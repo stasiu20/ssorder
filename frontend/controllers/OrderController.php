@@ -110,17 +110,27 @@ class OrderController extends Controller {
     public function actionDelete($id) {
 
         $model = Order::findOne($id);
-
         $model->delete();
         return $this->redirect(['index']);
     }
 
-    public function actionEdit($id) {
+    public function actionEdit() {
 
-
+    if (Yii::$app->request->post() && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
+        $id= Yii::$app->request->post('id');
         $order = Order::findOne($id);
         $model = Menu::findOne($order->foodId);
         //var_dump($model);die;
+    
+     return $this->render('uwagi', [
+                    'model' => $model,
+                    'order' => $order
+        ]);
+    
+    }else{
+        return $this->redirect(['index']);
+    }
+       
 
         if (Yii::$app->request->post()) {
             $order->load(Yii::$app->request->post());
@@ -137,10 +147,7 @@ class OrderController extends Controller {
                 // }
             }
         }
-        return $this->render('uwagi', [
-                    'model' => $model,
-                    'order' => $order
-        ]);
+       
     }
 
     public function actionRestaurant($id) {

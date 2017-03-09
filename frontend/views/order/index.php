@@ -19,11 +19,17 @@ $formatter = \Yii::$app->formatter;
 foreach ($model as $order):
     $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete?id=$order->id"], ['class' => 'btn btn-danger', 'style' =>'margin-right:10px',
                             'data' => [
-                            'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
-                            'method' => 'post',
+                                'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
+                                'method' => 'post',
+                                
                             
                         ],]) : '');
-    $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit?id=$order->id"], ['class' => 'btn btn-success', 'style' =>'margin-right:10px']) : '');
+    $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-success', 'style' =>'margin-right:10px',
+                            'data' => [
+                                'method' => 'post',
+                                'params'=>['name'=>Yii::$app->user->identity->username, 'id'=>$order->id],
+                                
+                                ]]) : '');
     $takeRestaurantId = $order->menu->restaurants[0]['id'];
     $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-primary']);
     ?>
