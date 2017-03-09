@@ -108,10 +108,11 @@ class OrderController extends Controller {
     }
 
     public function actionDelete($id) {
-
+    if (Yii::$app->request->post()) {
         $model = Order::findOne($id);
         $model->delete();
         return $this->redirect(['index']);
+    }
     }
 
     public function actionEdit() {
@@ -187,5 +188,3 @@ class OrderController extends Controller {
     }
 
 }
-
-//UPDATE `sensiszama`.`order` SET `status` = '1' WHERE `order`.`id` = 8;

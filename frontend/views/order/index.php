@@ -17,11 +17,11 @@ $formatter = \Yii::$app->formatter;
 <tbody>
 <?php
 foreach ($model as $order):
-    $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete?id=$order->id"], ['class' => 'btn btn-danger', 'style' =>'margin-right:10px',
+    $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-danger', 'style' =>'margin-right:10px',
                             'data' => [
                                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
                                 'method' => 'post',
-                                
+                                'params'=>['id'=>$order->id]
                             
                         ],]) : '');
     $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-success', 'style' =>'margin-right:10px',
