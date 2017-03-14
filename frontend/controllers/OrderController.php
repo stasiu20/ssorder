@@ -22,14 +22,22 @@ class OrderController extends Controller {
     public function behaviors() {
 
         return [
-                /* 'access' =>[
-                  'verbs' => [
-                  'class' => VerbFilter::className(),
-                  'actions' => [
-                  'logout' => ['post'],
-                  ],
-                  ]
-                  ] */
+                'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout', 'signup', 'index', 'upload', 'restaurant', 'delete', 'update', 'category', 'restaurant', 'view', 'create'],
+                'rules' => [
+                    [
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'upload', 'restaurant', 'update', 'delete', 'category', 'restaurant', 'view', 'create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
         ];
     }
 
