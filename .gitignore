@@ -33,3 +33,8 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+/frontend/runtime/HTML
+/frontend/runtime/logs
+/frontend/runtime/cache
+/frontend/runtime/debug
+/frontend/runtime/gii-2.0.10
