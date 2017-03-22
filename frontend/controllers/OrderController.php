@@ -115,8 +115,9 @@ class OrderController extends Controller {
         }
     }
 
-    public function actionDelete($id) {
-    if (Yii::$app->request->post()) {
+    public function actionDelete() {
+    if (Yii::$app->request->post('id')) {
+        $id= Yii::$app->request->post('id');
         $model = Order::findOne($id);
         $model->delete();
         return $this->redirect(['index']);
