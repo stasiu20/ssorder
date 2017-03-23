@@ -72,13 +72,6 @@ class OrderController extends Controller {
 
 
         $order = new Order();
-//        $model->load(Yii::$app->request->post());
-//
-//        $model->validate();
-        // $menu ->$model->menu;
-        // $user ->$model->user;
-//        var_dump($model->validate(), $model->errors);die;
-        //$model->save();
 
         if (Yii::$app->request->post()) {
             $order->load(Yii::$app->request->post());
@@ -92,19 +85,13 @@ class OrderController extends Controller {
             if ($order->save()) {
                 return $this->redirect(['index']);
 
-                // }
+                
             }
         }
         return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
         ]);
-
-
-
-//        if ($order->load(Yii::$app->request->post()) && $order->save()) {
-//            return $this->redirect(['index']);
-//        } else {
     }
 
     protected function findModel($id) {
@@ -130,33 +117,33 @@ class OrderController extends Controller {
         $id= Yii::$app->request->post('id');
         $order = Order::findOne($id);
         $model = Menu::findOne($order->foodId);
-        //var_dump($model);die;
+
     
      return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
         ]);
     
-    }else{
-        return $this->redirect(['index']);
-    }
-       
-
-        if (Yii::$app->request->post()) {
+    } 
+    else if (Yii::$app->request->post('Order')) {
+            $id= Yii::$app->request->post('Order')['orderId'];
+            $order = Order::findOne($id);
             $order->load(Yii::$app->request->post());
             $orderUwagi = strip_tags($order->uwagi);
-
-            //$order->userId = Yii::$app->user->identity->id;
-            //$order->foodId = $model->id;
             $order->uwagi = $orderUwagi;
             $order->update();
             //$order->save();
             if ($order->save()) {
                 return $this->redirect(['index']);
 
-                // }
+               
             }
         }
+        else{
+       
+        return $this->redirect(['index']);
+    }
+      
        
     }
 
