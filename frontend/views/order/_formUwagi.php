@@ -18,7 +18,9 @@ use frontend\models\Restaurants;
 
     <?= $form->field($order, 'uwagi')->textarea(['rows' => 6], ['palceholder'=>$order->uwagi]) ?>
     
-    <?php echo ($order->isNewRecord ? $form->field($order, 'orderId')->hiddenInput(['value'=> $order->id])->label(false) :  $form->field($order, 'orderId')->hiddenInput(['value'=> $order->id])->label(false));?>
+    <?php if(!$order->isNewRecord): ?> 
+    <?= $form->field($order, 'orderId')->hiddenInput(['value'=> $order->id])->label(false); ?>
+    <?php endif; ?>
     
 
     <div class="form-group">

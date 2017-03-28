@@ -70,7 +70,7 @@ class OrderController extends Controller {
 
         $model = $this->findModel($id);
 
-
+        
         $order = new Order();
 
         if (Yii::$app->request->post()) {
@@ -81,7 +81,6 @@ class OrderController extends Controller {
             $order->foodId = $model->id;
             $order->restaurantId = $model->restaurantId;
             $order->status = 0;
-            $order->save();
             if ($order->save()) {
                 return $this->redirect(['index']);
 
