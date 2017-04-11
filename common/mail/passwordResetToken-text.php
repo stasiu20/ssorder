@@ -5,8 +5,8 @@
 
 $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
 ?>
-Hello <?= $user->username ?>,
+Siemka <?= $user->username ?>,
 
-Follow the link below to reset your password:
+Przejdź do linku poniżej żeby zmienić twoje hasło:
 
 <?= $resetLink ?>
