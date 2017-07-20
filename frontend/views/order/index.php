@@ -17,21 +17,21 @@ $formatter = \Yii::$app->formatter;
 <tbody>
 <?php
 foreach ($model as $order):
-    $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-danger', 'style' =>'margin-right:10px',
+    $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
                             'data' => [
                                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
                                 'method' => 'post',
                                 'params'=>['id'=>$order->id]
                             
                         ],]) : '');
-    $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-success', 'style' =>'margin-right:10px',
+    $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
                             'data' => [
                                 'method' => 'post',
                                 'params'=>['name'=>Yii::$app->user->identity->username, 'id'=>$order->id],
                                 
                                 ]]) : '');
     $takeRestaurantId = $order->menu->restaurants[0]['id'];
-    $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-primary']);
+    $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
     ?>
 
         <tr>

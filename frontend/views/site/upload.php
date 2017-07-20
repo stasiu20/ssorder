@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
           
         ]);
         ?>
-        <button class="btn btn-success">Dodaj Restaurację</button>
+        <button class="btn btn-custom">Dodaj Restaurację</button>
         <?php ActiveForm::end(); ?>       
     </div>
     <div class="col-lg-4"></div>
