@@ -1,11 +1,29 @@
 <?php
 
 use yii\helpers\Html;
+/** @var \DateTime $date */
+/** @var \DateTime $yesterday */
+/** @var \DateTime $tomorrow */
+/** @var \DateTime $today */
+/** @var \DateTime $minDate */
 
 $this->title = 'Zamówienia';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h1>Zamówienia z Dnia: <?= date('d-m-Y') ?> </h1>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <h1>
+            <?php if ($date > $minDate): ?>
+                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
+                            class="glyphicon glyphicon-chevron-left"></span></a>
+            <?php endif ?>
+            Zamówienia z Dnia: <?= $date->format('d-m-Y') ?>
+            <?php if ($tomorrow <= $today): ?>
+                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            <?php endif; ?>
+        </h1>
+    </div>
+</div>
 <?php
 $userName = Yii::$app->user->identity->username;
 
