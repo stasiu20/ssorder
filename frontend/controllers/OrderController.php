@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
+use yii\validators\DateValidator;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -16,6 +17,7 @@ use yii\data\Sort;
 use yii\grid\ActionColumn;
 use frontend\models\Restaurants;
 use frontend\models\Imagesmenu;
+use yii\web\NotFoundHttpException;
 
 class OrderController extends Controller {
 
@@ -41,8 +43,17 @@ class OrderController extends Controller {
         ];
     }
 
-    public function actionIndex() {
-        $date = date('Y-m-d');
+    public function actionIndex($date = null) {
+        $dateValue = $date ? $date : date('Y-m-d');
+        $validator = new DateValidator(['format' => 'php:Y-m-d']);
+        if (!$validator->validate($dateValue)) {
+            throw new BadRequestHttpException('Wrong date format');
+        }
+
+        $date = \DateTimeImmutable::createFromFormat('Y-m-d', $dateValue);
+        $tomorrow = $date->add(new \DateInterval('P1D'));
+        $yesterday = $date->sub(new \DateInterval('P1D'));
+
         $sort = new Sort([
             'attributes' => [
 
@@ -56,14 +67,21 @@ class OrderController extends Controller {
         ]);
 
 
-        $model = new Order();
         $model = Order::find()
-                ->where(['>', 'data', $date])
+                ->where(['>', 'data', $date->format('Y-m-d')])
+                ->andWhere(['<', 'data', $tomorrow->format('Y-m-d')])
                 ->orderBy($sort->orders)
                 ->all();
 
-        return $this->render('index', ['model' => $model,
-                    'sort' => $sort]);
+        return $this->render('index', [
+            'model' => $model,
+            'sort' => $sort,
+            'date' => $date,
+            'minDate' => \DateTime::createFromFormat('Y-m-d', '2000-01-01'),
+            'today' => new \DateTime('now'),
+            'tomorrow' => $tomorrow,
+            'yesterday' => $yesterday,
+        ]);
     }
 
     public function actionUwagi($id) {
