@@ -13,6 +13,7 @@ use frontend\models\Restaurants;
  * @property integer $foodId
  * @property integer $userId
  * @property integer $status
+ * @property integer $restaurantId
  * @property string $data
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu

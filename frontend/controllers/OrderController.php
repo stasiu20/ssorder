@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\services\OrderSummaryStatics;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\validators\DateValidator;
@@ -73,6 +74,9 @@ class OrderController extends Controller {
                 ->orderBy($sort->orders)
                 ->all();
 
+        $statics = new OrderSummaryStatics();
+        $summary = $statics->getStatics($model);
+
         return $this->render('index', [
             'model' => $model,
             'sort' => $sort,
@@ -81,6 +85,7 @@ class OrderController extends Controller {
             'today' => new \DateTime('now'),
             'tomorrow' => $tomorrow,
             'yesterday' => $yesterday,
+            'summary' => $summary
         ]);
     }
 

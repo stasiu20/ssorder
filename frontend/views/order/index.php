@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /** @var \DateTime $today */
 /** @var \DateTime $minDate */
 /** @var \frontend\models\Order $order */
+/** @var \frontend\models\OrderSummaryRow[] $summary */
 
 $this->title = 'Zamówienia';
 $this->params['breadcrumbs'][] = $this->title;
@@ -69,4 +70,16 @@ foreach ($model as $order):
         </tr>
 <?php endforeach; ?>
 </tbody>
+<tfoot>
+    <?php foreach ($summary as $row): ?>
+        <tr>
+            <td colspan="2" class="text-right">
+                <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
+                    <?= $row->restaurant->restaurantName ?>
+                </a>
+            </td>
+            <td colspan="5" class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
+        </tr>
+    <?php endforeach; ?>
+</tfoot>
 </table>
