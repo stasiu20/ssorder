@@ -54,6 +54,8 @@ class OrderController extends Controller {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', $dateValue);
         $tomorrow = $date->add(new \DateInterval('P1D'));
         $yesterday = $date->sub(new \DateInterval('P1D'));
+        $sevenDaysAgo = $date->sub(new \DateInterval('P7D'));
+        $sevenDaysFuture = $date->add(new \DateInterval('P7D'));
 
         $sort = new Sort([
             'attributes' => [
@@ -85,6 +87,8 @@ class OrderController extends Controller {
             'today' => new \DateTime('now'),
             'tomorrow' => $tomorrow,
             'yesterday' => $yesterday,
+            'sevenDaysAgo' => $sevenDaysAgo,
+            'sevenDaysNext' => $sevenDaysFuture,
             'summary' => $summary
         ]);
     }

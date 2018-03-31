@@ -6,6 +6,8 @@ use yii\helpers\Html;
 /** @var \DateTime $tomorrow */
 /** @var \DateTime $today */
 /** @var \DateTime $minDate */
+/** @var \DateTime $sevenDaysAgo */
+/** @var \DateTime $sevenDaysNext */
 /** @var \frontend\models\Order $order */
 /** @var \frontend\models\OrderSummaryRow[] $summary */
 
@@ -15,6 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-xs-12 text-center">
         <h1>
+            <?php if ($sevenDaysAgo >= $minDate): ?>
+                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysAgo->format('Y-m-d')]); ?>">
+                    <span class="glyphicon glyphicon-backward"></span></a>
+            <?php endif ?>
             <?php if ($date > $minDate): ?>
                 <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
                             class="glyphicon glyphicon-chevron-left"></span></a>
@@ -23,6 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if ($tomorrow <= $today): ?>
                 <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span class="glyphicon glyphicon-chevron-right"></span></a>
             <?php endif; ?>
+            <?php if ($sevenDaysNext <= $today): ?>
+                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
+                    <span class="glyphicon glyphicon-forward"></span>
+                </a>
+            <?php endif ?>
         </h1>
     </div>
 </div>
