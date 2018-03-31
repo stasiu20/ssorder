@@ -12,10 +12,15 @@ use frontend\models\Restaurants;
  * @property integer $id
  * @property integer $foodId
  * @property integer $userId
+ * @property integer $status
  * @property string $data
+ * @property \frontend\models\Restaurants $restaurants
+ * @property \frontend\models\Menu $menu
  */
 class Order extends \yii\db\ActiveRecord
 {
+    const STATUS_REALIZED = 1;
+
     /**
      * @inheritdoc
      */
@@ -70,4 +75,25 @@ class Order extends \yii\db\ActiveRecord
     
         return $this->hasOne(Restaurants::className(),['id'=>'restaurantId']);
      }
+
+    public function isCreatedByUser($userId = null)
+    {
+        if (null === $userId) {
+            $userId = Yii::$app->user->identity->id;
+        }
+        return $this->userId == $userId;
+    }
+
+    public function cloneOrder()
+    {
+        $order = clone $this;
+        $order->isNewRecord = true;
+        $order->id = null;
+        return $order;
+    }
+
+    public function isRealized()
+    {
+        return $this->status == self::STATUS_REALIZED;
+    }
 }

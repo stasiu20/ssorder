@@ -111,6 +111,24 @@ class OrderController extends Controller {
         ]);
     }
 
+    public function actionAgain($id)
+    {
+        $order = Order::findOne($id);
+        if (null === $order) {
+            throw new NotFoundHttpException('Order not exist');
+        }
+
+        if (!$order->isCreatedByUser()) {
+            throw new NotFoundHttpException('Order not exist');
+        }
+
+        $order = $order->cloneOrder();
+
+        return $this->render('again', [
+            'order' => $order
+        ]);
+    }
+
     protected function findModel($id) {
         if (($model = Menu::findOne($id)) !== null) {
             return $model;

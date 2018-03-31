@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /** @var \DateTime $tomorrow */
 /** @var \DateTime $today */
 /** @var \DateTime $minDate */
+/** @var \frontend\models\Order $order */
 
 $this->title = 'Zamówienia';
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,7 +32,7 @@ $formatter = \Yii::$app->formatter;
 ?>
 <p>sortuj według: <?=$sort->link('restaurant');?></p>
 <table class="table table-striped">
-    <thead><th>Nazwa Żarcia</th><th>Nazwa Restauracji</th><th>Cena</th><th>Uwagi</th><th>Kto Zamawia</th><th>Status</th><th>Usuń/edytuj/zrealizuj</th></thead>
+    <thead><th>Nazwa Żarcia</th><th>Nazwa Restauracji</th><th>Cena</th><th>Uwagi</th><th>Kto Zamawia</th><th>Status</th><th>Akcje</th></thead>
 <tbody>
 <?php
 foreach ($model as $order):
@@ -59,7 +60,12 @@ foreach ($model as $order):
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
-            <td><?php   if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?></td>
+            <td>
+                <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
+                <?php if ($order->isRealized() && $order->isCreatedByUser()): ?>
+                    <a class="btn btn-custom" href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">Zamów ponownie</a>
+                <?php endif; ?>
+            </td>
         </tr>
 <?php endforeach; ?>
 </tbody>
