@@ -102,4 +102,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->status == self::STATUS_REALIZED;
     }
+
+    public function getPriceWithPack()
+    {
+        return 0.0 + $this->menu->foodPrice + $this->restaurants->pack_price;
+    }
 }

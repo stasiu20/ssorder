@@ -9,7 +9,7 @@ use yii\helpers\Html;
 /** @var \DateTime $sevenDaysAgo */
 /** @var \DateTime $sevenDaysNext */
 /** @var \frontend\models\Order $order */
-/** @var \frontend\models\OrderSummaryRow[] $summary */
+/** @var \frontend\models\OrdersSummary $summary */
 
 $this->title = 'Zamówienia - ' . $date->format('Y-m-d');
 $this->params['breadcrumbs'][] = $this->title;
@@ -44,10 +44,22 @@ $formatter = \Yii::$app->formatter;
 ?>
 <p>sortuj według: <?=$sort->link('restaurant');?></p>
 <table class="table table-striped">
-    <thead><th>Nazwa Żarcia</th><th>Nazwa Restauracji</th><th>Cena</th><th>Uwagi</th><th>Kto Zamawia</th><th>Status</th><th>Akcje</th></thead>
+    <thead>
+        <th>Nazwa Żarcia</th>
+        <th>Nazwa Restauracji</th>
+        <th>Cena</th>
+        <th title="Koszt zamówienia wraz z opakowaniem i dowozem">Koszt</th>
+        <th>Uwagi</th>
+        <th>Kto Zamawia</th>
+        <th>Status</th>
+        <th>Akcje</th>
+    </thead>
 <tbody>
 <?php
+$mapIndex = [];
 foreach ($model as $order):
+    if (!isset($mapIndex[$order->restaurantId])) { $mapIndex[$order->restaurantId] = -1; }
+    $mapIndex[$order->restaurantId] += 1;
     $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
                             'data' => [
                                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
@@ -69,6 +81,13 @@ foreach ($model as $order):
             <td><a href="/site/view?id=<?=$order->menu->id?>&order=true"><?= $order->menu->foodName ?></a></td>
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
             <td><?=$formatter->asCurrency($order->menu->foodPrice) ?></td>
+            <td>
+                <?=$formatter->asCurrency(\frontend\helpers\OrderCost::calculateOrderCost(
+                    $order,
+                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
+                    $mapIndex[$order->restaurantId])
+                ); ?>
+            </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
@@ -84,14 +103,15 @@ foreach ($model as $order):
 <?php endforeach; ?>
 </tbody>
 <tfoot>
-    <?php foreach ($summary as $row): ?>
+    <?php foreach ($summary->getData() as $row): ?>
         <tr>
             <td colspan="2" class="text-right">
                 <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
                     <?= $row->restaurant->restaurantName ?>
                 </a>
             </td>
-            <td colspan="5" class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
+            <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
+            <td colspan="4" class="text-left"><?= $formatter->asCurrency($row->getCostWithDelivery()) ?></td>
         </tr>
     <?php endforeach; ?>
 </tfoot>
