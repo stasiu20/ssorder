@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /** @var \frontend\models\Order $order */
 /** @var \frontend\models\OrderSummaryRow[] $summary */
 
-$this->title = 'Zamówienia';
+$this->title = 'Zamówienia - ' . $date->format('Y-m-d');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
