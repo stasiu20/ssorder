@@ -127,10 +127,6 @@ class OrderController extends Controller {
             throw new NotFoundHttpException('Order not exist');
         }
 
-        if (!$order->isCreatedByUser()) {
-            throw new NotFoundHttpException('Order not exist');
-        }
-
         $order = $order->cloneOrder();
 
         return $this->render('again', [

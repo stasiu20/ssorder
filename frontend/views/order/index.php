@@ -74,8 +74,10 @@ foreach ($model as $order):
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
             <td>
                 <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
-                <?php if ($order->isRealized() && $order->isCreatedByUser()): ?>
-                    <a class="btn btn-custom" href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">Zamów ponownie</a>
+                <?php if ($order->isRealized()): ?>
+                    <a title="Smakowało? Zamów raz jeszcze!" class="" href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">
+                        <span class="glyphicon glyphicon-cutlery"></span>
+                    </a>
                 <?php endif; ?>
             </td>
         </tr>

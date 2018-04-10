@@ -85,11 +85,16 @@ class Order extends \yii\db\ActiveRecord
         return $this->userId == $userId;
     }
 
-    public function cloneOrder()
+    public function cloneOrder($userId = null)
     {
+        if (null === $userId) {
+            $userId = Yii::$app->user->identity->id;
+        }
+
         $order = clone $this;
         $order->isNewRecord = true;
         $order->id = null;
+        $order->userId = $userId;
         return $order;
     }
 
