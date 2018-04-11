@@ -48,7 +48,7 @@ $formatter = \Yii::$app->formatter;
         <th>Nazwa Żarcia</th>
         <th>Nazwa Restauracji</th>
         <th>Cena</th>
-        <th title="Koszt zamówienia wraz z opakowaniem i dowozem">Koszt</th>
+        <th title="Do zapłaty (cena żarca wraz z opakowaniem i dowozem)">Do zapłaty</th>
         <th>Uwagi</th>
         <th>Kto Zamawia</th>
         <th>Status</th>
