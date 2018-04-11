@@ -8,6 +8,9 @@ class OrderCost
 {
     public static function calculateOrderCost(Order $order, $numOfOrders, $index)
     {
+        if (!$order->isRealized()) {
+            return;
+        }
         $cost = $order->getPriceWithPack();
         $deliveryCost = round(
             $order->restaurants->delivery_price / $numOfOrders,

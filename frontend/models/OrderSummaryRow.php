@@ -36,6 +36,9 @@ class OrderSummaryRow extends Model
 
     public function getCostWithDelivery()
     {
-        return $this->cost + $this->deliveryCost;
+        if ($this->numOfOrders > 0) {
+            return $this->cost + $this->deliveryCost;
+        }
+        return 0.0;
     }
 }
