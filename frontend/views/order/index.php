@@ -45,6 +45,7 @@ $formatter = \Yii::$app->formatter;
 <p>sortuj według: <?=$sort->link('restaurant');?></p>
 <table class="table table-striped">
     <thead>
+        <th>l.p.</th>
         <th>Nazwa Żarcia</th>
         <th>Nazwa Restauracji</th>
         <th>Cena</th>
@@ -57,7 +58,9 @@ $formatter = \Yii::$app->formatter;
 <tbody>
 <?php
 $mapIndex = [];
+$i = 0;
 foreach ($model as $order):
+    ++$i;
     if (!isset($mapIndex[$order->restaurantId])) { $mapIndex[$order->restaurantId] = -1; }
     $mapIndex[$order->restaurantId] += 1;
     $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
@@ -78,6 +81,7 @@ foreach ($model as $order):
     ?>
 
         <tr>
+            <td><?= $i; ?></td>
             <td><a href="/site/view?id=<?=$order->menu->id?>&order=true"><?= $order->menu->foodName ?></a></td>
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
             <td><?=$formatter->asCurrency($order->menu->foodPrice) ?></td>
@@ -107,7 +111,7 @@ foreach ($model as $order):
         <tr>
             <td colspan="2" class="text-right">
                 <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
-                    <?= $row->restaurant->restaurantName ?>
+                    <?= $row->restaurant->restaurantName ?> (<?= $row->numOfOrders ?>)
                 </a>
             </td>
             <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
