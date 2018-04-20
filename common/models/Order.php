@@ -74,6 +74,24 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(Menu::className(),['id'=>'foodId']);
         
     }
+
+    public function getRestaurantName()
+    {
+        if (null === $this->restaurants) {
+            return '';
+        }
+
+        return $this->restaurants->restaurantName;
+    }
+
+    public function getFoodName()
+    {
+        if (null === $this->menu) {
+            return '';
+        }
+
+        return $this->menu->foodName;
+    }
     
      public function getRestaurants(){
     
