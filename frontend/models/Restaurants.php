@@ -15,7 +15,7 @@ use frontend\models\Order;
  * @property string $restaurantName
  * @property integer $tel_number
  * @property float $delivery_price
- * @property integer $pack_price
+ * @property float $pack_price
  * @property string $img_url
  */
 class Restaurants extends ActiveRecord {
@@ -40,13 +40,12 @@ class Restaurants extends ActiveRecord {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'on'=>self::SCENARIO_UPDATE],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg',],
-            [['restaurantName', 'tel_number', 'pack_price', 'img_url', 'categoryId'], 'required',],
+            [['restaurantName', 'tel_number', 'img_url', 'categoryId'], 'required',],
             //[['restaurantName', 'tel_number', 'delivery_price', 'pack_price', 'categoryId'], 'required', 'on'=>  self::SCENARIO_UPDATE],
             [['restaurantName', 'img_url','tel_number'], 'string'],
-            [['delivery_price'], 'default', 'value' => 0],
-            [['delivery_price'], 'number', 'min' => 0, 'max' => 999.99],
+            [['delivery_price', 'pack_price'], 'default', 'value' => 0],
+            [['delivery_price', 'pack_price'], 'number', 'min' => 0, 'max' => 999.99],
             [[ 'categoryId'], 'integer'],
-            [['pack_price'], 'string'],
             [['tel_number'],'string','length'=>[11, 12]],
             ['tel_number', 'match', 'pattern' => '/([0-9]{3}-[0-9]{3}-[0-9]{3})|([0-9]{4}-[0-9]{2}-[0-9]{2})/']
             //[['tel_number'], PhoneInputValidator::className(), 'region' => ['PL']],
