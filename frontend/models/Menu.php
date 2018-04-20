@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\Restaurants;
-use frontend\models\Order;
+use common\models\Order;
 
 /**
  * This is the model class for table "menu".

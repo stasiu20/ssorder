@@ -2,7 +2,7 @@
 
 namespace frontend\services;
 
-use frontend\models\Order;
+use common\models\Order;
 use frontend\models\OrdersSummary;
 use frontend\models\OrderSummaryRow;
 
@@ -25,7 +25,7 @@ class OrderSummaryStatics
             }
 
             if ($order->isRealized()) {
-                $result[$order->restaurantId]->price += $order->menu->foodPrice;
+                $result[$order->restaurantId]->price += $order->getPrice();
                 $result[$order->restaurantId]->cost += $order->getPriceWithPack();
                 $result[$order->restaurantId]->numOfOrders += 1;
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use frontend\models\Menu;
@@ -14,6 +14,7 @@ use frontend\models\Restaurants;
  * @property integer $userId
  * @property integer $status
  * @property integer $restaurantId
+ * @property float $price
  * @property string $data
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
@@ -40,6 +41,7 @@ class Order extends \yii\db\ActiveRecord
             [['foodId', 'userId','restaurantId', 'status'], 'integer'],
             [['data'], 'safe'],
             [['uwagi'],'string'],
+            [['price'],'number', 'min' => 0.01, 'max' => 999.99],
             ['status', 'match', 'pattern' => '/[0-1]/'],
         ];
     }
@@ -105,6 +107,15 @@ class Order extends \yii\db\ActiveRecord
 
     public function getPriceWithPack()
     {
-        return 0.0 + $this->menu->foodPrice + $this->restaurants->pack_price;
+        return 0.0 + $this->getPrice() + $this->restaurants->pack_price;
+    }
+
+    public function getPrice()
+    {
+        if ($this->status == self::STATUS_REALIZED) {
+            return $this->price;
+        }
+
+        return $this->menu->foodPrice;
     }
 }

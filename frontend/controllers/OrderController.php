@@ -11,7 +11,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\Order;
+use common\models\Order;
 use frontend\models\Menu;
 use yii\data\ActiveDataProvider;
 use yii\data\Sort;
@@ -211,14 +211,14 @@ class OrderController extends Controller {
     public function actionOrderCompleted($id) {
         $date = date('Y-m-d');
 
+        /** @var Order[] $model */
         $model = Order::find()->where(['restaurantId'=>$id])->andWhere(['>', 'data', $date])->all();
         
         foreach($model as $status){
-        $status->status = 1;
-        $status->save();
+            $status->price = $status->getPrice();
+            $status->status = 1;
+            $status->save();
         }
-        
-       
 
         return $this->redirect("index");
     }

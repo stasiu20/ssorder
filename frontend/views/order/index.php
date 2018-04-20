@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /** @var \DateTime $minDate */
 /** @var \DateTime $sevenDaysAgo */
 /** @var \DateTime $sevenDaysNext */
-/** @var \frontend\models\Order $order */
+/** @var \common\models\Order $order */
 /** @var \frontend\models\OrdersSummary $summary */
 
 $this->title = 'Zamówienia - ' . $date->format('Y-m-d');
@@ -84,7 +84,7 @@ foreach ($model as $order):
             <td><?= $i; ?></td>
             <td><a href="/site/view?id=<?=$order->menu->id?>&order=true"><?= $order->menu->foodName ?></a></td>
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
-            <td><?=$formatter->asCurrency($order->menu->foodPrice) ?></td>
+            <td><?=$formatter->asCurrency($order->getPrice()) ?></td>
             <td>
                 <?=$formatter->asCurrency(\frontend\helpers\OrderCost::calculateOrderCost(
                     $order,

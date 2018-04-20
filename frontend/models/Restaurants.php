@@ -6,7 +6,7 @@ use Yii;
 use \yii\db\ActiveRecord;
 use borales\extensions\phoneInput\PhoneInputValidator;
 use borales\extensions\phoneInput\PhoneInputBehavior;
-use frontend\models\Order;
+use common\models\Order;
 
 /**
  * This is the model class for table "restaurants".

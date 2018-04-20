@@ -2,7 +2,7 @@
 
 namespace frontend\helpers;
 
-use frontend\models\Order;
+use common\models\Order;
 
 class OrderCost
 {

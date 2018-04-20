@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use frontend\models\Restaurants;
 
 /* @var $this yii\web\View */
-/* @var $order \frontend\models\Order */
+/* @var $order \common\models\Order */
 $url = 'site/restaurant?id=' . $order->restaurants->id;
 $this->title = 'Zamówienie: ' . $order->menu->foodName;
 $this->params['breadcrumbs'][] = ['label' => $order->restaurants->restaurantName, 'url' => [$url]];

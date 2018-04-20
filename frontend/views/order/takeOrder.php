@@ -67,8 +67,8 @@ GridView::widget([
         [ 'attribute' => 'foodPrice',
             'label' => 'Cena Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
-                $foodPrice = $data->menu->foodPrice;
+            'value' => function(\common\models\Order $data) {
+                $foodPrice = $data->getPrice();
                 return "$foodPrice" . " " . "zł";
             },
             'contentOptions' => ['class' => 'text-right'],
