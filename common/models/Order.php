@@ -18,6 +18,7 @@ use frontend\models\Restaurants;
  * @property string $data
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
+ * @property \common\models\User $user
  */
 class Order extends \yii\db\ActiveRecord
 {
