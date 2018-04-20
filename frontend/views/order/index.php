@@ -109,7 +109,7 @@ foreach ($model as $order):
 <tfoot>
     <?php foreach ($summary->getData() as $row): ?>
         <tr>
-            <td colspan="2" class="text-right">
+            <td colspan="3" class="text-right">
                 <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
                     <?= $row->restaurant->restaurantName ?> (<?= $row->numOfOrders ?>)
                 </a>
