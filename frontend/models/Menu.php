@@ -33,7 +33,8 @@ class Menu extends \yii\db\ActiveRecord {
         return [
             [['restaurantId', 'foodName', 'foodInfo', 'foodPrice'], 'required'],
             [['restaurantId'], 'integer'],
-            [['foodInfo','foodPrice'], 'string'],
+            [['foodInfo'], 'string'],
+            [['foodPrice'], 'number', 'min' => 0.01, 'max' => 999.99],
             [['foodName'], 'string', 'max' => 200],
         ];
     }
