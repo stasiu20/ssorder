@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\services\OrderSummaryStatics;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\validators\DateValidator;
@@ -10,7 +11,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\Order;
+use common\models\Order;
 use frontend\models\Menu;
 use yii\data\ActiveDataProvider;
 use yii\data\Sort;
@@ -53,6 +54,8 @@ class OrderController extends Controller {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', $dateValue);
         $tomorrow = $date->add(new \DateInterval('P1D'));
         $yesterday = $date->sub(new \DateInterval('P1D'));
+        $sevenDaysAgo = $date->sub(new \DateInterval('P7D'));
+        $sevenDaysFuture = $date->add(new \DateInterval('P7D'));
 
         $sort = new Sort([
             'attributes' => [
@@ -73,6 +76,9 @@ class OrderController extends Controller {
                 ->orderBy($sort->orders)
                 ->all();
 
+        $statics = new OrderSummaryStatics();
+        $summary = $statics->getStatics($model);
+
         return $this->render('index', [
             'model' => $model,
             'sort' => $sort,
@@ -81,6 +87,9 @@ class OrderController extends Controller {
             'today' => new \DateTime('now'),
             'tomorrow' => $tomorrow,
             'yesterday' => $yesterday,
+            'sevenDaysAgo' => $sevenDaysAgo,
+            'sevenDaysNext' => $sevenDaysFuture,
+            'summary' => $summary
         ]);
     }
 
@@ -108,6 +117,20 @@ class OrderController extends Controller {
         return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
+        ]);
+    }
+
+    public function actionAgain($id)
+    {
+        $order = Order::findOne($id);
+        if (null === $order) {
+            throw new NotFoundHttpException('Order not exist');
+        }
+
+        $order = $order->cloneOrder();
+
+        return $this->render('again', [
+            'order' => $order
         ]);
     }
 
@@ -188,14 +211,14 @@ class OrderController extends Controller {
     public function actionOrderCompleted($id) {
         $date = date('Y-m-d');
 
+        /** @var Order[] $model */
         $model = Order::find()->where(['restaurantId'=>$id])->andWhere(['>', 'data', $date])->all();
         
         foreach($model as $status){
-        $status->status = 1;
-        $status->save();
+            $status->price = $status->getPrice();
+            $status->status = 1;
+            $status->save();
         }
-        
-       
 
         return $this->redirect("index");
     }

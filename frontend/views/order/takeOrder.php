@@ -63,12 +63,21 @@ GridView::widget([
             'contentOptions' => ['class' => 'text-left'],
         ],
         'uwagi',
+        [
+            'attribute' => 'userId',
+            'label' => 'Kto',
+            'format' => 'raw',
+            'value' => function(\common\models\Order $order) {
+                return $order->user->username;
+            },
+            'contentOptions' => ['class' => 'text-right'],
+        ],
 //            'foodPrice',
         [ 'attribute' => 'foodPrice',
             'label' => 'Cena Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
-                $foodPrice = $data->menu->foodPrice;
+            'value' => function(\common\models\Order $data) {
+                $foodPrice = $data->getPrice();
                 return "$foodPrice" . " " . "zł";
             },
             'contentOptions' => ['class' => 'text-right'],

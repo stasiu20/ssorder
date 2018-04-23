@@ -7,6 +7,7 @@ use frontend\models\Restaurants;
 /* @var $this yii\web\View */
 /* @var $model app\models\Restaurants */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $action string|null */
 ?>
 
 <div class="restaurants-form">
@@ -14,7 +15,7 @@ use frontend\models\Restaurants;
     
     
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => isset($action) ? $action : null]); ?>
 
     <?= $form->field($order, 'uwagi')->textarea(['rows' => 6], ['palceholder'=>$order->uwagi]) ?>
     

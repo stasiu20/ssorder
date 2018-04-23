@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\Restaurants;
-use frontend\models\Order;
+use common\models\Order;
 
 /**
  * This is the model class for table "menu".
@@ -33,7 +33,8 @@ class Menu extends \yii\db\ActiveRecord {
         return [
             [['restaurantId', 'foodName', 'foodInfo', 'foodPrice'], 'required'],
             [['restaurantId'], 'integer'],
-            [['foodInfo','foodPrice'], 'string'],
+            [['foodInfo'], 'string'],
+            [['foodPrice'], 'number', 'min' => 0.01, 'max' => 999.99],
             [['foodName'], 'string', 'max' => 200],
         ];
     }
