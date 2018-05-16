@@ -2,9 +2,13 @@
 
 namespace frontend\controllers;
 
+use common\models\History;
+use common\models\OrderFilters;
+use common\models\OrderSearch;
 use frontend\services\OrderSummaryStatics;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\Pagination;
 use yii\validators\DateValidator;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -59,7 +63,6 @@ class OrderController extends Controller {
 
         $sort = new Sort([
             'attributes' => [
-
                 'restaurant' => [
                     'asc' => ['restaurantId' => SORT_ASC],
                     'desc' => ['restaurantId' => SORT_DESC],
@@ -70,9 +73,10 @@ class OrderController extends Controller {
         ]);
 
 
-        $model = Order::find()
-                ->where(['>', 'data', $date->format('Y-m-d')])
-                ->andWhere(['<', 'data', $tomorrow->format('Y-m-d')])
+        $filters = new OrderFilters();
+        $filters->dateFrom = $date->format('Y-m-d');
+        $filters->dateTo = $tomorrow->format('Y-m-d');
+        $model = OrderSearch::search($filters)
                 ->orderBy($sort->orders)
                 ->all();
 
@@ -192,27 +196,32 @@ class OrderController extends Controller {
         $resturant = new Restaurants;
         $restaurant = Restaurants::findOne($id);
         $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
-
+        $filters = new OrderFilters();
+        $filters->restaurantId = $id;
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Order::find()->where(['restaurantId' => $id])->andWhere(['>', 'data', $date]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+            'query' => OrderSearch::search($filters),
+            'sort' => History::getDefaultSort(),
+            'pagination' => new Pagination()
         ]);
 
 
-        return $this->render('takeOrder', ['restaurant' => $restaurant,
-                    'imagesMenu' => $imagesMenu,
-                    'dataProvider' => $dataProvider,
+        return $this->render('/history/restaurant', [
+            'restaurant' => $restaurant,
+            'imagesMenu' => $imagesMenu,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     public function actionOrderCompleted($id) {
         $date = date('Y-m-d');
 
+        $filters = new OrderFilters();
+        $filters->restaurantId = $id;
+        $filters->dateFrom = $date;
+
         /** @var Order[] $model */
-        $model = Order::find()->where(['restaurantId'=>$id])->andWhere(['>', 'data', $date])->all();
+        $model = OrderSearch::search($filters)->all();
         
         foreach($model as $status){
             $status->price = $status->getPrice();
