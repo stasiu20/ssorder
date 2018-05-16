@@ -18,7 +18,7 @@ class OrderSearch extends Order
         }
 
         if ($filters->status) {
-            $query->andWhere(['status' => $filters->status]);
+            $query->andWhere(['order.status' => $filters->status]);
         }
 
         if ($filters->dateFrom) {

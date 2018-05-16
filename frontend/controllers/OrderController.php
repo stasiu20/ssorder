@@ -101,7 +101,7 @@ class OrderController extends Controller {
 
         $model = $this->findModel($id);
 
-        
+
         $order = new Order();
 
         if (Yii::$app->request->post()) {
@@ -115,7 +115,7 @@ class OrderController extends Controller {
             if ($order->save()) {
                 return $this->redirect(['index']);
 
-                
+
             }
         }
         return $this->render('uwagi', [
@@ -162,13 +162,13 @@ class OrderController extends Controller {
         $order = Order::findOne($id);
         $model = Menu::findOne($order->foodId);
 
-    
+
      return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
         ]);
-    
-    } 
+
+    }
     else if (Yii::$app->request->post('Order')) {
             $id= Yii::$app->request->post('Order')['orderId'];
             $order = Order::findOne($id);
@@ -180,15 +180,15 @@ class OrderController extends Controller {
             if ($order->save()) {
                 return $this->redirect(['index']);
 
-               
+
             }
         }
         else{
-       
+
         return $this->redirect(['index']);
     }
-      
-       
+
+
     }
 
     public function actionRestaurant($id) {
@@ -206,8 +206,7 @@ class OrderController extends Controller {
         ]);
 
 
-        return $this->render('/history/restaurant', [
-            'restaurant' => $restaurant,
+        return $this->render('takeOrder', ['restaurant' => $restaurant,
             'imagesMenu' => $imagesMenu,
             'dataProvider' => $dataProvider,
         ]);
@@ -222,7 +221,7 @@ class OrderController extends Controller {
 
         /** @var Order[] $model */
         $model = OrderSearch::search($filters)->all();
-        
+
         foreach($model as $status){
             $status->price = $status->getPrice();
             $status->status = 1;
