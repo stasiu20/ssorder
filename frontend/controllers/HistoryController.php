@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\History;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -30,9 +31,7 @@ class HistoryController extends Controller
         $userId = \Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
             'query' => History::findByUser($userId),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+            'sort' => History::getDefaultSort(),
         ]);
 
         return $this->render('user', [
