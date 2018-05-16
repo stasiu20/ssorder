@@ -32,6 +32,7 @@ class HistoryController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => History::findByUser($userId),
             'sort' => History::getDefaultSort(),
+            'pagination' => new Pagination(),
         ]);
 
         return $this->render('user', [
