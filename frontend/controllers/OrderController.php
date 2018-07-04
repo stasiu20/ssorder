@@ -222,10 +222,11 @@ class OrderController extends Controller {
         /** @var Order[] $model */
         $model = OrderSearch::search($filters)->all();
 
-        foreach($model as $status){
-            $status->price = $status->getPrice();
-            $status->status = 1;
-            $status->save();
+        foreach($model as $order){
+            $order->price = $order->getPrice();
+            $order->status = Order::STATUS_REALIZED;
+            $order->realizedBy = Yii::$app->user->identity->id;
+            $order->save();
         }
 
         return $this->redirect("index");

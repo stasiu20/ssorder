@@ -26,4 +26,24 @@ class TaskController extends Controller
             }
         }
     }
+
+    public function actionSetRealizedBy($userId = 1)
+    {
+        /** @var Order[] $orders */
+        $orders = Order::findAll(['status' => Order::STATUS_REALIZED, 'realizedBy' => null]);
+        foreach ($orders as $order) {
+            if (!$order->menu) {
+                continue;
+            }
+            $order->realizedBy = $userId;
+            $result = $order->save();
+            if (!$result) {
+                throw new \RuntimeException(sprintf(
+                    'Cant save order #d with %s',
+                    $order->id,
+                    $order->realizedBy)
+                );
+            }
+        }
+    }
 }

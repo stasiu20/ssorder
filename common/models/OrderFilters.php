@@ -11,4 +11,5 @@ class OrderFilters extends Model
     public $dateFrom;
     public $dateTo;
     public $status;
+    public $realizedBy;
 }

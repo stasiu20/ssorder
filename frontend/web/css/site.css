@@ -434,3 +434,7 @@ a {
     color: #ff3971;
     font-weight: 800;
 }
+
+body table td.no-right-border {
+    border-right: 1px solid transparent;;
+}

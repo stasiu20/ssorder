@@ -29,6 +29,10 @@ class OrderSearch extends Order
             $query->andWhere(['<', 'data', $filters->dateTo]);
         }
 
+        if ($filters->realizedBy) {
+            $query->andWhere(['realizedBy' => $filters->realizedBy]);
+        }
+
         return $query;
     }
 }

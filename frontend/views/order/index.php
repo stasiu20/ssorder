@@ -53,6 +53,7 @@ $formatter = \Yii::$app->formatter;
         <th>Uwagi</th>
         <th>Kto Zamawia</th>
         <th>Status</th>
+        <th>Do rozliczenia</th>
         <th>Akcje</th>
     </thead>
 <tbody>
@@ -86,15 +87,19 @@ foreach ($model as $order):
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
             <td><?=$formatter->asCurrency($order->getPrice()) ?></td>
             <td>
-                <?=$formatter->asCurrency(\frontend\helpers\OrderCost::calculateOrderCost(
+                <?= $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
                     $order,
                     $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId])
+                    $mapIndex[$order->restaurantId]);
+                    $formatter->asCurrency($calculateOrderCost
                 ); ?>
             </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
+            <td class="<?= \common\helpers\OrderView::getSettlementCssClass($order); ?>">
+                <?= $formatter->asCurrency($order->paymentChange()); ?>
+            </td>
             <td>
                 <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
                 <?php if ($order->isRealized()): ?>

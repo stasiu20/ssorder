@@ -15,10 +15,13 @@ use frontend\models\Restaurants;
  * @property integer $status
  * @property integer $restaurantId
  * @property float $price
+ * @property float $pay_amount
  * @property string $data
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
  * @property \common\models\User $user
+ * @property integer $realizedBy
+ * @property \common\models\User $realizedByUser
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -42,7 +45,7 @@ class Order extends \yii\db\ActiveRecord
             [['foodId', 'userId','restaurantId', 'status'], 'integer'],
             [['data'], 'safe'],
             [['uwagi'],'string'],
-            [['price'],'number', 'min' => 0.01, 'max' => 999.99],
+            [['price', 'pay_amount'],'number', 'min' => 0.01, 'max' => 999.99],
             ['status', 'match', 'pattern' => '/[0-1]/'],
         ];
     }
@@ -58,15 +61,19 @@ class Order extends \yii\db\ActiveRecord
             'userId' => 'User ID',
             'data' => 'Data',
             'uwagi'=> 'Uwagi',
-            'status'=>'Status'
+            'status'=>'Status',
+            'pay_amount'=>'Wpłata',
         ];
     }
     
-    public function getUser(){
-        
+    public function getUser()
+    {
         return $this->hasOne(\common\models\User::className(),['id'=>'userId']);
-        
-        
+    }
+
+    public function getRealizedByUser()
+    {
+        return $this->hasOne(\common\models\User::className(),['id'=>'realizedBy']);
     }
     
     public function getMenu(){
@@ -136,5 +143,10 @@ class Order extends \yii\db\ActiveRecord
         }
 
         return $this->menu->foodPrice;
+    }
+
+    public function paymentChange()
+    {
+        return $this->price - $this->pay_amount;
     }
 }
