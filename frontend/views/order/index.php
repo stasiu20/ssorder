@@ -97,8 +97,12 @@ foreach ($model as $order):
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
-            <td class="<?= \common\helpers\OrderView::getSettlementCssClass($order); ?>">
-                <?= $formatter->asCurrency($order->paymentChange()); ?>
+            <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($calculateOrderCost) : ''; ?>">
+                <?php if ($order->isRealized()): ?>
+                    <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order, $calculateOrderCost); ?>">
+                        <?= $formatter->asCurrency($order->paymentChange($calculateOrderCost)); ?>
+                    </span>
+                <?php endif ?>
             </td>
             <td>
                 <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
@@ -121,6 +125,9 @@ foreach ($model as $order):
             </td>
             <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
             <td colspan="4" class="text-left"><?= $formatter->asCurrency($row->getCostWithDelivery()) ?></td>
+            <td colspan="2" class="text-left <?= \common\helpers\OrderView::getSettlementCssClass($row->change); ?>">
+                <span><?= $formatter->asCurrency($row->change) ?></span>
+            </td>
         </tr>
     <?php endforeach; ?>
 </tfoot>

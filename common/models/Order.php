@@ -145,8 +145,8 @@ class Order extends \yii\db\ActiveRecord
         return $this->menu->foodPrice;
     }
 
-    public function paymentChange()
+    public function paymentChange($totalCost)
     {
-        return $this->price - $this->pay_amount;
+        return $totalCost - $this->pay_amount;
     }
 }

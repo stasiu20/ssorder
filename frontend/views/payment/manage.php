@@ -4,6 +4,7 @@
 
 $this->title = 'Zarządzanie wpłatami';
 $form = \yii\bootstrap\ActiveForm::begin();
+$mapIndex = new ArrayObject();
 
 echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
@@ -51,17 +52,19 @@ echo \yii\grid\GridView::widget([
             'contentOptions' => ['class' => 'text-right'],
             'footerOptions' => ['class' => 'no-right-border']
         ],
-//            'foodPrice',
         [ 'attribute' => 'foodPrice',
             'label' => 'Cena Żarcia',
             'format' => 'raw',
-            'value' => function(\common\models\Order $data) use ($summary) {
+            'value' => function(\common\models\Order $order) use (&$mapIndex, $summary) {
+                if (!isset($mapIndex[$order->restaurantId])) { $mapIndex[$order->restaurantId] = -1; }
+                $mapIndex[$order->restaurantId] += 1;
+                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
+                    $order,
+                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
+                    $mapIndex[$order->restaurantId]);
+
                 $formatter = \Yii::$app->formatter;
-                return $formatter->asCurrency(\frontend\helpers\OrderCost::calculateOrderCost(
-                    $data,
-                    $summary->getDataForRestaurant($data->restaurantId)->numOfOrders,
-                    9999) //todo mmo zmienic
-                );
+                return $formatter->asCurrency($calculateOrderCost);
             },
             'contentOptions' => ['class' => 'text-right'],
             'footerOptions' => ['class' => 'no-right-border']
@@ -74,17 +77,25 @@ echo \yii\grid\GridView::widget([
             'name' => function(\common\models\Order $order) {
                 return sprintf('price[%d]', $order->id);
             },
-            'footer' => \yii\bootstrap\Html::submitButton('Zapisz'),
+            'footer' => \yii\bootstrap\Html::submitButton('Zapisz', ['class' => 'btn btn-success']),
             'footerOptions' => ['class' => 'text-right']
         ],
         [
             'label' => 'Różnica',
-            'contentOptions' => function(\common\models\Order $order) {
-                return ['class' => \common\helpers\OrderView::getSettlementCssClass($order)];
+            'contentOptions' => function(\common\models\Order $order) use($mapIndex, $summary) {
+                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
+                    $order,
+                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
+                    $mapIndex[$order->restaurantId]);
+                return ['class' => \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($calculateOrderCost))];
             },
-            'value' => function(\common\models\Order $order) {
+            'value' => function(\common\models\Order $order) use ($mapIndex, $summary) {
+                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
+                    $order,
+                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
+                    $mapIndex[$order->restaurantId]);
                 $formatter = \Yii::$app->formatter;
-                return $formatter->asCurrency($order->paymentChange());
+                return $formatter->asCurrency($order->paymentChange($calculateOrderCost));
             },
         ],
     ],
