@@ -7,6 +7,7 @@ use common\models\OrderFilters;
 use common\models\OrderSearch;
 use frontend\services\OrderSummaryStatics;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -47,14 +48,14 @@ class PaymentController extends Controller
             $data = \Yii::$app->request->post('price', []);
             \common\models\Payment::updatePayAmountFromPostData($orders, $data);
             foreach ($orders as $order) {
-                if ($order->validate(['pay_amount'])) {
+                if (strlen($order->pay_amount) > 0 && $order->validate(['pay_amount'])) {
                     $order->save(false, ['pay_amount']);
                 }
             }
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $dp,
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $orders,
             'pagination' => [
                 'defaultPageSize' => 100,
             ],
