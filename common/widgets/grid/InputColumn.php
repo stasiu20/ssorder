@@ -71,8 +71,11 @@ class InputColumn extends Column
     {
         $options['value'] = $this->getDataCellValue($model, $key, $index);
         $options['name'] = call_user_func($this->name, $model, $key, $index, $this);
+        $options['id'] = Html::getInputId($model, $options['name']);
 
-        return $this->form->field($model, $this->attribute)->label(false)->textInput($options);
+        return $this->form->field($model, $this->attribute)
+            ->label(false)
+            ->textInput($options);
     }
 
     /**
