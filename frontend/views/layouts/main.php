@@ -48,6 +48,7 @@ AppAsset::register($this);
     } else {
         $menuItems[] = ['label' => 'Dodaj Restaurację', 'url' => ['/site/upload']];
         $menuItems[] = ['label' => 'Zamówienia', 'url' => ['/order/index']];
+        $menuItems[] = ['label' => 'Rozliczenie', 'url' => ['/payment/manage']];
         $menuItems[] = ['label' => 'Historia', 'url' => ['/history/my']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

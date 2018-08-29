@@ -3,6 +3,10 @@
 namespace frontend\controllers;
 
 use common\models\History;
+use common\models\OrderFilters;
+use common\models\OrderSearch;
+use frontend\models\Imagesmenu;
+use frontend\models\Restaurants;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -17,7 +21,7 @@ class HistoryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['my'],
+                        'actions' => ['my', 'restaurant'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -36,6 +40,27 @@ class HistoryController extends Controller
         ]);
 
         return $this->render('user', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionRestaurant($id)
+    {
+        $restaurant = Restaurants::findOne($id);
+        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
+        $filters = new OrderFilters();
+        $filters->restaurantId = $id;
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => OrderSearch::search($filters),
+            'sort' => History::getDefaultSort(),
+            'pagination' => new Pagination()
+        ]);
+
+
+        return $this->render('restaurant', [
+            'restaurant' => $restaurant,
+            'imagesMenu' => $imagesMenu,
             'dataProvider' => $dataProvider,
         ]);
     }

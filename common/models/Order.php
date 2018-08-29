@@ -15,10 +15,14 @@ use frontend\models\Restaurants;
  * @property integer $status
  * @property integer $restaurantId
  * @property float $price
+ * @property float $pay_amount
+ * @property float $total_price
  * @property string $data
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
  * @property \common\models\User $user
+ * @property integer $realizedBy
+ * @property \common\models\User $realizedByUser
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -42,7 +46,7 @@ class Order extends \yii\db\ActiveRecord
             [['foodId', 'userId','restaurantId', 'status'], 'integer'],
             [['data'], 'safe'],
             [['uwagi'],'string'],
-            [['price'],'number', 'min' => 0.01, 'max' => 999.99],
+            [['price', 'pay_amount', 'total_price'],'number', 'min' => 0.01, 'max' => 999.99],
             ['status', 'match', 'pattern' => '/[0-1]/'],
         ];
     }
@@ -58,21 +62,26 @@ class Order extends \yii\db\ActiveRecord
             'userId' => 'User ID',
             'data' => 'Data',
             'uwagi'=> 'Uwagi',
-            'status'=>'Status'
+            'status'=>'Status',
+            'pay_amount'=>'Wpłata',
+            'total_price'=>'Do zapłaty',
         ];
     }
-    
-    public function getUser(){
-        
+
+    public function getUser()
+    {
         return $this->hasOne(\common\models\User::className(),['id'=>'userId']);
-        
-        
     }
-    
+
+    public function getRealizedByUser()
+    {
+        return $this->hasOne(\common\models\User::className(),['id'=>'realizedBy']);
+    }
+
     public function getMenu(){
-        
+
         return $this->hasOne(Menu::className(),['id'=>'foodId']);
-        
+
     }
 
     public function getRestaurantName()
@@ -92,9 +101,9 @@ class Order extends \yii\db\ActiveRecord
 
         return $this->menu->foodName;
     }
-    
+
      public function getRestaurants(){
-    
+
         return $this->hasOne(Restaurants::className(),['id'=>'restaurantId']);
      }
 
@@ -136,5 +145,10 @@ class Order extends \yii\db\ActiveRecord
         }
 
         return $this->menu->foodPrice;
+    }
+
+    public function paymentChange($totalCost)
+    {
+        return $totalCost - $this->pay_amount;
     }
 }

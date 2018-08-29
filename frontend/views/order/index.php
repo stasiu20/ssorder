@@ -53,6 +53,7 @@ $formatter = \Yii::$app->formatter;
         <th>Uwagi</th>
         <th>Kto Zamawia</th>
         <th>Status</th>
+        <th>Do rozliczenia</th>
         <th>Akcje</th>
     </thead>
 <tbody>
@@ -68,13 +69,13 @@ foreach ($model as $order):
                                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
                                 'method' => 'post',
                                 'params'=>['id'=>$order->id]
-                            
+
                         ],]) : '');
     $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
                             'data' => [
                                 'method' => 'post',
                                 'params'=>['name'=>Yii::$app->user->identity->username, 'id'=>$order->id],
-                                
+
                                 ]]) : '');
     $takeRestaurantId = $order->menu->restaurants[0]['id'];
     $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
@@ -86,15 +87,18 @@ foreach ($model as $order):
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
             <td><?=$formatter->asCurrency($order->getPrice()) ?></td>
             <td>
-                <?=$formatter->asCurrency(\frontend\helpers\OrderCost::calculateOrderCost(
-                    $order,
-                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId])
-                ); ?>
+                <?= $formatter->asCurrency($order->total_price); ?>
             </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
+            <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
+                <?php if ($order->isRealized()): ?>
+                    <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order); ?>">
+                        <?= $formatter->asCurrency(abs($order->paymentChange($order->total_price))); ?>
+                    </span>
+                <?php endif ?>
+            </td>
             <td>
                 <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
                 <?php if ($order->isRealized()): ?>
@@ -116,6 +120,9 @@ foreach ($model as $order):
             </td>
             <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
             <td colspan="4" class="text-left"><?= $formatter->asCurrency($row->getCostWithDelivery()) ?></td>
+            <td colspan="2" class="text-left <?= \common\helpers\OrderView::getSettlementCssClass($row->change); ?>">
+                <span><?= $formatter->asCurrency($row->change) ?></span>
+            </td>
         </tr>
     <?php endforeach; ?>
 </tfoot>

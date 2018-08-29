@@ -4,6 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 
+/**
+ * Class OrderSummaryRow
+ * @package frontend\models
+ *
+ * @property-read float $change
+ */
 class OrderSummaryRow extends Model
 {
     /** @var Restaurants */
@@ -19,6 +25,8 @@ class OrderSummaryRow extends Model
     private $cost = 0.0;
 
     public $deliveryCost = 0.0;
+
+    public $pay_amount = 0.0;
 
     /**
      * @return float
@@ -40,5 +48,14 @@ class OrderSummaryRow extends Model
             return $this->cost + $this->deliveryCost;
         }
         return 0.0;
+    }
+
+    public function getChange()
+    {
+        if ($this->numOfOrders > 0) {
+            return $this->getCostWithDelivery() - $this->pay_amount;
+        }
+
+        return null;
     }
 }
