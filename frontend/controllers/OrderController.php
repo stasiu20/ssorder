@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\History;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
+use frontend\helpers\OrderCost;
 use frontend\services\OrderSummaryStatics;
 use Yii;
 use yii\base\InvalidParamException;
@@ -100,8 +101,6 @@ class OrderController extends Controller {
     public function actionUwagi($id) {
 
         $model = $this->findModel($id);
-
-
         $order = new Order();
 
         if (Yii::$app->request->post()) {
@@ -114,8 +113,6 @@ class OrderController extends Controller {
             $order->status = 0;
             if ($order->save()) {
                 return $this->redirect(['index']);
-
-
             }
         }
         return $this->render('uwagi', [
@@ -162,12 +159,10 @@ class OrderController extends Controller {
         $order = Order::findOne($id);
         $model = Menu::findOne($order->foodId);
 
-
      return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
         ]);
-
     }
     else if (Yii::$app->request->post('Order')) {
             $id= Yii::$app->request->post('Order')['orderId'];
@@ -179,21 +174,15 @@ class OrderController extends Controller {
             //$order->save();
             if ($order->save()) {
                 return $this->redirect(['index']);
-
-
             }
         }
         else{
-
         return $this->redirect(['index']);
     }
-
-
     }
 
     public function actionRestaurant($id) {
         $date = date('Y-m-d');
-        $resturant = new Restaurants;
         $restaurant = Restaurants::findOne($id);
         $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
         $filters = new OrderFilters();
@@ -204,7 +193,6 @@ class OrderController extends Controller {
             'sort' => History::getDefaultSort(),
             'pagination' => new Pagination()
         ]);
-
 
         return $this->render('takeOrder', ['restaurant' => $restaurant,
             'imagesMenu' => $imagesMenu,
@@ -219,13 +207,17 @@ class OrderController extends Controller {
         $filters->restaurantId = $id;
         $filters->dateFrom = $date;
 
-        /** @var Order[] $model */
-        $model = OrderSearch::search($filters)->all();
-
-        foreach($model as $order){
+        /** @var Order[] $orders */
+        $orders = OrderSearch::search($filters)->all();
+        $count = count($orders);
+        for($i = 0; $i < $count; $i++){
+            $order = $orders[$i];
             $order->price = $order->getPrice();
             $order->status = Order::STATUS_REALIZED;
-            $order->realizedBy = Yii::$app->user->identity->id;
+            if (null === $order->realizedBy) {
+                $order->realizedBy = Yii::$app->user->identity->id;
+            }
+            $order->total_price = OrderCost::calculateOrderCost($order, $count, $i);
             $order->save();
         }
 

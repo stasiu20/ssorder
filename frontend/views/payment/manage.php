@@ -4,7 +4,6 @@
 
 $this->title = 'Zarządzanie wpłatami';
 $form = \yii\bootstrap\ActiveForm::begin();
-$mapIndex = new ArrayObject();
 
 echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
@@ -52,19 +51,13 @@ echo \yii\grid\GridView::widget([
             'contentOptions' => ['class' => 'text-right'],
             'footerOptions' => ['class' => 'no-right-border']
         ],
-        [ 'attribute' => 'foodPrice',
-            'label' => 'Cena Żarcia',
+        [
+            'attribute' => 'total_price',
+            'label' => 'Do zapłaty',
             'format' => 'raw',
-            'value' => function(\common\models\Order $order) use (&$mapIndex, $summary) {
-                if (!isset($mapIndex[$order->restaurantId])) { $mapIndex[$order->restaurantId] = -1; }
-                $mapIndex[$order->restaurantId] += 1;
-                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
-                    $order,
-                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId]);
-
+            'value' => function(\common\models\Order $order) {
                 $formatter = \Yii::$app->formatter;
-                return $formatter->asCurrency($calculateOrderCost);
+                return $formatter->asCurrency($order->total_price);
             },
             'contentOptions' => ['class' => 'text-right'],
             'footerOptions' => ['class' => 'no-right-border']
@@ -82,20 +75,12 @@ echo \yii\grid\GridView::widget([
         ],
         [
             'label' => 'Różnica',
-            'contentOptions' => function(\common\models\Order $order) use($mapIndex, $summary) {
-                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
-                    $order,
-                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId]);
-                return ['class' => \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($calculateOrderCost))];
+            'contentOptions' => function(\common\models\Order $order) {
+                return ['class' => \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price))];
             },
-            'value' => function(\common\models\Order $order) use ($mapIndex, $summary) {
-                $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
-                    $order,
-                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId]);
+            'value' => function(\common\models\Order $order) {
                 $formatter = \Yii::$app->formatter;
-                return $formatter->asCurrency($order->paymentChange($calculateOrderCost));
+                return $formatter->asCurrency(abs($order->paymentChange($order->total_price)));
             },
         ],
     ],

@@ -12,16 +12,28 @@ class OrderView
         return $amount > 0 ? 'text-danger' : 'text-success';
     }
 
-    public static function getOrderChangeTitle(Order $order, $totalCost, Formatter $formatter = null)
+    public static function getOrderChangeTitle(Order $order, Formatter $formatter = null)
     {
         if (null === $formatter) {
             $formatter = \Yii::$app->formatter;
         }
 
-        return sprintf(
-            'Zostało %s z %s',
-            $formatter->asCurrency($order->paymentChange($totalCost)),
-            $formatter->asCurrency($totalCost)
-        );
+        $change = $order->paymentChange($order->total_price);
+        if ($change > 0) {
+            return sprintf(
+                'Do zapłaty %s z %s',
+                $formatter->asCurrency($change),
+                $formatter->asCurrency($order->total_price)
+            );
+        } elseif ($change < 0) {
+            return sprintf(
+                'Nadpłata %s',
+                $formatter->asCurrency(abs($change))
+            );
+        } else {
+            return sprintf(
+                'Rozliczone'
+            );
+        }
     }
 }

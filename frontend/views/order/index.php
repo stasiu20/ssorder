@@ -69,13 +69,13 @@ foreach ($model as $order):
                                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
                                 'method' => 'post',
                                 'params'=>['id'=>$order->id]
-                            
+
                         ],]) : '');
     $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
                             'data' => [
                                 'method' => 'post',
                                 'params'=>['name'=>Yii::$app->user->identity->username, 'id'=>$order->id],
-                                
+
                                 ]]) : '');
     $takeRestaurantId = $order->menu->restaurants[0]['id'];
     $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
@@ -87,20 +87,15 @@ foreach ($model as $order):
             <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
             <td><?=$formatter->asCurrency($order->getPrice()) ?></td>
             <td>
-                <?= $calculateOrderCost = \frontend\helpers\OrderCost::calculateOrderCost(
-                    $order,
-                    $summary->getDataForRestaurant($order->restaurantId)->numOfOrders,
-                    $mapIndex[$order->restaurantId]);
-                    $formatter->asCurrency($calculateOrderCost
-                ); ?>
+                <?= $formatter->asCurrency($order->total_price); ?>
             </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
-            <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($calculateOrderCost) : ''; ?>">
+            <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
                 <?php if ($order->isRealized()): ?>
-                    <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order, $calculateOrderCost); ?>">
-                        <?= $formatter->asCurrency($order->paymentChange($calculateOrderCost)); ?>
+                    <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order); ?>">
+                        <?= $formatter->asCurrency(abs($order->paymentChange($order->total_price))); ?>
                     </span>
                 <?php endif ?>
             </td>
