@@ -14,10 +14,10 @@ class OrderSearch extends Order
         }
 
         if ($filters->restaurantId) {
-            $query->andWhere(['restaurantId' => $filters->restaurantId]);
+            $query->andWhere(['order.restaurantId' => $filters->restaurantId]);
         }
 
-        if ($filters->status) {
+        if (null !== $filters->status) {
             $query->andWhere(['order.status' => $filters->status]);
         }
 

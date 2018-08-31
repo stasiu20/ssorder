@@ -11,13 +11,13 @@ $formatter = \Yii::$app->formatter;
 ?>
 
 <div style="float: left">
-    <div class ="img-restaurant"><img class ="img-circle" src="/image/<?= $restaurant->img_url ?>"></div>   
+    <div class ="img-restaurant"><img class ="img-circle" src="/image/<?= $restaurant->img_url ?>"></div>
 </div>
 <div class="info" style="float:left">
     <h6><b>Info</b></h6>
     <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
         cena za dowóz: <?= Html::encode("{$formatter->asCurrency($restaurant->delivery_price)}"); ?><br/>
-        cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?> 
+        cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?>
     </p>
 </div>
 
@@ -28,8 +28,8 @@ $formatter = \Yii::$app->formatter;
 
             <div class="img">
                 <a href="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>" data-lightbox="<?= $imageMenu->imagesMenu_url; ?>"  data-title="My caption">
-                    <img class="menuImage" src="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>"/>   
-                </a>      
+                    <img class="menuImage" src="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>"/>
+                </a>
             </div>
         </div>
     <?php endforeach; ?>
@@ -121,7 +121,7 @@ GridView::widget([
             'buttons' => [
                 'zrealizuj' => function($url, $restaurant) {
                     if ($restaurant->status === 0) {
-                        //TO DOO action w kontrolerze do zmiany statusu 
+                        //TO DOO action w kontrolerze do zmiany statusu
                         return Html::a('Zrealizuj', ["restaurant"], ['class' => 'btn btn-primary'], ['title' => 'zamów',
                         ]);
                     }

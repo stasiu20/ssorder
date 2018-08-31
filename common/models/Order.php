@@ -27,6 +27,7 @@ use frontend\models\Restaurants;
 class Order extends \yii\db\ActiveRecord
 {
     const STATUS_REALIZED = 1;
+    const STATUS_NOT_REALIZED = 0;
 
     /**
      * @inheritdoc

@@ -182,11 +182,16 @@ class OrderController extends Controller {
     }
 
     public function actionRestaurant($id) {
-        $date = date('Y-m-d');
+        $date = \DateTimeImmutable::createFromFormat('Y-m-d', date('Y-m-d'));
+        $tomorrow = $date->add(new \DateInterval('P1D'));
+
         $restaurant = Restaurants::findOne($id);
         $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
         $filters = new OrderFilters();
         $filters->restaurantId = $id;
+        $filters->dateFrom = $date->format('Y-m-d');
+        $filters->dateTo = $tomorrow->format('Y-m-d');
+        $filters->status = Order::STATUS_NOT_REALIZED;
 
         $dataProvider = new ActiveDataProvider([
             'query' => OrderSearch::search($filters),
