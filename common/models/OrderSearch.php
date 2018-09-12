@@ -9,6 +9,8 @@ class OrderSearch extends Order
         $query =  Order::find();
         $userTableName = self::getDb()->getSchema()->getRawTableName(User::tableName());
         $query->joinWith($userTableName);
+        $query->joinWith('menu');
+
         if ($filters->userId) {
             $query->andWhere(['userId' => $filters->userId]);
         }
@@ -31,6 +33,10 @@ class OrderSearch extends Order
 
         if ($filters->realizedBy) {
             $query->andWhere(['realizedBy' => $filters->realizedBy]);
+        }
+
+        if ($filters->foodName) {
+            $query->andFilterWhere(['like', 'menu.foodName', $filters->foodName]);
         }
 
         return $query;

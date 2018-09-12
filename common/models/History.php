@@ -18,7 +18,11 @@ class History
     {
         $orderBy = new Sort([
             'attributes' => [
-                'data',
+                'date' => [
+                    'asc' => ['data' => SORT_ASC],
+                    'desc' => ['data' => SORT_DESC],
+                    'default' => SORT_DESC,
+                ],
                 'price' => [
                     'asc' => ['price' => SORT_ASC, 'data' => SORT_DESC],
                     'desc' => ['price' => SORT_DESC, 'data' => SORT_DESC],
@@ -28,7 +32,7 @@ class History
                 'user.username'
             ],
             'defaultOrder' => [
-                'data' => SORT_DESC,
+                'date' => SORT_DESC,
                 'price' => SORT_ASC,
             ]
         ]);

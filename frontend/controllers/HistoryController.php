@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\History;
+use common\models\Order;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
 use frontend\models\Imagesmenu;
@@ -33,14 +34,21 @@ class HistoryController extends Controller
     public function actionMy()
     {
         $userId = \Yii::$app->user->identity->id;
+        $filters = new OrderFilters();
+        $filters->load(\Yii::$app->getRequest()->queryParams);
+        $filters->status = Order::STATUS_REALIZED;
+        $filters->userId = $userId;
+        $filters->validate();
+
         $dataProvider = new ActiveDataProvider([
-            'query' => History::findByUser($userId),
+            'query' => OrderSearch::search($filters),
             'sort' => History::getDefaultSort(),
             'pagination' => new Pagination(),
         ]);
 
         return $this->render('user', [
             'dataProvider' => $dataProvider,
+            'searchModel' =>$filters
         ]);
     }
 

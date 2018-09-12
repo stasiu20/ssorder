@@ -23,7 +23,8 @@
 		"2amigos/yii2-gallery-widget": "~1.0",
 		"2amigos/yii2-disqus-widget" : "~1.0",
 		"kartik-v/yii2-widget-fileinput": "@dev",
-		"borales/yii2-phone-input": "*"
+		"borales/yii2-phone-input": "*",
+        "kartik-v/yii2-date-range": "^1.6"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

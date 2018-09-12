@@ -59,13 +59,18 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'foodId' => 'Food ID',
-            'userId' => 'User ID',
+            'foodId' => 'Żarcie',
+            'userId' => 'Użytkownik',
             'data' => 'Data',
             'uwagi'=> 'Uwagi',
             'status'=>'Status',
             'pay_amount'=>'Wpłata',
             'total_price'=>'Do zapłaty',
+            //todo mmo: move to search model
+            'restaurantId' => 'Restauracja',
+            'foodName' => 'Nazwa żarcia',
+            'date' => 'Data zamówienia',
+            'price' => 'Cena',
         ];
     }
 

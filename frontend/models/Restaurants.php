@@ -7,6 +7,7 @@ use \yii\db\ActiveRecord;
 use borales\extensions\phoneInput\PhoneInputValidator;
 use borales\extensions\phoneInput\PhoneInputBehavior;
 use common\models\Order;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "restaurants".
@@ -20,9 +21,9 @@ use common\models\Order;
  */
 class Restaurants extends ActiveRecord {
     public $phone;
-   
+
     public $imageFile;
-    
+
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_UPLOAD = 'upload';
 
@@ -31,6 +32,12 @@ class Restaurants extends ActiveRecord {
      */
     public static function tableName() {
         return 'restaurants';
+    }
+
+    public static function restaurantsAsArray()
+    {
+        $restaurants = self::find()->all();
+        return ArrayHelper::map($restaurants, 'id', 'restaurantName');
     }
 
     /**
@@ -51,7 +58,7 @@ class Restaurants extends ActiveRecord {
             //[['tel_number'], PhoneInputValidator::className(), 'region' => ['PL']],
         ];
     }
-   
+
 
     public function scenarios() {
 
@@ -64,18 +71,18 @@ class Restaurants extends ActiveRecord {
                                  [['tel_number'], PhoneInputValidator::className(),'region' => ['PL']],
                 ];
     }
-    
+
     public function behaviors()
     {
 
-      
+
         return [
             'phoneInput' => PhoneInputBehavior::className(),
         ];
     }
 
     public function upload() {
-        
+
         $this->img_url = $this->imageFile->baseName . '.' . $this->imageFile->extension;
         if ($this->validate()) {
             $this->imageFile->saveAs('image/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
@@ -112,8 +119,8 @@ class Restaurants extends ActiveRecord {
     public function getImagesmenu() {
         return $this->hasMany(Imagesmenu::className(), ['restaurantId' => 'id']);
     }
-    
-    
+
+
      public function getOrder() {
         return $this->hasMany(Order::className(), ['restaurantId' => 'id']);
     }
