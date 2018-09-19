@@ -21,7 +21,13 @@ return [
 //                'encryption' => 'tls',
             ],
         ],
+        'rocketChat' => [
+            'class' => \common\component\RocketChat::className(),
+            'endpoint' => 'TO_OVERWRITE',
+            'token' => 'TO_OVERWRITE',
+        ],
+        'order' => [
+            'class' => \common\component\Order::className(),
+        ],
     ],
-    
-    
 ];

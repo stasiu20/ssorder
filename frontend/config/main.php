@@ -10,7 +10,10 @@ return [
     'id' => 'app-frontend',
     'language' => 'pl-PL',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', function() {
+        $mediator = new \common\component\RocketChatOrderMediator();
+        $mediator->mediate();
+    }],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
@@ -37,7 +40,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -47,7 +50,7 @@ return [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
-        
+
     ],
     'params' => $params,
 ];

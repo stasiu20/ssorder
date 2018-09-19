@@ -24,7 +24,8 @@
 		"2amigos/yii2-disqus-widget" : "~1.0",
 		"kartik-v/yii2-widget-fileinput": "@dev",
 		"borales/yii2-phone-input": "*",
-        "kartik-v/yii2-date-range": "^1.6"
+        "kartik-v/yii2-date-range": "^1.6",
+        "bt/rocketchat-php": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

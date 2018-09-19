@@ -2,6 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\component\RocketChat;
+use common\events\BeforeRealizedOrdersEvent;
+use common\events\NewOrderEvent;
+use common\events\Orders;
+use common\events\RealizedOrdersEvent;
 use common\models\History;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
@@ -112,6 +117,12 @@ class OrderController extends Controller {
             $order->restaurantId = $model->restaurantId;
             $order->status = 0;
             if ($order->save()) {
+                /** @var \common\component\Order $orderComponent */
+                $orderComponent = \Yii::$app->order;
+                $orderComponent->trigger(
+                    NewOrderEvent::EVENT_NEW_ORDER,
+                    NewOrderEvent::factoryFromOrder($order)
+                );
                 return $this->redirect(['index']);
             }
         }
@@ -199,6 +210,16 @@ class OrderController extends Controller {
             'pagination' => new Pagination()
         ]);
 
+        /** @var \common\component\Order $orderComponent */
+        $orderComponent = \Yii::$app->order;
+        $orderComponent->trigger(
+            BeforeRealizedOrdersEvent::EVENT_BEFORE_REALIZED_ORDERS,
+            BeforeRealizedOrdersEvent::factory(
+                $dataProvider->getModels(),
+                Yii::$app->user->identity
+            )
+        );
+
         return $this->render('takeOrder', ['restaurant' => $restaurant,
             'imagesMenu' => $imagesMenu,
             'dataProvider' => $dataProvider,
@@ -226,7 +247,13 @@ class OrderController extends Controller {
             $order->save();
         }
 
+        /** @var \common\component\Order $orderComponent */
+        $orderComponent = \Yii::$app->order;
+        $orderComponent->trigger(
+            RealizedOrdersEvent::EVENT_REALIZED_ORDERS,
+            RealizedOrdersEvent::factoryFromArrayOrders($orders)
+        );
+
         return $this->redirect("index");
     }
-
 }
