@@ -52,7 +52,7 @@ class SiteController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
                 ],
             ],
         ];
@@ -246,8 +246,8 @@ class SiteController extends Controller {
         $model = new Restaurants();
         $model->scenario = 'upload';
         $model->load(\Yii::$app->request->post());
-        
-        
+
+
 //        var_dump($model);die;
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
@@ -255,7 +255,7 @@ class SiteController extends Controller {
             if ($model->upload()) {
                 $model->imageFile = null;
                 // file is uploaded successfully
-             
+
                 $model->save(false);
                 return $this->redirect(['index']);
                 //return $this->render('uploadOk', ['model' => $model,]);
@@ -290,8 +290,8 @@ class SiteController extends Controller {
                 'pageSize' => 20,
             ],
         ]);
-    
-       
+
+
         return $this->render('restaurant', ['restaurant' => $restaurant,
                     'menu' => $menu,
                     'dataProvider' => $dataProvider,

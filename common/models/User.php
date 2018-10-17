@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -20,12 +21,16 @@ use common\models\Order;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $rocketchat_username
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    /** @var string|null */
+    public $new_password;
 
 
     /**
@@ -52,8 +57,18 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['rocketchat_username', 'email', 'new_password'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['email', 'email'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['new_password', 'string', 'length' => [4, 20]],
+            ['new_password', 'filter', 'filter' => function($value) {
+                if (!empty($value)) {
+                    $this->setPassword($value);
+                    $this->generateAuthKey();
+                }
+                return '';
+            }],
         ];
     }
 
@@ -114,7 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -187,15 +202,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-    
-    public function getOrder(){
-        
-        
-        return $this->hasMany(Order::className(), ['user_id'=>'id']);
-        
-        
+
+    public function getOrder()
+    {
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
     }
-    
-    
+
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+        $labels['new_password'] = Yii::t('app', 'Nowe hasło');
+        return $labels;
+    }
 }
 

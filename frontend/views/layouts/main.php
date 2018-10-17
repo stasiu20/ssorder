@@ -50,15 +50,16 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Zamówienia', 'url' => ['/order/index']];
         $menuItems[] = ['label' => 'Rozliczenie', 'url' => ['/payment/manage']];
         $menuItems[] = ['label' => 'Historia', 'url' => ['/history/my']];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-        
+        $menuItems[] = [
+            'label' => 'TY',
+            'items' => [
+                ['label' => 'Profil', 'url' => ['/profile']],
+                [
+                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                    'url' => ['/site/logout'],
+                ]
+            ]
+        ];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
