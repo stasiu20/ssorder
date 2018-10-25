@@ -1,0 +1,91 @@
+version: '3.4'
+services:
+    ssorder:
+        build: frontend
+        volumes:
+            - ./:/app
+        depends_on:
+            - mysql
+        links:
+            - mysql
+            - rocketchat:rocketchat.lvh.me
+            - mailhog
+        labels:
+            traefik.backend: "ssorder"
+            traefik.frontend.rule: "Host:ssorder.lvh.me"
+        environment:
+            XDEBUG_CONFIG: "remote_host=192.168.0.105"
+#            XDEBUG_CONFIG: "remote_host=${DEV_REMOTE_HOST} remote_port=${DEV_REMOTE_PORT} var_display_max_data=1024 var_display_max_depth=5"
+#PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME}"
+    mysql:
+        image: mysql:5.6
+        restart: always
+        volumes:
+            - .runtime/mysqldata:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: ssorder
+            MYSQL_USER: ssorder
+            MYSQL_PASSWORD: ssorderpassword
+        ports:
+            - "3307:3306"
+    mailhog:
+        image: mailhog/mailhog
+        labels:
+            traefik.port: "8025"
+            traefik.frontend.rule: "Host:mailhog.lvh.me"
+    rocketchat:
+        image: rocketchat/rocket.chat:0.70.2 # upgrade to 0.70.4
+        restart: unless-stopped
+        volumes:
+            - .runtime/uploads:/app/uploads
+        environment:
+            - PORT=3000
+            - ROOT_URL=${ROCKETCHAT_URL:-http://localhost:3000}
+            - MONGO_URL=mongodb://mongo:27017/rocketchat
+            - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+            - MAIL_URL=smtp://mailhog:1025
+    #       - HTTP_PROXY=http://proxy.domain.com
+    #       - HTTPS_PROXY=http://proxy.domain.com
+        depends_on:
+            - mongo
+        #ports:
+            #- 3001:80
+        labels:
+            traefik.backend: "rocketchat"
+            traefik.frontend.rule: "Host:rocketchat.lvh.me"
+            traefik.port: "3000"
+        links:
+            - mailhog
+        external_links:
+          - ssorder:ssorder.lvh.me
+
+    mongo:
+        image: mongo:3.2
+        restart: unless-stopped
+        volumes:
+            - .runtime/data/db:/data/db
+            #- ./data/dump:/dump
+        command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+        labels:
+            traefik.enable: "false"
+
+    # this container's job is just run the command to initialize the replica set.
+    # it will run the command and remove himself (it will not stay running)
+    mongo-init-replica:
+        image: mongo:3.2
+        depends_on:
+            - mongo
+        command: 'mongo mongo/rocketchat --eval "rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})"'
+        labels:
+            traefik.enable: "false"
+    traefik:
+        image: traefik:1.5
+        command: --web --docker --logLevel=DEBUG
+        ports:
+          - "80:80"
+          - "8080:8080"
+          - "4443:443"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /dev/null:/etc/traefik/traefik.toml
