@@ -18,6 +18,7 @@ use frontend\models\Restaurants;
  * @property float $pay_amount
  * @property float $total_price
  * @property string $data
+ * @property string $uwagi
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
  * @property \common\models\User $user

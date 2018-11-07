@@ -42,6 +42,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param $userName
+     * @return User|null
+     */
+    public static function getByRocketChatUserName($userName)
+    {
+        return self::findOne(['rocketchat_username' => $userName]);
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
