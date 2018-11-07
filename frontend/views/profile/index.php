@@ -6,7 +6,7 @@
     <?php $form = \yii\bootstrap\ActiveForm::begin(); ?>
     <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($user, 'rocketchat_username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($user, 'rocketchat_id')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($user, 'new_password')->passwordInput(['maxlength' => true, 'autocomplete' => 'new-password']) ?>
 

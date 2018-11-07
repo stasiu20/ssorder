@@ -18,7 +18,7 @@ class LastOrderCommand extends Object implements Command
 
     public function execute(Request $request)
     {
-        $user = User::getByRocketChatUserName($request->user_name);
+        $user = User::getByRocketChatUserId($request->user_id);
         if (null === $user) {
             return 'Brak integracji z ssorder :/';
         }

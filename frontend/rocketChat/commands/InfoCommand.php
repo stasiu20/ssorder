@@ -20,7 +20,7 @@ Wiadomość od $request->user_name, id rocketchat ($request->user_id)
 EOS;
         $text .= "\n";
 
-        $user = User::getByRocketChatUserName($request->user_name);
+        $user = User::getByRocketChatUserId($request->user_id);
         if (null === $user) {
             $text .= 'Nie masz integracji między ssorder a rocketchat :/';
         } else {

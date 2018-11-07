@@ -21,7 +21,7 @@ use common\models\Order;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $rocketchat_username
+ * @property string $rocketchat_id
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -45,9 +45,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param $userName
      * @return User|null
      */
-    public static function getByRocketChatUserName($userName)
+    public static function getByRocketChatUserId($userName)
     {
-        return self::findOne(['rocketchat_username' => $userName]);
+        return self::findOne(['rocketchat_id' => $userName]);
     }
 
     /**
@@ -66,7 +66,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['rocketchat_username', 'email', 'new_password'], 'safe'],
+            [['rocketchat_id', 'email', 'new_password'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['email', 'email'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
