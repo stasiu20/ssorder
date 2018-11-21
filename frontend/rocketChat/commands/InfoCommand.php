@@ -15,18 +15,10 @@ class InfoCommand extends Object implements Command
 
     public function execute(Request $request)
     {
-        $text = <<<EOS
-Wiadomość od $request->user_name, id rocketchat ($request->user_id)
-EOS;
-        $text .= "\n";
-
         $user = User::getByRocketChatUserId($request->user_id);
-        if (null === $user) {
-            $text .= 'Nie masz integracji między ssorder a rocketchat :/';
-        } else {
-            $text .= 'Twój login w ssorder to ' . $user->username;
-        }
-
-        return $text;
+        return \Yii::$app->view->render('/rocket-chat/commands/info', [
+            'request' => $request,
+            'user' => $user
+        ]);
     }
 }
