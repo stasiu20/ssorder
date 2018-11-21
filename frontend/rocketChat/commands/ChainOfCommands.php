@@ -12,6 +12,7 @@ class ChainOfCommands
             OrderCommand::className(),
             LastOrderCommand::className(),
             HistoryCommand::className(),
+            ReorderCommand::className(),
         ];
     }
 

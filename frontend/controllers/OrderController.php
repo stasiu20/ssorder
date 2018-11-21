@@ -116,13 +116,10 @@ class OrderController extends Controller {
             $order->foodId = $model->id;
             $order->restaurantId = $model->restaurantId;
             $order->status = 0;
-            if ($order->save()) {
-                /** @var \common\component\Order $orderComponent */
-                $orderComponent = \Yii::$app->order;
-                $orderComponent->trigger(
-                    NewOrderEvent::EVENT_NEW_ORDER,
-                    NewOrderEvent::factoryFromOrder($order)
-                );
+
+            /** @var \common\component\Order $orderComponent */
+            $orderComponent = Yii::$app->order;
+            if ($orderComponent->addOrder($order)) {
                 return $this->redirect(['index']);
             }
         }
