@@ -11,6 +11,7 @@ class ChainOfCommands
             HelpCommand::className(),
             OrderCommand::className(),
             LastOrderCommand::className(),
+            HistoryCommand::className(),
         ];
     }
 
