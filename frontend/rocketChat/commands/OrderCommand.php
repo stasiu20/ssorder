@@ -13,7 +13,7 @@ class OrderCommand extends Object implements Command
 {
     public static function supports($text)
     {
-        return stripos($text, 'order') !== false;
+        return stripos($text, 'order') === 0;
     }
 
     public function execute(Request $request)

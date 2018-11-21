@@ -13,7 +13,7 @@ class LastOrderCommand extends Object implements Command
 {
     public static function supports($text)
     {
-        return stripos($text, 'last') !== false;
+        return stripos($text, 'last') === 0;
     }
 
     public function execute(Request $request)

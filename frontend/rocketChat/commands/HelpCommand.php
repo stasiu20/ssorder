@@ -9,7 +9,7 @@ class HelpCommand extends Object implements Command
 {
     public static function supports($text)
     {
-        return stripos($text, 'help') !== false;
+        return stripos($text, 'help') === 0;
     }
 
     public function execute(Request $request)
