@@ -34,12 +34,18 @@ class RocketChatOrderMediator extends Component
 
     public function realizedOrders(RealizedOrdersEvent $event)
     {
-        $this->getRocketChatComponent()->sendText($event->getTextMessage());
+        $text = $event->getTextMessage();
+        if (!empty($text)) {
+            $this->getRocketChatComponent()->sendText($text);
+        }
     }
 
     public function beforeRealizedOrders(BeforeRealizedOrdersEvent $event)
     {
-        $this->getRocketChatComponent()->sendText($event->getTextMessage());
+        $text = $event->getTextMessage();
+        if (!empty($text)) {
+            $this->getRocketChatComponent()->sendText($text);
+        }
     }
 
     protected function getRocketChatComponent()
