@@ -1,4 +1,8 @@
-<?php if (null === $user): ?>
+<?php
+/** @var $user \common\models\User */
+/** @var $orders \common\models\Order[] */
+
+if (null === $user): ?>
     Brak integracji z ssorder użyj komendy `info`.
 <?php else: ?>
     <?php if (empty($orders)): ?>

@@ -1,4 +1,8 @@
-<?php if (null === $user): ?>
+<?php
+/** @var $user \common\models\User */
+/** @var $order \common\models\Order */
+
+if (null === $user): ?>
     Brak integracji z ssorder użyj komendy `info`.
 <?php else:
     if ($order): ?>
@@ -8,4 +12,3 @@
         Jeszcze niczego nie zamówiłeś!
     <?php endif; ?>
 <?php endif; ?>
-

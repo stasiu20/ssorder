@@ -1,3 +1,8 @@
+<?php
+/** @var $user \common\models\User */
+/** @var $request \frontend\rocketChat\models\Request */
+?>
+
 Wiadomość od <?= $request->user_name ?>, id rocketchat `<?= $request->user_id ?>`
 <?php if (null === $user): ?>
     Nie masz integracji między ssorder a rocketchat :/
