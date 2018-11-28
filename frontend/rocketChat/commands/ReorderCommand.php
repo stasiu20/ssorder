@@ -23,7 +23,7 @@ class ReorderCommand extends Object implements Command
 
         $argument = explode(' ', trim($request->text), 3);
         if (count($argument) < 2) {
-            return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Niepodałeś numeru zamówienia']);
+            return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Nie podałeś numeru zamówienia']);
         }
 
         $orderId = $argument[1];

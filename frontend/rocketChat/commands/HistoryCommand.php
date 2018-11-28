@@ -20,7 +20,7 @@ class HistoryCommand extends Object implements Command
     {
         $argument = explode(' ', $request->text, 2);
         if (count($argument) != 2) {
-            return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Niepodałeś daty']);
+            return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Nie podałeś daty']);
         }
 
         $arg = $argument[1];
