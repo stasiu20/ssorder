@@ -131,6 +131,8 @@ class Order extends \yii\db\ActiveRecord
         $order = clone $this;
         $order->isNewRecord = true;
         $order->id = null;
+        $order->total_price = null;
+        $order->pay_amount = null;
         $order->userId = $userId;
         return $order;
     }
