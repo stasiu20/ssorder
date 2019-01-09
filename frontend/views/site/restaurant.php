@@ -23,7 +23,7 @@ $formatter = \Yii::$app->formatter;
                 Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['restaurants/update', 'id' => $restaurant->id], [
                     'title' => 'Edytuj restaurację',
                 ]);
-                ?>
+?>
                 <?= Html::a('<span class="glyphicon glyphicon-trash"></span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
             <div class ="img-restaurant"><img  src="/image/<?= $restaurant->img_url ?>" class="img-responsive img-thumbnail"></div>    
@@ -50,7 +50,9 @@ $formatter = \Yii::$app->formatter;
                     }
                     ?>
                 </h4>
-                <?php if ($imagesMenu) { echo "<h3>Galeria</h3>"; } ?>
+                <?php if ($imagesMenu) {
+                    echo '<h3>Galeria</h3>';
+                } ?>
                 <?php foreach ($imagesMenu as $imageMenu): ?>
                     <div class="responsive">
 
@@ -77,7 +79,7 @@ $formatter = \Yii::$app->formatter;
                 </p>
             </div>
 
-            <?php if (!empty($menu)) : ?>
+            <?php if (!empty($menu)): ?>
                 <?=
                 GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -89,15 +91,15 @@ $formatter = \Yii::$app->formatter;
                         'foodInfo',
                         ['attribute' => 'foodPrice',
                             'format' => 'raw',
-                            'value' => function($data) {
-                                return "$data->foodPrice" . " " . "zł";
+                            'value' => function ($data) {
+                                return "$data->foodPrice" . ' ' . 'zł';
                             },
                             'contentOptions' => ['class' => 'text-right'],
                         ],
                         ['class' => 'yii\grid\ActionColumn',
                             'template' => '{order}  {view}  {update} {delete}',
                             'buttons' => [
-                                'order' => function($url, $restaurant) {
+                                'order' => function ($url, $restaurant) {
                                     return Html::a('<span class="glyphicon glyphicon-cutlery"></span>', ['order/uwagi', 'id' => $restaurant->id], [
                                                 'title' => 'zamów',
                                     ]);

@@ -46,7 +46,7 @@ GridView::widget([
         [ 'attribute' => 'foodName',
             'label' => 'Nazwa Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
+            'value' => function ($data) {
                 $foodName = $data->menu->foodName;
                 return "$foodName";
             },
@@ -56,7 +56,7 @@ GridView::widget([
         [ 'attribute' => 'foodInfo',
             'label' => 'Info o Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
+            'value' => function ($data) {
                 $foodInfo = $data->menu->foodInfo;
                 return "$foodInfo";
             },
@@ -67,7 +67,7 @@ GridView::widget([
             'attribute' => 'userId',
             'label' => 'Kto',
             'format' => 'raw',
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 return $order->user->username;
             },
             'contentOptions' => ['class' => 'text-right'],
@@ -76,19 +76,17 @@ GridView::widget([
         [ 'attribute' => 'foodPrice',
             'label' => 'Cena Żarcia',
             'format' => 'raw',
-            'value' => function(\common\models\Order $data) {
+            'value' => function (\common\models\Order $data) {
                 $foodPrice = $data->getPrice();
-                return "$foodPrice" . " " . "zł";
+                return "$foodPrice" . ' ' . 'zł';
             },
             'contentOptions' => ['class' => 'text-right'],
         ],
         [ 'attribute' => 'status',
-            'value' => function($data) {
+            'value' => function ($data) {
                 if ($data->status == 0) {
-
                     $status = 'do realizacji';
                 } else {
-
                     $status = 'zrealizowano';
                 }
 
@@ -99,7 +97,6 @@ GridView::widget([
 
 
                 if ($model->status == 0) {
-
                     $background = ['class' => 'text-right', 'style' => 'background-color: red'];
                 } else {
                     $background = ['class' => 'text-right', 'style' => 'background-color: green'];
@@ -110,7 +107,7 @@ GridView::widget([
                 ],
             ],
         ]);
-        ?>
+?>
         <div style="float: right">
         <?= Html::a('Zrealizuj', ["order-completed?id=$restaurant->id"], ['class' => 'btn btn-primary'], ['title' => 'zamów',]); ?>
 </div>

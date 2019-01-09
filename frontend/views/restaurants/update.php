@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Edytuj';
             $this->render('_form', [
                 'model' => $model,
             ])
-            ?>
+?>
         </div>
     </div>
 </div>

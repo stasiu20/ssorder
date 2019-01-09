@@ -1,3 +1,4 @@
 <?php
 
-var_dump($categorys->restaurants); die;
+var_dump($categorys->restaurants);
+die;

@@ -15,21 +15,24 @@ use common\models\Order;
  * @property string $foodInfo
  * @property double $foodPrice
  */
-class Menu extends \yii\db\ActiveRecord {
+class Menu extends \yii\db\ActiveRecord
+{
 
 
     
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'menu';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['restaurantId', 'foodName', 'foodInfo', 'foodPrice'], 'required'],
             [['restaurantId'], 'integer'],
@@ -42,7 +45,8 @@ class Menu extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'restaurantId' => 'Restaurant ID',
@@ -52,17 +56,16 @@ class Menu extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function getRestaurants() {
+    public function getRestaurants()
+    {
         return $this->hasMany(Restaurants::className(), ['id' => 'restaurantId']);
     }
 
     
-    public function getOrder(){
+    public function getOrder()
+    {
         
         
-        return $this->hasMany(Order::className(),['foodId'=>'id']);
-        
-        
-    } 
-    
+        return $this->hasMany(Order::className(), ['foodId'=>'id']);
+    }
 }

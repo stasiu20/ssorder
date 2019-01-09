@@ -30,9 +30,11 @@ use frontend\models\Restaurants;
 use frontend\models\Imagesmenu;
 use yii\web\NotFoundHttpException;
 
-class OrderController extends Controller {
+class OrderController extends Controller
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
 
         return [
                 'access' => [
@@ -50,11 +52,12 @@ class OrderController extends Controller {
                         'roles' => ['@'],
                     ],
                 ],
-            ],
+                ],
         ];
     }
 
-    public function actionIndex($date = null) {
+    public function actionIndex($date = null)
+    {
         $dateValue = $date ? $date : date('Y-m-d');
         $validator = new DateValidator(['format' => 'php:Y-m-d']);
         if (!$validator->validate($dateValue)) {
@@ -103,7 +106,8 @@ class OrderController extends Controller {
         ]);
     }
 
-    public function actionUwagi($id) {
+    public function actionUwagi($id)
+    {
 
         $model = $this->findModel($id);
         $order = new Order();
@@ -143,7 +147,8 @@ class OrderController extends Controller {
         ]);
     }
 
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Menu::findOne($id)) !== null) {
             return $model;
         } else {
@@ -151,28 +156,29 @@ class OrderController extends Controller {
         }
     }
 
-    public function actionDelete() {
-    if (Yii::$app->request->post('id')) {
-        $id= Yii::$app->request->post('id');
-        $model = Order::findOne($id);
-        $model->delete();
-        return $this->redirect(['index']);
+    public function actionDelete()
+    {
+        if (Yii::$app->request->post('id')) {
+            $id= Yii::$app->request->post('id');
+            $model = Order::findOne($id);
+            $model->delete();
+            return $this->redirect(['index']);
+        }
     }
-    }
 
-    public function actionEdit() {
+    public function actionEdit()
+    {
 
-    if (Yii::$app->request->post() && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
-        $id= Yii::$app->request->post('id');
-        $order = Order::findOne($id);
-        $model = Menu::findOne($order->foodId);
+        if (Yii::$app->request->post() && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
+            $id= Yii::$app->request->post('id');
+            $order = Order::findOne($id);
+            $model = Menu::findOne($order->foodId);
 
-     return $this->render('uwagi', [
+            return $this->render('uwagi', [
                     'model' => $model,
                     'order' => $order
-        ]);
-    }
-    else if (Yii::$app->request->post('Order')) {
+            ]);
+        } else if (Yii::$app->request->post('Order')) {
             $id= Yii::$app->request->post('Order')['orderId'];
             $order = Order::findOne($id);
             $order->load(Yii::$app->request->post());
@@ -183,13 +189,13 @@ class OrderController extends Controller {
             if ($order->save()) {
                 return $this->redirect(['index']);
             }
+        } else {
+            return $this->redirect(['index']);
         }
-        else{
-        return $this->redirect(['index']);
-    }
     }
 
-    public function actionRestaurant($id) {
+    public function actionRestaurant($id)
+    {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', date('Y-m-d'));
         $tomorrow = $date->add(new \DateInterval('P1D'));
 
@@ -223,7 +229,8 @@ class OrderController extends Controller {
         ]);
     }
 
-    public function actionOrderCompleted($id) {
+    public function actionOrderCompleted($id)
+    {
         $date = date('Y-m-d');
 
         $filters = new OrderFilters();
@@ -233,7 +240,7 @@ class OrderController extends Controller {
         /** @var Order[] $orders */
         $orders = OrderSearch::search($filters)->all();
         $count = count($orders);
-        for($i = 0; $i < $count; $i++){
+        for ($i = 0; $i < $count; $i++) {
             $order = $orders[$i];
             $order->price = $order->getPrice();
             $order->status = Order::STATUS_REALIZED;
@@ -251,6 +258,6 @@ class OrderController extends Controller {
             RealizedOrdersEvent::factoryFromArrayOrders($orders)
         );
 
-        return $this->redirect("index");
+        return $this->redirect('index');
     }
 }

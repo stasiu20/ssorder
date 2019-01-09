@@ -7,7 +7,8 @@ use yii\web\UploadedFile;
 use yii\web\Restaurants;
 use frontend\models\Restaurants;
 
-class UploadForm extends Model {
+class UploadForm extends Model
+{
 
     /**
      * @var UploadedFile
@@ -18,7 +19,8 @@ class UploadForm extends Model {
     public $delivery_price;
     public $pack_price;
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['restaurantName', 'imageFile', 'tel_number', 'delivery_price', 'pack_price'], 'required'],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
@@ -27,9 +29,9 @@ class UploadForm extends Model {
         ];
     }
 
-    public function upload() {
+    public function upload()
+    {
         if ($this->validate()) {
-
             $this->imageFile->saveAs('image/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
 
             return true;
@@ -37,5 +39,4 @@ class UploadForm extends Model {
             return false;
         }
     }
-
 }

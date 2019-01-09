@@ -5,11 +5,11 @@ namespace frontend\models;
 class OrdersSummary
 {
     /** @var OrderSummaryRow[] */
-    private $data = [];
+    private $_data = [];
 
     public function getData()
     {
-        return $this->data;
+        return $this->_data;
     }
 
     public function setData(array $data)
@@ -21,13 +21,13 @@ class OrdersSummary
 
     public function setRestaurantStatics($restaurantId, OrderSummaryRow $summaryRow)
     {
-        $this->data[$restaurantId] = $summaryRow;
+        $this->_data[$restaurantId] = $summaryRow;
     }
 
     public function getDataForRestaurant($restaurantId)
     {
-        if (isset($this->data[$restaurantId])) {
-            return $this->data[$restaurantId];
+        if (isset($this->_data[$restaurantId])) {
+            return $this->_data[$restaurantId];
         }
 
         throw new \OutOfBoundsException(sprintf('Restaurant "%s" not exist', $restaurantId));

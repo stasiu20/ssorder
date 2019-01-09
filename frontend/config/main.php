@@ -10,7 +10,7 @@ return [
     'id' => 'app-frontend',
     'language' => 'pl-PL',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', function() {
+    'bootstrap' => ['log', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
         $mediator->mediate();
     }],

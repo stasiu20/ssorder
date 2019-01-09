@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+
 /** @var \DateTime $date */
 /** @var \DateTime $yesterday */
 /** @var \DateTime $tomorrow */
@@ -27,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif ?>
             Zamówienia z Dnia: <?= $date->format('d-m-Y') ?>
             <?php if ($tomorrow <= $today): ?>
-                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span
+                            class="glyphicon glyphicon-chevron-right"></span></a>
             <?php endif; ?>
             <?php if ($sevenDaysNext <= $today): ?>
                 <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
@@ -42,56 +44,68 @@ $userName = Yii::$app->user->identity->username;
 
 $formatter = \Yii::$app->formatter;
 ?>
-<p>sortuj według: <?=$sort->link('restaurant');?></p>
+<p>sortuj według: <?= $sort->link('restaurant'); ?></p>
 <table class="table table-striped">
     <thead>
-        <th>l.p.</th>
-        <th>Nazwa Żarcia</th>
-        <th>Nazwa Restauracji</th>
-        <th>Cena</th>
-        <th title="Do zapłaty (cena żarca wraz z opakowaniem i dowozem)">Do zapłaty</th>
-        <th>Uwagi</th>
-        <th>Kto Zamawia</th>
-        <th>Status</th>
-        <th>Do rozliczenia</th>
-        <th>Akcje</th>
+    <th>l.p.</th>
+    <th>Nazwa Żarcia</th>
+    <th>Nazwa Restauracji</th>
+    <th>Cena</th>
+    <th title="Do zapłaty (cena żarca wraz z opakowaniem i dowozem)">Do zapłaty</th>
+    <th>Uwagi</th>
+    <th>Kto Zamawia</th>
+    <th>Status</th>
+    <th>Do rozliczenia</th>
+    <th>Akcje</th>
     </thead>
-<tbody>
-<?php
-$mapIndex = [];
-$i = 0;
-foreach ($model as $order):
-    ++$i;
-    if (!isset($mapIndex[$order->restaurantId])) { $mapIndex[$order->restaurantId] = -1; }
-    $mapIndex[$order->restaurantId] += 1;
-    $delete = ($userName === $order->user['username'] ? Html::a('usuń', ["delete"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
-                            'data' => [
-                                'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
-                                'method' => 'post',
-                                'params'=>['id'=>$order->id]
+    <tbody>
+    <?php
+    $mapIndex = [];
+    $i = 0;
+    foreach ($model as $order):
+        ++$i;
+        if (!isset($mapIndex[$order->restaurantId])) {
+            $mapIndex[$order->restaurantId] = -1;
+        }
+        $mapIndex[$order->restaurantId] += 1;
+        $delete = ($userName === $order->user['username'] ? Html::a('usuń', ['delete'], [
+            'class' => 'btn btn-custom',
+            'style' => 'margin-right:10px',
+            'data' => [
+                'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
+                'method' => 'post',
+                'params' => ['id' => $order->id]
 
-                        ],]) : '');
-    $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ["edit"], ['class' => 'btn btn-custom', 'style' =>'margin-right:10px',
-                            'data' => [
-                                'method' => 'post',
-                                'params'=>['name'=>Yii::$app->user->identity->username, 'id'=>$order->id],
+            ],
+        ]) : '');
+        $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ['edit'], [
+            'class' => 'btn btn-custom',
+            'style' => 'margin-right:10px',
+            'data' => [
+                'method' => 'post',
+                'params' => ['name' => Yii::$app->user->identity->username, 'id' => $order->id],
 
-                                ]]) : '');
-    $takeRestaurantId = $order->menu->restaurants[0]['id'];
-    $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
-    ?>
+            ]
+        ]) : '');
+        $takeRestaurantId = $order->menu->restaurants[0]['id'];
+        $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
+        ?>
 
         <tr>
             <td><?= $i; ?></td>
-            <td><a href="/site/view?id=<?=$order->menu->id?>&order=true"><?= $order->menu->foodName ?></a></td>
-            <td><a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a></td>
-            <td><?=$formatter->asCurrency($order->getPrice()) ?></td>
+            <td><a href="/site/view?id=<?= $order->menu->id ?>&order=true"><?= $order->menu->foodName ?></a></td>
+            <td>
+                <a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a>
+            </td>
+            <td><?= $formatter->asCurrency($order->getPrice()) ?></td>
             <td>
                 <?= $formatter->asCurrency($order->total_price); ?>
             </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
-            <td style="color: <?php if($order->status == 0) { echo 'red';}else{ echo 'green';}?>"><?php if($order->status == 0){echo "do realizacji";}else{echo "zrealizowane";}?></td>
+            <td style="color: <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'red' : 'green'; ?>>
+                <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'do realizacji' : 'zrealizowane'; ?>
+            </td>
             <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
                 <?php if ($order->isRealized()): ?>
                     <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order); ?>">
@@ -100,17 +114,20 @@ foreach ($model as $order):
                 <?php endif ?>
             </td>
             <td>
-                <?php if($order->status == 0){echo  $delete . $edit . $takeOrder;} ?>
+                <?php if ($order->status == 0) {
+                    echo $delete . $edit . $takeOrder;
+                } ?>
                 <?php if ($order->isRealized()): ?>
-                    <a title="Smakowało? Zamów raz jeszcze!" class="" href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">
+                    <a title="Smakowało? Zamów raz jeszcze!" class=""
+                       href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">
                         <span class="glyphicon glyphicon-cutlery"></span>
                     </a>
                 <?php endif; ?>
             </td>
         </tr>
-<?php endforeach; ?>
-</tbody>
-<tfoot>
+    <?php endforeach; ?>
+    </tbody>
+    <tfoot>
     <?php foreach ($summary->getData() as $row): ?>
         <tr>
             <td colspan="3" class="text-right">
@@ -125,5 +142,5 @@ foreach ($model as $order):
             </td>
         </tr>
     <?php endforeach; ?>
-</tfoot>
+    </tfoot>
 </table>

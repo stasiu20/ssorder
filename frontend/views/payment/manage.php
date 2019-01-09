@@ -19,7 +19,7 @@ echo \yii\grid\GridView::widget([
         [ 'attribute' => 'foodName',
             'label' => 'Nazwa Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
+            'value' => function ($data) {
                 $foodName = $data->menu->foodName;
                 return "$foodName";
             },
@@ -30,7 +30,7 @@ echo \yii\grid\GridView::widget([
         [ 'attribute' => 'foodInfo',
             'label' => 'Info o Żarcia',
             'format' => 'raw',
-            'value' => function($data) {
+            'value' => function ($data) {
                 $foodInfo = $data->menu->foodInfo;
                 return "$foodInfo";
             },
@@ -45,7 +45,7 @@ echo \yii\grid\GridView::widget([
             'attribute' => 'userId',
             'label' => 'Kto',
             'format' => 'raw',
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 return $order->user->username;
             },
             'contentOptions' => ['class' => 'text-right'],
@@ -55,7 +55,7 @@ echo \yii\grid\GridView::widget([
             'attribute' => 'total_price',
             'label' => 'Do zapłaty',
             'format' => 'raw',
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 $formatter = \Yii::$app->formatter;
                 return $formatter->asCurrency($order->total_price);
             },
@@ -67,7 +67,7 @@ echo \yii\grid\GridView::widget([
             'header' => 'Wpłata',
             'attribute' => 'pay_amount',
             'form' => $form,
-            'name' => function(\common\models\Order $order) {
+            'name' => function (\common\models\Order $order) {
                 return sprintf('price[%d]', $order->id);
             },
             'footer' => \yii\bootstrap\Html::submitButton('Zapisz', ['class' => 'btn btn-success']),
@@ -75,10 +75,10 @@ echo \yii\grid\GridView::widget([
         ],
         [
             'label' => 'Różnica',
-            'contentOptions' => function(\common\models\Order $order) {
+            'contentOptions' => function (\common\models\Order $order) {
                 return ['class' => \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price))];
             },
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 $formatter = \Yii::$app->formatter;
                 return $formatter->asCurrency(abs($order->paymentChange($order->total_price)));
             },

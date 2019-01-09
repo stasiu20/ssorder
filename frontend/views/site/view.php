@@ -10,7 +10,7 @@ $order = $request->get('order');
 $url = $restaurant[0]['id'];
 $restaurantName = $restaurant[0]['restaurantName'];
 $this->title = $model->foodName;
-$order == true ? $this->params['breadcrumbs'][] = ['label' => "Zamówienia", 'url' => ["/order/index"]] :  $this->params['breadcrumbs'][] = ['label' => "$restaurantName", 'url' => ["site/restaurant?id=$url"]];
+$order == true ? $this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => ['/order/index']] :  $this->params['breadcrumbs'][] = ['label' => "$restaurantName", 'url' => ["site/restaurant?id=$url"]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="restaurants-view">

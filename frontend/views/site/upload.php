@@ -8,7 +8,7 @@ use kartik\file\FileInput;
 use borales\extensions\phoneInput\PhoneInput;
 use yii\widgets\MaskedInput;
 
-$this->title = "Dodaj Restaurację";
+$this->title = 'Dodaj Restaurację';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $form->field($model, 'tel_number', ['labelOptions' => ['class' => 'control-label col-md-3']])->widget(MaskedInput::className(), [
             'mask' => ['29999-99-99', '999-999-999', ],
         ]);
-        ?>
+?>
         <?=
         $form->field($model, 'delivery_price', ['labelOptions' => ['class' => 'control-label col-md-3']])->widget(MaskedInput::className(), [
             'clientOptions' => [
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'autoGroup' => true
             ],
         ]);
-        ?>
+?>
         <?=
         $form->field($model, 'pack_price', ['labelOptions' => ['class' => 'control-label col-md-3']])->widget(MaskedInput::className(), [
             'clientOptions' => [
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
             ],
         ]);
-        ?>
+?>
         <?= $form->field($model, 'categoryId', ['labelOptions' => ['class' => 'control-label col-md-3']])->dropdownList(ArrayHelper::map(Category::find()->all(), 'id', 'categoryName'), ['prompt' => '---Wybierz Kategorię---', 'style' => 'width:200px']) ?>
         <?=
         $form->field($model, 'imageFile', ['labelOptions' => ['class' => 'control-label col-md-3']])->widget(FileInput::classname(), [
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
           
         ]);
-        ?>
+?>
         <button class="btn btn-custom">Dodaj Restaurację</button>
         <?php ActiveForm::end(); ?>       
     </div>

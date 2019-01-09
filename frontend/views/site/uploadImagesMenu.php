@@ -13,7 +13,7 @@ use kartik\file\FileInput;
         $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
             'options' => ['accept' => 'image/*'],
         ]);
-        ?>
+?>
 
 <?php ActiveForm::end() ?>
     </div>

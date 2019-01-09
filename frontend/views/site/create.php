@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $this->render('_formMenu', [
                 'model' => $model,
             ])
-            ?>
+?>
         </div>
     </div>
 </div>

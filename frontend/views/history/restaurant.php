@@ -49,7 +49,7 @@ $formatter = \Yii::$app->formatter;
             'class' => 'yii\grid\DataColumn',
             'format' => 'text',
             'attribute' => 'menu.foodName',
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 return $order->getFoodName();
             }
         ],
@@ -62,7 +62,7 @@ $formatter = \Yii::$app->formatter;
             'class' => 'yii\grid\DataColumn',
             'format' => 'html',
             'attribute' => 'price',
-            'value' => function(\common\models\Order $order) {
+            'value' => function (\common\models\Order $order) {
                 return Yii::$app->formatter->asCurrency($order->getPrice());
             }
         ],

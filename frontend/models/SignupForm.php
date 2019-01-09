@@ -36,12 +36,12 @@ class SignupForm extends Model
         ];
     }
     
-        public function attributeLabels()
+    public function attributeLabels()
     {
         return [
-            'username'=>'Login',
-            'email'=>'Email',
-            'password'=>'Hasło'
+        'username'=>'Login',
+        'email'=>'Email',
+        'password'=>'Hasło'
         ];
     }
     
@@ -65,6 +65,4 @@ class SignupForm extends Model
         
         return $user->save() ? $user : null;
     }
-    
-    
 }

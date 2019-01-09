@@ -13,7 +13,8 @@ use yii\web\Controller;
 
 class PaymentController extends Controller
 {
-    public function behaviors() {
+    public function behaviors()
+    {
 
         return [
             'access' => [
@@ -29,7 +30,8 @@ class PaymentController extends Controller
         ];
     }
 
-    public function actionManage() {
+    public function actionManage()
+    {
         $date = \DateTimeImmutable::createFromFormat('Y-m-d', date('Y-m-d'));
         $tomorrow = $date->add(new \DateInterval('P1D'));
         $userId = \Yii::$app->getUser()->identity->id;

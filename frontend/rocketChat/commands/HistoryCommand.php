@@ -47,5 +47,4 @@ class HistoryCommand extends Object implements Command
             'date' => \Yii::$app->formatter->asDate($date, 'short')
         ]);
     }
-
 }

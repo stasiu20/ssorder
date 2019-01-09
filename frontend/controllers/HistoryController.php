@@ -15,7 +15,8 @@ use yii\web\Controller;
 
 class HistoryController extends Controller
 {
-    public function behaviors() {
+    public function behaviors()
+    {
 
         return [
             'access' => [

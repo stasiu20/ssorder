@@ -19,7 +19,8 @@ use yii\helpers\ArrayHelper;
  * @property float $pack_price
  * @property string $img_url
  */
-class Restaurants extends ActiveRecord {
+class Restaurants extends ActiveRecord
+{
     public $phone;
 
     public $imageFile;
@@ -30,7 +31,8 @@ class Restaurants extends ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'restaurants';
     }
 
@@ -43,7 +45,8 @@ class Restaurants extends ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'on'=>self::SCENARIO_UPDATE],
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg',],
@@ -60,7 +63,8 @@ class Restaurants extends ActiveRecord {
     }
 
 
-    public function scenarios() {
+    public function scenarios()
+    {
 
         return[
             self::SCENARIO_UPDATE => ['restaurantName', 'tel_number', 'delivery_price', 'pack_price', 'categoryId',],
@@ -81,7 +85,8 @@ class Restaurants extends ActiveRecord {
         ];
     }
 
-    public function upload() {
+    public function upload()
+    {
 
         $this->img_url = $this->imageFile->baseName . '.' . $this->imageFile->extension;
         if ($this->validate()) {
@@ -95,7 +100,8 @@ class Restaurants extends ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'restaurantName' => 'Nazwa Restauracji',
@@ -108,22 +114,24 @@ class Restaurants extends ActiveRecord {
         ];
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return $this->hasOne(\frontend\models\Category::className(), ['id' => 'categoryId']);
     }
 
-    public function getMenu() {
+    public function getMenu()
+    {
         return $this->hasMany(\frontend\models\Menu::className(), ['restaurantId' => 'id']);
     }
 
-    public function getImagesmenu() {
+    public function getImagesmenu()
+    {
         return $this->hasMany(Imagesmenu::className(), ['restaurantId' => 'id']);
     }
 
 
-     public function getOrder() {
+    public function getOrder()
+    {
         return $this->hasMany(Order::className(), ['restaurantId' => 'id']);
     }
-
 }
-

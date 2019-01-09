@@ -22,7 +22,7 @@ class OrderSummaryRow extends Model
     public $numOfOrders = 0;
 
     /** @var float */
-    private $cost = 0.0;
+    private $_cost = 0.0;
 
     public $deliveryCost = 0.0;
 
@@ -33,19 +33,19 @@ class OrderSummaryRow extends Model
      */
     public function getCost()
     {
-        return $this->cost;
+        return $this->_cost;
     }
 
     public function setCost($cost)
     {
-        $this->cost = floatval($cost);
+        $this->_cost = floatval($cost);
         return $this;
     }
 
     public function getCostWithDelivery()
     {
         if ($this->numOfOrders > 0) {
-            return $this->cost + $this->deliveryCost;
+            return $this->_cost + $this->deliveryCost;
         }
         return 0.0;
     }

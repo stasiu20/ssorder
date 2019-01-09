@@ -12,7 +12,7 @@ use yii\widgets\MaskedInput;
 <div class="restaurants-form">
 
     <?php
-    $form = ActiveForm::begin(['options' => [ 
+    $form = ActiveForm::begin(['options' => [
                     'layout' => 'horizontal',
                     'fieldConfig' => [
                         'template' => "{label}\n<div class=\"col-md-10\">{input}</div>\n<div class=\"col-md-offset-2 col-md-10\">{error}</div>",
@@ -40,7 +40,7 @@ use yii\widgets\MaskedInput;
             
         ]
     ]);
-    ?>
+?>
 
     
 

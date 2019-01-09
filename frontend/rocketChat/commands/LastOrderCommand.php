@@ -35,6 +35,5 @@ class LastOrderCommand extends Object implements Command
         }
 
         return \Yii::$app->view->render('/rocket-chat/commands/last', ['order' => $order, 'user' => $user]);
-
     }
 }

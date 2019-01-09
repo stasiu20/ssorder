@@ -8,7 +8,8 @@ use yii\web\Controller;
 
 class ProfileController extends Controller
 {
-    public function behaviors() {
+    public function behaviors()
+    {
 
         return [
             'access' => [

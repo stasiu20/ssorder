@@ -10,19 +10,22 @@ use Yii;
  * @property integer $id
  * @property string $categoryName
  */
-class Category extends \yii\db\ActiveRecord {
+class Category extends \yii\db\ActiveRecord
+{
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'category';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['categoryName'], 'required'],
             [['categoryName'], 'string', 'max' => 200],
@@ -32,15 +35,16 @@ class Category extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'categoryName' => 'Category Name',
         ];
     }
 
-    public function getRestaurants() {
+    public function getRestaurants()
+    {
         return $this->hasMany(\frontend\models\Restaurants::className(), ['categoryId' => 'id']);
     }
-
 }

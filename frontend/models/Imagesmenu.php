@@ -18,7 +18,7 @@ class Imagesmenu extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     
-     public $imageFile;
+    public $imageFile;
     public static function tableName()
     {
         return 'imagesmenu';
@@ -49,14 +49,14 @@ class Imagesmenu extends \yii\db\ActiveRecord
         ];
     }
     
-        public function upload($restaurantId) {
+    public function upload($restaurantId)
+    {
 
             
         $this->imagesMenu_url = $this->imageFile->baseName . '.' . $this->imageFile->extension;
         $this->restaurantId = $restaurantId;
         
         if ($this->validate()) {
-
             $this->imageFile->saveAs('imagesMenu/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
 
             return true;
@@ -64,7 +64,8 @@ class Imagesmenu extends \yii\db\ActiveRecord
             return false;
         }
     }
-     public function getRetaurants(){
-        return $this->hasOne(Restaurants::className(),['id'=>'restaurantId']);
+    public function getRetaurants()
+    {
+        return $this->hasOne(Restaurants::className(), ['id'=>'restaurantId']);
     }
 }

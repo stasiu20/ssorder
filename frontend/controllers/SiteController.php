@@ -26,12 +26,14 @@ use frontend\models\Imagesmenu;
 /**
  * Site controller
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,7 +63,8 @@ class SiteController extends Controller {
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -78,7 +81,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionIndex($id = 0) {
+    public function actionIndex($id = 0)
+    {
 
         if ($id > 0) {           //tu trzeba dać && nie więcej niż ostatni rekord w bazie
             $query = Restaurants::find()->where(['categoryId' => $id]);
@@ -116,7 +120,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -136,7 +141,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -147,7 +153,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -169,7 +176,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionAbout() {
+    public function actionAbout()
+    {
         return $this->render('about');
     }
 
@@ -178,7 +186,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionSignup()
+    {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -198,7 +207,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -222,7 +232,8 @@ class SiteController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -240,7 +251,8 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionUpload() {
+    public function actionUpload()
+    {
 
 
         $model = new Restaurants();
@@ -260,7 +272,8 @@ class SiteController extends Controller {
                 return $this->redirect(['index']);
                 //return $this->render('uploadOk', ['model' => $model,]);
             } else {
-                var_dump("no upload");die;
+                var_dump('no upload');
+                die;
             }
         }
 
@@ -268,7 +281,8 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionCategory($id) {
+    public function actionCategory($id)
+    {
 
 
         $categorys = \frontend\models\Category::findOne($id);
@@ -276,7 +290,8 @@ class SiteController extends Controller {
         return $this->render('category', ['categorys' => $categorys]);
     }
 
-    public function actionRestaurant($id) {
+    public function actionRestaurant($id)
+    {
 
         $restaurant = Restaurants::findOne($id);
         $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
@@ -301,7 +316,8 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $menu = Menu::findOne($id);
         $restaurant = $menu->restaurants;
         return $this->render('view', [
@@ -310,7 +326,8 @@ class SiteController extends Controller {
         ]);
     }
 
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Menu::findOne($id)) !== null) {
             //$model1 = Restaurants::findOne($id);
 
@@ -320,13 +337,12 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
 
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $menu = Menu::findOne($id);
@@ -338,14 +354,14 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionCreate($id) {
+    public function actionCreate($id)
+    {
         $model = new Menu();
         $restaurant = Restaurants::findOne($id);
         $model->restaurantId = $id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['restaurant', 'id' => $restaurant->id]);
         } else {
-
             return $this->render('create', [
                         'model' => $model,
                         'restaurant' => $restaurant,
@@ -353,7 +369,8 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $menu = Menu::findOne($id);
         $restaurant = $menu->restaurants;
         $this->findModel($id)->delete();
@@ -361,7 +378,8 @@ class SiteController extends Controller {
         return $this->redirect(['restaurant', 'id' => $restaurant[0]['id']]);
     }
 
-    public function actionAddimages($id) {
+    public function actionAddimages($id)
+    {
 
         $model = new Imagesmenu();
         $model->load(\Yii::$app->request->post());
@@ -371,7 +389,6 @@ class SiteController extends Controller {
             $model->imageFile = UploadedFile::getInstance($model, 'imagesMenu_url');
 
             if ($model->upload($restaurantId)) {
-
                 //          var_dump($model->validate(), $model->errors);die;
                 $model->restaurantId = $restaurantId;
                 $model->imageFile = null;
@@ -386,7 +403,8 @@ class SiteController extends Controller {
         ]);
     }
 
-    public function actionImage($url, $id) {
+    public function actionImage($url, $id)
+    {
 
         $img = Imagesmenu::findOne(['imagesMenu_url' => $url]);
         $restaurantId = Yii::$app->request->get('id');
@@ -397,5 +415,4 @@ class SiteController extends Controller {
             return $this->redirect("restaurant?id=$restaurantId");
         }
     }
-
 }
