@@ -133,6 +133,8 @@ class Order extends \yii\db\ActiveRecord
         $order->id = null;
         $order->total_price = null;
         $order->pay_amount = null;
+        $order->realizedBy = null;
+        $order->status = self::STATUS_NOT_REALIZED;
         $order->userId = $userId;
         return $order;
     }
