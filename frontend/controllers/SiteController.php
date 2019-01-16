@@ -14,7 +14,6 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Restaurants;
-use app\models\UploadForm;
 use yii\web\UploadedFile;
 use frontend\models\Menu;
 use yii\data\ActiveDataProvider;
@@ -248,36 +247,6 @@ class SiteController extends Controller
 
         return $this->render('resetPassword', [
                     'model' => $model,
-        ]);
-    }
-
-    public function actionUpload()
-    {
-
-
-        $model = new Restaurants();
-        $model->scenario = 'upload';
-        $model->load(\Yii::$app->request->post());
-
-
-//        var_dump($model);die;
-        if (Yii::$app->request->isPost) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if ($model->upload()) {
-                $model->imageFile = null;
-                // file is uploaded successfully
-
-                $model->save(false);
-                return $this->redirect(['index']);
-                //return $this->render('uploadOk', ['model' => $model,]);
-            } else {
-                var_dump('no upload');
-                die;
-            }
-        }
-
-        return $this->render('upload', ['model' => $model,
         ]);
     }
 
