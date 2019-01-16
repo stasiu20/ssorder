@@ -1,0 +1,72 @@
+stages:
+  - prepare
+  - qa
+  - build
+  - testing
+  - security
+  - deploy
+
+composer:
+  stage: prepare
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - php -v
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 30 days
+    when: always
+
+codestyle:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/phpcs --report=junit --extensions=php ./frontend | tee phpcs-report.xml
+  dependencies:
+    - composer
+  artifacts:
+    when: on_failure
+    reports:
+      junit: phpcs-report.xml
+
+phpmd:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend text cleancode,codesize,controversial,design,naming,unusedcode
+  dependencies:
+    - composer
+
+phploc:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/phploc ./frontend/
+  dependencies:
+    - composer
+
+phpcpd:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/
+  dependencies:
+    - composer
+
+php-lint:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/parallel-lint ./frontend/
+  dependencies:
+    - composer
+
+security-checker:
+  stage: security
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+  - ./vendor/bin/security-checker security:check ./composer.lock --format text
+  allow_failure: true
+  dependencies:
+  - composer
