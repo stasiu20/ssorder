@@ -4,8 +4,6 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\web\UploadedFile;
-use yii\web\Restaurants;
-use frontend\models\Restaurants;
 
 class UploadForm extends Model
 {
