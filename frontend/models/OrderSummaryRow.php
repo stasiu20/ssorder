@@ -8,6 +8,7 @@ use yii\base\Model;
  * Class OrderSummaryRow
  * @package frontend\models
  *
+ * @property float $cost
  * @property-read float $change
  */
 class OrderSummaryRow extends Model
