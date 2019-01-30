@@ -34,7 +34,7 @@ phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend text cleancode,codesize,controversial,design,naming,unusedcode
+    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./backend/,./common/,./console/ text cleancode,codesize,controversial,design,naming,unusedcode
   dependencies:
     - composer
 
@@ -42,7 +42,7 @@ phploc:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phploc ./frontend/
+    - ./vendor/bin/phploc ./frontend/ ./backend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -50,7 +50,7 @@ phpcpd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/
+    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./backend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -58,7 +58,7 @@ php-lint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/parallel-lint ./frontend/
+    - ./vendor/bin/parallel-lint --exclude vendor/ .
   dependencies:
     - composer
 
