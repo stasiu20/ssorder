@@ -21,8 +21,8 @@ class TaskController extends Controller
                 throw new \RuntimeException(sprintf(
                     'Cant save order #d with %s',
                     $order->id,
-                    $order->menu->foodPrice)
-                );
+                    $order->menu->foodPrice
+                ));
             }
         }
     }
@@ -41,8 +41,8 @@ class TaskController extends Controller
                 throw new \RuntimeException(sprintf(
                     'Cant save order #d with %s',
                     $order->id,
-                    $order->realizedBy)
-                );
+                    $order->realizedBy
+                ));
             }
         }
     }

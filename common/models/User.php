@@ -71,7 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['new_password', 'string', 'length' => [4, 20]],
-            ['new_password', 'filter', 'filter' => function($value) {
+            ['new_password', 'filter', 'filter' => function ($value) {
                 if (!empty($value)) {
                     $this->setPassword($value);
                     $this->generateAuthKey();
@@ -224,4 +224,3 @@ class User extends ActiveRecord implements IdentityInterface
         return $labels;
     }
 }
-

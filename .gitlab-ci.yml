@@ -22,7 +22,7 @@ codestyle:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcs --report=junit --extensions=php ./frontend | tee phpcs-report.xml
+    - ./vendor/bin/phpcs --report=junit --extensions=php | tee phpcs-report.xml
   dependencies:
     - composer
   artifacts:

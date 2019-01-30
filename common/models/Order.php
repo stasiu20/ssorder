@@ -77,18 +77,18 @@ class Order extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(\common\models\User::className(),['id'=>'userId']);
+        return $this->hasOne(\common\models\User::className(), ['id'=>'userId']);
     }
 
     public function getRealizedByUser()
     {
-        return $this->hasOne(\common\models\User::className(),['id'=>'realizedBy']);
+        return $this->hasOne(\common\models\User::className(), ['id'=>'realizedBy']);
     }
 
-    public function getMenu(){
+    public function getMenu()
+    {
 
-        return $this->hasOne(Menu::className(),['id'=>'foodId']);
-
+        return $this->hasOne(Menu::className(), ['id'=>'foodId']);
     }
 
     public function getRestaurantName()
@@ -109,10 +109,11 @@ class Order extends \yii\db\ActiveRecord
         return $this->menu->foodName;
     }
 
-     public function getRestaurants(){
+    public function getRestaurants()
+    {
 
-        return $this->hasOne(Restaurants::className(),['id'=>'restaurantId']);
-     }
+        return $this->hasOne(Restaurants::className(), ['id'=>'restaurantId']);
+    }
 
     public function isCreatedByUser($userId = null)
     {

@@ -14,11 +14,11 @@ class RocketChat extends Component
     public $token;
 
     /** @var Client */
-    private $client;
+    private $_client;
 
     public function init()
     {
-        $this->client = new Client($this->endpoint, $this->token);
+        $this->_client = new Client($this->endpoint, $this->token);
     }
 
     /**
@@ -26,7 +26,7 @@ class RocketChat extends Component
      */
     public function sendText($text)
     {
-        $this->client->payload([
+        $this->_client->payload([
             'text' => $text
         ]);
     }

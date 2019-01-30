@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-
 class Payment
 {
     /**
