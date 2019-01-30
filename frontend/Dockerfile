@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get -y install \
             git \
             zip \
+            unzip \
             libicu-dev \
         --no-install-recommends && \
     apt-get clean && \
