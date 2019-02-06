@@ -39,7 +39,7 @@ class ChunkedIterator extends \IteratorIterator
 
     public function next()
     {
-        $this->chunk = array();
+        $this->chunk = [];
         for ($i = 0; $i < $this->chunkSize && parent::valid(); $i++) {
             $this->chunk[] = parent::current();
             parent::next();
