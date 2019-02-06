@@ -12,47 +12,64 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-index">
     <div class="jumbotron">
         <h2>To co dziś zamawiamy?!</h2>
-    </div>  
+    </div>
     <div class="body-content">
         <div class="row">
-            <div class="col-lg-2">  
-                <div id = "sidebarDiv">
+            <div class="col-lg-2">
+                <div id="sidebarDiv">
                     <h3>Kategorie:</h3>
                     <ul id="sidebar">
                         <?php
                         foreach ($categorys as $category) {
                             ?>
-                            <li><a href = "?id=<?= $category->id ?>"><?= $category->categoryName ?></a></li>
+                            <li><a href="?id=<?= $category->id ?>"><?= $category->categoryName ?></a></li>
                             <?php
                         }
                         ?>
-                        <li><a href = "?id=0">Wszystko</a></li>
-                    </ul> 
-                </div>               
+                        <li><a href="?id=0">Wszystko</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-lg-10">
-                <?php foreach ($restaurants as $restaurant): ?>
-                    <div class='restaurant'>
-                        <div class="restaurant-image" style="background-image: url(/image/<?= $restaurant->img_url ?>)">
-    <!--                            <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>"><p> <img src="/image/<?= $restaurant->img_url ?>"></p></a>-->
-                        </div>
-                        <div class="restaurant-content">
-                            <div class="content">
-                                <p class="restaurant-name"><a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>"><?= Html::encode("{$restaurant->restaurantName}"); ?></a></h3>
-                                <p><a href="?id=<?= $restaurant->category->id ?>"><?= Html::encode("{$restaurant->category->categoryName}"); ?></a></p>
-                            </div> 
-                            <div class="info">
-                                <h4><img src="/image/phone.png" class="restaurant-details-icon" /> <?= Html::encode("{$restaurant->tel_number}"); ?></h4>
-                                <p class="restaurant-details"><img src="/image/car.png" class="restaurant-details-icon" /> <?= Html::encode("{$restaurant->delivery_price}"); ?> zł</p>
-                                <p class="restaurant-details"><img src="/image/box.png" class="restaurant-details-icon" /> <?= Html::encode("{$restaurant->pack_price}"); ?> zł </p>
+            <div id="restaurants-card-container" class="col-lg-10 bs4" style="background-color: #F5F3EE">
+                <?php foreach ($restaurants as $chunk): ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-deck">
+                                <?php foreach ($chunk as $restaurant): ?>
+                                    <div class="card">
+                                        <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
+                                            <img class="card-img-top" src="/image/<?= $restaurant->img_url ?>"
+                                                 alt="<?= $restaurant->restaurantName; ?>"/>
+                                        </a>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
+                                                    <?= Html::encode("{$restaurant->restaurantName}"); ?>
+                                                </a>
+                                            </h5>
+                                            <p class="card-text">
+                                                <a href="?id=<?= $restaurant->category->id ?>"><?= Html::encode("{$restaurant->category->categoryName}"); ?></a>
+                                            </p>
+                                            <p class="card-text">
+                                                <img src="/image/phone.png"
+                                                     class="restaurant-details-icon"/> <?= Html::encode("{$restaurant->tel_number}"); ?>
+                                            <p class="restaurant-details">
+                                                <img src="/image/car.png" class="restaurant-details-icon"/>
+                                                <?= Html::encode("{$restaurant->delivery_price}"); ?> zł
+                                            </p>
+                                            <p class="restaurant-details">
+                                                <img src="/image/box.png" class="restaurant-details-icon"/>
+                                                <?= Html::encode("{$restaurant->pack_price}"); ?> zł
+                                            </p>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?> 
+                <?php endforeach; ?>
             </div>
-<!--            <div class="col-lg-4">         
-            </div>-->
+            <footer class="container-fluid text-center"><?= LinkPager::widget(['pagination' => $pagination]) ?></footer>
         </div>
-        <footer class="container-fluid text-center"><?= LinkPager::widget(['pagination' => $pagination]) ?></footer>
-    </div> 
-</div>
+    </div>

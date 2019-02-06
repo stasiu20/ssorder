@@ -19,6 +19,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <link rel="icon" href="/image/sensisoft.png" type="image/x-icon"/>
     <link href="/css/lightbox.css" rel="stylesheet">
+    <link href="/css/bs4.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>

@@ -438,3 +438,7 @@ a {
 body table td.no-right-border {
     border-right: 1px solid transparent;;
 }
+
+#restaurants-card-container .row+.row {
+    margin-top: 1rem;
+}

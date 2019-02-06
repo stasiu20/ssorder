@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\iterators\ChunkedIterator;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -97,7 +98,7 @@ class SiteController extends Controller
             //$restaurants = Restaurants::find()->all();
             $query = Restaurants::find();
             $pagination = new Pagination([
-                'defaultPageSize' => 10,
+                'defaultPageSize' => 20,
                 'totalCount' => $query->count(),]);
             $restaurants = $query->orderBy('restaurantName')
                     ->offset($pagination->offset)
@@ -108,7 +109,7 @@ class SiteController extends Controller
         $categorys = Category::find()->all();
         // var_dump($category->restaurants);die;
         return $this->render('index', [
-                    'restaurants' => $restaurants,
+                    'restaurants' => new ChunkedIterator(new \ArrayIterator($restaurants), 4),
                     'categorys' => $categorys,
                     'pagination' => $pagination,
         ]);
