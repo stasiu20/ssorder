@@ -103,7 +103,7 @@ $formatter = \Yii::$app->formatter;
             </td>
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
-            <td style="color: <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'red' : 'green'; ?>>
+            <td style="color: <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'red' : 'green'; ?>">
                 <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'do realizacji' : 'zrealizowane'; ?>
             </td>
             <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
