@@ -22,3 +22,4 @@ RUN docker-php-ext-install \
 RUN curl -sS https://getcomposer.org/installer | php -- \
         --filename=composer \
         --install-dir=/usr/local/bin
+RUN composer global require fxp/composer-asset-plugin
