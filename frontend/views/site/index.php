@@ -36,34 +36,38 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-lg-12">
                             <div class="card-deck">
                                 <?php foreach ($chunk as $restaurant): ?>
-                                    <div class="card">
-                                        <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
-                                            <img class="card-img-top" src="/image/<?= $restaurant->img_url ?>"
-                                                 alt="<?= $restaurant->restaurantName; ?>"/>
-                                        </a>
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
-                                                    <?= Html::encode("{$restaurant->restaurantName}"); ?>
-                                                </a>
-                                            </h5>
-                                            <p class="card-text">
-                                                <a href="?id=<?= $restaurant->category->id ?>"><?= Html::encode("{$restaurant->category->categoryName}"); ?></a>
-                                            </p>
-                                            <p class="card-text">
-                                                <img src="/image/phone.png"
-                                                     class="restaurant-details-icon"/> <?= Html::encode("{$restaurant->tel_number}"); ?>
-                                            <p class="restaurant-details">
-                                                <img src="/image/car.png" class="restaurant-details-icon"/>
-                                                <?= Html::encode("{$restaurant->delivery_price}"); ?> zł
-                                            </p>
-                                            <p class="restaurant-details">
-                                                <img src="/image/box.png" class="restaurant-details-icon"/>
-                                                <?= Html::encode("{$restaurant->pack_price}"); ?> zł
-                                            </p>
-                                            </p>
+                                    <?php if ($restaurant instanceof \frontend\models\Restaurants): ?>
+                                        <div class="card">
+                                            <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
+                                                <img class="card-img-top" src="/image/<?= $restaurant->img_url ?>"
+                                                     alt="<?= $restaurant->restaurantName; ?>"/>
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
+                                                        <?= Html::encode("{$restaurant->restaurantName}"); ?>
+                                                    </a>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <a href="?id=<?= $restaurant->category->id ?>"><?= Html::encode("{$restaurant->category->categoryName}"); ?></a>
+                                                </p>
+                                                <p class="card-text">
+                                                    <img src="/image/phone.png"
+                                                         class="restaurant-details-icon"/> <?= Html::encode("{$restaurant->tel_number}"); ?>
+                                                <p class="restaurant-details">
+                                                    <img src="/image/car.png" class="restaurant-details-icon"/>
+                                                    <?= Html::encode("{$restaurant->delivery_price}"); ?> zł
+                                                </p>
+                                                <p class="restaurant-details">
+                                                    <img src="/image/box.png" class="restaurant-details-icon"/>
+                                                    <?= Html::encode("{$restaurant->pack_price}"); ?> zł
+                                                </p>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php else: ?>
+                                        <div class="card invisible"></div>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
                         </div>

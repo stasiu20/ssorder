@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
 use Yii;
 use yii\base\InvalidParamException;
@@ -106,10 +107,12 @@ class SiteController extends Controller
                     ->all();
         }
 
+        $chunkSize = 4;
+        $restaurants = ArrayHelper::fillToMultiply($restaurants, $chunkSize);
+
         $categorys = Category::find()->all();
-        // var_dump($category->restaurants);die;
         return $this->render('index', [
-                    'restaurants' => new ChunkedIterator(new \ArrayIterator($restaurants), 4),
+                    'restaurants' => new ChunkedIterator(new \ArrayIterator($restaurants), $chunkSize),
                     'categorys' => $categorys,
                     'pagination' => $pagination,
         ]);
