@@ -5,9 +5,6 @@ return yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/test.php'),
     [
         'components' => [
-            'db' => [
-                'dsn' => 'mysql:host=localhost;dbname=yii2advanced_test',
-            ]
         ],
     ]
 );

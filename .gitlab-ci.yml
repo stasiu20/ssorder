@@ -70,3 +70,12 @@ security-checker:
   allow_failure: true
   dependencies:
   - composer
+
+codeception:
+  stage: testing
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - init --env 0
+    - cd ./common && ../vendor/bin/codecept run unit
+  dependencies:
+    - composer

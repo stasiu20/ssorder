@@ -7,9 +7,20 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     public static function fillToMultiply(array $array, $multiply, $newValue = null)
     {
         $count = count($array);
-        $remainder = $count % $multiply;
-        for ($i = $multiply ; $i >= $remainder; $i--) {
-            $array[] = $newValue;
+
+        if ($count > $multiply) {
+            $remainder = $multiply - ($count % $multiply);
+        } elseif ($count < $multiply) {
+            $remainder = $multiply % $count;
+        } else {
+            $remainder = 0;
+        }
+
+        if ($remainder != 0) {
+            while ($remainder > 0) {
+                $array[] = $newValue;
+                $remainder--;
+            }
         }
 
         return $array;
