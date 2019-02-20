@@ -75,7 +75,7 @@ codeception:
   stage: testing
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./init --env 0
+    - ./init --env=Development --overwrite=All
     - cd ./common && ../vendor/bin/codecept run unit
   dependencies:
     - composer
