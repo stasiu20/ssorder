@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * RestaurantsController implements the CRUD actions for Restaurants model.
@@ -82,7 +83,7 @@ class RestaurantsController extends Controller
     public function actionCreate()
     {
         $model = new Restaurants();
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -100,7 +101,7 @@ class RestaurantsController extends Controller
      */
     public function actionUpdate($id)
     {
-        
+
         $model = $this->findModel($id);
         $model->scenario = 'update';
         $model->load(Yii::$app->request->post());
@@ -133,7 +134,7 @@ class RestaurantsController extends Controller
             $menus->delete();
         }
         $imgs = $restaurant->imagesmenu;
-        
+
         foreach ($imgs as $img) {
             unlink(getcwd() . '/image/' . $img->imagesMenu_url);
             $img->delete();
@@ -141,6 +142,27 @@ class RestaurantsController extends Controller
         unlink(getcwd() . '/image/' . $restaurant->img_url);
         $restaurant->delete();
         return $this->redirect(['site/index']);
+    }
+
+    public function actionUpload()
+    {
+        $model = new Restaurants();
+        $model->scenario = 'upload';
+        $model->load(\Yii::$app->request->post());
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            if ($model->upload()) {
+                $model->imageFile = null;
+                // file is uploaded successfully
+                $model->save(false);
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('upload', ['model' => $model,
+        ]);
     }
 
     /**

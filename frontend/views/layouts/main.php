@@ -47,7 +47,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Dodaj Restaurację', 'url' => ['/site/upload']];
+        $menuItems[] = ['label' => 'Dodaj Restaurację', 'url' => ['/restaurants/upload']];
         $menuItems[] = ['label' => 'Zamówienia', 'url' => ['/order/index']];
         $menuItems[] = ['label' => 'Rozliczenie', 'url' => ['/payment/manage']];
         $menuItems[] = ['label' => 'Historia', 'url' => ['/history/my']];
