@@ -8,18 +8,12 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     {
         $count = count($array);
 
-        if ($count > $multiply) {
-            $remainder = $multiply - ($count % $multiply);
-        } elseif ($count < $multiply) {
-            $remainder = $multiply % $count;
-        } else {
-            $remainder = 0;
-        }
-
+        $remainder = $count % $multiply;
         if ($remainder != 0) {
-            while ($remainder > 0) {
+            $i = $multiply - $remainder;
+            while ($i > 0) {
                 $array[] = $newValue;
-                $remainder--;
+                $i--;
             }
         }
 
