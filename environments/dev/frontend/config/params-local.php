@@ -1,4 +1,4 @@
 <?php
 return [
-    'rocketChatBotToken' => 'TO_OVERWRITE'
+    'rocketChatBotToken' => 'FQMA74ydpMjuJhbP9Y3nNJwy'
 ];

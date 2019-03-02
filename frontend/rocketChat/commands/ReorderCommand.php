@@ -2,6 +2,7 @@
 
 namespace frontend\rocketChat\commands;
 
+use common\enums\OrderSource;
 use common\models\Order;
 use common\models\User;
 use frontend\rocketChat\models\Request;
@@ -40,7 +41,7 @@ class ReorderCommand extends Object implements Command
                 try {
                     /** @var \common\component\Order $orderComponent */
                     $orderComponent = \Yii::$app->order;
-                    $orderComponent->addOrder($newOrder);
+                    $orderComponent->addOrder($newOrder, OrderSource::BOT);
                     return \Yii::$app->view->render('/rocket-chat/commands/reorder', ['newOrder' => $newOrder]);
                 } catch (\Exception $e) {
                     return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Błąd zapisu']);

@@ -13,7 +13,29 @@ return [
     'bootstrap' => ['log', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
         $mediator->mediate();
+
+        $mediator = new \common\component\GAOrderMediator();
+        $mediator->mediate();
     }],
+    'container' => [
+        'definitions' => [
+            \TheIconic\Tracking\GoogleAnalytics\Analytics::class => function() use ($params) {
+                $analytics = new \TheIconic\Tracking\GoogleAnalytics\Analytics(true);
+                $analytics->setProtocolVersion('1')
+                    ->setTrackingId(empty($params['ga_tracking_id']) ? null : $params['ga_tracking_id'])
+                    ->setAsyncRequest(true)
+                    ->setClientId($params['ga_client_id']);
+                if (!\Yii::$app->user->isGuest) {
+                    $analytics->setUserId(\Yii::$app->user->id);
+                }
+                if (!empty(\Yii::$app->request->userIP)) {
+                    $analytics->setIpOverride(\Yii::$app->request->userIP);
+                }
+
+                return $analytics;
+            },
+        ]
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
@@ -53,7 +75,6 @@ return [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
-
     ],
     'params' => $params,
 ];

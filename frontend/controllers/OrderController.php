@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\component\RocketChat;
+use common\enums\OrderSource;
 use common\events\BeforeRealizedOrdersEvent;
 use common\events\NewOrderEvent;
 use common\events\Orders;
@@ -123,7 +124,7 @@ class OrderController extends Controller
 
             /** @var \common\component\Order $orderComponent */
             $orderComponent = Yii::$app->order;
-            if ($orderComponent->addOrder($order)) {
+            if ($orderComponent->addOrder($order, OrderSource::WEB)) {
                 return $this->redirect(['index']);
             }
         }

@@ -2,12 +2,18 @@
 
 namespace common\component;
 
+use common\enums\OrderSource;
 use common\events\NewOrderEvent;
 use yii\base\Component;
 
 class Order extends Component
 {
-    public function addOrder(\common\models\Order $order)
+    /**
+     * @param \common\models\Order $order
+     * @param string|OrderSource $source
+     * @return bool
+     */
+    public function addOrder(\common\models\Order $order, $source)
     {
         $result = $order->save();
         if (false === $result) {
@@ -16,7 +22,7 @@ class Order extends Component
 
         $this->trigger(
             NewOrderEvent::EVENT_NEW_ORDER,
-            NewOrderEvent::factoryFromOrder($order)
+            NewOrderEvent::factoryFromOrder($order, $source)
         );
 
         return true;

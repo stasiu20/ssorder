@@ -25,6 +25,19 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <!-- Google Analytics -->
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', '<?= \frontend\helpers\GoogleAnalyticsHelper::getTrackingId() ?>', 'auto');
+        <?php if (!\Yii::$app->user->isGuest): ?>
+            ga('set', 'userId', <?= \frontend\helpers\GoogleAnalyticsHelper::getUserId() ?>);
+        <?php endif; ?>
+        ga('send', 'pageview');
+    </script>
+    <?php if (\frontend\helpers\GoogleAnalyticsHelper::isEnabledGA()): ?>
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <?php endif; ?>
+    <!-- End Google Analytics -->
 </head>
 <body>
 <?php $this->beginBody() ?>

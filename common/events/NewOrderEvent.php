@@ -2,6 +2,7 @@
 
 namespace common\events;
 
+use common\enums\OrderSource;
 use common\models\Order;
 use yii\base\Event;
 
@@ -12,10 +13,19 @@ class NewOrderEvent extends Event
     /** @var Order */
     public $order;
 
-    public static function factoryFromOrder(Order $order)
+    /** @var OrderSource|string */
+    public $source;
+
+    /**
+     * @param Order $order
+     * @param string|OrderSource $source
+     * @return NewOrderEvent
+     */
+    public static function factoryFromOrder(Order $order, $source)
     {
         $obj = new static();
         $obj->order = $order;
+        $obj->source = $source;
         return $obj;
     }
 

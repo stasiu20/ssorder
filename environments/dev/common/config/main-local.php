@@ -18,7 +18,7 @@ return [
         ],
         'rocketChat' => [
             'endpoint' => 'http://rocketchat.lvh.me:3000',
-            'token' => 'puhPSTPcA6zfXQtZZ/9dbe4Az3S72e4fFbpTaY3fDMufRszeZaTuQfaESaCp8cSzkk',
+            'token' => 'HHPL4h7SrvCcfHBrj/4invwR2sgveqdKjNtRmm96h7b6sAAN8PTQyzZPytbcTTojJD',
         ]
     ],
 
