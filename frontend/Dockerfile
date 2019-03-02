@@ -4,6 +4,7 @@ FROM phpstorm/php-56-apache-xdebug-25
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get -y install \
+            vim \
             git \
             zip \
             unzip \
