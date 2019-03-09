@@ -18,8 +18,8 @@ class HistoryCommand extends Object implements Command
 
     public function execute(Request $request)
     {
-        $argument = explode(' ', $request->text, 2);
-        if (count($argument) != 2) {
+        $argument = explode(' ', $request->text, 3);
+        if (count($argument) < 2) {
             return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Nie podałeś daty']);
         }
 
@@ -29,6 +29,11 @@ class HistoryCommand extends Object implements Command
             return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Niepoprawny format daty.']);
         }
 
+        $dateTo = empty($argument[2]) ? strtotime('tomorrow', $date) : strtotime($argument[2]);
+        if (false === $dateTo) {
+            return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Niepoprawny format daty do.']);
+        }
+
         $orders = [];
         $user = User::getByRocketChatUserId($request->user_id);
         if ($user) {
@@ -36,7 +41,7 @@ class HistoryCommand extends Object implements Command
             $filters->userId = $user->id;
             $filters->status = Order::STATUS_REALIZED;
             $filters->dateFrom = date('Y-m-d 00:00:00', $date);
-            $filters->dateTo = date('Y-m-d H:i:s', strtotime('tomorrow', $date));
+            $filters->dateTo = date('Y-m-d H:i:s', $dateTo);
             /** @var Order[] $orders */
             $orders = OrderSearch::search($filters)->all();
         }
@@ -44,7 +49,8 @@ class HistoryCommand extends Object implements Command
         return \Yii::$app->view->render('/rocket-chat/commands/history', [
             'orders' => $orders,
             'user' => $user,
-            'date' => \Yii::$app->formatter->asDate($date, 'short')
+            'date' => \Yii::$app->formatter->asDate($date, 'short'),
+            'dateTo' => \Yii::$app->formatter->asDate($dateTo, 'short')
         ]);
     }
 }
