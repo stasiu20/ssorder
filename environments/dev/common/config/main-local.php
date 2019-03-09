@@ -14,7 +14,15 @@ return [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            #'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'mailhog',
+                'username' => 'ssorder@example.com',
+                'password' => 'secret',
+                'port' => '1025',
+//                'encryption' => 'tls',
+            ],
         ],
         'rocketChat' => [
             'endpoint' => 'http://rocketchat.lvh.me:3000',

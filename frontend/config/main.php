@@ -9,6 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'language' => 'pl-PL',
+    'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
