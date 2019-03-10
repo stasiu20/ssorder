@@ -88,7 +88,6 @@ $formatter = \Yii::$app->formatter;
             ]
         ]) : '');
         $takeRestaurantId = $order->menu->restaurants[0]['id'];
-        $takeOrder = Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']);
         ?>
 
         <tr>
@@ -104,7 +103,7 @@ $formatter = \Yii::$app->formatter;
             <td><?= $order->uwagi ?></td>
             <td><?= $order->user['username'] ?></td>
             <td style="color: <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'red' : 'green'; ?>">
-                <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'do realizacji' : 'zrealizowane'; ?>
+                <?= Yii::t('app', 'ORDER_STATUS_' . $order->status); ?>
             </td>
             <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
                 <?php if ($order->isRealized()): ?>
@@ -115,8 +114,13 @@ $formatter = \Yii::$app->formatter;
             </td>
             <td>
                 <?php if ($order->status == 0) {
-                    echo $delete . $edit . $takeOrder;
+                    echo $delete . $edit;
                 } ?>
+
+                <?php if ($order->canBeRealized()): ?>
+                    <?= Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']); ?>
+                <?php endif; ?>
+
                 <?php if ($order->isRealized()): ?>
                     <a title="Smakowało? Zamów raz jeszcze!" class=""
                        href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">

@@ -29,6 +29,7 @@ class Order extends \yii\db\ActiveRecord
 {
     const STATUS_REALIZED = 1;
     const STATUS_NOT_REALIZED = 0;
+    const STATUS_CANCELED = 2;
 
     /**
      * @inheritdoc
@@ -162,5 +163,14 @@ class Order extends \yii\db\ActiveRecord
     public function paymentChange($totalCost)
     {
         return $totalCost - $this->pay_amount;
+    }
+
+    public function canBeRealized(\DateTimeInterface $compareToDate = null)
+    {
+        if (null === $compareToDate) {
+            $compareToDate = (new \DateTimeImmutable('now'))->setTime(0, 0,0);
+        }
+        // wiodace zero musi byc ustawione
+        return $this->status === self::STATUS_NOT_REALIZED && (strpos($this->data, $compareToDate->format('Y-m-d')) === 0);
     }
 }

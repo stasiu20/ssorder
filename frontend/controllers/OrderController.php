@@ -120,7 +120,7 @@ class OrderController extends Controller
             $order->userId = Yii::$app->user->identity->id;
             $order->foodId = $model->id;
             $order->restaurantId = $model->restaurantId;
-            $order->status = 0;
+            $order->status = Order::STATUS_NOT_REALIZED;
 
             /** @var \common\component\Order $orderComponent */
             $orderComponent = Yii::$app->order;
