@@ -20,7 +20,7 @@ return [
     }],
     'container' => [
         'definitions' => [
-            \TheIconic\Tracking\GoogleAnalytics\Analytics::class => function() use ($params) {
+            \TheIconic\Tracking\GoogleAnalytics\Analytics::class => function () use ($params) {
                 $analytics = new \TheIconic\Tracking\GoogleAnalytics\Analytics(true);
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId(empty($params['ga_tracking_id']) ? null : $params['ga_tracking_id'])

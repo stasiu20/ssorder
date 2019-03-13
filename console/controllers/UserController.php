@@ -2,7 +2,6 @@
 
 namespace console\controllers;
 
-
 use common\models\User;
 use yii\console\Controller;
 

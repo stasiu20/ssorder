@@ -2,7 +2,6 @@
 
 namespace frontend\helpers;
 
-
 class GoogleAnalyticsHelper
 {
     public static function getTrackingId()
