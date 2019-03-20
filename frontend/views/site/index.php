@@ -51,15 +51,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <p class="card-text">
                                                     <a href="?id=<?= $restaurant->category->id ?>"><?= Html::encode("{$restaurant->category->categoryName}"); ?></a>
                                                 </p>
-                                                <p class="card-text">
-                                                    <img src="/image/phone.png"
-                                                         class="restaurant-details-icon"/> <?= Html::encode("{$restaurant->tel_number}"); ?>
                                                 <p class="restaurant-details">
-                                                    <img src="/image/car.png" class="restaurant-details-icon"/>
+                                                    <i class="fas fa-phone"></i>
+                                                    <?= Html::encode("{$restaurant->tel_number}"); ?>
+                                                <p class="restaurant-details">
+                                                    <i class="fas fa-car-side"></i>
                                                     <?= Html::encode("{$restaurant->delivery_price}"); ?> zł
                                                 </p>
                                                 <p class="restaurant-details">
-                                                    <img src="/image/box.png" class="restaurant-details-icon"/>
+                                                    <i class="fas fa-box"></i>
                                                     <?= Html::encode("{$restaurant->pack_price}"); ?> zł
                                                 </p>
                                                 </p>
