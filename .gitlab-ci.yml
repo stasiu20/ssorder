@@ -71,6 +71,15 @@ php-lint:
   dependencies:
     - composer
 
+phpstan-deprecation-rules:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.1
+  script:
+    - composer global require  phpstan/phpstan-deprecation-rules
+    - ~/.composer/vendor/bin/phpstan analyse ./frontend ./common ./backend ./console
+  dependencies:
+    - composer
+
 security-checker:
   stage: security
   image: edbizarro/gitlab-ci-pipeline-php:5.6
