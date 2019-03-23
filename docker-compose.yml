@@ -17,6 +17,17 @@ services:
             COMPOSER_AUTH: '{"github-oauth": {"github.com": "${COMPOSER_GITHUB_OAUTH}"}}'
             PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME}"
             XDEBUG_CONFIG: "remote_host=${MY_IP}"
+    cli:
+        image: edbizarro/gitlab-ci-pipeline-php:5.6
+        volumes:
+            - ./:/app
+        user: ${MY_UID:-1000}
+        tty: true
+        working_dir: /app
+        depends_on:
+          - mysql
+        links:
+          - mysql
     mysql:
         image: mysql:5.6
         volumes:
