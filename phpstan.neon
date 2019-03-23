@@ -4,6 +4,9 @@ parameters:
         - %currentWorkingDirectory%/frontend/web/index.php
         - %currentWorkingDirectory%/frontend/tests/*
         - %currentWorkingDirectory%/console/migrations/*
+        - %currentWorkingDirectory%/backend/tests/_support/FunctionalTester.php
+        - %currentWorkingDirectory%/backend/tests/_support/UnitTester.php
+        - %currentWorkingDirectory%/common/tests/_support/UnitTester.php
     customRulesetUsed: true
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:

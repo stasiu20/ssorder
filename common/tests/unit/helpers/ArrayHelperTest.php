@@ -1,5 +1,5 @@
 <?php
-namespace common\tests;
+namespace common\tests\unit\helpers;
 
 use common\helpers\ArrayHelper;
 
