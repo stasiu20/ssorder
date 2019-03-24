@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1788b6158f2dfcd1b969ad3238ef5eef",
+    "content-hash": "52a516f24fbdc452be9f8d94e9436ab8",
     "packages": [
         {
             "name": "2amigos/yii2-disqus-widget",
@@ -4551,7 +4551,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.6.0"
     },
     "platform-dev": []
 }

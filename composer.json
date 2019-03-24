@@ -13,15 +13,8 @@
         "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
-    "repositories": [
-      {
-        "type": "vcs",
-        "url": "https://github.com/morawskim/yii2-ga-measurement-protocol"
-      }
-    ],
     "require": {
-
-		"php": ">=5.4.0",
+		"php": ">=5.6.0",
         "yiisoft/yii2": "^2.0.15",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
