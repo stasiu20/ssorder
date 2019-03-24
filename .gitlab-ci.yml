@@ -92,6 +92,14 @@ phpstan-deprecation-rules:
   dependencies:
     - composer
 
+phpcf:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/ ./backend/
+  dependencies:
+    - composer
+
 assets:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:5.6
