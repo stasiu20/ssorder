@@ -88,7 +88,7 @@ phpstan-deprecation-rules:
   image: edbizarro/gitlab-ci-pipeline-php:7.1
   script:
     - composer global require  phpstan/phpstan-deprecation-rules
-    - ~/.composer/vendor/bin/phpstan analyse ./frontend ./common ./backend ./console
+    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./backend ./console
   dependencies:
     - composer
 
