@@ -25,7 +25,19 @@ composer:
     paths:
       - vendor/
     expire_in: 30 days
-    when: always
+    when: on_success
+
+yarn:
+  stage: prepare
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - yarn -v
+    - cd frontend && yarn
+  artifacts:
+    paths:
+      - frontend/node_modules/
+    expire_in: 5 days
+    when: on_success
 
 codestyle:
   stage: qa
@@ -79,6 +91,19 @@ phpstan-deprecation-rules:
     - ~/.composer/vendor/bin/phpstan analyse ./frontend ./common ./backend ./console
   dependencies:
     - composer
+
+assets:
+  stage: build
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - cd frontend && yarn build
+  dependencies:
+    - yarn
+  artifacts:
+    paths:
+      - frontend/web/assets/build
+    expire_in: 30 days
+    when: on_success
 
 security-checker:
   stage: security
