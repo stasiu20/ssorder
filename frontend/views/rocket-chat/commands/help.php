@@ -1,12 +1,12 @@
 Dostępne polecenia to:
-* info - zwraca id uzytkownika i informacje o powiazaniu (lub nie) konta z ssorder
+* info - zwraca id użytkownika i informacje o powiązaniu (lub nie) konta z ssorder
 
-* order - informacja o dzisiejszym zamowieniu lub braku
+* order - informacja o dzisiejszym zamówieniu lub braku
 
-* last - informacja o ostatnim zrealizowanym zamowieniu (ale nie w dniu dzisiejszym)
+* last - informacja o ostatnim zrealizowanym zamówieniu (ale nie w dniu dzisiejszym)
 
 * history - 'data od' [data do]
-Gdzie obslugiwane formaty daty to:
+Gdzie obsługiwane formaty daty to:
 YYYY-MM-DD
 -5days (data sprzed 5dni)
 
@@ -14,4 +14,4 @@ Przykłady:
 `history -5days` Wszystkie zamówienia sprzed 5 dni
 `history -5days today` Wszystkie zamówienia od 5 dni wstecz do dnia dzisiejszego włącznie
 
-* reorder NrZamownia [uwagi]
+* reorder NrZamowniaBezHash [uwagi]
