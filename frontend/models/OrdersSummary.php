@@ -7,6 +7,9 @@ class OrdersSummary
     /** @var OrderSummaryRow[] */
     private $_data = [];
 
+    /**
+     * @return OrderSummaryRow[]
+     */
     public function getData()
     {
         return $this->_data;

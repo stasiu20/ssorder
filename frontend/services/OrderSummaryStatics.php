@@ -24,6 +24,8 @@ class OrderSummaryStatics
                 $result[$order->restaurantId]->deliveryCost = $order->restaurants->delivery_price;
             }
 
+            $result[$order->restaurantId]->allOrders += 1;
+
             if ($order->isRealized()) {
                 $result[$order->restaurantId]->price += $order->getPrice();
                 $result[$order->restaurantId]->cost += $order->getPriceWithPack();

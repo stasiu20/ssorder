@@ -136,7 +136,7 @@ $formatter = \Yii::$app->formatter;
         <tr>
             <td colspan="3" class="text-right">
                 <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
-                    <?= $row->restaurant->restaurantName ?> (<?= $row->numOfOrders ?>)
+                    <?= $row->restaurant->restaurantName ?> (<?= sprintf('%d / %d', $row->numOfOrders, $row->allOrders) ?>)
                 </a>
             </td>
             <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>

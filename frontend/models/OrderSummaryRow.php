@@ -29,6 +29,8 @@ class OrderSummaryRow extends Model
 
     public $pay_amount = 0.0;
 
+    public $allOrders = 0;
+
     /**
      * @return float
      */
