@@ -25,9 +25,9 @@ class OrderSummaryStatics
             }
 
             $result[$order->restaurantId]->allOrders += 1;
+            $result[$order->restaurantId]->price += $order->getPrice();
 
             if ($order->isRealized()) {
-                $result[$order->restaurantId]->price += $order->getPrice();
                 $result[$order->restaurantId]->cost += $order->getPriceWithPack();
                 $result[$order->restaurantId]->numOfOrders += 1;
                 $result[$order->restaurantId]->pay_amount += $order->pay_amount;
