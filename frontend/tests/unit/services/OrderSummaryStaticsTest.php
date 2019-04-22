@@ -38,7 +38,7 @@ class OrderSummaryStaticsTest extends \Codeception\Test\Unit
 
         $data = $ordersSummary->getData();
         $this->assertCount(1, $data);
-        $this->assertSame(1, $data[$restaurantId]->numOfOrders);
+        $this->assertSame(1, $data[$restaurantId]->numOfRealizedOrders);
     }
 
     public function testCountAllOrders()

@@ -29,7 +29,7 @@ class OrderSummaryStatics
 
             if ($order->isRealized()) {
                 $result[$order->restaurantId]->cost += $order->getPriceWithPack();
-                $result[$order->restaurantId]->numOfOrders += 1;
+                $result[$order->restaurantId]->numOfRealizedOrders += 1;
                 $result[$order->restaurantId]->pay_amount += $order->pay_amount;
             }
         }

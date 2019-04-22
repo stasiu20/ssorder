@@ -19,8 +19,15 @@ class OrderSummaryRow extends Model
     /** @var float */
     public $price = 0.0;
 
-    /** @var int */
+    /**
+     * @var int
+     * @deprecated Use numOfRealizedOrders
+     * @see \frontend\models\OrderSummaryRow::$numOfRealizedOrders
+     */
     public $numOfOrders = 0;
+
+    /** @var int  */
+    public $numOfRealizedOrders = 0;
 
     /** @var float */
     private $_cost = 0.0;
@@ -47,7 +54,7 @@ class OrderSummaryRow extends Model
 
     public function getCostWithDelivery()
     {
-        if ($this->numOfOrders > 0) {
+        if ($this->numOfRealizedOrders > 0) {
             return $this->_cost + $this->deliveryCost;
         }
         return 0.0;
@@ -55,7 +62,7 @@ class OrderSummaryRow extends Model
 
     public function getChange()
     {
-        if ($this->numOfOrders > 0) {
+        if ($this->numOfRealizedOrders > 0) {
             return $this->getCostWithDelivery() - $this->pay_amount;
         }
 
