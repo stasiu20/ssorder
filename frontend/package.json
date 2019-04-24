@@ -4,6 +4,7 @@
     "@symfony/webpack-encore": "^0.24.0",
     "bootstrap": "4",
     "node-sass": "^4.11.0",
+    "prettier": "^1.17.0",
     "sass-loader": "^7.0.1",
     "webpack-notifier": "^1.7.0"
   },

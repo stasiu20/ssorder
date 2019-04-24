@@ -113,6 +113,14 @@ assets:
     expire_in: 30 days
     when: on_success
 
+pretier:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:5.6
+  script:
+    - cd frontend && ./node_modules/.bin/prettier --check './webpack/**'
+  dependencies:
+    - yarn
+
 security-checker:
   stage: security
   image: edbizarro/gitlab-ci-pipeline-php:5.6
