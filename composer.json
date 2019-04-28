@@ -43,7 +43,10 @@
         "wapmorgan/php-code-fixer": "^2.0"
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "platform": {
+            "php": "5.6"
+        }
     },
     "extra": {
         "asset-installer-paths": {
