@@ -40,7 +40,8 @@
         "jakub-onderka/php-parallel-lint": "^1.0",
         "sensiolabs/security-checker": "^5.0",
         "phploc/phploc": "^3.0.1",
-        "wapmorgan/php-code-fixer": "^2.0"
+        "wapmorgan/php-code-fixer": "^2.0",
+        "phpcompatibility/php-compatibility": "^9.1"
     },
     "config": {
         "process-timeout": 1800,

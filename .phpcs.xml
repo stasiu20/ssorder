@@ -26,8 +26,15 @@
     <!-- Include some specific sniffs from the Generic standard -->
     <rule ref="Generic.Commenting.Todo"/>
 
+    <!-- Run against the PHPCompatibility ruleset -->
+    <!-- Require phpcompatibility/php-compatibility package -->
+    <rule ref="PHPCompatibility"/>
+    <!-- Check for cross-version support for PHP 7.3 and higher. -->
+    <config name="testVersion" value="7.3-"/>
+    <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
+
     <!-- Include the whole YII2 standard -->
     <!-- You can install them by run `composer require &#45;&#45;dev yiisoft/yii2-coding-standards` -->
-     <rule ref="./vendor/yiisoft/yii2-coding-standards/Yii2/ruleset.xml"></rule>
+    <rule ref="./vendor/yiisoft/yii2-coding-standards/Yii2/ruleset.xml"/>
 </ruleset>
 
