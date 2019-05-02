@@ -18,6 +18,8 @@ use yii\helpers\ArrayHelper;
  * @property float $delivery_price
  * @property float $pack_price
  * @property string $img_url
+ * @property int $categoryId
+ * @property-read Category $category
  */
 class Restaurants extends ActiveRecord
 {
