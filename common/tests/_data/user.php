@@ -1,10 +1,10 @@
 <?php
 
 return [
-    [
+    'sonia.baran' => [
         'username' => 'sonia.baran',
         'email' => 'eborkowski@gazeta.pl',
-        'status' => 10,
+        'status' => \common\models\User::STATUS_ACTIVE,
         'password_hash' => '$2y$13$03N.rAkSb7pUb8zvqivMA.o79YzXlu99DK0NdjDXycRiXXv1Qfohq',
         'password_reset_token' => null,
         'auth_key' => 'y2slP7A1xDi8w1URNc4Spvw2xYZ-7uFn',
@@ -12,10 +12,10 @@ return [
         'created_at' => 1184184960,
         'updated_at' => 1392520524,
     ],
-    [
+    'mateusz.sikora' => [
         'username' => 'mateusz.sikora',
         'email' => 'gajewska.tymon@yahoo.com',
-        'status' => 10,
+        'status' => \common\models\User::STATUS_ACTIVE,
         'password_hash' => '$2y$13$Cqb49p.b55JAjew/HDFZTOVdfU90PTF6VRpBh1cv288IeowhWg7k6',
         'password_reset_token' => null,
         'auth_key' => 'HBQsNuMuHmzaTIWNiOFlg66uSoBIVsfi',
@@ -23,10 +23,10 @@ return [
         'created_at' => 1142471697,
         'updated_at' => 510996648,
     ],
-    [
+    'ljasinska' => [
         'username' => 'ljasinska',
         'email' => 'cieslak.bruno@onet.pl',
-        'status' => 0,
+        'status' => \common\models\User::STATUS_DELETED,
         'password_hash' => '$2y$13$H7lKmanWeeB8XblVMYxrye4e.Xz3TQc.ekU8LeANaMuAF3DnVkcJq',
         'password_reset_token' => null,
         'auth_key' => 'jNzAGvX7bFxOacIWQqx5uAe1B7Tvq1TF',
@@ -34,10 +34,10 @@ return [
         'created_at' => 3292686,
         'updated_at' => 890212446,
     ],
-    [
+    'tostrowski' => [
         'username' => 'tostrowski',
         'email' => 'yjaworska@yahoo.com',
-        'status' => 10,
+        'status' => \common\models\User::STATUS_ACTIVE,
         'password_hash' => '$2y$13$.xZAIi3sItl4feNApbVpJ.dFTgQ4GONqzfXo9DK3ZK5hjq9ZP4SWS',
         'password_reset_token' => null,
         'auth_key' => '13SZH-ia0oISlcqRrz_lW3SFPbWMHIZ_',
@@ -45,10 +45,10 @@ return [
         'created_at' => 34648895,
         'updated_at' => 75387472,
     ],
-    [
+    'artur56' => [
         'username' => 'artur56',
         'email' => 'michalska.dawid@laskowska.info',
-        'status' => 0,
+        'status' => \common\models\User::STATUS_DELETED,
         'password_hash' => '$2y$13$HogTP74nK1Z3pbxKM30jN.Yjh1cCBjgHvKG1.3v8RwNwOKxXs2UGK',
         'password_reset_token' => null,
         'auth_key' => 'TNYPWmFhDUgM5rxnAnYwLeZmEXHGHdHx',
@@ -56,10 +56,10 @@ return [
         'created_at' => 1067098721,
         'updated_at' => 1016051041,
     ],
-    [
+    'izabela21' => [
         'username' => 'izabela21',
         'email' => 'yszymczak@interia.pl',
-        'status' => 10,
+        'status' => \common\models\User::STATUS_ACTIVE,
         'password_hash' => '$2y$13$LwmqpYTw//kTVszYwFoXOuS55AXbIr5W6HreCB3cuZC7mn/NLpyJi',
         'password_reset_token' => null,
         'auth_key' => 'UsKCVTwVjbYmniGk1lEqRop7FqGl3j5u',
@@ -67,10 +67,10 @@ return [
         'created_at' => 251885146,
         'updated_at' => 462700489,
     ],
-    [
+    'malgorzata.glowacki' => [
         'username' => 'malgorzata.glowacki',
         'email' => 'eryk.wieczorek@gazeta.pl',
-        'status' => 10,
+        'status' => \common\models\User::STATUS_ACTIVE,
         'password_hash' => '$2y$13$H.QfaBw7rB6cJX3mASFUIeVL/uIyNA6Z3blJVmnxFexWpcV41Nq1.',
         'password_reset_token' => null,
         'auth_key' => 'yB3Lvt5iFeO5P8_DyAyVdZlCOKj-M24r',
@@ -78,10 +78,10 @@ return [
         'created_at' => 1317642353,
         'updated_at' => 363921060,
     ],
-    [
+    'unowak' => [
         'username' => 'unowak',
         'email' => 'kolodziej.arkadiusz@yahoo.com',
-        'status' => 0,
+        'status' => \common\models\User::STATUS_DELETED,
         'password_hash' => '$2y$13$Vv.f1g8pEsAIKe.Tz.Z6JOtehRSuACNZ3b6F2c8ZTVz.Wcw.1ePOa',
         'password_reset_token' => null,
         'auth_key' => 'IKuY_ZrUIsvNpgVo_WhHAZnuzR99MT_d',
@@ -89,10 +89,10 @@ return [
         'created_at' => 1381328706,
         'updated_at' => 466066733,
     ],
-    [
+    'qborowski' => [
         'username' => 'qborowski',
         'email' => 'xnowak@kaczmarczyk.pl',
-        'status' => 0,
+        'status' => \common\models\User::STATUS_DELETED,
         'password_hash' => '$2y$13$o9Q4Oh9RHl.ov36RId0Y7.2dqUR81sskOKBnoMV.Oo/4HRPOE7FtK',
         'password_reset_token' => null,
         'auth_key' => 'U09dp14IF3ALX5xwQP32HN9HWU5HL0WH',
@@ -100,10 +100,10 @@ return [
         'created_at' => 664552430,
         'updated_at' => 1350296229,
     ],
-    [
+    'witold15' => [
         'username' => 'witold15',
         'email' => 'krol.michal@borkowski.pl',
-        'status' => 0,
+        'status' => \common\models\User::STATUS_DELETED,
         'password_hash' => '$2y$13$O/zz7ULnEpGFKrC8iRJWBeYKQaDVHrwRVCaa1q3vUzG7Rx9/H6sxy',
         'password_reset_token' => null,
         'auth_key' => '0I3_DVxeS_D06D5EbUdl4nd_IRjSNAUu',
