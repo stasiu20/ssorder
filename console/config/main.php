@@ -1,4 +1,7 @@
 <?php
+
+use yii\faker\FixtureController;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -30,4 +33,11 @@ return [
 
     ],
     'params' => $params,
+    'controllerMap' => [
+        'fixture' => [
+            'class' => FixtureController::class,
+            'templatePath' => '@tests/_data/templates/fixtures',
+            'fixtureDataPath' => '@tests/_data/'
+        ],
+    ],
 ];
