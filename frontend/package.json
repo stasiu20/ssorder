@@ -2,6 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.0",
     "@symfony/webpack-encore": "^0.24.0",
+    "@types/jasmine": "^3.3.12",
     "bootstrap": "4",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^12.0.0",
@@ -11,9 +12,12 @@
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.11.0",
     "prettier": "^1.17.0",
+    "protractor": "^5.4.2",
     "sass-loader": "^7.0.1",
     "stylelint": "^10.0.1",
     "stylelint-config-recommended": "^2.2.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5",
     "webpack-notifier": "^1.7.0"
   },
   "private": true,
@@ -21,6 +25,8 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "pree2e": "webdriver-manager update",
+    "e2e": "protractor protractor.conf.js"
   }
 }
