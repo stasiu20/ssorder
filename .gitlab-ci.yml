@@ -137,6 +137,12 @@ eslint:
   dependencies:
     - yarn
 
+hadolint:
+  stage: qa
+  image: hadolint/hadolint:v1.16.3-debian
+  script:
+    - hadolint frontend/Dockerfile
+
 security-checker:
   stage: security
   image: edbizarro/gitlab-ci-pipeline-php:5.6
