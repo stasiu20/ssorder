@@ -26,7 +26,7 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
-    "pree2e": "webdriver-manager update",
+    "pree2e": "tsc protractor.conf.ts",
     "e2e": "protractor protractor.conf.js"
   }
 }

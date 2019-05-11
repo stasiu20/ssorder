@@ -8,6 +8,19 @@ export let config: Config = {
     SELENIUM_PROMISE_MANAGER: false,
     specs: ['e2e/spec/**/*.e2e-spec.ts'],
     exclude: ['e2e/spec/login/FailedLogin.e2e-spec.ts'],
+    capabilities: {
+        'browserName': 'chrome',
+        'chromeOptions': {
+            'args': [
+                '--no-sandbox',
+                '--headless',
+                '--window-size=1920,1080',
+                '--disable-dev-shm-usage',
+                '--remote-debugging-address=0.0.0.0',
+                '--remote-debugging-port=9222'
+            ]
+        },
+    },
     'onPrepare': async () => {
         require('ts-node/dist/index').register({
             project: 'e2e/tsconfig.json'
@@ -25,3 +38,4 @@ export let config: Config = {
         }, 10000);
     }
 };
+// jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
