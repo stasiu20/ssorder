@@ -8,6 +8,9 @@ export let config: Config = {
     SELENIUM_PROMISE_MANAGER: false,
     specs: ['e2e/spec/**/*.e2e-spec.ts'],
     exclude: ['e2e/spec/login/FailedLogin.e2e-spec.ts'],
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 90000
+    },
     capabilities: {
         'browserName': 'chrome',
         'chromeOptions': {
@@ -21,6 +24,7 @@ export let config: Config = {
             ]
         },
     },
+    chromeDriver: '/usr/local/bin/chromedriver',
     'onPrepare': async () => {
         require('ts-node/dist/index').register({
             project: 'e2e/tsconfig.json'

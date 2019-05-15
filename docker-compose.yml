@@ -114,3 +114,18 @@ services:
             - traefik
         external_links:
             - traefik:ssorder.lvh.me
+    e2e-debug:
+      image: morawskim/node10-google-chrome:74.0.3729.131
+      command: node --inspect-brk=0.0.0.0:9229 ./node_modules/.bin/protractor protractor.conf.js
+      volumes:
+        - ./:/app
+      working_dir: /app/frontend
+      ports:
+        - "9229:9229"
+      depends_on:
+        - traefik
+      links:
+        - traefik
+      external_links:
+        - traefik:ssorder.lvh.me
+
