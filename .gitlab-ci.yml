@@ -164,6 +164,12 @@ codeception:
   dependencies:
     - composer
 
+.e2e:
+  stage: testing
+  image: morawskim/node10-google-chrome:74.0.3729.131
+  script:
+    - cd frontend && npm run e2e
+
 deploy_production:
   stage: deploy
   image: edbizarro/gitlab-ci-pipeline-php:5.6
