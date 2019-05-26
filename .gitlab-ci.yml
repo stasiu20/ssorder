@@ -32,7 +32,7 @@ yarn:
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
     - yarn -v
-    - cd frontend && yarn
+    - cd frontend && yarn install --frozen-lock-file
   artifacts:
     paths:
       - frontend/node_modules/
