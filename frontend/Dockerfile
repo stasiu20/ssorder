@@ -13,15 +13,18 @@ RUN apt-get update && \
             zip \
             unzip \
             libicu-dev \
+            libgmp-dev \
         --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # hadolint ignore=SC2015
 RUN rm -rf /var/www/html && ln -s /app/frontend/web/ /var/www/html || true
 RUN a2enmod rewrite headers
+RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
 RUN docker-php-ext-install \
         pdo_mysql \
-        intl
+        intl \
+        gmp
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \

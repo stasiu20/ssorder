@@ -25,7 +25,9 @@
 		"borales/yii2-phone-input": "*",
         "kartik-v/yii2-date-range": "^1.6",
         "bt/rocketchat-php": "^1.1",
-        "theiconic/php-ga-measurement-protocol": "^2.0"
+        "theiconic/php-ga-measurement-protocol": "^2.0",
+        "spomky-labs/jose": "^6.1",
+        "lcobucci/jwt": "^3.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

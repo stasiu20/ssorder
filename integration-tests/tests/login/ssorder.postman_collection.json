@@ -1,0 +1,143 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ssorder",
+		"_postman_id": "b7e3ec2b-7e84-0658-a08c-2b20e1bbeb32",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth - bad username/password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Zly login/hasło\", function() {",
+							"    pm.response.to.have.status(422);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response[0]).to.have.property('field').to.eql('userName');",
+							"    pm.expect(response[0]).to.have.property('message').to.eql('Niepoprawny login lub hasło.');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"aa\",\n\t\"password\": \"bbb\"\n}\n"
+				},
+				"description": "wrong username or password"
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Udane logowanie\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('type').to.eql('auth');",
+							"    pm.expect(response).to.have.property('data').and.to.be.a('string');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"description": "Correct username or password"
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - empty body request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Zly login/hasło\", function() {",
+							"    pm.response.to.have.status(422);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response[0]).to.have.property('field').to.eql('userName');",
+							"    pm.expect(response[0]).to.have.property('message').to.eql('User Name nie może pozostać bez wartości.');",
+							"    pm.expect(response[1]).to.have.property('field').to.eql('password');",
+							"    pm.expect(response[1]).to.have.property('message').to.eql('Password nie może pozostać bez wartości.');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}\n"
+				},
+				"description": "Empty body request"
+			},
+			"response": []
+		}
+	]
+}

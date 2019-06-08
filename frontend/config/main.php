@@ -18,6 +18,11 @@ return [
         $mediator = new \common\component\GAOrderMediator();
         $mediator->mediate();
     }],
+    'modules' => [
+        'apiV1' => [
+            'class' => \frontend\modules\apiV1\ApiV1Module::class
+        ],
+    ],
     'container' => [
         'definitions' => [
             \TheIconic\Tracking\GoogleAnalytics\Analytics::class => function () use ($params) {
@@ -84,7 +89,7 @@ return [
             'rules' => [//'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
             ],
         ],
     ],

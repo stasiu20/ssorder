@@ -128,4 +128,16 @@ services:
         - traefik
       external_links:
         - traefik:ssorder.lvh.me
+    newman:
+        image: postman/newman:alpine
+        volumes:
+            - ./integration-tests:/tests
+        depends_on:
+            - traefik
+        links:
+            - traefik
+        external_links:
+            - traefik:ssorder.lvh.me
+        command: run --environment /tests/environments/docker.postman_environment.json --iteration-data /tests/tests/login/data.csv  --reporters cli /tests/tests/login/ssorder.postman_collection.json
+
 
