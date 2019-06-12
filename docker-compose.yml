@@ -39,6 +39,15 @@ services:
             MYSQL_PASSWORD: ssorderpassword
         ports:
             - "3307:3306"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.8
+        links:
+          - mysql
+        environment:
+            - PMA_HOST=mysql
+        labels:
+            traefik.backend: "phpmyadmin"
+            traefik.frontend.rule: "Host:phpmyadmin.lvh.me"
     mailhog:
         image: mailhog/mailhog
         labels:
