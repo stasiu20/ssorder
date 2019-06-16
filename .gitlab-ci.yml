@@ -143,6 +143,7 @@ hadolint:
   script:
     - hadolint frontend/Dockerfile
     - find -iname 'Dockerfile*' | xargs --max-lines=1 hadolint
+  dependencies: []
   only:
     changes:
       - frontend/Dockerfile
