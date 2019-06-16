@@ -201,3 +201,4 @@ deploy_production:
     - scp -P22 -r ./frontend/web/assets/build sensilabs@192.168.15.22:${PROD_SSORDER_PATH}/frontend/web/assets/
     - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/ && git fetch origin && git checkout $CI_COMMIT_SHA"
     - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/vendor && ln -s ./bower-asset/ ./bower"
+    - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH} && ./yii migrate/up --interactive 0"
