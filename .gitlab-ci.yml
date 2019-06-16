@@ -142,7 +142,7 @@ hadolint:
   image: hadolint/hadolint:v1.16.3-debian
   script:
     - hadolint frontend/Dockerfile
-    - git ls-files --exclude='Dockerfile*' --ignored | xargs --max-lines=1 hadolint
+    - find -iname 'Dockerfile*' | xargs --max-lines=1 hadolint
   only:
     changes:
       - frontend/Dockerfile
