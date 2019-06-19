@@ -166,6 +166,8 @@ codeception:
     - ./init --env=CI --overwrite=All
     - ./yii migrate/up --interactive 0
     - cd ./common && ../vendor/bin/codecept run unit
+    - cd ..
+    - cd ./frontend && ../vendor/bin/codecept run unit
   dependencies:
     - composer
 

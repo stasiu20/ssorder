@@ -5,13 +5,30 @@ namespace frontend\modules\apiV1\controllers;
 use common\models\AccessToken;
 use common\models\User;
 use frontend\modules\apiV1\models\request\LoginRequest;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key;
+use frontend\modules\apiV1\helpers\AccessTokenHelper;
+use yii\filters\AccessControl;
 use yii\rest\Controller;
+use yii\web\BadRequestHttpException;
+use yii\web\Response;
 
 class SessionController extends Controller
 {
+    public function behaviors()
+    {
+        $parent = parent::behaviors();
+        $parent['verbFilter']['actions'] = [
+            'login' => ['post'],
+            'logout' => ['delete'],
+        ];
+        $parent['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                ['actions' => ['login'], 'allow' => true, 'roles' => ['?']],
+                ['actions' => ['logout'], 'allow' => true, 'roles' => ['@']],
+            ]
+        ];
+        return $parent;
+    }
     public function actionLogin()
     {
         $loginRequest = new LoginRequest();
@@ -30,15 +47,30 @@ class SessionController extends Controller
             return $loginRequest;
         }
 
-        $time = time();
-        $signer = new Sha256();
-        $token = (new Builder())
-            ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-            ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-            ->withClaim('uid', $user->getId()) // Configures a new claim, called "uid"
-            ->getToken($signer, new Key('qwe')); // Retrieves the generated token
-
+        $token = AccessTokenHelper::createTokenForUser($user);
         AccessToken::saveTokenForUser($token, $user);
         return ['type' => 'auth', 'data' => (string)$token];
+    }
+
+    /**
+     * @throws BadRequestHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionLogout()
+    {
+        $header = \Yii::$app->request->getHeaders()->get(AccessTokenHelper::HEADER_NAME);
+        $token = AccessTokenHelper::getTokenFromHeader($header);
+        if (null === $token) {
+            throw new BadRequestHttpException('Token is empty');
+        }
+        $accessToken = AccessToken::getByToken($token);
+        if ($accessToken) {
+            $accessToken->delete();
+            \Yii::$app->user->logout();
+        }
+
+        $response = new Response();
+        return $response->setStatusCode(204);
     }
 }

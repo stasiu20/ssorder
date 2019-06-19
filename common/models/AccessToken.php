@@ -21,6 +21,11 @@ class AccessToken extends \yii\db\ActiveRecord
         return 'access_token';
     }
 
+    public static function getByToken($token)
+    {
+        return self::findOne(['token' => $token]);
+    }
+
     public static function saveTokenForUser(Token $token, User $user)
     {
         $tokenAR = new static();

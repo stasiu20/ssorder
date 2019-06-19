@@ -8,7 +8,7 @@ use frontend\models\Menu;
 use frontend\models\OrdersSummary;
 use frontend\services\OrderSummaryStatics;
 
-class OrderSummaryStaticsTest extends \Codeception\Test\Unit
+class OrderSummaryStaticsTestt extends \Codeception\Test\Unit
 {
     /**
      * @var \common\tests\UnitTester

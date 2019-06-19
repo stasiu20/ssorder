@@ -2,12 +2,11 @@
 
 namespace common\models;
 
+use frontend\modules\apiV1\helpers\AccessTokenHelper;
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use common\models\Order;
 
 /**
  * User model
@@ -94,7 +93,27 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        $accessToken = AccessToken::getByToken($token);
+        if (null === $accessToken) {
+            return null;
+        }
+
+        $token = AccessTokenHelper::parseToken($token);
+        if (null === $token) {
+            return null;
+        }
+
+        $userId = $token->getClaim('uid');
+        $user = User::findOne($userId);
+        if (null === $user) {
+            return null;
+        }
+
+        if ($user->isAccountActive()) {
+            return $user;
+        }
+
+        return null;
     }
 
     /**
@@ -222,5 +241,10 @@ class User extends ActiveRecord implements IdentityInterface
         $labels = parent::attributeLabels();
         $labels['new_password'] = Yii::t('app', 'Nowe hasło');
         return $labels;
+    }
+
+    public function isAccountActive()
+    {
+        return $this->status === User::STATUS_ACTIVE;
     }
 }
