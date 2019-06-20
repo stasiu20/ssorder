@@ -13,12 +13,7 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => false,
             'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 't.pl',
-                'username' => 'ssorder@t.pl',
-                'password' => 'ssorder123',
-                'port' => '25',
-//                'encryption' => 'tls',
+                'class' => 'Swift_Transport_SendmailTransport',
             ],
         ],
         'rocketChat' => [
