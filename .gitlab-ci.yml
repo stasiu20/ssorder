@@ -1,4 +1,5 @@
 stages:
+  - commit
   - prepare
   - qa
   - build
@@ -14,6 +15,20 @@ variables:
   MYSQL_USER: ssorder
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
+
+commit-message:
+  stage: commit
+  image: ruby:2.6-alpine
+  script:
+    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+ [a-zA-Z]+/"
+
+branch-name:
+  stage: commit
+  image: ruby:2.6-alpine
+  script:
+    - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
+  only:
+    - branches
 
 composer:
   stage: prepare
