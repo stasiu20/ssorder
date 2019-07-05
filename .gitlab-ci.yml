@@ -41,6 +41,10 @@ composer:
       - vendor/
     expire_in: 30 days
     when: on_success
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - /home/php/.composer/cache
 
 yarn:
   stage: prepare
@@ -53,6 +57,10 @@ yarn:
       - frontend/node_modules/
     expire_in: 5 days
     when: on_success
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - /home/php/.cache/yarn/v1
 
 codestyle:
   stage: qa
