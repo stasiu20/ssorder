@@ -3,7 +3,6 @@
     <description>The custom coding standard.</description>
 
     <file>frontend/</file>
-    <file>backend/</file>
     <file>common/</file>
     <file>console/</file>
     <exclude-pattern>*/vendor/</exclude-pattern>

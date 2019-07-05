@@ -70,7 +70,7 @@ phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./backend/,./common/,./console/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text cleancode,codesize,controversial,design,naming,unusedcode
   dependencies:
     - composer
 
@@ -78,7 +78,7 @@ phploc:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phploc ./frontend/ ./backend/ ./common/ ./console/
+    - ./vendor/bin/phploc ./frontend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -86,7 +86,7 @@ phpcpd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./backend/ ./common/ ./console/
+    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -103,7 +103,7 @@ phpstan-deprecation-rules:
   image: edbizarro/gitlab-ci-pipeline-php:7.1
   script:
     - composer global require  phpstan/phpstan-deprecation-rules
-    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./backend ./console
+    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console
   dependencies:
     - composer
 
@@ -111,7 +111,7 @@ phpcf:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/ ./backend/
+    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/
   dependencies:
     - composer
 
