@@ -44,6 +44,11 @@ class Restaurants extends ActiveRecord
         return ArrayHelper::map($restaurants, 'id', 'restaurantName');
     }
 
+    public static function findActiveRestaurants()
+    {
+        return static::find();
+    }
+
     /**
      * @inheritdoc
      */
