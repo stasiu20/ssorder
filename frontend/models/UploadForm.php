@@ -5,6 +5,9 @@ namespace frontend\models;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
+/**
+* @SuppressWarnings(PHPMD.CamelCasePropertyName)
+*/
 class UploadForm extends Model
 {
 

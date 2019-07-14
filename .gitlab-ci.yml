@@ -78,7 +78,7 @@ phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml
   dependencies:
     - composer
 

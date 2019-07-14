@@ -4,6 +4,9 @@ namespace frontend\rocketChat\models;
 
 use yii\base\Model;
 
+/**
+* @SuppressWarnings(PHPMD.CamelCasePropertyName)
+*/
 class Request extends Model
 {
     public $token;
