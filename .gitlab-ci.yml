@@ -3,8 +3,9 @@ stages:
   - prepare
   - qa
   - build
-  - testing
   - security
+  - testing
+  - docker
   - deploy
 
 services:
@@ -20,7 +21,7 @@ commit-message:
   stage: commit
   image: ruby:2.6-alpine
   script:
-    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+ [a-zA-Z]+/"
+    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
 
 branch-name:
   stage: commit
@@ -36,6 +37,7 @@ composer:
   script:
     - php -v
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cd vendor && ln -s bower-asset/ bower
   artifacts:
     paths:
       - vendor/
@@ -200,6 +202,21 @@ codeception:
   script:
     - cd frontend && npm run e2e
 
+docker:develop:
+  stage: docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  dependencies:
+    - composer
+    - assets
+  script:
+      - echo "" > $CI_PROJECT_DIR/.env
+      - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
+  only:
+    - develop
+
 deploy_production:
   stage: deploy
   image: edbizarro/gitlab-ci-pipeline-php:5.6
@@ -226,7 +243,6 @@ deploy_production:
     - scp -P22 -r ./vendor sensilabs@192.168.15.22:${PROD_SSORDER_PATH}/
     - scp -P22 -r ./frontend/web/assets/build sensilabs@192.168.15.22:${PROD_SSORDER_PATH}/frontend/web/assets/
     - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/ && git fetch origin && git checkout $CI_COMMIT_SHA"
-    - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/vendor && ln -s ./bower-asset/ ./bower"
     - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH} && ./yii migrate/up --interactive 0"
     - >
       curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN
