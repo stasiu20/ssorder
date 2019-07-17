@@ -3,10 +3,12 @@
 namespace frontend\modules\apiV1\controllers;
 
 use frontend\models\Restaurants;
+use frontend\modules\apiV1\models\Food;
 use frontend\modules\apiV1\models\Restaurant;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
+use yii\web\NotFoundHttpException;
 
 class RestaurantsController extends Controller
 {
@@ -19,7 +21,7 @@ class RestaurantsController extends Controller
         $parent['access'] = [
             'class' => AccessControl::class,
             'rules' => [
-                ['actions' => ['index'], 'allow' => true, 'roles' => ['@']],
+                ['actions' => ['index', 'foods'], 'allow' => true, 'roles' => ['@']],
             ]
         ];
         return $parent;
@@ -31,6 +33,25 @@ class RestaurantsController extends Controller
         $restaurants->modelClass = Restaurant::class;
         return new ActiveDataProvider([
             'query' => $restaurants
+        ]);
+    }
+
+    /**
+     * @param $restaurantId
+     * @return ActiveDataProvider
+     * @throws NotFoundHttpException
+     */
+    public function actionFoods($restaurantId)
+    {
+        $restaurant = Restaurants::findOne($restaurantId);
+        if (null === $restaurant) {
+            throw new NotFoundHttpException('Restaurant not exists');
+        }
+
+        $foods = $restaurant->getMenu();
+        $foods->modelClass = Food::class;
+        return new ActiveDataProvider([
+            'query' => $foods
         ]);
     }
 }
