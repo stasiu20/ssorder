@@ -27,7 +27,8 @@
         "bt/rocketchat-php": "^1.1",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "spomky-labs/jose": "^6.1",
-        "lcobucci/jwt": "^3.3"
+        "lcobucci/jwt": "^3.3",
+        "symfony/dotenv": "^3.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -58,7 +59,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "php init --env=Development --overwrite=n"
+        "post-install-cmd": "cp .env.dist .env"
     }
-
 }

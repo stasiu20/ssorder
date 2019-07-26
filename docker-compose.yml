@@ -34,9 +34,9 @@ services:
             - .runtime/mysqldata:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: ssorder
-            MYSQL_USER: ssorder
-            MYSQL_PASSWORD: ssorderpassword
+            MYSQL_DATABASE: $DB_DATABASE_NAME
+            MYSQL_USER: $DB_USERNAME
+            MYSQL_PASSWORD: $DB_PASSWORD
         ports:
             - "3307:3306"
     phpmyadmin:
