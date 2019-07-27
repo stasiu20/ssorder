@@ -1,15 +1,9 @@
 stages:
-  - commit
   - prepare
   - qa
   - build
-  - security
-  - testing
   - docker
   - deploy
-
-services:
-  - mysql:5.6
 
 variables:
   MYSQL_ROOT_PASSWORD: "rootpassword"
@@ -18,13 +12,13 @@ variables:
   MYSQL_DATABASE: ssorder
 
 commit-message:
-  stage: commit
+  stage: prepare
   image: ruby:2.6-alpine
   script:
     - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
 
 branch-name:
-  stage: commit
+  stage: prepare
   image: ruby:2.6-alpine
   script:
     - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
@@ -174,7 +168,7 @@ hadolint:
       - frontend/Dockerfile
 
 security-checker:
-  stage: security
+  stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
     - ./vendor/bin/security-checker security:check ./composer.lock --format text
@@ -183,7 +177,7 @@ security-checker:
     - composer
 
 npm-audit:
-  stage: security
+  stage: qa
   image: node:8.9-alpine
   script:
     - npm install -g yarn
@@ -193,7 +187,7 @@ npm-audit:
     - yarn
 
 codeception:
-  stage: testing
+  stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   services:
     - mysql:5.6
