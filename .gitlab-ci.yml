@@ -182,6 +182,16 @@ security-checker:
   dependencies:
     - composer
 
+npm-audit:
+  stage: security
+  image: node:8.9-alpine
+  script:
+    - npm install -g yarn
+    - cd frontend && npm run audit-ci -m
+  allow_failure: true
+  dependencies:
+    - yarn
+
 codeception:
   stage: testing
   image: edbizarro/gitlab-ci-pipeline-php:5.6

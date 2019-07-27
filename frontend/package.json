@@ -3,6 +3,7 @@
     "@fortawesome/fontawesome-free": "^5.8.0",
     "@symfony/webpack-encore": "^0.24.0",
     "@types/jasmine": "^3.3.12",
+    "audit-ci": "^2.2.0",
     "bootstrap": "4",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^12.0.0",
@@ -27,6 +28,7 @@
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "pree2e": "tsc protractor.conf.ts",
-    "e2e": "protractor protractor.conf.js"
+    "e2e": "protractor protractor.conf.js",
+    "audit-ci": "audit-ci -m"
   }
 }
