@@ -1,0 +1,28 @@
+version: '3.4'
+services:
+  ssorder:
+    image: registry.sensilabs.pl/sensilabs/ssorder
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    networks:
+      - default
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.backend: "ssorder"
+        traefik.frontend.rule: "Host:ssorder.snlb.pl"
+  mysql:
+    image: mysql:5.6
+    volumes:
+      - $PROD_SSORDER_PATH/.runtime/mysql:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+networks:
+  traefik:
+    external: true
+# vim: ft=docker-compose.yaml:
