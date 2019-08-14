@@ -13,17 +13,31 @@ variables:
 
 commit-message:
   stage: prepare
-  image: ruby:2.6-alpine
+  image: morawskim/pipeline-scripts
   script:
     - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
 
 branch-name:
   stage: prepare
-  image: ruby:2.6-alpine
+  image: morawskim/pipeline-scripts
   script:
     - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
   only:
     - branches
+
+version:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - |
+      VERSION=$(/pipeline/scripts/get-version.rb $CI_PROJECT_DIR/.git $CI_COMMIT_REF_NAME $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME)
+      echo "VERSION=$VERSION" > VERSION
+      echo "COMMIT=$CI_COMMIT_SHA" >> VERSION
+      echo "PIPELINE=$CI_PIPELINE_ID" >> VERSION
+  artifacts:
+    paths:
+      - VERSION
+    expire_in: 30 days
 
 composer:
   stage: prepare
@@ -214,7 +228,9 @@ docker:develop:
   dependencies:
     - composer
     - assets
+    - version
   script:
+      - source $CI_PROJECT_DIR/VERSION
       - echo "" > $CI_PROJECT_DIR/.env
       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
