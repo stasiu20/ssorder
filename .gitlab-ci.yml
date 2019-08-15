@@ -220,7 +220,7 @@ codeception:
   script:
     - cd frontend && npm run e2e
 
-docker:develop:
+.docker:
   stage: docker
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -229,13 +229,31 @@ docker:develop:
     - composer
     - assets
     - version
+  before_script:
+    - source $CI_PROJECT_DIR/VERSION
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "" > $CI_PROJECT_DIR/.env
+
+docker:develop:
+  extends: .docker
   script:
-      - source $CI_PROJECT_DIR/VERSION
-      - echo "" > $CI_PROJECT_DIR/.env
-      - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
+
+docker:master:
+  extends: .docker
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
+  only:
+    - master
+
+docker:rc:
+  extends: .docker
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
+  only:
+    - /^release-/
 
 deploy_production:
   stage: deploy
