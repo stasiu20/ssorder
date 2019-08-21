@@ -11,7 +11,7 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
-commit-message:
+.commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
