@@ -15,7 +15,7 @@ commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
+    - ruby -e "exit 1 unless \"$CI_COMMIT_TITLE\" =~ /^#\d+[ -]+[\p{L}]+/u"
 
 branch-name:
   stage: prepare
