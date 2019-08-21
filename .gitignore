@@ -40,3 +40,4 @@ phpunit.phar
 /frontend/runtime/gii-2.0.10
 
 /.runtime/
+/.env

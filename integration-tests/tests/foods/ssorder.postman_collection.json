@@ -1,0 +1,117 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ssorder restaurant foods",
+		"_postman_id": "8507c58b-826d-02af-de61-4041494efc25",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth - success login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Udane logowanie\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('type').to.eql('auth');",
+							"    pm.expect(response).to.have.property('data').and.to.be.a('string');",
+							"    ",
+							"    pm.environment.set(\"ACCESS_TOKEN\", response.data);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"description": "success log in"
+			},
+			"response": []
+		},
+		{
+			"name": "Foods for restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Lista posiłków w restauracji\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    ",
+							"    pm.expect(pm.response.headers.get('X-Pagination-Current-Page')).to.eql('1');",
+							"    pm.response.to.have.header('X-Pagination-Page-Count');",
+							"    pm.response.to.have.header('X-Pagination-Per-Page');",
+							"    pm.response.to.have.header('X-Pagination-Total-Count');",
+							"",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('array');",
+							"    ",
+							"    pm.expect(response[0]).to.be.a('object');",
+							"    pm.expect(response[0]).to.have.property('id').and.to.be.a('number');",
+							"    pm.expect(response[0]).to.have.property('restaurantId').and.to.be.a('number');",
+							"    pm.expect(response[0]).to.have.property('foodName').and.to.be.a('string');",
+							"    pm.expect(response[0]).to.have.property('foodInfo').and.to.be.a('string');",
+							"    pm.expect(response[0]).to.have.property('foodPrice').and.to.be.a('number');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/{{API_VERSION}}/restaurants/{{restaurantId}}/foods",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ACCESS_TOKEN}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

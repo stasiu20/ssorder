@@ -2,12 +2,8 @@ stages:
   - prepare
   - qa
   - build
-  - testing
-  - security
+  - docker
   - deploy
-
-services:
-  - mysql:5.6
 
 variables:
   MYSQL_ROOT_PASSWORD: "rootpassword"
@@ -15,17 +11,53 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
+commit-message:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
+
+branch-name:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
+  only:
+    - branches
+
+version:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - |
+      VERSION=$(/pipeline/scripts/get-version.rb $CI_PROJECT_DIR/.git $CI_COMMIT_REF_NAME $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME)
+      echo "VERSION=$VERSION" | tee VERSION
+      echo "COMMIT=$CI_COMMIT_SHA" | tee -a VERSION
+      echo "PIPELINE=$CI_PIPELINE_ID" | tee -a VERSION
+  only:
+    - branches
+    - merge_requests
+  artifacts:
+    paths:
+      - VERSION
+    expire_in: 30 days
+
 composer:
   stage: prepare
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
     - php -v
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cd vendor && ln -s bower-asset/ bower
   artifacts:
     paths:
       - vendor/
     expire_in: 30 days
     when: on_success
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - /home/php/.composer/cache
 
 yarn:
   stage: prepare
@@ -38,6 +70,10 @@ yarn:
       - frontend/node_modules/
     expire_in: 5 days
     when: on_success
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - /home/php/.cache/yarn/v1
 
 codestyle:
   stage: qa
@@ -55,7 +91,7 @@ phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./backend/,./common/,./console/ text cleancode,codesize,controversial,design,naming,unusedcode
+    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml
   dependencies:
     - composer
 
@@ -63,7 +99,7 @@ phploc:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phploc ./frontend/ ./backend/ ./common/ ./console/
+    - ./vendor/bin/phploc ./frontend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -71,7 +107,7 @@ phpcpd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./backend/ ./common/ ./console/
+    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/
   dependencies:
     - composer
 
@@ -88,7 +124,7 @@ phpstan-deprecation-rules:
   image: edbizarro/gitlab-ci-pipeline-php:7.1
   script:
     - composer global require  phpstan/phpstan-deprecation-rules
-    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./backend ./console
+    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console
   dependencies:
     - composer
 
@@ -96,7 +132,7 @@ phpcf:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/ ./backend/
+    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/
   dependencies:
     - composer
 
@@ -149,7 +185,7 @@ hadolint:
       - frontend/Dockerfile
 
 security-checker:
-  stage: security
+  stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
     - ./vendor/bin/security-checker security:check ./composer.lock --format text
@@ -157,13 +193,23 @@ security-checker:
   dependencies:
     - composer
 
+npm-audit:
+  stage: qa
+  image: node:8.9-alpine
+  script:
+    - npm install -g yarn
+    - cd frontend && npm run audit-ci -m
+  allow_failure: true
+  dependencies:
+    - yarn
+
 codeception:
-  stage: testing
+  stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   services:
     - mysql:5.6
   script:
-    - ./init --env=CI --overwrite=All
+    - cp .env.ci .env
     - ./yii migrate/up --interactive 0
     - cd ./common && ../vendor/bin/codecept run unit
     - cd ..
@@ -177,6 +223,69 @@ codeception:
   script:
     - cd frontend && npm run e2e
 
+.docker:
+  stage: docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  dependencies:
+    - composer
+    - assets
+    - version
+  before_script:
+    - source $CI_PROJECT_DIR/VERSION
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "" > $CI_PROJECT_DIR/.env
+
+docker:develop:
+  extends: .docker
+  script:
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
+  only:
+    - develop
+
+docker:master:
+  extends: .docker
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
+  only:
+    - master
+
+docker:rc:
+  extends: .docker
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
+  only:
+    - /^release-/
+
+tag_release:
+  stage: deploy
+  image: edbizarro/gitlab-ci-pipeline-php:7.2
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY_FOR_TAGGING")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - source ./VERSION
+    - echo "GITLAB_USER $GITLAB_USER_NAME GITLAB_EMAIL $GITLAB_USER_EMAIL VERSION $VERSION"
+    - git --version
+    - git config --add user.name "${GITLAB_USER_NAME}"
+    - git config --add user.email "${GITLAB_USER_EMAIL}"
+    - git remote set-url --push origin ssh://git@gitlab.sensilabs.pl:6222/${CI_PROJECT_PATH}.git
+    - git remote -v
+    - git tag -a $VERSION -m "Releasing version v${VERSION} (by gitlab-ci)"
+    - git push -o ci.skip origin --tags
+  dependencies:
+    - version
+  variables:
+    GIT_STRATEGY: clone
+
 deploy_production:
   stage: deploy
   image: edbizarro/gitlab-ci-pipeline-php:5.6
@@ -186,9 +295,6 @@ deploy_production:
 #  only:
 #    - master
   when: manual
-  dependencies:
-    - composer
-    - assets
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -196,12 +302,16 @@ deploy_production:
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    # brak obslugi bledow ssh
     - echo $PROD_SSORDER_PATH
-    - ssh -p22 sensilabs@192.168.15.22 "rm -rf ${PROD_SSORDER_PATH}/vendor"
-    - ssh -p22 sensilabs@192.168.15.22 "rm -rf ${PROD_SSORDER_PATH}/frontend/web/assets/build"
-    - scp -P22 -r ./vendor sensilabs@192.168.15.22:${PROD_SSORDER_PATH}/
-    - scp -P22 -r ./frontend/web/assets/build sensilabs@192.168.15.22:${PROD_SSORDER_PATH}/frontend/web/assets/
-    - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/ && git fetch origin && git checkout $CI_COMMIT_SHA"
-    - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH}/vendor && ln -s ./bower-asset/ ./bower"
-    - ssh -p22 sensilabs@192.168.15.22 "cd ${PROD_SSORDER_PATH} && ./yii migrate/up --interactive 0"
+    - echo "$PROD_CONFIG" > .env
+    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
+    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio}
+    - scp -P22 -r .env docker-swarm.yml deployer@192.168.15.28:${PROD_SSORDER_PATH}/
+    - |
+      ssh -p22 deployer@192.168.15.28 << EOF
+        set -e
+        echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_SSORDER_PATH/config.json
+        env PROD_SSORDER_PATH=${PROD_SSORDER_PATH} docker --config $PROD_SSORDER_PATH stack deploy --compose-file $PROD_SSORDER_PATH/docker-swarm.yml --with-registry-auth ssorder-prod
+      EOF
+    - >
+      curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN

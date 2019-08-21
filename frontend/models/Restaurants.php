@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property string $img_url
  * @property int $categoryId
  * @property-read Category $category
+ * @property-read Menu[] $menu
  */
 class Restaurants extends ActiveRecord
 {
@@ -42,6 +43,11 @@ class Restaurants extends ActiveRecord
     {
         $restaurants = self::find()->all();
         return ArrayHelper::map($restaurants, 'id', 'restaurantName');
+    }
+
+    public static function findActiveRestaurants()
+    {
+        return static::find();
     }
 
     /**
