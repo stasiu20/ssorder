@@ -21,7 +21,7 @@ branch-name:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
+    - /pipeline/scripts/check-branch-name.rb $CI_COMMIT_REF_NAME
   only:
     - branches
 
