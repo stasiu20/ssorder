@@ -11,11 +11,11 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
-commit-message:
+.commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless '$CI_COMMIT_TITLE' =~ /^#\d+[ -]+[\p{L}]+/u"
+    - ruby -e "exit 1 unless \"$CI_COMMIT_TITLE\" =~ /^#\d+[ -]+[\p{L}]+/u"
 
 branch-name:
   stage: prepare
@@ -243,6 +243,16 @@ docker:develop:
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
+  except:
+    - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
 
 docker:master:
   extends: .docker
@@ -250,6 +260,16 @@ docker:master:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - master
+  except:
+    - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
 
 docker:rc:
   extends: .docker
@@ -257,6 +277,16 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
+  except:
+    - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
 
 tag_release:
   stage: deploy
@@ -265,6 +295,14 @@ tag_release:
     - master
   except:
     - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
