@@ -11,11 +11,11 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
-.commit-message:
+commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless \"$CI_COMMIT_TITLE\" =~ /^#\d+[ -]+[\p{L}]+/u"
+    - /pipeline/scripts/check-commit-title.rb $CI_COMMIT_TITLE
 
 branch-name:
   stage: prepare
