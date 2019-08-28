@@ -236,6 +236,16 @@ codeception:
     - source $CI_PROJECT_DIR/VERSION
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "" > $CI_PROJECT_DIR/.env
+  except:
+    - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
 
 docker:develop:
   extends: .docker
@@ -243,16 +253,6 @@ docker:develop:
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 docker:master:
   extends: .docker
@@ -260,16 +260,6 @@ docker:master:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - master
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 docker:rc:
   extends: .docker
@@ -277,16 +267,6 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 tag_release:
   stage: deploy
