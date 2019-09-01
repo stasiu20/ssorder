@@ -153,7 +153,7 @@ pretier:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/prettier --check './webpack/**'
+    - cd frontend && yarn run prettier
   dependencies:
     - yarn
 
@@ -161,7 +161,7 @@ stylelint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/stylelint ./webpack
+    - cd frontend && yarn run stylelint
   dependencies:
     - yarn
 
@@ -169,7 +169,7 @@ eslint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/eslint ./webpack
+    - cd frontend && yarn run eslint
   dependencies:
     - yarn
 
@@ -198,7 +198,7 @@ npm-audit:
   image: node:8.9-alpine
   script:
     - npm install -g yarn
-    - cd frontend && npm run audit-ci -m
+    - cd frontend && yarn run audit-ci
   allow_failure: true
   dependencies:
     - yarn

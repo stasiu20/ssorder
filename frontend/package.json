@@ -29,6 +29,9 @@
     "build": "encore production --progress",
     "pree2e": "tsc protractor.conf.ts",
     "e2e": "protractor protractor.conf.js",
-    "audit-ci": "audit-ci -m"
+    "audit-ci": "audit-ci -m",
+    "prettier": "prettier --check './webpack/**'",
+    "stylelint": "stylelint ./webpack",
+    "eslint": "eslint ./webpack"
   }
 }
