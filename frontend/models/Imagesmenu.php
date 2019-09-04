@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\Restaurants;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "imagesmenu".
@@ -14,11 +15,9 @@ use frontend\models\Restaurants;
  */
 class Imagesmenu extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    
+    /** @var UploadedFile|null */
     public $imageFile;
+
     public static function tableName()
     {
         return 'imagesmenu';
@@ -48,22 +47,12 @@ class Imagesmenu extends \yii\db\ActiveRecord
             'imagesMenu_url' => 'Zdjęcie',
         ];
     }
-    
-    public function upload($restaurantId)
+
+    public function getTmpFileKey()
     {
-
-            
-        $this->imagesMenu_url = $this->imageFile->baseName . '.' . $this->imageFile->extension;
-        $this->restaurantId = $restaurantId;
-        
-        if ($this->validate()) {
-            $this->imageFile->saveAs('imagesMenu/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-
-            return true;
-        } else {
-            return false;
-        }
+        return $this->imageFile->baseName . mt_rand(1000, 9000) . '.' . $this->imageFile->extension;
     }
+
     public function getRetaurants()
     {
         return $this->hasOne(Restaurants::className(), ['id'=>'restaurantId']);

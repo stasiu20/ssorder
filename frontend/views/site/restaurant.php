@@ -40,19 +40,16 @@ $formatter = \Yii::$app->formatter;
             <div class="menuImg">
                 <h4>
                     <?php
-                    if ($userName == 'Michał') {
-                        $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => ["site/addimages?id= $restaurant->id"]])
-                        ?>
-                        <?=
-                        $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
+                        $form = ActiveForm::begin([
+                            'options' => ['enctype' => 'multipart/form-data'],
+                            'action' => ["site/addimages?restaurantId= $restaurant->id"]
+                        ]);
+                        echo $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
                             'options' => ['accept' => 'image/*'],
                             'language' => 'pl',
                         ]);
-                        ?>
-                        <?php
                         ActiveForm::end();
-                    }
-                    ?>
+                        ?>
                 </h4>
                 <?php if ($imagesMenu) {
                     echo '<h3>Galeria</h3>';

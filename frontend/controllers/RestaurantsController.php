@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\enums\BucketEnum;
+use common\services\FileService;
 use Yii;
 use frontend\models\Restaurants;
 use frontend\models\RestaurantsSearch;
@@ -152,10 +154,15 @@ class RestaurantsController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if ($model->upload()) {
-                $model->imageFile = null;
-                // file is uploaded successfully
+            $key = $model->getTmpFileKey();
+            $model->img_url = $key;
+            if ($model->validate()) {
+                /** @var FileService $fileService */
+                $fileService = Yii::$container->get(FileService::class);
+                $fileService->storeFile(
+                    BucketEnum::RESTAURANT . '/' . $key,
+                    $model->imageFile->tempName
+                );
                 $model->save(false);
                 return $this->redirect(['index']);
             }

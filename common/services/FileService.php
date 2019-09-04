@@ -4,6 +4,7 @@ namespace common\services;
 
 use Aws\S3\S3Client;
 use GuzzleHttp\Psr7\Uri;
+use yii\helpers\FileHelper;
 
 class FileService
 {
@@ -32,6 +33,20 @@ class FileService
         return $this->_s3Client->getObject([
             'Bucket' => $this->_bucketName,
             'Key'    => $key,
+        ]);
+    }
+
+    public function storeFile($key, $filePath)
+    {
+        $this->_s3Client->putObject([
+            'Bucket' => $this->_bucketName,
+            'Key'    => $key,
+            'SourceFile' => $filePath,
+            'ContentType' => FileHelper::getMimeType(
+                $filePath,
+                null,
+                false
+            )
         ]);
     }
 }
