@@ -6,6 +6,7 @@ services:
       - .env
     depends_on:
       - mysql
+      - minio
     networks:
       - default
       - traefik
@@ -14,6 +15,27 @@ services:
         traefik.port: 80
         traefik.backend: "ssorder"
         traefik.frontend.rule: "Host:ssorder.snlb.pl"
+  minio:
+    image: minio/minio:RELEASE.2019-08-21T19-40-07Z
+    volumes:
+      - $PROD_SSORDER_PATH/.runtime/minio:/data
+    env_file:
+      - .env
+    command: server /data
+    networks:
+      - default
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 9000
+        traefik.backend: "ssorder-minio"
+        traefik.frontend.rule: "Host:cdn.ssorder.snlb.pl"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 1m30s
+      timeout: 20s
+      retries: 3
+      start_period: 3m
   mysql:
     image: mysql:5.6
     volumes:
