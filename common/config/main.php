@@ -1,6 +1,32 @@
 <?php
+
+use Aws\S3\S3Client;
+use common\services\FileService;
+use yii\di\Container;
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'container' => [
+        'definitions' => [
+            S3Client::class => function ($container, $params, $config) {
+                return new S3Client([
+                    'version' => 'latest',
+                    'region'  => 'us-east-1',
+                    'endpoint' => getenv('S3CLIENT_ENDPOINT'),
+                    'use_path_style_endpoint' => true,
+                    'credentials' => [
+                        'key'    => getenv('MINIO_ACCESS_KEY'),
+                        'secret' => getenv('MINIO_SECRET_KEY'),
+                    ],
+                ]);
+            },
+            FileService::class => function (Container $container, $params, $config) {
+                /** @var S3Client $s3Client */
+                $s3Client = $container->get(S3Client::class);
+                return new FileService($s3Client);
+            }
+        ]
+    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',

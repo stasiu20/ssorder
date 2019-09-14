@@ -1,7 +1,13 @@
 <?php
 
+use frontend\helpers\FileServiceViewHelper;
+use frontend\models\Imagesmenu;
+use frontend\models\Restaurants;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+/** @var Restaurants $restaurant */
+/** @var Imagesmenu[] $imagesMenu */
 
 $title = 'Zrealizuj zamówienie dla ' . $restaurant->restaurantName;
 $this->title = "$title";
@@ -11,7 +17,7 @@ $formatter = \Yii::$app->formatter;
 ?>
 
 <div style="float: left">
-    <div class ="img-restaurant"><img class ="img-circle" src="/image/<?= $restaurant->img_url ?>"></div>
+    <div class ="img-restaurant"><img class ="img-circle" src="/image/<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
 </div>
 <div class="info" style="float:left">
     <h6><b>Info</b></h6>
@@ -27,8 +33,8 @@ $formatter = \Yii::$app->formatter;
         <div class="responsive">
 
             <div class="img">
-                <a href="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>" data-lightbox="<?= $imageMenu->imagesMenu_url; ?>"  data-title="My caption">
-                    <img class="menuImage" src="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>"/>
+                <a href="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>" data-lightbox="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"  data-title="My caption">
+                    <img class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
                 </a>
             </div>
         </div>

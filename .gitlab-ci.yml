@@ -11,17 +11,17 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
-.commit-message:
+commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless \"$CI_COMMIT_TITLE\" =~ /^#\d+[ -]+[\p{L}]+/u"
+    - /pipeline/scripts/check-commit-title.rb $CI_COMMIT_TITLE
 
 branch-name:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
-    - ruby -e "exit 1 unless '$CI_COMMIT_REF_NAME' =~ /^master|develop$/ || '$CI_COMMIT_REF_NAME' =~ /^hotfix-|release-\d+\.\d+\.\d+$/ || '$CI_COMMIT_REF_NAME' =~ /^feature-\d+$/"
+    - /pipeline/scripts/check-branch-name.rb $CI_COMMIT_REF_NAME
   only:
     - branches
 
@@ -79,7 +79,7 @@ codestyle:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcs --report=junit --extensions=php | tee phpcs-report.xml
+    - composer run phpcs | tee phpcs-report.xml
   dependencies:
     - composer
   artifacts:
@@ -91,7 +91,7 @@ phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml
+    - composer run phpmd
   dependencies:
     - composer
 
@@ -99,7 +99,7 @@ phploc:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phploc ./frontend/ ./common/ ./console/
+    - composer run phploc
   dependencies:
     - composer
 
@@ -107,7 +107,7 @@ phpcpd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/
+    - composer run phpcpd
   dependencies:
     - composer
 
@@ -115,7 +115,7 @@ php-lint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/parallel-lint --exclude vendor/ .
+    - composer run phplint
   dependencies:
     - composer
 
@@ -132,7 +132,7 @@ phpcf:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/
+    - composer run phpcf
   dependencies:
     - composer
 
@@ -153,7 +153,7 @@ pretier:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/prettier --check './webpack/**'
+    - cd frontend && yarn run prettier
   dependencies:
     - yarn
 
@@ -161,7 +161,7 @@ stylelint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/stylelint ./webpack
+    - cd frontend && yarn run stylelint
   dependencies:
     - yarn
 
@@ -169,7 +169,7 @@ eslint:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - cd frontend && ./node_modules/.bin/eslint ./webpack
+    - cd frontend && yarn run eslint
   dependencies:
     - yarn
 
@@ -188,7 +188,7 @@ security-checker:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:5.6
   script:
-    - ./vendor/bin/security-checker security:check ./composer.lock --format text
+    - composer run security-checker
   allow_failure: true
   dependencies:
     - composer
@@ -198,7 +198,7 @@ npm-audit:
   image: node:8.9-alpine
   script:
     - npm install -g yarn
-    - cd frontend && npm run audit-ci -m
+    - cd frontend && yarn run audit-ci
   allow_failure: true
   dependencies:
     - yarn
@@ -211,9 +211,8 @@ codeception:
   script:
     - cp .env.ci .env
     - ./yii migrate/up --interactive 0
-    - cd ./common && ../vendor/bin/codecept run unit
-    - cd ..
-    - cd ./frontend && ../vendor/bin/codecept run unit
+    - composer run codecept-common
+    - composer run codecept-frontend
   dependencies:
     - composer
 
@@ -236,6 +235,16 @@ codeception:
     - source $CI_PROJECT_DIR/VERSION
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "" > $CI_PROJECT_DIR/.env
+  except:
+    - tags
+    - api
+    - external
+    - pipelines
+    - schedules
+    - triggers
+    - web
+    - merge_requests
+    - chats
 
 docker:develop:
   extends: .docker
@@ -243,16 +252,6 @@ docker:develop:
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 docker:master:
   extends: .docker
@@ -260,16 +259,6 @@ docker:master:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - master
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 docker:rc:
   extends: .docker
@@ -277,16 +266,6 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 tag_release:
   stage: deploy

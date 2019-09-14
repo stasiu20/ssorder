@@ -2,8 +2,10 @@
 
 namespace frontend\controllers;
 
+use common\enums\BucketEnum;
 use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
+use common\services\FileService;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -16,6 +18,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Restaurants;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use frontend\models\Menu;
 use yii\data\ActiveDataProvider;
@@ -351,28 +354,34 @@ class SiteController extends Controller
         return $this->redirect(['restaurant', 'id' => $restaurant[0]['id']]);
     }
 
-    public function actionAddimages($id)
+    public function actionAddimages($restaurantId)
     {
-
         $model = new Imagesmenu();
-        $model->load(\Yii::$app->request->post());
-        $restaurant = Restaurants::findOne($id);
-        $restaurantId = $restaurant->id;
-        if (Yii::$app->request->isPost) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imagesMenu_url');
-
-            if ($model->upload($restaurantId)) {
-                //          var_dump($model->validate(), $model->errors);die;
-                $model->restaurantId = $restaurantId;
-                $model->imageFile = null;
-                // file is uploaded successfully
-                $model->save(false);
-                return $this->redirect(["site/restaurant?id=$restaurantId"]);
-                //return $this->render('uploadOk', ['model' => $model,]);
-            }
+        $restaurant = Restaurants::findOne($restaurantId);
+        if (null === $restaurant) {
+            throw new NotFoundHttpException('Restaurant not exists');
         }
 
-        return $this->render('uploadImagesMenu', ['model' => $model,
+        if (Yii::$app->request->isPost) {
+            $model->restaurantId = $restaurant->id;
+            $model->imageFile = UploadedFile::getInstance($model, 'imagesMenu_url');
+
+            if ($model->validate()) {
+                /** @var FileService $fileService */
+                $fileService = Yii::$container->get(FileService::class);
+                $key = $model->getTmpFileKey();
+                $fileService->storeFile(
+                    BucketEnum::MENU . '/' . $key,
+                    $model->imageFile->tempName
+                );
+                $model->imagesMenu_url = $key;
+                $model->save(false);
+            }
+            return $this->redirect(["site/restaurant?id=$restaurantId"]);
+        }
+
+        return $this->render('uploadImagesMenu', [
+            'model' => $model,
         ]);
     }
 

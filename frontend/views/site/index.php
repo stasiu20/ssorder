@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 
+use frontend\helpers\FileServiceViewHelper;
 use yii\helpers\Html;
 use frontend\models\Category;
 use yii\widgets\LinkPager;
@@ -39,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?php if ($restaurant instanceof \frontend\models\Restaurants): ?>
                                         <div class="card">
                                             <a href="/site/restaurant?id=<?= Html::encode("{$restaurant->id}"); ?>">
-                                                <img class="card-img-top" src="/image/<?= $restaurant->img_url ?>"
+                                                <img class="card-img-top" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"
                                                      alt="<?= $restaurant->restaurantName; ?>"/>
                                             </a>
                                             <div class="card-body">

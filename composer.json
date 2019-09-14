@@ -28,7 +28,8 @@
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "spomky-labs/jose": "^6.1",
         "lcobucci/jwt": "^3.3",
-        "symfony/dotenv": "^3.4"
+        "symfony/dotenv": "^3.4",
+        "aws/aws-sdk-php": "3.24.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -59,6 +60,16 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "cp .env.dist .env"
+        "post-install-cmd": "cp .env.dist .env",
+        "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
+        "phpcf": "./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/",
+        "codecept-common": "cd ./common && ../vendor/bin/codecept run unit",
+        "codecept-frontend": "cd ./frontend && ../vendor/bin/codecept run unit",
+        "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
+        "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml",
+        "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
+        "phpcpd": "./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/",
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text"
     }
 }

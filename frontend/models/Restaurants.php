@@ -8,6 +8,7 @@ use borales\extensions\phoneInput\PhoneInputValidator;
 use borales\extensions\phoneInput\PhoneInputBehavior;
 use common\models\Order;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "restaurants".
@@ -21,11 +22,13 @@ use yii\helpers\ArrayHelper;
  * @property int $categoryId
  * @property-read Category $category
  * @property-read Menu[] $menu
+ * @property-read Imagesmenu[] $imagesmenu
  */
 class Restaurants extends ActiveRecord
 {
     public $phone;
 
+    /** @var UploadedFile|null */
     public $imageFile;
 
     const SCENARIO_UPDATE = 'update';
@@ -93,16 +96,9 @@ class Restaurants extends ActiveRecord
         ];
     }
 
-    public function upload()
+    public function getTmpFileKey()
     {
-
-        $this->img_url = $this->imageFile->baseName . '.' . $this->imageFile->extension;
-        if ($this->validate()) {
-            $this->imageFile->saveAs('image/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-            return true;
-        } else {
-            return false;
-        }
+        return $this->imageFile->baseName . mt_rand(1000, 9000) . '.' . $this->imageFile->extension;
     }
 
     /**

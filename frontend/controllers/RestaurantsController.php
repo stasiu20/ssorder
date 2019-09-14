@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\enums\BucketEnum;
+use common\services\FileService;
+use frontend\helpers\FileServiceViewHelper;
 use Yii;
 use frontend\models\Restaurants;
 use frontend\models\RestaurantsSearch;
@@ -133,13 +136,16 @@ class RestaurantsController extends Controller
         foreach ($menu as $menus) {
             $menus->delete();
         }
+        /** @var FileService $fileService */
+        $fileService = Yii::$container->get(FileService::class);
+        /** @var  $imgs */
         $imgs = $restaurant->imagesmenu;
 
         foreach ($imgs as $img) {
-            unlink(getcwd() . '/image/' . $img->imagesMenu_url);
+            $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
             $img->delete();
         }
-        unlink(getcwd() . '/image/' . $restaurant->img_url);
+        $fileService->deleteFile(FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url));
         $restaurant->delete();
         return $this->redirect(['site/index']);
     }
@@ -152,10 +158,15 @@ class RestaurantsController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-            if ($model->upload()) {
-                $model->imageFile = null;
-                // file is uploaded successfully
+            $key = $model->getTmpFileKey();
+            $model->img_url = $key;
+            if ($model->validate()) {
+                /** @var FileService $fileService */
+                $fileService = Yii::$container->get(FileService::class);
+                $fileService->storeFile(
+                    BucketEnum::RESTAURANT . '/' . $key,
+                    $model->imageFile->tempName
+                );
                 $model->save(false);
                 return $this->redirect(['index']);
             }

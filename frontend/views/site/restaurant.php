@@ -1,5 +1,7 @@
 <?php
 
+use frontend\helpers\FileServiceViewHelper;
+use frontend\models\Restaurants;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -9,6 +11,8 @@ use kartik\file\FileInput;
 use frontend\models\Imagesmenu;
 
 //var_dump($menu);die;
+/** @var Restaurants $restaurant */
+/** @var Imagesmenu[] $imagesMenu */
 $this->title = $restaurant->restaurantName;
 $this->params['breadcrumbs'][] = $this->title;
 $userName = Yii::$app->user->identity->username;
@@ -16,7 +20,7 @@ $formatter = \Yii::$app->formatter;
 ?>
 <div class="body-content">
     <div class="row">
-        <div class="col-lg-3">  
+        <div class="col-lg-3">
             <h1><?= Html::encode("{$restaurant->restaurantName}"); ?></h1>
             <p>
                 <?=
@@ -26,7 +30,7 @@ $formatter = \Yii::$app->formatter;
 ?>
                 <?= Html::a('<span class="glyphicon glyphicon-trash"></span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
-            <div class ="img-restaurant"><img  src="/image/<?= $restaurant->img_url ?>" class="img-responsive img-thumbnail"></div>    
+            <div class ="img-restaurant"><img  src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-responsive img-thumbnail"></div>
             <h5>Numer telefonu:</h5>
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
             <h5>Koszt dowozu:</h5>
@@ -36,19 +40,16 @@ $formatter = \Yii::$app->formatter;
             <div class="menuImg">
                 <h4>
                     <?php
-                    if ($userName == 'Michał') {
-                        $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => ["site/addimages?id= $restaurant->id"]])
-                        ?>
-                        <?=
-                        $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
+                        $form = ActiveForm::begin([
+                            'options' => ['enctype' => 'multipart/form-data'],
+                            'action' => ["site/addimages?restaurantId= $restaurant->id"]
+                        ]);
+                        echo $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
                             'options' => ['accept' => 'image/*'],
                             'language' => 'pl',
                         ]);
-                        ?>
-                        <?php
                         ActiveForm::end();
-                    }
-                    ?>
+                        ?>
                 </h4>
                 <?php if ($imagesMenu) {
                     echo '<h3>Galeria</h3>';
@@ -57,14 +58,14 @@ $formatter = \Yii::$app->formatter;
                     <div class="responsive">
 
                         <div class="img">
-                            <?php if ($userName == 'Michał') { ?>           
+                            <?php if ($userName == 'Michał') { ?>
                                 <a class="delete" href="image?id=<?= $restaurant->id ?>&url=<?= $imageMenu->imagesMenu_url; ?>" >
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </a>
                             <?php } ?>
-                            <a href="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>" data-lightbox="<?= $imageMenu->imagesMenu_url; ?>"  data-title="My caption">
-                                <img class="menuImage" src="/imagesMenu/<?= $imageMenu->imagesMenu_url; ?>"/>   
-                            </a>      
+                            <a href="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>" data-lightbox="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"  data-title="My caption">
+                                <img class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
