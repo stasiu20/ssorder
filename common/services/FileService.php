@@ -49,4 +49,12 @@ class FileService
             )
         ]);
     }
+
+    public function deleteFile($key)
+    {
+        $this->_s3Client->deleteObject([
+            'Bucket' => $this->_bucketName,
+            'Key'    => $key,
+        ]);
+    }
 }

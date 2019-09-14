@@ -15,11 +15,21 @@ class FileServiceViewHelper
 
     public static function getRestaurantImageUrl($imageUrl)
     {
-        return self::getPublicUrl('/restaurants/' . $imageUrl);
+        return self::getPublicUrl(self::getRestaurantImageKey($imageUrl));
     }
 
     public static function getMenuImageUrl($imageUrl)
     {
-        return self::getPublicUrl('/menus/' . $imageUrl);
+        return self::getPublicUrl(self::getMenuImageKey($imageUrl));
+    }
+
+    public static function getRestaurantImageKey($imageUrl)
+    {
+        return '/restaurants/' . $imageUrl;
+    }
+
+    public static function getMenuImageKey($imageUrl)
+    {
+        return '/menus/' . $imageUrl;
     }
 }

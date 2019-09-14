@@ -22,6 +22,7 @@ use yii\web\UploadedFile;
  * @property int $categoryId
  * @property-read Category $category
  * @property-read Menu[] $menu
+ * @property-read Imagesmenu[] $imagesmenu
  */
 class Restaurants extends ActiveRecord
 {
