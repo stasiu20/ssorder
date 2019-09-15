@@ -19,7 +19,7 @@ services:
             PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME}"
             XDEBUG_CONFIG: "remote_host=${MY_IP}"
     cli:
-        image: edbizarro/gitlab-ci-pipeline-php:5.6
+        image: edbizarro/gitlab-ci-pipeline-php:7.3
         volumes:
             - ./:/app
         user: ${MY_UID:-1000}

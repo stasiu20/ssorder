@@ -4,9 +4,9 @@ namespace frontend\rocketChat\commands;
 
 use common\models\User;
 use frontend\rocketChat\models\Request;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class InfoCommand extends Object implements Command
+class InfoCommand extends BaseObject implements Command
 {
     public static function supports($text)
     {

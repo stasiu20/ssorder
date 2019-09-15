@@ -1,5 +1,5 @@
 # hadolint ignore=DL3006
-FROM php:5.6-apache
+FROM php:7.3-apache
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
@@ -27,4 +27,4 @@ RUN docker-php-ext-install \
         gmp
 
 COPY --chown=www-data:www-data ./ /app
-#TODO mmo co z logami /app/frontend/runtime i obrazkami
+#TODO mmo co z logami /app/frontend/runtime
