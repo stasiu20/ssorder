@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = 'Uwagi';
                 'model' => $model,
                 'order' => $order,
             ])
-?>
+                        ?>
         </div>
         <div class="col-lg-2"></div>
     </div>
