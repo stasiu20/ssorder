@@ -45,7 +45,8 @@
         "sensiolabs/security-checker": "^6.0.2",
         "phploc/phploc": "^5.0.0",
         "wapmorgan/php-code-fixer": "^2.0",
-        "phpcompatibility/php-compatibility": "^9.1"
+        "phpcompatibility/php-compatibility": "^9.1",
+        "phpstan/phpstan-deprecation-rules": "^0.11.2"
     },
     "config": {
         "process-timeout": 1800,

@@ -121,10 +121,9 @@ php-lint:
 
 phpstan-deprecation-rules:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.1
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - composer global require  phpstan/phpstan-deprecation-rules
-    - ~/.composer/vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console
+    - composer run phpstan-deprecation-rules
   dependencies:
     - composer
 

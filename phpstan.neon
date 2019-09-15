@@ -9,8 +9,5 @@ parameters:
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:
     		- '#Call to deprecated method className\(\) of class yii\\base\\BaseObject#'
-    		- '#Class [a-zA-Z0-9\\]+ extends deprecated class yii\\base\\Object#'
 includes:
-    # on production we have php5.6
-    # phpstan require php7.1. So we use docker image with php7.1 and install phpstan globaly
-	- /home/php/.composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
