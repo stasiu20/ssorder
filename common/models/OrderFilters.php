@@ -9,13 +9,28 @@ use yii\base\Model;
 //todo mmo: Craete search model from Orders
 class OrderFilters extends Model
 {
+    /** @var int */
     public $restaurantId;
+
+    /** @var int */
     public $userId;
+
+    /** @var string */
     public $date;
+
+    /** @var string */
     public $dateFrom;
+
+    /** @var string */
     public $dateTo;
+
+    /** @var int */
     public $status;
+
+    /** @var int */
     public $realizedBy;
+
+    /** @var string */
     public $foodName;
 
     public function rules()

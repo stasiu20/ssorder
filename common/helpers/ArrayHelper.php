@@ -4,7 +4,13 @@ namespace common\helpers;
 
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
-    public static function fillToMultiply(array $array, $multiply, $newValue = null)
+    /**
+     * @param array $array
+     * @param int $multiply
+     * @param null|mixed $newValue
+     * @return array
+     */
+    public static function fillToMultiply(array $array, int $multiply, $newValue = null): array
     {
         $count = count($array);
 

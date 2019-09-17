@@ -8,7 +8,7 @@ class Payment
      * @param Order[] $orders
      * @param array $postData
      */
-    public static function updatePayAmountFromPostData(array $orders, array $postData)
+    public static function updatePayAmountFromPostData(array $orders, array $postData): void
     {
         foreach ($orders as $order) {
             $order->pay_amount = isset($postData[$order->id]) ? $postData[$order->id] : $order->pay_amount;

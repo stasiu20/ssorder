@@ -13,6 +13,7 @@ class FileService
      */
     private $_s3Client;
 
+    /** @var string */
     private $_bucketName = 'ssorder';
 
     public function __construct(S3Client $s3Client)
@@ -20,7 +21,7 @@ class FileService
         $this->_s3Client = $s3Client;
     }
 
-    public function getPublicFileUrl($key)
+    public function getPublicFileUrl(string $key): string
     {
         $url = getenv('MINIO_PUBLIC_URL');
         $uri = new Uri($url);
@@ -28,7 +29,7 @@ class FileService
         return (string)$uri;
     }
 
-    public function getFile($key)
+    public function getFile(string $key): \Aws\Result
     {
         return $this->_s3Client->getObject([
             'Bucket' => $this->_bucketName,
@@ -36,7 +37,7 @@ class FileService
         ]);
     }
 
-    public function storeFile($key, $filePath)
+    public function storeFile(string  $key, string $filePath): void
     {
         $this->_s3Client->putObject([
             'Bucket' => $this->_bucketName,
@@ -50,7 +51,7 @@ class FileService
         ]);
     }
 
-    public function deleteFile($key)
+    public function deleteFile(string $key): void
     {
         $this->_s3Client->deleteObject([
             'Bucket' => $this->_bucketName,

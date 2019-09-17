@@ -16,7 +16,7 @@ class BeforeRealizedOrdersEvent extends Event
     /** @var User */
     public $realizedBy = [];
 
-    public static function factory(array $orders, User $user)
+    public static function factory(array $orders, User $user): BeforeRealizedOrdersEvent
     {
         $obj = new static();
         $obj->orders = $orders;
@@ -24,7 +24,7 @@ class BeforeRealizedOrdersEvent extends Event
         return $obj;
     }
 
-    public function getTextMessage()
+    public function getTextMessage(): string
     {
         if (!count($this->orders)) {
             return '';

@@ -4,7 +4,7 @@ namespace common\behaviors;
 
 class DateRangeBehavior extends \kartik\daterange\DateRangeBehavior
 {
-    public function afterValidate($event)
+    public function afterValidate($event): void
     {
         parent::afterValidate($event);
 

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "category".
@@ -43,7 +44,7 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getRestaurants()
+    public function getRestaurants(): ActiveQuery
     {
         return $this->hasMany(\frontend\models\Restaurants::className(), ['categoryId' => 'id']);
     }

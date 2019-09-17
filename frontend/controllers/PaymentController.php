@@ -46,7 +46,7 @@ class PaymentController extends Controller
         /** @var Order[] $orders */
         $orders = $dp->all();
 
-        if (\Yii::$app->request->post()) {
+        if (\Yii::$app->request->isPost) {
             $data = \Yii::$app->request->post('price', []);
             \common\models\Payment::updatePayAmountFromPostData($orders, $data);
             foreach ($orders as $order) {

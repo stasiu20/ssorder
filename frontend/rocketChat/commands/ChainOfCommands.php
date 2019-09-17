@@ -4,27 +4,23 @@ namespace frontend\rocketChat\commands;
 
 class ChainOfCommands
 {
-    public static function getCommandChain()
+    public static function getCommandChain(): array
     {
         return [
-            InfoCommand::className(),
-            HelpCommand::className(),
-            OrderCommand::className(),
-            LastOrderCommand::className(),
-            HistoryCommand::className(),
-            ReorderCommand::className(),
+            InfoCommand::class,
+            HelpCommand::class,
+            OrderCommand::class,
+            LastOrderCommand::class,
+            HistoryCommand::class,
+            ReorderCommand::class,
         ];
     }
 
-    /**
-     * @param $input
-     * @return Command
-     */
-    public static function getCommandForInput($input)
+    public static function getCommandForInput(string $input): Command
     {
         $commands = self::getCommandChain();
         foreach ($commands as $command) {
-            $isSupported = call_user_func([$command, 'supports'], $input);
+            $isSupported = $command->supports($input);
             if ($isSupported) {
                 return new $command();
             }

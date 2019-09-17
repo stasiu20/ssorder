@@ -10,7 +10,7 @@ class ArrayHelperTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    public function testFillToMultiplyIfLess()
+    public function testFillToMultiplyIfLess(): void
     {
         $data = ['a', 'b', 'c'];
         $newArray = ArrayHelper::fillToMultiply($data, 4);
@@ -18,7 +18,7 @@ class ArrayHelperTest extends \Codeception\Test\Unit
         $this->assertNull($newArray[3]);
     }
 
-    public function testFillToMultiplyIfNumberOfElementsIsGreaterThanChunkSize()
+    public function testFillToMultiplyIfNumberOfElementsIsGreaterThanChunkSize(): void
     {
         $data = ['a', 'b', 'c', 'd', 'e'];
         $newArray = ArrayHelper::fillToMultiply($data, 4);
@@ -28,7 +28,7 @@ class ArrayHelperTest extends \Codeception\Test\Unit
         $this->assertNull($newArray[7]);
     }
 
-    public function testFillToMultiplyIfChunkSizeEqualArrayLength()
+    public function testFillToMultiplyIfChunkSizeEqualArrayLength(): void
     {
         $element1 = 'a';
         $element2 = 'b';

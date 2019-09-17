@@ -119,11 +119,11 @@ php-lint:
   dependencies:
     - composer
 
-phpstan-deprecation-rules:
+phpstan:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - composer run phpstan-deprecation-rules
+    - composer run phpstan
   dependencies:
     - composer
 

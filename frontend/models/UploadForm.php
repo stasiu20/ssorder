@@ -15,9 +15,17 @@ class UploadForm extends Model
      * @var UploadedFile
      */
     public $imageFile;
+
+    /** @var string */
     public $restaurantName;
+
+    /** @var string */
     public $tel_number;
+
+    /** @var string|float */
     public $delivery_price;
+
+    /** @var string|float */
     public $pack_price;
 
     public function rules()
@@ -30,14 +38,16 @@ class UploadForm extends Model
         ];
     }
 
-    public function upload()
+    /**
+     * @deprecated
+     * @return bool
+     */
+    public function upload(): bool
     {
         if ($this->validate()) {
             $this->imageFile->saveAs('image/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

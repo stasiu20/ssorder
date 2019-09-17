@@ -113,7 +113,7 @@ class OrderController extends Controller
         $model = $this->findModel($id);
         $order = new Order();
 
-        if (Yii::$app->request->post()) {
+        if (Yii::$app->request->isPost) {
             $order->load(Yii::$app->request->post());
             $order->uwagi = strip_tags($order->uwagi);
 
@@ -159,7 +159,7 @@ class OrderController extends Controller
 
     public function actionDelete()
     {
-        if (Yii::$app->request->post('id')) {
+        if (null !== Yii::$app->request->post('id')) {
             $id= Yii::$app->request->post('id');
             $model = Order::findOne($id);
             $model->delete();
@@ -170,7 +170,7 @@ class OrderController extends Controller
     public function actionEdit()
     {
 
-        if (Yii::$app->request->post() && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
+        if (Yii::$app->request->isPost && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
             $id= Yii::$app->request->post('id');
             $order = Order::findOne($id);
             $model = Menu::findOne($order->foodId);
@@ -179,7 +179,7 @@ class OrderController extends Controller
                     'model' => $model,
                     'order' => $order
             ]);
-        } else if (Yii::$app->request->post('Order')) {
+        } else if (null !== Yii::$app->request->post('Order')) {
             $id= Yii::$app->request->post('Order')['orderId'];
             $order = Order::findOne($id);
             $order->load(Yii::$app->request->post());

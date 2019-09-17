@@ -12,7 +12,7 @@ class OrderTest extends Unit
      */
     protected $tester;
 
-    public function testOrderCantBeRealizedIfIsAlreadyRealized()
+    public function testOrderCantBeRealizedIfIsAlreadyRealized(): void
     {
         $order = new Order();
         $order->status = Order::STATUS_REALIZED;
@@ -20,7 +20,7 @@ class OrderTest extends Unit
         $this->assertFalse($order->canBeRealized());
     }
 
-    public function testOrderCantBeRealizedIfIsCanceled()
+    public function testOrderCantBeRealizedIfIsCanceled(): void
     {
         $order = new Order();
         $order->status = Order::STATUS_CANCELED;
@@ -28,7 +28,7 @@ class OrderTest extends Unit
         $this->assertFalse($order->canBeRealized());
     }
 
-    public function testOrderCantBeRealizedIfDateIsNotToday()
+    public function testOrderCantBeRealizedIfDateIsNotToday(): void
     {
         $order = new Order();
         $order->status = Order::STATUS_NOT_REALIZED;
@@ -38,7 +38,7 @@ class OrderTest extends Unit
         $this->assertFalse($order->canBeRealized($compareToDate));
     }
 
-    public function testOrderCanBeRealized()
+    public function testOrderCanBeRealized(): void
     {
         $order = new Order();
         $order->status = Order::STATUS_NOT_REALIZED;

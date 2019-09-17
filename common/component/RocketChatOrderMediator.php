@@ -9,7 +9,7 @@ use yii\base\Component;
 
 class RocketChatOrderMediator extends Component
 {
-    public function mediate()
+    public function mediate(): void
     {
         $this->getOrderComponent()->on(
             NewOrderEvent::EVENT_NEW_ORDER,
@@ -27,12 +27,12 @@ class RocketChatOrderMediator extends Component
         );
     }
 
-    public function newOrder(NewOrderEvent $event)
+    public function newOrder(NewOrderEvent $event): void
     {
         $this->getRocketChatComponent()->sendText($event->getTextMessage());
     }
 
-    public function realizedOrders(RealizedOrdersEvent $event)
+    public function realizedOrders(RealizedOrdersEvent $event): void
     {
         $text = $event->getTextMessage();
         if (!empty($text)) {
@@ -40,7 +40,7 @@ class RocketChatOrderMediator extends Component
         }
     }
 
-    public function beforeRealizedOrders(BeforeRealizedOrdersEvent $event)
+    public function beforeRealizedOrders(BeforeRealizedOrdersEvent $event): void
     {
         $text = $event->getTextMessage();
         if (!empty($text)) {
@@ -48,7 +48,7 @@ class RocketChatOrderMediator extends Component
         }
     }
 
-    protected function getRocketChatComponent()
+    protected function getRocketChatComponent(): RocketChat
     {
         /** @var RocketChat $rocketChat */
         $rocketChat = \Yii::$app->rocketChat;
@@ -58,7 +58,7 @@ class RocketChatOrderMediator extends Component
     /**
      * @return Order
      */
-    protected function getOrderComponent()
+    protected function getOrderComponent(): Order
     {
         $order = \Yii::$app->order;
         return $order;

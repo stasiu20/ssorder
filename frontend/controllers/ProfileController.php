@@ -30,7 +30,7 @@ class ProfileController extends Controller
         /** @var User $user */
         $user = \Yii::$app->user->identity;
 
-        if (\Yii::$app->request->post()) {
+        if (\Yii::$app->request->isPost) {
             if ($user->load(\Yii::$app->request->post()) && $user->save()) {
                 \Yii::$app->getSession()->setFlash('success', ' Your Profile has been saved.');
             }

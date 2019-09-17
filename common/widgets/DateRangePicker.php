@@ -10,14 +10,14 @@ class DateRangePicker extends \kartik\daterange\DateRangePicker
      * We overwrite base method for one reason. We cant select "today" date.
      * @see https://github.com/kartik-v/yii2-date-range/issues/33
      */
-    public function registerAssets()
+    public function registerAssets(): void
     {
         parent::registerAssets();
         $id = $this->options['id'];
         $isSingleDatePicker = ArrayHelper::getValue($this->pluginOptions, 'singleDatePicker', false);
 
         // we currently NOT support singleDatePicker. Maybe also other types?
-        if ($isSingleDatePicker) {
+        if ((bool)$isSingleDatePicker) {
             return;
         }
 

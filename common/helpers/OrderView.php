@@ -7,12 +7,16 @@ use yii\i18n\Formatter;
 
 class OrderView
 {
-    public static function getSettlementCssClass($amount)
+    /**
+     * @param float|null $amount
+     * @return string
+     */
+    public static function getSettlementCssClass($amount): string
     {
         return $amount > 0 ? 'text-danger' : 'text-success';
     }
 
-    public static function getOrderChangeTitle(Order $order, Formatter $formatter = null)
+    public static function getOrderChangeTitle(Order $order, Formatter $formatter = null): ?string
     {
         if (null === $formatter) {
             $formatter = \Yii::$app->formatter;

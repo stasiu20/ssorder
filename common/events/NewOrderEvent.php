@@ -21,7 +21,7 @@ class NewOrderEvent extends Event
      * @param string|OrderSource $source
      * @return NewOrderEvent
      */
-    public static function factoryFromOrder(Order $order, $source)
+    public static function factoryFromOrder(Order $order, $source): NewOrderEvent
     {
         $obj = new static();
         $obj->order = $order;
@@ -29,7 +29,7 @@ class NewOrderEvent extends Event
         return $obj;
     }
 
-    public function getTextMessage()
+    public function getTextMessage(): string
     {
         return sprintf(
             ":hamburger: :hotdog:\nZłożono nowe zamówienie przez *%s* na *%s* w restauracji *%s*.\n:hamburger: :hotdog:",

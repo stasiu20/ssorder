@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\Restaurants;
+use yii\db\ActiveQuery;
 use yii\web\UploadedFile;
 
 /**
@@ -48,13 +49,13 @@ class Imagesmenu extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getTmpFileKey()
+    public function getTmpFileKey(): string
     {
         return $this->imageFile->baseName . mt_rand(1000, 9000) . '.' . $this->imageFile->extension;
     }
 
-    public function getRetaurants()
+    public function getRetaurants(): ActiveQuery
     {
-        return $this->hasOne(Restaurants::className(), ['id'=>'restaurantId']);
+        return $this->hasOne(Restaurants::class, ['id'=>'restaurantId']);
     }
 }

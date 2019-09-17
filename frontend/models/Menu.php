@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use frontend\models\Restaurants;
 use common\models\Order;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "menu".
@@ -13,13 +14,10 @@ use common\models\Order;
  * @property integer $restaurantId
  * @property string $foodName
  * @property string $foodInfo
- * @property double $foodPrice
+ * @property double|string $foodPrice
  */
 class Menu extends \yii\db\ActiveRecord
 {
-
-
-    
     /**
      * @inheritdoc
      */
@@ -56,16 +54,14 @@ class Menu extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getRestaurants()
+    public function getRestaurants(): ActiveQuery
     {
         return $this->hasMany(Restaurants::className(), ['id' => 'restaurantId']);
     }
 
-    
-    public function getOrder()
+
+    public function getOrder(): ActiveQuery
     {
-        
-        
         return $this->hasMany(Order::className(), ['foodId'=>'id']);
     }
 }

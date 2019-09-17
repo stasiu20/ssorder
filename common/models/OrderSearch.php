@@ -2,9 +2,11 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
+
 class OrderSearch extends Order
 {
-    public static function search(OrderFilters $filters)
+    public static function search(OrderFilters $filters): ActiveQuery
     {
         $query =  Order::find();
         $userTableName = self::getDb()->getSchema()->getRawTableName(User::tableName());

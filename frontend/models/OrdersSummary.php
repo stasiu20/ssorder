@@ -15,19 +15,19 @@ class OrdersSummary
         return $this->_data;
     }
 
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         foreach ($data as $restaurantId => $summary) {
             $this->setRestaurantStatics($restaurantId, $summary);
         }
     }
 
-    public function setRestaurantStatics($restaurantId, OrderSummaryRow $summaryRow)
+    public function setRestaurantStatics(int $restaurantId, OrderSummaryRow $summaryRow): void
     {
         $this->_data[$restaurantId] = $summaryRow;
     }
 
-    public function getDataForRestaurant($restaurantId)
+    public function getDataForRestaurant(int $restaurantId): OrderSummaryRow
     {
         if (isset($this->_data[$restaurantId])) {
             return $this->_data[$restaurantId];

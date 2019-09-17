@@ -19,6 +19,11 @@ class RocketChatController extends Controller
         return $behaviours;
     }
 
+    /**
+     * @return array|Request
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
+     */
     public function actionIndex()
     {
         $request = \Yii::$app->request->getBodyParams();

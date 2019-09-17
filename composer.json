@@ -46,7 +46,8 @@
         "phploc/phploc": "^5.0.0",
         "wapmorgan/php-code-fixer": "^2.0",
         "phpcompatibility/php-compatibility": "^9.1",
-        "phpstan/phpstan-deprecation-rules": "^0.11.2"
+        "phpstan/phpstan-deprecation-rules": "^0.11.2",
+        "phpstan/phpstan-strict-rules": "^0.11.1"
     },
     "config": {
         "process-timeout": 1800,
@@ -72,7 +73,7 @@
         "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
         "phpcpd": "./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
-        "phpstan-deprecation-rules": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
+        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text"
     }
 }

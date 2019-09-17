@@ -6,6 +6,10 @@ use common\models\AccessToken;
 use common\models\User;
 use frontend\modules\apiV1\models\request\LoginRequest;
 use frontend\modules\apiV1\helpers\AccessTokenHelper;
+use Throwable;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
@@ -29,10 +33,15 @@ class SessionController extends Controller
         ];
         return $parent;
     }
+
+    /**
+     * @return array|LoginRequest
+     * @throws InvalidConfigException
+     */
     public function actionLogin()
     {
         $loginRequest = new LoginRequest();
-        $loginRequest->load(\Yii::$app->request->getBodyParams(), '');
+        $loginRequest->load(Yii::$app->request->getBodyParams(), '');
         if (!$loginRequest->validate()) {
             return $loginRequest;
         }
@@ -54,12 +63,13 @@ class SessionController extends Controller
 
     /**
      * @throws BadRequestHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws Throwable
+     * @throws StaleObjectException
+     * @return Response
      */
     public function actionLogout()
     {
-        $header = \Yii::$app->request->getHeaders()->get(AccessTokenHelper::HEADER_NAME);
+        $header = Yii::$app->request->getHeaders()->get(AccessTokenHelper::HEADER_NAME);
         $token = AccessTokenHelper::getTokenFromHeader($header);
         if (null === $token) {
             throw new BadRequestHttpException('Token is empty');
@@ -67,7 +77,7 @@ class SessionController extends Controller
         $accessToken = AccessToken::getByToken($token);
         if ($accessToken) {
             $accessToken->delete();
-            \Yii::$app->user->logout();
+            Yii::$app->user->logout();
         }
 
         $response = new Response();

@@ -20,7 +20,7 @@ class LoginRequest extends Model
         ];
     }
 
-    public function addFailedLoginError()
+    public function addFailedLoginError(): void
     {
         $this->addError('userName', \Yii::t('app', 'Niepoprawny login lub hasło.'));
     }

@@ -7,13 +7,17 @@ use yii\web\AssetBundle;
 
 class WebpackAsset extends AssetBundle
 {
+    /** @var string  */
     public $entryPointsFile = '@webroot/assets/build/entrypoints.json';
+    /** @var string  */
     public $entryPoint = 'app';
 
+    /** @var string  */
     public $basePath = '@webroot/assets/build';
+    /** @var string  */
     public $baseUrl = '@web/assets/build';
 
-    public function publish($am)
+    public function publish($am): void
     {
         $path = \Yii::getAlias($this->entryPointsFile);
         $content = file_get_contents($path);

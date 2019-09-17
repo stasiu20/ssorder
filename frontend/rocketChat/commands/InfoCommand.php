@@ -8,12 +8,12 @@ use yii\base\BaseObject;
 
 class InfoCommand extends BaseObject implements Command
 {
-    public static function supports($text)
+    public static function supports($text): bool
     {
         return stripos($text, 'info') === 0;
     }
 
-    public function execute(Request $request)
+    public function execute(Request $request): string
     {
         $user = User::getByRocketChatUserId($request->user_id);
         return \Yii::$app->view->render('/rocket-chat/commands/info', [
