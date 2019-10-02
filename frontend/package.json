@@ -5,6 +5,7 @@
     "@types/jasmine": "^3.3.12",
     "audit-ci": "^2.2.0",
     "bootstrap": "4",
+    "error-stack-parser": "^2.0.4",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.2",
