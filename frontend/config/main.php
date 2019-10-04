@@ -1,4 +1,8 @@
 <?php
+
+use mmo\yii2\helpers\AppVersionHelper;
+use mmo\yii2\models\AppVersion;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -17,6 +21,13 @@ return [
 
         $mediator = new \common\component\GAOrderMediator();
         $mediator->mediate();
+    }, function () {
+        $filePath = Yii::getAlias('@root/VERSION');
+        if (file_exists($filePath)) {
+            \Yii::$app->view->params['appVersion'] = AppVersionHelper::factoryFromFile($filePath);
+        } else {
+            \Yii::$app->view->params['appVersion'] = new AppVersion([]);
+        }
     }],
     'modules' => [
         'apiV1' => [

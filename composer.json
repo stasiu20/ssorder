@@ -13,6 +13,12 @@
         "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/morawskim/yii2-utils"
+        }
+    ],
     "require": {
 		"php": ">=7.3.0",
         "yiisoft/yii2": "^2.0.15",
@@ -29,7 +35,8 @@
         "spomky-labs/jose": "^6.1",
         "lcobucci/jwt": "^3.3",
         "symfony/dotenv": "^3.4",
-        "aws/aws-sdk-php": "^3.24.3"
+        "aws/aws-sdk-php": "^3.24.3",
+        "mmo/yii2-utils": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
