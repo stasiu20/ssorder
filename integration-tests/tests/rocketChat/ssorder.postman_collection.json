@@ -1,0 +1,128 @@
+{
+	"variables": [],
+	"info": {
+		"name": "rocketchat",
+		"_postman_id": "b4e97fc5-33e1-6794-f693-e2ce38070b89",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "help command",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Koemnda help\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('text').and.to.be.a('string');",
+							"    pm.expect(response.text).to.have.string('Dostępne polecenia to');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/rocket-chat",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"token\": \"{{rocketChatToken}}\",\n  \"bot\": false,\n  \"channel_id\": \"6WqgZQx8nkS7vqnQrvBdeuRry3i5xknr6q\",\n  \"channel_name\": null,\n  \"message_id\": \"Lx2Rry5vtA38NvRtc\",\n  \"timestamp\": \"2019-10-04T17:17:46.298Z\",\n  \"user_id\": \"6WqgZQx8nkS7vqnQr\",\n  \"user_name\": \"admin\",\n  \"text\": \"help\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "info command",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Koemnda info\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('text').and.to.be.a('string');",
+							"    pm.expect(response.text).to.have.string('Nie masz integracji między ssorder');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/rocket-chat",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"token\": \"{{rocketChatToken}}\",\n  \"bot\": false,\n  \"channel_id\": \"6WqgZQx8nkS7vqnQrvBdeuRry3i5xknr6q\",\n  \"channel_name\": null,\n  \"message_id\": \"Lx2Rry5vtA38NvRtc\",\n  \"timestamp\": \"2019-10-04T17:17:46.298Z\",\n  \"user_id\": \"6WqgZQx8nkS7vqnQr\",\n  \"user_name\": \"admin\",\n  \"text\": \"info\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "last command - brak integracji",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Koemnda info\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('text').and.to.be.a('string');",
+							"    pm.expect(response.text).to.have.string('Brak integracji z ssorder');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{BASE_URL}}/rocket-chat",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"token\": \"{{rocketChatToken}}\",\n  \"bot\": false,\n  \"channel_id\": \"6WqgZQx8nkS7vqnQrvBdeuRry3i5xknr6q\",\n  \"channel_name\": null,\n  \"message_id\": \"Lx2Rry5vtA38NvRtc\",\n  \"timestamp\": \"2019-10-04T17:17:46.298Z\",\n  \"user_id\": \"6WqgZQx8nkS7vqnQr\",\n  \"user_name\": \"admin\",\n  \"text\": \"last\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

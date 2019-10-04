@@ -20,7 +20,7 @@ class ChainOfCommands
     {
         $commands = self::getCommandChain();
         foreach ($commands as $command) {
-            $isSupported = $command->supports($input);
+            $isSupported = $command::supports($input);
             if ($isSupported) {
                 return new $command();
             }
