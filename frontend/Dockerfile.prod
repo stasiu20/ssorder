@@ -27,4 +27,3 @@ RUN docker-php-ext-install \
         gmp
 
 COPY --chown=www-data:www-data ./ /app
-#TODO mmo co z logami /app/frontend/runtime

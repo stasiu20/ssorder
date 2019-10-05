@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+use samdark\log\PsrTarget;
 use mmo\yii2\helpers\AppVersionHelper;
 use mmo\yii2\models\AppVersion;
 
@@ -9,6 +11,9 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
+
+$psrLogger = new \Monolog\Logger('ssorder_logger');
+$psrLogger->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout', YII_DEBUG ? \Monolog\Logger::DEBUG : Logger::NOTICE));
 
 return [
     'id' => 'app-frontend',
@@ -74,8 +79,12 @@ return [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'class' => PsrTarget::class,
+                    'logger' => $psrLogger,
+                    'levels' => ['error', 'warning', 'info'],
+                    // It is optional parameter. Default value is false. If you use Yii log buffering, you see buffer write time, and not real timestamp.
+                    // If you want write real time to logs, you can set addTimestampToContext as true and use timestamp from log event context.
+                    'addTimestampToContext' => true,
                 ],
             ],
         ],
