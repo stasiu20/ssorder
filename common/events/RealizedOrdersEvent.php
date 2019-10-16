@@ -16,14 +16,14 @@ class RealizedOrdersEvent extends Event
      * @param Order[] $orders
      * @return RealizedOrdersEvent
      */
-    public static function factoryFromArrayOrders(array $orders)
+    public static function factoryFromArrayOrders(array $orders): RealizedOrdersEvent
     {
         $obj = new static();
         $obj->orders = $orders;
         return $obj;
     }
 
-    public function getTextMessage()
+    public function getTextMessage(): string
     {
         if (!count($this->orders)) {
             return '';

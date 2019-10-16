@@ -7,13 +7,14 @@ use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Token;
 use Lcobucci\JWT\ValidationData;
 
 class AccessTokenHelper
 {
-    const HEADER_NAME = 'Authorization';
+    public const HEADER_NAME = 'Authorization';
 
-    public static function getTokenFromHeader($authHeader)
+    public static function getTokenFromHeader(string $authHeader): ?string
     {
         if (preg_match('/^Bearer\s+(.*?)$/', $authHeader, $matches)) {
             $authHeader = $matches[1];
@@ -22,12 +23,12 @@ class AccessTokenHelper
         return null;
     }
 
-    public static function getJwtSignKey()
+    public static function getJwtSignKey(): string
     {
         return \Yii::$app->params['jwt_key'];
     }
 
-    public static function createTokenForUser(User $user, $time = null)
+    public static function createTokenForUser(User $user, int $time = null): Token
     {
         if (null === $time) {
             $time = time();
@@ -42,7 +43,7 @@ class AccessTokenHelper
         return $token;
     }
 
-    public static function parseToken($token, $jwtSignKey = null)
+    public static function parseToken(string $token, string $jwtSignKey = null): ?Token
     {
         if (null === $jwtSignKey) {
             $jwtSignKey = self::getJwtSignKey();

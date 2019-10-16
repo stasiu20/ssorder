@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "jsx": "preserve",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "webpack/js/**/*"
+  ]
+}

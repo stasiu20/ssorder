@@ -27,6 +27,9 @@ class RestaurantsController extends Controller
         return $parent;
     }
 
+    /**
+     * @return ActiveDataProvider
+     */
     public function actionIndex()
     {
         $restaurants = Restaurants::findActiveRestaurants();
@@ -37,11 +40,11 @@ class RestaurantsController extends Controller
     }
 
     /**
-     * @param $restaurantId
+     * @param int $restaurantId
      * @return ActiveDataProvider
      * @throws NotFoundHttpException
      */
-    public function actionFoods($restaurantId)
+    public function actionFoods(int $restaurantId)
     {
         $restaurant = Restaurants::findOne($restaurantId);
         if (null === $restaurant) {

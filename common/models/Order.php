@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use frontend\models\Menu;
 use frontend\models\Restaurants;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "order".
@@ -76,23 +77,23 @@ class Order extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(\common\models\User::className(), ['id'=>'userId']);
     }
 
-    public function getRealizedByUser()
+    public function getRealizedByUser(): ActiveQuery
     {
         return $this->hasOne(\common\models\User::className(), ['id'=>'realizedBy']);
     }
 
-    public function getMenu()
+    public function getMenu(): ActiveQuery
     {
 
         return $this->hasOne(Menu::className(), ['id'=>'foodId']);
     }
 
-    public function getRestaurantName()
+    public function getRestaurantName(): string
     {
         if (null === $this->restaurants) {
             return '';
@@ -101,7 +102,7 @@ class Order extends \yii\db\ActiveRecord
         return $this->restaurants->restaurantName;
     }
 
-    public function getFoodName()
+    public function getFoodName(): string
     {
         if (null === $this->menu) {
             return '';
@@ -110,13 +111,13 @@ class Order extends \yii\db\ActiveRecord
         return $this->menu->foodName;
     }
 
-    public function getRestaurants()
+    public function getRestaurants(): ActiveQuery
     {
 
         return $this->hasOne(Restaurants::className(), ['id'=>'restaurantId']);
     }
 
-    public function isCreatedByUser($userId = null)
+    public function isCreatedByUser(int $userId = null): bool
     {
         if (null === $userId) {
             $userId = Yii::$app->user->identity->id;
@@ -124,7 +125,7 @@ class Order extends \yii\db\ActiveRecord
         return $this->userId == $userId;
     }
 
-    public function cloneOrder($userId = null)
+    public function cloneOrder(int $userId = null): Order
     {
         if (null === $userId) {
             $userId = Yii::$app->user->identity->id;
@@ -141,17 +142,17 @@ class Order extends \yii\db\ActiveRecord
         return $order;
     }
 
-    public function isRealized()
+    public function isRealized(): bool
     {
         return $this->status == self::STATUS_REALIZED;
     }
 
-    public function getPriceWithPack()
+    public function getPriceWithPack(): float
     {
         return 0.0 + $this->getPrice() + $this->restaurants->pack_price;
     }
 
-    public function getPrice()
+    public function getPrice(): float
     {
         if ($this->status == self::STATUS_REALIZED) {
             return $this->price;
@@ -160,12 +161,12 @@ class Order extends \yii\db\ActiveRecord
         return $this->menu->foodPrice;
     }
 
-    public function paymentChange($totalCost)
+    public function paymentChange(float $totalCost): float
     {
         return $totalCost - $this->pay_amount;
     }
 
-    public function canBeRealized(\DateTimeInterface $compareToDate = null)
+    public function canBeRealized(\DateTimeInterface $compareToDate = null): bool
     {
         if (null === $compareToDate) {
             $compareToDate = (new \DateTimeImmutable('now'))->setTime(0, 0, 0);

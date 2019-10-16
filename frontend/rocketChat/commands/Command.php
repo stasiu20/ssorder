@@ -10,7 +10,7 @@ interface Command
      * @param string $text
      * @return bool
      */
-    public static function supports($text);
+    public static function supports($text): bool;
 
-    public function execute(Request $request);
+    public function execute(Request $request): string;
 }

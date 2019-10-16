@@ -1,5 +1,5 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
+    "name": "ssorder/ssorder",
     "description": "Yii 2 Advanced Project Template",
     "keywords": ["yii2", "framework", "advanced", "project template"],
     "homepage": "http://www.yiiframework.com/",
@@ -13,8 +13,14 @@
         "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/morawskim/yii2-utils"
+        }
+    ],
     "require": {
-		"php": ">=5.6.0",
+		"php": ">=7.3.0",
         "yiisoft/yii2": "^2.0.15",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
@@ -29,28 +35,34 @@
         "spomky-labs/jose": "^6.1",
         "lcobucci/jwt": "^3.3",
         "symfony/dotenv": "^3.4",
-        "aws/aws-sdk-php": "3.24.3"
+        "aws/aws-sdk-php": "^3.24.3",
+        "mmo/yii2-utils": "dev-master",
+        "samdark/yii2-psr-log-target": "^1.1",
+        "monolog/monolog": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
 
-        "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1",
+        "codeception/base": "^3.1.1",
+        "codeception/verify": "~1.2.0",
         "yiisoft/yii2-coding-standards": "^2.0",
         "phpmd/phpmd": "^2.6",
-        "sebastian/phpcpd": "^3.0",
+        "sebastian/phpcpd": "^4.1.0",
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "sensiolabs/security-checker": "^5.0",
-        "phploc/phploc": "^3.0.1",
+        "sensiolabs/security-checker": "^6.0.2",
+        "phploc/phploc": "^5.0.0",
         "wapmorgan/php-code-fixer": "^2.0",
-        "phpcompatibility/php-compatibility": "^9.1"
+        "phpcompatibility/php-compatibility": "^9.1",
+        "phpstan/phpstan-deprecation-rules": "^0.11.2",
+        "phpstan/phpstan-strict-rules": "^0.11.1"
     },
     "config": {
         "process-timeout": 1800,
         "platform": {
-            "php": "5.6"
+            "php": "7.3",
+            "ext-gmp": "1.0.0"
         }
     },
     "extra": {
@@ -62,7 +74,7 @@
     "scripts": {
         "post-install-cmd": "cp .env.dist .env",
         "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
-        "phpcf": "./vendor/bin/phpcf --target 7.2 ./frontend/ console/ ./common/",
+        "phpcf": "./vendor/bin/phpcf ./frontend/ console/ ./common/",
         "codecept-common": "cd ./common && ../vendor/bin/codecept run unit",
         "codecept-frontend": "cd ./frontend && ../vendor/bin/codecept run unit",
         "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
@@ -70,6 +82,7 @@
         "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
         "phpcpd": "./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text"
     }
 }

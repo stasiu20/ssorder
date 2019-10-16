@@ -1,5 +1,5 @@
 # hadolint ignore=DL3006
-FROM phpstorm/php-56-apache-xdebug-25
+FROM phpstorm/php-73-apache-xdebug-27
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive

@@ -9,7 +9,7 @@ use yii\base\Component;
 
 class GAOrderMediator extends Component
 {
-    public function mediate()
+    public function mediate(): void
     {
         $this->getOrderComponent()->on(
             NewOrderEvent::EVENT_NEW_ORDER,
@@ -17,7 +17,7 @@ class GAOrderMediator extends Component
         );
     }
 
-    public function newOrder(NewOrderEvent $event)
+    public function newOrder(NewOrderEvent $event): void
     {
         $this->getGoogleAnalyticsObject()
             ->setEventCategory('NewOrder')
@@ -25,7 +25,7 @@ class GAOrderMediator extends Component
             ->sendEvent();
     }
 
-    protected function getGoogleAnalyticsObject()
+    protected function getGoogleAnalyticsObject(): Analytics
     {
         /** @var Analytics $ga */
         $ga = \Yii::$container->get(\TheIconic\Tracking\GoogleAnalytics\Analytics::class);
@@ -35,7 +35,7 @@ class GAOrderMediator extends Component
     /**
      * @return Order
      */
-    protected function getOrderComponent()
+    protected function getOrderComponent(): Order
     {
         $order = \Yii::$app->order;
         return $order;

@@ -16,8 +16,8 @@ use yii\web\UploadedFile;
  * @property integer $id
  * @property string $restaurantName
  * @property integer $tel_number
- * @property float $delivery_price
- * @property float $pack_price
+ * @property float|string $delivery_price
+ * @property float|string $pack_price
  * @property string $img_url
  * @property int $categoryId
  * @property-read Category $category
@@ -26,6 +26,7 @@ use yii\web\UploadedFile;
  */
 class Restaurants extends ActiveRecord
 {
+    /** @var string */
     public $phone;
 
     /** @var UploadedFile|null */
@@ -42,13 +43,13 @@ class Restaurants extends ActiveRecord
         return 'restaurants';
     }
 
-    public static function restaurantsAsArray()
+    public static function restaurantsAsArray(): array
     {
         $restaurants = self::find()->all();
         return ArrayHelper::map($restaurants, 'id', 'restaurantName');
     }
 
-    public static function findActiveRestaurants()
+    public static function findActiveRestaurants(): \yii\db\ActiveQuery
     {
         return static::find();
     }
@@ -96,7 +97,7 @@ class Restaurants extends ActiveRecord
         ];
     }
 
-    public function getTmpFileKey()
+    public function getTmpFileKey(): string
     {
         return $this->imageFile->baseName . mt_rand(1000, 9000) . '.' . $this->imageFile->extension;
     }
@@ -118,23 +119,23 @@ class Restaurants extends ActiveRecord
         ];
     }
 
-    public function getCategory()
+    public function getCategory(): \yii\db\ActiveQuery
     {
         return $this->hasOne(\frontend\models\Category::className(), ['id' => 'categoryId']);
     }
 
-    public function getMenu()
+    public function getMenu(): \yii\db\ActiveQuery
     {
         return $this->hasMany(\frontend\models\Menu::className(), ['restaurantId' => 'id']);
     }
 
-    public function getImagesmenu()
+    public function getImagesmenu(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Imagesmenu::className(), ['restaurantId' => 'id']);
     }
 
 
-    public function getOrder()
+    public function getOrder(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Order::className(), ['restaurantId' => 'id']);
     }

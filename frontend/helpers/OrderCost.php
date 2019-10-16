@@ -6,7 +6,13 @@ use common\models\Order;
 
 class OrderCost
 {
-    public static function calculateOrderCost(Order $order, $numOfOrders, $index)
+    /**
+     * @param Order $order
+     * @param int $numOfOrders
+     * @param int $index
+     * @return float|string|void
+     */
+    public static function calculateOrderCost(Order $order, int $numOfOrders, int $index)
     {
         if (!$order->isRealized()) {
             return;

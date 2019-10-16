@@ -3,10 +3,11 @@
 namespace common\models;
 
 use yii\data\Sort;
+use yii\db\ActiveQuery;
 
 class History
 {
-    public static function findByUser($userId)
+    public static function findByUser(int $userId): ActiveQuery
     {
         $filters = new OrderFilters();
         $filters->status = Order::STATUS_REALIZED;
@@ -14,7 +15,7 @@ class History
         return OrderSearch::search($filters);
     }
 
-    public static function getDefaultSort()
+    public static function getDefaultSort(): Sort
     {
         $orderBy = new Sort([
             'attributes' => [

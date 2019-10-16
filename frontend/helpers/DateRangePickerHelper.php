@@ -4,7 +4,7 @@ namespace frontend\helpers;
 
 class DateRangePickerHelper
 {
-    public static function getDefaultWidgetOptions()
+    public static function getDefaultWidgetOptions(): array
     {
         return [
             'locale' => [
@@ -17,7 +17,7 @@ class DateRangePickerHelper
         ];
     }
 
-    public static function getDefaultBehaviourOptions()
+    public static function getDefaultBehaviourOptions(): array
     {
         //the value of seperator must be equal to seperator in widget settings
         return [

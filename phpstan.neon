@@ -9,8 +9,153 @@ parameters:
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:
     		- '#Call to deprecated method className\(\) of class yii\\base\\BaseObject#'
-    		- '#Class [a-zA-Z0-9\\]+ extends deprecated class yii\\base\\Object#'
+    		- '#Method [a-zA-Z0-9\\]+::action[a-zA-Z0-9\\]+\(\) has no return typehint specified#'
+    		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has parameter \$[a-zA-Z0-9]+ with no typehint specified#'
+    		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has no return typehint specified#'
+    		- '#Dynamic call to static method PHPUnit\\Framework\\Assert::.*#'
+    polluteScopeWithLoopInitialAssignments: false
+    polluteScopeWithAlwaysIterableForeach: false
+    checkAlwaysTrueCheckTypeFunctionCall: true
+    checkAlwaysTrueInstanceof: true
+    checkAlwaysTrueStrictComparison: true
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+    reportMaybesInMethodSignatures: true
+    reportStaticMethodSignatures: true
 includes:
-    # on production we have php5.6
-    # phpstan require php7.1. So we use docker image with php7.1 and install phpstan globaly
-	- /home/php/.composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+services:
+    # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanRuleHelper
+    -
+        class: PHPStan\Rules\Operators\OperatorRuleHelper
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanAndRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanNotRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanOrRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInElseIfConditionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInIfConditionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\BooleansInConditions\BooleanInTernaryOperatorRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Cast\UselessCastRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\DisallowedConstructs\DisallowedImplicitArrayCreationRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\ForeachLoop\OverwriteVariablesWithForeachRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Functions\MissingFunctionParameterTypehintRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Functions\MissingFunctionReturnTypehintRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Methods\MissingMethodParameterTypehintRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Methods\MissingMethodReturnTypehintRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Methods\WrongCaseOfInheritedMethodRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandInArithmeticPostDecrementRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandInArithmeticPostIncrementRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandInArithmeticPreDecrementRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandInArithmeticPreIncrementRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticAdditionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticDivisionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticExponentiationRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticModuloRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticMultiplicationRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperandsInArithmeticSubtractionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Properties\MissingPropertyTypehintRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\StrictCalls\DynamicCallOnStaticMethodsRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\StrictCalls\StrictFunctionCallsRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\SwitchConditions\MatchingTypeInSwitchCaseConditionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\VariableVariables\VariableMethodCallRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\VariableVariables\VariableStaticMethodCallRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\VariableVariables\VariableStaticPropertyFetchRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\VariableVariables\VariableVariablesRule
+        tags:
+            - phpstan.rules.rule
+    # end phpstan/phpstan-strict-rules

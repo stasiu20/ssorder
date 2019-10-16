@@ -9,10 +9,16 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    /** @var string */
     public $username;
+
+    /** @var string */
     public $password;
+
+    /** @var bool */
     public $rememberMe = true;
 
+    /** @var User|null */
     private $_user;
 
 
@@ -38,7 +44,7 @@ class LoginForm extends Model
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($attribute, $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -81,7 +87,7 @@ class LoginForm extends Model
         'username'=>'Login',
         'rememberMe'=>'Zapamiętaj Mnie',
         'password'=>'Hasło'
-            
+
         ];
     }
 }

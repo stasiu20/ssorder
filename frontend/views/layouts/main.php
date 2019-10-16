@@ -3,6 +3,11 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+/** @var AppVersion $appVersion */
+$appVersion = $this->params['appVersion'];
+
+use mmo\yii2\helpers\AppVersionHelper;
+use mmo\yii2\models\AppVersion;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -93,9 +98,12 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Stasiu <?= date('Y') ?></p>
-
-        <p class="pull-right"></p>
+        <p class="pull-left">
+            &copy; Stasiu 2017 - <?= date('Y') ?>
+        </p>
+        <p class="pull-right">
+            <?= Yii::t('app', 'Wersja') ?> <?= $appVersion->getVersion(); ?>
+        </p>
     </div>
 </footer>
 <script src="/js/lightbox-plus-jquery.js"></script>

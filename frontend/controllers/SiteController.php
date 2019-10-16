@@ -67,7 +67,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
+    public function actions(): array
     {
         return [
             'error' => [
@@ -83,6 +83,7 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
+     * @param int $id
      * @return mixed
      */
     public function actionIndex($id = 0)
@@ -257,15 +258,21 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionCategory($id)
+    /**
+     * @param $id int
+     * @return string
+     */
+    public function actionCategory($id): string
     {
-
-
         $categorys = \frontend\models\Category::findOne($id);
 
         return $this->render('category', ['categorys' => $categorys]);
     }
 
+    /**
+     * @param $id int
+     * @return string
+     */
     public function actionRestaurant($id)
     {
 
@@ -292,6 +299,11 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @param $id int
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         $menu = Menu::findOne($id);
@@ -302,20 +314,28 @@ class SiteController extends Controller
         ]);
     }
 
-    protected function findModel($id)
+    /**
+     * @param $id int
+     * @return Menu|null
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id): ?Menu
     {
         if (($model = Menu::findOne($id)) !== null) {
             //$model1 = Restaurants::findOne($id);
 
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    /**
+     * @param $id int
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
-
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -330,6 +350,10 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * @param $id int
+     * @return string|\yii\web\Response
+     */
     public function actionCreate($id)
     {
         $model = new Menu();
@@ -345,6 +369,13 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * @param $id int
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($id)
     {
         $menu = Menu::findOne($id);
@@ -354,6 +385,13 @@ class SiteController extends Controller
         return $this->redirect(['restaurant', 'id' => $restaurant[0]['id']]);
     }
 
+    /**
+     * @param $restaurantId int
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
+     */
     public function actionAddimages($restaurantId)
     {
         $model = new Imagesmenu();
@@ -385,6 +423,13 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @param $url string
+     * @param $id int
+     * @return \yii\web\Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionImage($url, $id)
     {
 

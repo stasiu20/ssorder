@@ -1,6 +1,9 @@
 {
     "extends": "standard",
     "rules": {
-        "semi": ["off"]
+        "semi": ["off"],
+        "indent": ["error", 4],
+        "comma-dangle": ["error", "always-multiline"],
+        "space-before-function-paren": ["error", "never"]
     }
 }

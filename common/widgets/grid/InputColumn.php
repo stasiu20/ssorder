@@ -56,7 +56,7 @@ class InputColumn extends Column
      * @inheritdoc
      * @throws \yii\base\InvalidConfigException if [[name]] is not set.
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (empty($this->attribute)) {
@@ -69,6 +69,7 @@ class InputColumn extends Column
      */
     protected function renderDataCellContent($model, $key, $index)
     {
+        $options = [];
         $options['value'] = $this->getDataCellValue($model, $key, $index);
         $options['name'] = call_user_func($this->name, $model, $key, $index, $this);
         $options['id'] = Html::getInputId($model, $options['name']);

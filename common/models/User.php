@@ -5,6 +5,7 @@ namespace common\models;
 use frontend\modules\apiV1\helpers\AccessTokenHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -41,10 +42,10 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $userName
+     * @param string $userName
      * @return User|null
      */
-    public static function getByRocketChatUserId($userName)
+    public static function getByRocketChatUserId(string $userName): ?User
     {
         return self::findOne(['rocketchat_id' => $userName]);
     }
@@ -202,7 +203,7 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPassword($password): void
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
@@ -210,7 +211,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Generates "remember me" authentication key
      */
-    public function generateAuthKey()
+    public function generateAuthKey(): void
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
@@ -218,7 +219,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Generates new password reset token
      */
-    public function generatePasswordResetToken()
+    public function generatePasswordResetToken(): void
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
@@ -226,14 +227,14 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Removes password reset token
      */
-    public function removePasswordResetToken()
+    public function removePasswordResetToken(): void
     {
         $this->password_reset_token = null;
     }
 
-    public function getOrder()
+    public function getOrder(): ActiveQuery
     {
-        return $this->hasMany(Order::className(), ['user_id' => 'id']);
+        return $this->hasMany(Order::class, ['user_id' => 'id']);
     }
 
     public function attributeLabels()
@@ -243,7 +244,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $labels;
     }
 
-    public function isAccountActive()
+    public function isAccountActive(): bool
     {
         return $this->status === User::STATUS_ACTIVE;
     }

@@ -150,6 +150,11 @@ class RestaurantsController extends Controller
         return $this->redirect(['site/index']);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
+     */
     public function actionUpload()
     {
         $model = new Restaurants();

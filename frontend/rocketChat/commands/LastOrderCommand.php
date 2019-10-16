@@ -7,16 +7,16 @@ use common\models\OrderFilters;
 use common\models\OrderSearch;
 use common\models\User;
 use frontend\rocketChat\models\Request;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class LastOrderCommand extends Object implements Command
+class LastOrderCommand extends BaseObject implements Command
 {
-    public static function supports($text)
+    public static function supports($text): bool
     {
         return stripos($text, 'last') === 0;
     }
 
-    public function execute(Request $request)
+    public function execute(Request $request): string
     {
         $user = User::getByRocketChatUserId($request->user_id);
         $order = null;
