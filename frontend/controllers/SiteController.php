@@ -6,6 +6,7 @@ use common\enums\BucketEnum;
 use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
 use common\services\FileService;
+use frontend\helpers\FileServiceViewHelper;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -432,12 +433,13 @@ class SiteController extends Controller
      */
     public function actionImage($url, $id)
     {
-
         $img = Imagesmenu::findOne(['imagesMenu_url' => $url]);
         $restaurantId = Yii::$app->request->get('id');
 
-        if (Yii::$app->request->isGet) {
-            unlink(getcwd() . '/imagesMenu/' . $img->imagesMenu_url);
+        if ($img && Yii::$app->request->isGet) {
+            /** @var FileService $fileService */
+            $fileService = Yii::$container->get(FileService::class);
+            $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
             $img->delete();
             return $this->redirect("restaurant?id=$restaurantId");
         }

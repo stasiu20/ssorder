@@ -1,22 +1,25 @@
 <?php
 
+use frontend\assets\RestaurantAsset;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Restaurants;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 use frontend\models\Imagesmenu;
 
-//var_dump($menu);die;
 /** @var Restaurants $restaurant */
 /** @var Imagesmenu[] $imagesMenu */
 $this->title = $restaurant->restaurantName;
 $this->params['breadcrumbs'][] = $this->title;
 $userName = Yii::$app->user->identity->username;
 $formatter = \Yii::$app->formatter;
+RestaurantAsset::register($this);
 ?>
 <div class="body-content">
     <div class="row">
@@ -30,7 +33,7 @@ $formatter = \Yii::$app->formatter;
 ?>
                 <?= Html::a('<span class="glyphicon glyphicon-trash"></span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
-            <div class ="img-restaurant"><img  src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-responsive img-thumbnail"></div>
+            <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class ="img-restaurant"></div>
             <h5>Numer telefonu:</h5>
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
             <h5>Koszt dowozu:</h5>
@@ -54,21 +57,14 @@ $formatter = \Yii::$app->formatter;
                 <?php if ($imagesMenu) {
                     echo '<h3>Galeria</h3>';
                 } ?>
-                <?php foreach ($imagesMenu as $imageMenu): ?>
-                    <div class="responsive">
-
-                        <div class="img">
-                            <?php if ($userName == 'Michał') { ?>
-                                <a class="delete" href="image?id=<?= $restaurant->id ?>&url=<?= $imageMenu->imagesMenu_url; ?>" >
-                                    <span class="glyphicon glyphicon-remove-sign"></span>
-                                </a>
-                            <?php } ?>
-                            <a href="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>" data-lightbox="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"  data-title="My caption">
-                                <img class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                <?php $galleryData = array_map(function (Imagesmenu $imageMenu) {
+                    return [
+                        'id' => $imageMenu->id,
+                        'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
+                        'deleteUrl' => Url::toRoute(['site/image', 'id' => $imageMenu->restaurantId, 'url' => $imageMenu->imagesMenu_url])
+                    ];
+                }, $imagesMenu); ?>
+                <div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery"></div>
             </div>
         </div>
         <div class="col-lg-9">
@@ -121,13 +117,4 @@ $formatter = \Yii::$app->formatter;
 
     </div>
 </div>
-
-<script>
-    lightbox.option({
-        'resizeDuration': 200,
-        'wrapAround': true,
-        'maxWidth': 20
-    })
-
-</script>
 
