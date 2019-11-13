@@ -62,6 +62,7 @@ class CategorySearch extends Category
             'id' => $this->id,
         ]);
 
+        $query->andWhere(['is', 'deletedAt', null]);
         $query->andFilterWhere(['like', 'categoryName', $this->categoryName]);
 
         return $dataProvider;

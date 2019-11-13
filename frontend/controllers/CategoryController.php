@@ -101,7 +101,7 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->softDelete();
 
         return $this->redirect(['index']);
     }
@@ -117,8 +117,7 @@ class CategoryController extends Controller
     {
         if (($model = Category::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

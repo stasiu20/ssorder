@@ -9,6 +9,7 @@ use borales\extensions\phoneInput\PhoneInputBehavior;
 use common\models\Order;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "restaurants".
@@ -23,6 +24,7 @@ use yii\web\UploadedFile;
  * @property-read Category $category
  * @property-read Menu[] $menu
  * @property-read Imagesmenu[] $imagesmenu
+ * @method softDelete
  */
 class Restaurants extends ActiveRecord
 {
@@ -51,7 +53,8 @@ class Restaurants extends ActiveRecord
 
     public static function findActiveRestaurants(): \yii\db\ActiveQuery
     {
-        return static::find();
+        $query = static::find();
+        return $query->andWhere(['is', 'deletedAt', null]);
     }
 
     /**
@@ -90,10 +93,16 @@ class Restaurants extends ActiveRecord
 
     public function behaviors()
     {
-
-
         return [
-            'phoneInput' => PhoneInputBehavior::className(),
+            'phoneInput' => PhoneInputBehavior::class,
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::class,
+                'softDeleteAttributeValues' => [
+                    'deletedAt' => function ($model) {
+                        return date('Y-m-d');
+                    }
+                ],
+            ],
         ];
     }
 

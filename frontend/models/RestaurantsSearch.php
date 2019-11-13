@@ -66,7 +66,7 @@ class RestaurantsSearch extends Restaurants
         ]);
 
         $query->andFilterWhere(['like', 'restaurantName', $this->restaurantName])
-            
+            ->andWhere(['is', 'deletedAt', null])
             ->andFilterWhere(['like', 'img_url', $this->img_url]);
 
         return $dataProvider;
