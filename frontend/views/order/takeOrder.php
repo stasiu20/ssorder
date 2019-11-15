@@ -5,13 +5,14 @@ use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /** @var Restaurants $restaurant */
 /** @var Imagesmenu[] $imagesMenu */
 
 $title = 'Zrealizuj zamówienie dla ' . $restaurant->restaurantName;
 $this->title = "$title";
-$this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => ['index/order']];
+$this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => Url::to(['order/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 $formatter = \Yii::$app->formatter;
 ?>
