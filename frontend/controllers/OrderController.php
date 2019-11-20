@@ -162,7 +162,7 @@ class OrderController extends Controller
         if (null !== Yii::$app->request->post('id')) {
             $id= Yii::$app->request->post('id');
             $model = Order::findOne($id);
-            $model->delete();
+            $model->softDelete();
             return $this->redirect(['index']);
         }
     }

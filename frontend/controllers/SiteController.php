@@ -6,6 +6,7 @@ use common\enums\BucketEnum;
 use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
 use common\services\FileService;
+use frontend\helpers\FileServiceViewHelper;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -90,7 +91,7 @@ class SiteController extends Controller
     {
 
         if ($id > 0) {           //tu trzeba dać && nie więcej niż ostatni rekord w bazie
-            $query = Restaurants::find()->where(['categoryId' => $id]);
+            $query = Restaurants::findActiveRestaurants()->andWhere(['categoryId' => $id]);
             $pagination = new Pagination([
                 'defaultPageSize' => 10,
                 'totalCount' => $query->count(),]);
@@ -100,8 +101,7 @@ class SiteController extends Controller
                     ->all();
             //$restaurants = $category->restaurants;
         } else {
-            //$restaurants = Restaurants::find()->all();
-            $query = Restaurants::find();
+            $query = Restaurants::findActiveRestaurants();
             $pagination = new Pagination([
                 'defaultPageSize' => 20,
                 'totalCount' => $query->count(),]);
@@ -114,7 +114,7 @@ class SiteController extends Controller
         $chunkSize = 4;
         $restaurants = ArrayHelper::fillToMultiply($restaurants, $chunkSize);
 
-        $categorys = Category::find()->all();
+        $categorys = Category::findActive()->all();
         return $this->render('index', [
                     'restaurants' => new ChunkedIterator(new \ArrayIterator($restaurants), $chunkSize),
                     'categorys' => $categorys,
@@ -322,8 +322,6 @@ class SiteController extends Controller
     protected function findModel($id): ?Menu
     {
         if (($model = Menu::findOne($id)) !== null) {
-            //$model1 = Restaurants::findOne($id);
-
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -380,7 +378,7 @@ class SiteController extends Controller
     {
         $menu = Menu::findOne($id);
         $restaurant = $menu->restaurants;
-        $this->findModel($id)->delete();
+        $this->findModel($id)->softDelete();
 
         return $this->redirect(['restaurant', 'id' => $restaurant[0]['id']]);
     }
@@ -432,13 +430,14 @@ class SiteController extends Controller
      */
     public function actionImage($url, $id)
     {
-
         $img = Imagesmenu::findOne(['imagesMenu_url' => $url]);
         $restaurantId = Yii::$app->request->get('id');
 
-        if (Yii::$app->request->isGet) {
-            unlink(getcwd() . '/imagesMenu/' . $img->imagesMenu_url);
-            $img->delete();
+        if ($img && Yii::$app->request->isGet) {
+            /** @var FileService $fileService */
+            $fileService = Yii::$container->get(FileService::class);
+            $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
+            $img->softDelete();
             return $this->redirect("restaurant?id=$restaurantId");
         }
     }

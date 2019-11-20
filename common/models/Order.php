@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Menu;
 use frontend\models\Restaurants;
 use yii\db\ActiveQuery;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "order".
@@ -25,6 +26,7 @@ use yii\db\ActiveQuery;
  * @property \common\models\User $user
  * @property integer $realizedBy
  * @property \common\models\User $realizedByUser
+ * @method softDelete
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -52,6 +54,20 @@ class Order extends \yii\db\ActiveRecord
             [['uwagi'],'string'],
             [['price', 'pay_amount', 'total_price'],'number', 'min' => 0.01, 'max' => 999.99],
             ['status', 'match', 'pattern' => '/[0-1]/'],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::class,
+                'softDeleteAttributeValues' => [
+                    'deletedAt' => function ($model) {
+                        return date('Y-m-d');
+                    }
+                ],
+            ],
         ];
     }
 

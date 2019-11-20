@@ -17,6 +17,10 @@ class WebpackAsset extends AssetBundle
     /** @var string  */
     public $baseUrl = '@web/assets/build';
 
+    public $depends = [
+        AppAsset::class,
+    ];
+
     public function publish($am): void
     {
         $path = \Yii::getAlias($this->entryPointsFile);

@@ -134,7 +134,7 @@ class RestaurantsController extends Controller
         $restaurant = $this->findModel($id);
         $menu = $restaurant->menu;
         foreach ($menu as $menus) {
-            $menus->delete();
+            $menus->softDelete();
         }
         /** @var FileService $fileService */
         $fileService = Yii::$container->get(FileService::class);
@@ -143,10 +143,10 @@ class RestaurantsController extends Controller
 
         foreach ($imgs as $img) {
             $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
-            $img->delete();
+            $img->softDelete();
         }
         $fileService->deleteFile(FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url));
-        $restaurant->delete();
+        $restaurant->softDelete();
         return $this->redirect(['site/index']);
     }
 

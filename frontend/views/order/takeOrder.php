@@ -1,46 +1,47 @@
 <?php
 
+use frontend\assets\OrderRealiseAsset;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 /** @var Restaurants $restaurant */
 /** @var Imagesmenu[] $imagesMenu */
 
 $title = 'Zrealizuj zamówienie dla ' . $restaurant->restaurantName;
 $this->title = "$title";
-$this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => ['index/order']];
+$this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => Url::to(['order/index'])];
 $this->params['breadcrumbs'][] = $this->title;
 $formatter = \Yii::$app->formatter;
+
+OrderRealiseAsset::register($this);
 ?>
 
-<div style="float: left">
+<div class="d-flex flex-row">
     <div class ="img-restaurant"><img class ="img-circle" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
-</div>
-<div class="info" style="float:left">
-    <h6><b>Info</b></h6>
-    <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
-        cena za dowóz: <?= Html::encode("{$formatter->asCurrency($restaurant->delivery_price)}"); ?><br/>
-        cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?>
-    </p>
+    <div class="ml-4">
+        <h6><b>Info</b></h6>
+        <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
+            cena za dowóz: <?= Html::encode("{$formatter->asCurrency($restaurant->delivery_price)}"); ?><br/>
+            cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?>
+        </p>
+    </div>
 </div>
 
-<div class="menuImg" style="float:left">
+<?php $galleryData = array_map(function (Imagesmenu $imageMenu) {
+    return [
+        'id' => $imageMenu->id,
+        'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
+        'deleteUrl' => Url::toRoute(['site/image', 'id' => $imageMenu->restaurantId, 'url' => $imageMenu->imagesMenu_url])
+    ];
+}, $imagesMenu); ?>
+<div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery" class="menuImg"></div>
+<br />
 
-    <?php foreach ($imagesMenu as $imageMenu): ?>
-        <div class="responsive">
-
-            <div class="img">
-                <a href="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>" data-lightbox="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"  data-title="My caption">
-                    <img class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
-                </a>
-            </div>
-        </div>
-    <?php endforeach; ?>
-</div>
-<div style="clear: both"></div>
 <?=
 GridView::widget([
     'dataProvider' => $dataProvider,

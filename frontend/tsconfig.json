@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es6",
     "jsx": "preserve",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "webpack/js/**/*"

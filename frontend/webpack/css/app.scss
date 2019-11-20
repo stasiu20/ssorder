@@ -1,5 +1,13 @@
 @import '../../web/css/bs4.css';
 @import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~react-image-lightbox/style.css';
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/utilities/flex';
+@import '~bootstrap/scss/utilities/display';
+@import '~bootstrap/scss/utilities/spacing';
 
 .restaurant-details {
     font-size: 150%;

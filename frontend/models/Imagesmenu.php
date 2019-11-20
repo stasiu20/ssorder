@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Restaurants;
 use yii\db\ActiveQuery;
 use yii\web\UploadedFile;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "imagesmenu".
@@ -13,6 +14,7 @@ use yii\web\UploadedFile;
  * @property integer $id
  * @property integer $restaurantId
  * @property string $imagesMenu_url
+ * @method softDelete
  */
 class Imagesmenu extends \yii\db\ActiveRecord
 {
@@ -34,6 +36,20 @@ class Imagesmenu extends \yii\db\ActiveRecord
             [['restaurantId',], 'required'],
             [['restaurantId'], 'integer'],
             [['imagesMenu_url'], 'string', 'max' => 360],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::class,
+                'softDeleteAttributeValues' => [
+                    'deletedAt' => function ($model) {
+                        return date('Y-m-d');
+                    }
+                ],
+            ],
         ];
     }
 
