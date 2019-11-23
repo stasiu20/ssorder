@@ -179,6 +179,10 @@ class Order extends \yii\db\ActiveRecord
 
     public function paymentChange(float $totalCost): float
     {
+        if (null === $this->pay_amount) {
+            return $totalCost;
+        }
+
         return $totalCost - $this->pay_amount;
     }
 
