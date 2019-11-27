@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-use frontend\models\Restaurants;
 use common\models\Order;
 use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
@@ -16,6 +15,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $foodName
  * @property string $foodInfo
  * @property double|string $foodPrice
+ * @property Restaurants $restaurant
+ * @property Restaurants[] $restaurants
  * @method softDelete
  */
 class Menu extends \yii\db\ActiveRecord
@@ -70,11 +71,20 @@ class Menu extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return ActiveQuery
+     * @deprecated
+     */
     public function getRestaurants(): ActiveQuery
     {
+        Yii::warning(sprintf('Call deprecated method "%s". Backtrace: %s', __METHOD__, var_export(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), true)));
         return $this->hasMany(Restaurants::className(), ['id' => 'restaurantId']);
     }
 
+    public function getRestaurant(): ActiveQuery
+    {
+        return $this->hasOne(Restaurants::class, ['id' => 'restaurantId']);
+    }
 
     public function getOrder(): ActiveQuery
     {

@@ -33,10 +33,14 @@ class OrderFilters extends Model
     /** @var string */
     public $foodName;
 
+    /** @var int */
+    public $foodId;
+
     public function rules()
     {
         return [
-            [['restaurantId', 'date', 'foodName'], 'safe'],
+            [['restaurantId', 'date', 'foodName', 'foodId'], 'safe'],
+            [['foodId'], 'number', 'integerOnly' => true, 'min' => 1],
             [['date'], 'match', 'pattern' => '/^\d{4}-\d{2}-\d{2}\sdo\s\d{4}-\d{2}-\d{2}$/'],
         ];
     }

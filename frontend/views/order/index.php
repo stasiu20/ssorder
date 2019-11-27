@@ -87,14 +87,14 @@ $formatter = \Yii::$app->formatter;
 
             ]
         ]) : '');
-        $takeRestaurantId = $order->menu->restaurants[0]['id'];
+        $takeRestaurantId = $order->menu->restaurant->id;
         ?>
 
         <tr>
             <td><?= $i; ?></td>
             <td><a href="/site/view?id=<?= $order->menu->id ?>&order=true"><?= $order->menu->foodName ?></a></td>
             <td>
-                <a href="/site/restaurant?id=<?= $order->menu->restaurants[0]['id'] ?>"><?= $order->menu->restaurants[0]['restaurantName'] ?></a>
+                <a href="/site/restaurant?id=<?= $order->menu->restaurant->id ?>"><?= $order->menu->restaurant->restaurantName ?></a>
             </td>
             <td><?= $formatter->asCurrency($order->getPrice()) ?></td>
             <td>

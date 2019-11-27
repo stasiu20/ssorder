@@ -11,7 +11,6 @@ parameters:
     		- '#Call to deprecated method className\(\) of class yii\\base\\BaseObject#'
     		- '#Method [a-zA-Z0-9\\]+::action[a-zA-Z0-9\\]+\(\) has no return typehint specified#'
     		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has parameter \$[a-zA-Z0-9]+ with no typehint specified#'
-    		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has no return typehint specified#'
     		- '#Dynamic call to static method PHPUnit\\Framework\\Assert::.*#'
     polluteScopeWithLoopInitialAssignments: false
     polluteScopeWithAlwaysIterableForeach: false

@@ -1,11 +1,14 @@
 <?php
+
+use frontend\models\Restaurants;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Restaurants */
+/* @var $restaurant Restaurants */
 
-$url = $restaurant[0]['id'];
-$restaurantName = $restaurant[0]['restaurantName'];
+$url = $restaurant->id;
+$restaurantName = $restaurant->restaurantName;
 
 $this->title = 'Zmień pozycję w Menu: ' . $model->foodName;
 $this->params['breadcrumbs'][] = ['label' => "$restaurantName", 'url' => ['restaurant', 'id'=>$url]];
@@ -24,5 +27,5 @@ $this->params['breadcrumbs'][] = 'UpdateMenu';
     ]) ?>
     </div>
     </div>
-   
+
 </div>
