@@ -11,7 +11,16 @@ class Payment
     public static function updatePayAmountFromPostData(array $orders, array $postData): void
     {
         foreach ($orders as $order) {
-            $order->pay_amount = isset($postData[$order->id]) ? $postData[$order->id] : $order->pay_amount;
+            $payAmount = $order->pay_amount;
+            if (isset($postData[$order->id])) {
+                $payAmount = $postData[$order->id];
+                if ('' === $payAmount) {
+                    $payAmount = null;
+                } else {
+                    $payAmount = (float)$payAmount;
+                }
+            }
+            $order->pay_amount = $payAmount;
         }
     }
 }

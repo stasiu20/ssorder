@@ -148,13 +148,18 @@ class OrderController extends Controller
         ]);
     }
 
-    protected function findModel($id)
+    /**
+     * @param $id
+     * @return Menu
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id): Menu
     {
         if (($model = Menu::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     public function actionDelete()

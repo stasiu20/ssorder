@@ -41,6 +41,10 @@ class OrderSearch extends Order
             $query->andFilterWhere(['like', 'menu.foodName', $filters->foodName]);
         }
 
+        if ($filters->foodId) {
+            $query->andWhere(['menu.id' => $filters->foodId]);
+        }
+
         $query->andWhere(['is', 'order.deletedAt', null]);
 
         return $query;

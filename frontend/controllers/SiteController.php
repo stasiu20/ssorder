@@ -5,6 +5,9 @@ namespace frontend\controllers;
 use common\enums\BucketEnum;
 use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
+use common\models\History;
+use common\models\OrderFilters;
+use common\models\OrderSearch;
 use common\services\FileService;
 use frontend\helpers\FileServiceViewHelper;
 use Yii;
@@ -306,20 +309,31 @@ class SiteController extends Controller
      */
     public function actionView($id)
     {
+        /** @var Menu $menu */
         $menu = Menu::findOne($id);
-        $restaurant = $menu->restaurants;
+        $restaurant = $menu->restaurant;
+
+        $filters = new OrderFilters();
+        $filters->foodId = $id;
+        $lastOrdersProvider = new ActiveDataProvider([
+            'query' => OrderSearch::search($filters),
+            'pagination' => new Pagination(),
+            'sort' => History::getDefaultSort()
+        ]);
+
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'restaurant' => $restaurant,
+            'model' => $this->findModel($id),
+            'restaurant' => $restaurant,
+            'lastOrdersProvider' => $lastOrdersProvider
         ]);
     }
 
     /**
      * @param $id int
-     * @return Menu|null
+     * @return Menu
      * @throws NotFoundHttpException
      */
-    protected function findModel($id): ?Menu
+    protected function findModel($id): Menu
     {
         if (($model = Menu::findOne($id)) !== null) {
             return $model;
@@ -339,8 +353,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $menu = Menu::findOne($id);
-            $restaurant = $menu->restaurants;
+            $menu = $model;
+            $restaurant = $menu->restaurant;
             return $this->render('updateMenu', [
                         'model' => $model,
                         'restaurant' => $restaurant,
@@ -376,11 +390,11 @@ class SiteController extends Controller
      */
     public function actionDelete($id)
     {
-        $menu = Menu::findOne($id);
-        $restaurant = $menu->restaurants;
-        $this->findModel($id)->softDelete();
+        $menu = $this->findModel($id);
+        $restaurant = $menu->restaurant;
+        $menu->softDelete();
 
-        return $this->redirect(['restaurant', 'id' => $restaurant[0]['id']]);
+        return $this->redirect(['restaurant', 'id' => $restaurant->id]);
     }
 
     /**

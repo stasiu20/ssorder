@@ -1,13 +1,13 @@
 <?php
 
+use frontend\models\Menu;
 use yii\helpers\Html;
-use frontend\models\Restaurants;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Restaurants */
-$url = 'site/restaurant?id=' . $model->restaurants[0]['id'];
+/* @var $model Menu */
+$url = 'site/restaurant?id=' . $model->restaurant->id;
 $this->title = 'Zamówienie: ' . $model->foodName;
-$this->params['breadcrumbs'][] = ['label' => $model->restaurants[0]['restaurantName'], 'url' => [$url]];
+$this->params['breadcrumbs'][] = ['label' => $model->restaurant->restaurantName, 'url' => [$url]];
 
 $this->params['breadcrumbs'][] = 'Uwagi';
 ?>

@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Order;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
+use common\models\Payment;
 use frontend\services\OrderSummaryStatics;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -48,9 +49,9 @@ class PaymentController extends Controller
 
         if (\Yii::$app->request->isPost) {
             $data = \Yii::$app->request->post('price', []);
-            \common\models\Payment::updatePayAmountFromPostData($orders, $data);
+            Payment::updatePayAmountFromPostData($orders, $data);
             foreach ($orders as $order) {
-                if (strlen($order->pay_amount) > 0 && $order->validate(['pay_amount'])) {
+                if (null !== $order->pay_amount && $order->validate(['pay_amount'])) {
                     $order->save(false, ['pay_amount']);
                 }
             }
