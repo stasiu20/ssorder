@@ -145,6 +145,7 @@ assets:
   artifacts:
     paths:
       - frontend/web/assets/build
+      - frontend/webpack/stats.json
     expire_in: 30 days
     when: on_success
 
