@@ -74,11 +74,9 @@ class SessionController extends Controller
         if (null === $token) {
             throw new BadRequestHttpException('Token is empty');
         }
-        $accessToken = AccessToken::getByToken($token);
-        if ($accessToken) {
-            $accessToken->delete();
-            Yii::$app->user->logout();
-        }
+
+        AccessTokenHelper::deleteToken($token);
+        Yii::$app->user->logout();
 
         $response = new Response();
         return $response->setStatusCode(204);

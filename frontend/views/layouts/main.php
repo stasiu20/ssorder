@@ -6,6 +6,7 @@
 /** @var AppVersion $appVersion */
 $appVersion = $this->params['appVersion'];
 
+use common\component\UserRestApiMediator;
 use mmo\yii2\helpers\AppVersionHelper;
 use mmo\yii2\models\AppVersion;
 use yii\helpers\Html;
@@ -29,6 +30,11 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <script type="text/javascript">
+        function getJWTToken() {
+            return '<?= Yii::$app->session->get(UserRestApiMediator::JWT_SESSION_KEY) ?>';
+        }
+    </script>
     <?php $this->head() ?>
     <!-- Google Analytics -->
     <script>
