@@ -26,6 +26,9 @@ return [
 
         $mediator = new \common\component\GAOrderMediator();
         $mediator->mediate();
+
+        $mediator = new \common\component\UserRestApiMediator();
+        $mediator->mediate();
     }, function () {
         $filePath = Yii::getAlias('@root/VERSION');
         if (file_exists($filePath)) {

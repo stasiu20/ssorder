@@ -1,4 +1,6 @@
 var Encore = require('@symfony/webpack-encore');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -55,5 +57,14 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     // .autoProvidejQuery()
 ;
+
+Encore.addPlugin(
+    new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: true,
+        statsOptions: { source: false },
+        statsFilename: process.env.CI ? path.join(process.env.CI_PROJECT_DIR, 'frontend/webpack/stats.json') : 'stats.json',
+    })
+);
 
 module.exports = Encore.getWebpackConfig();

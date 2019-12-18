@@ -1,3 +1,5 @@
+[![Gitter](https://badges.gitter.im/ssorder/community.svg)](https://gitter.im/ssorder/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Yii 2 Advanced Project Template
 ===============================
 

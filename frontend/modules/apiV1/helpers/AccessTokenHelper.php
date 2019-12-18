@@ -2,6 +2,7 @@
 
 namespace frontend\modules\apiV1\helpers;
 
+use common\models\AccessToken;
 use common\models\User;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
@@ -41,6 +42,14 @@ class AccessTokenHelper
             ->getToken($signer, new Key(self::getJwtSignKey())); // Retrieves the generated token
 
         return $token;
+    }
+
+    public static function deleteToken(string $token): void
+    {
+        $accessToken = AccessToken::getByToken($token);
+        if ($accessToken) {
+            $accessToken->delete();
+        }
     }
 
     public static function parseToken(string $token, string $jwtSignKey = null): ?Token

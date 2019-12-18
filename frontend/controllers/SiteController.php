@@ -6,6 +6,7 @@ use common\enums\BucketEnum;
 use common\helpers\ArrayHelper;
 use common\iterators\ChunkedIterator;
 use common\models\History;
+use common\models\Order;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
 use common\services\FileService;
@@ -314,6 +315,7 @@ class SiteController extends Controller
         $restaurant = $menu->restaurant;
 
         $filters = new OrderFilters();
+        $filters->status = Order::STATUS_REALIZED;
         $filters->foodId = $id;
         $lastOrdersProvider = new ActiveDataProvider([
             'query' => OrderSearch::search($filters),
