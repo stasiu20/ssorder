@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import RestaurantGalleryLightbox from '../components/restaurant/galleryLightbox';
+import RestaurantGalleryLightbox from '../core/components/galleryLightbox';
 
 $(document).ready(function() {
     const $el = $('#react-restaurant-gallery');

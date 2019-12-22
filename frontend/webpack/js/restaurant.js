@@ -1,1 +1,1 @@
-import './pages/restaurant';
+import './features/restaurant/restaurant';
