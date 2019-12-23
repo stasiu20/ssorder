@@ -4,3 +4,4 @@ require('react-image-lightbox');
 require('react');
 require('react-dom');
 require('error-stack-parser');
+require('react-rating');

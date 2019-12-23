@@ -1,7 +1,8 @@
 <?php
 /** @var $dataProvider \yii\data\DataProviderInterface */
 /** @var $searchModel \common\models\OrderFilters */
-?>
+
+use common\models\Order; ?>
 <?= \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
@@ -48,13 +49,24 @@
 
         [
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{again}',
+            'template' => '{again} {rating}',
             'buttons' => [
                 'again' => function ($url, $model, $key) {
                     return \yii\helpers\Html::a(
                         ' <span class="glyphicon glyphicon-cutlery"></span>',
                         \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
                         ['title' => 'Smakowało? Zamów raz jeszcze!']
+                    );
+                },
+                'rating' => function ($url, Order $model, $key) {
+                    if ($model->rating) {
+                        return '';
+                    }
+
+                    return \yii\helpers\Html::a(
+                        ' <span class="glyphicon glyphicon-thumbs-up"></span>',
+                        \yii\helpers\Url::to(['/rating/order', 'orderId' => $model->id]),
+                        ['title' => 'Oceń!']
                     );
                 }
             ]
