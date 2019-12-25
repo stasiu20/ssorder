@@ -29,6 +29,7 @@ Encore
     .addEntry('app', './webpack/js/app.js')
     .addEntry('restaurant', './webpack/js/restaurant.js')
     .addEntry('orderRealise', './webpack/js/orderRealise.js')
+    .addEntry('rating', './webpack/js/rating.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

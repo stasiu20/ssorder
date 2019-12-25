@@ -1,16 +1,19 @@
 <?php
 
 use common\models\FoodRating;
+use common\widgets\React\RatingWidget;
+use frontend\assets\RatingAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\MaskedInput;
+
+RatingAsset::register($this);
 
 /* @var $this \yii\web\View */
 /* @var $model FoodRating */
 ?>
 <div>
     <?php $form = ActiveForm::begin() ?>
-    <?= $form->field($model, 'rating')->input('number') ?>
+    <?= $form->field($model, 'rating')->widget(RatingWidget::class) ?>
     <?= $form->field($model, 'review')->textarea() ?>
 
     <div class="form-group">
