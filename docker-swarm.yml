@@ -44,6 +44,11 @@ services:
       - .env
     ports:
       - "3306:3306"
+  redis:
+    image: redis:5.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - $PROD_SSORDER_PATH/.runtime/redis:/data
 networks:
   traefik:
     external: true

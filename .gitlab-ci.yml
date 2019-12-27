@@ -322,7 +322,7 @@ deploy_production:
     - echo $PROD_SSORDER_PATH
     - echo "$PROD_CONFIG" > .env
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio}
+    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio,redis}
     - scp -P22 -r .env docker-swarm.yml deployer@192.168.15.28:${PROD_SSORDER_PATH}/
     - |
       ssh -p22 deployer@192.168.15.28 << EOF

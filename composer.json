@@ -39,7 +39,8 @@
         "mmo/yii2-utils": "dev-master",
         "samdark/yii2-psr-log-target": "^1.1",
         "monolog/monolog": "^2.0",
-        "yii2tech/ar-softdelete": "^1.0"
+        "yii2tech/ar-softdelete": "^1.0",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

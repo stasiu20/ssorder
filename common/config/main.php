@@ -1,5 +1,7 @@
 <?php
 
+use yii\redis\Connection;
+use yii\redis\Session;
 use Aws\S3\S3Client;
 use common\services\FileService;
 use yii\di\Container;
@@ -49,6 +51,17 @@ return [
         ],
         'order' => [
             'class' => \common\component\Order::className(),
+        ],
+        'session' => [
+            'class' => Session::class,
+        ],
+        'redis' => [
+            'class' => Connection::class,
+            'hostname' => 'redis',
+            'port' => 6379,
+            'database' => 0,
+            'connectionTimeout' => 2,
+            'dataTimeout' => 2
         ],
     ],
 ];

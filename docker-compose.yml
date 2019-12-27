@@ -40,6 +40,11 @@ services:
             MYSQL_PASSWORD: $DB_PASSWORD
         ports:
             - "3307:3306"
+    redis:
+        image: redis:5.0-alpine
+        command: ["redis-server", "--appendonly", "yes"]
+        volumes:
+            - .runtime/redis:/data
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.8
         links:
