@@ -4,23 +4,17 @@ namespace common\models;
 
 use Lcobucci\JWT\Token;
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * This is the model class for table "access_token".
  *
+ * @property string $uuid
  * @property string $token
- * @property integer $user_id
+ * @property int $user_id
  */
-class AccessToken extends \yii\db\ActiveRecord
+class AccessToken extends \yii\redis\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'access_token';
-    }
-
     public static function getByToken(string $token): ?AccessToken
     {
         return self::findOne(['token' => $token]);
@@ -29,13 +23,37 @@ class AccessToken extends \yii\db\ActiveRecord
     public static function saveTokenForUser(Token $token, User $user): AccessToken
     {
         $tokenAR = new static();
+        $tokenAR->uuid = $token->getHeader('jti');
         $tokenAR->token = (string)$token;
         $tokenAR->user_id = $user->id;
         $result = $tokenAR->save();
         if (!$result) {
             throw new \RuntimeException('Cant save access token in database');
         }
+
+        //todo mmo nie kasujemy wszystkiego.
+        $pk = static::buildKey(static::primaryKey());
+        $key = static::keyPrefix() . ':a:' . $pk;
+        static::getDb()->expireat($key, $token->getClaim('exp'));
         return $tokenAR;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'user_id' => AttributeTypecastBehavior::TYPE_INTEGER,
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => true,
+                'typecastAfterFind' => true,
+            ],
+        ];
     }
 
     /**
@@ -46,7 +64,7 @@ class AccessToken extends \yii\db\ActiveRecord
         return [
             [['token', 'user_id'], 'required'],
             [['user_id'], 'integer'],
-            [['token'], 'string', 'max' => 255],
+            [['token'], 'string', 'max' => 1000],
             [['token'], 'unique'],
         ];
     }
@@ -60,5 +78,15 @@ class AccessToken extends \yii\db\ActiveRecord
             'token' => 'Token',
             'user_id' => 'User ID',
         ];
+    }
+
+    public static function primaryKey()
+    {
+        return ['uuid'];
+    }
+
+    public function attributes()
+    {
+        return ['uuid', 'token', 'user_id'];
     }
 }

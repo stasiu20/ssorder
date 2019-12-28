@@ -54,6 +54,14 @@ services:
         labels:
             traefik.backend: "phpmyadmin"
             traefik.frontend.rule: "Host:phpmyadmin.lvh.me"
+    redis-web:
+        image: rediscommander/redis-commander:latest
+        environment:
+            - REDIS_HOSTS=local:redis:6379
+        labels:
+            traefik.backend: "redis-web"
+            traefik.port: "8081"
+            traefik.frontend.rule: "Host:redis.lvh.me"
     mailhog:
         image: mailhog/mailhog
         labels:

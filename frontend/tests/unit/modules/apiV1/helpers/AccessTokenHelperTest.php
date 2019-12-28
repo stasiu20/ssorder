@@ -52,4 +52,14 @@ class AccessTokenHelperTest extends Unit
         $parsedToken = AccessTokenHelper::parseToken($tokenAsString);
         $this->assertNull($parsedToken);
     }
+
+    public function testTokenShouldHaveJtiHeader()
+    {
+        $user = new User();
+        $user->id = 12;
+
+        $token = AccessTokenHelper::createTokenForUser($user);
+        $this->assertInstanceOf(Token::class, $token);
+        $this->assertNotEmpty($token->getHeader('jti'));
+    }
 }
