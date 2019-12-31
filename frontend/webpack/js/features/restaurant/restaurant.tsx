@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import RestaurantGalleryLightbox from '../core/components/galleryLightbox';
 import RestaurantLogoLightbox from './components/logo';
+import ErrorBoundary from '../core/components/errorBoundary';
 
 $(document).ready(function() {
     const $el = $('#react-restaurant-gallery');
@@ -10,10 +11,17 @@ $(document).ready(function() {
     const $elRestaurantImage = $('#react-restaurant-image');
     const restaurantImgSrc = $elRestaurantImage.data('src');
 
-    render(<RestaurantGalleryLightbox images={data} />, $el.get(0));
+    render(
+        <ErrorBoundary>
+            <RestaurantGalleryLightbox images={data} />
+        </ErrorBoundary>,
+        $el.get(0)
+    );
 
     render(
-        <RestaurantLogoLightbox src={restaurantImgSrc} />,
+        <ErrorBoundary>
+            <RestaurantLogoLightbox src={restaurantImgSrc} />
+        </ErrorBoundary>,
         document.getElementById('react-restaurant-image')
     );
 });
