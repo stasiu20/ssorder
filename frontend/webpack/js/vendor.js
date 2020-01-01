@@ -6,3 +6,5 @@ require('react-dom');
 require('error-stack-parser');
 require('react-rating');
 require('material-icons');
+require('rxjs');
+require('react-toastify');

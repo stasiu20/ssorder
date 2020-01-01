@@ -26,6 +26,9 @@ return [
                 /** @var S3Client $s3Client */
                 $s3Client = $container->get(S3Client::class);
                 return new FileService($s3Client);
+            },
+            \common\component\SSEOrderMediator::class => function (Container $container, $params, $config) {
+                return new \common\component\SSEOrderMediator(Yii::$app->redis, Yii::$app->order);
             }
         ]
     ],
@@ -57,9 +60,9 @@ return [
         ],
         'redis' => [
             'class' => Connection::class,
-            'hostname' => 'redis',
-            'port' => 6379,
-            'database' => 0,
+            'hostname' => getenv('REDIS_HOST'),
+            'port' => getenv('REDIS_PORT'),
+            'database' => getenv('REDIS_DATABASE'),
             'connectionTimeout' => 2,
             'dataTimeout' => 2
         ],

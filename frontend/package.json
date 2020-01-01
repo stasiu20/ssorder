@@ -24,6 +24,8 @@
     "react-dom": "^16.10.2",
     "react-image-lightbox": "^5.1.0",
     "react-rating": "^2.0.3",
+    "react-toastify": "^5.5.0",
+    "rxjs": "^6.5.4",
     "sass-loader": "^7.0.1",
     "stylelint": "^10.0.1",
     "stylelint-config-recommended": "^2.2.0",

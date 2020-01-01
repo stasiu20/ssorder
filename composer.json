@@ -41,7 +41,9 @@
         "monolog/monolog": "^2.0",
         "yii2tech/ar-softdelete": "^1.0",
         "yiisoft/yii2-redis": "^2.0",
-        "ramsey/uuid": "^3.9"
+        "ramsey/uuid": "^3.9",
+        "superbalist/php-pubsub-redis": "^2.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

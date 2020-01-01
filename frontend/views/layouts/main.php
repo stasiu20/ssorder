@@ -100,6 +100,7 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
+    <div id="react-toastify"></div>
 </div>
 
 <footer class="footer">
