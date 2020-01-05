@@ -1,9 +1,33 @@
 {
-    "extends": "standard",
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "standard",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "rules": {
-        "semi": ["off"],
-        "indent": ["error", 4],
-        "comma-dangle": ["error", "always-multiline"],
-        "space-before-function-paren": ["error", "never"]
+        "semi": [
+            "off"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "never"
+        ]
+    },
+    "globals": {
+        "$": "readonly"
+    },
+    "env": {
+        "browser": true
     }
 }
