@@ -8,12 +8,12 @@ interface RatingProps {
 }
 
 const RatingLegacy: FunctionComponent<RatingProps> = props => {
-    const onChange = (value: number) => {
+    const onChange = (value: number): void => {
         $(props.legacyFieldSelector).val(value.toString());
     };
     const defaultValue = parseInt(
         $(props.legacyFieldSelector).val() as string,
-        10
+        10,
     );
 
     return (
@@ -36,6 +36,6 @@ $(function() {
         $('#foodrating-rating')
             .closest('.react-wrapper')
             .find('.react-view-container')
-            .get(0)
+            .get(0),
     );
 });

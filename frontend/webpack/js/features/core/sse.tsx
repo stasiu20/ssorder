@@ -12,7 +12,7 @@ $(function() {
             autoClose={5000}
             draggable={false}
         />,
-        document.getElementById('react-toastify')
+        document.getElementById('react-toastify'),
     );
     if (EventSource) {
         fromEventSource('/sse').subscribe(
@@ -24,7 +24,7 @@ $(function() {
                     type: 'error',
                     autoClose: false,
                 });
-            }
+            },
         );
     }
 });

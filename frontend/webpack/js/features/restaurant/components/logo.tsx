@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import Lightbox from 'react-image-lightbox';
 
 interface RestaurantLogoLightboxProps {
@@ -21,16 +21,17 @@ export default class RestaurantLogoLightbox extends Component<
         };
     }
 
-    render() {
+    render(): ReactNode {
         const { isOpen } = this.state;
 
         return (
             <div>
                 <a
                     style={{ cursor: 'pointer' }}
-                    onClick={() => this.setState({ isOpen: true })}
+                    onClick={(): void => this.setState({ isOpen: true })}
                 >
                     <img
+                        alt={'logo'}
                         src={this.props.src}
                         className="img-responsive img-thumbnail"
                     />
@@ -39,7 +40,9 @@ export default class RestaurantLogoLightbox extends Component<
                     <Lightbox
                         mainSrc={this.props.src}
                         reactModalStyle={{ overlay: { zIndex: 2000 } }}
-                        onCloseRequest={() => this.setState({ isOpen: false })}
+                        onCloseRequest={(): void =>
+                            this.setState({ isOpen: false })
+                        }
                     />
                 )}
             </div>

@@ -15,13 +15,13 @@ $(document).ready(function() {
         <ErrorBoundary>
             <RestaurantGalleryLightbox images={data} />
         </ErrorBoundary>,
-        $el.get(0)
+        $el.get(0),
     );
 
     render(
         <ErrorBoundary>
             <RestaurantLogoLightbox src={restaurantImgSrc} />
         </ErrorBoundary>,
-        document.getElementById('react-restaurant-image')
+        document.getElementById('react-restaurant-image'),
     );
 });

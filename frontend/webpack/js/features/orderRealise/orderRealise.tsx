@@ -11,6 +11,6 @@ $(document).ready(function() {
         <ErrorBoundary>
             <RestaurantGalleryLightbox images={data} />
         </ErrorBoundary>,
-        $el.get(0)
+        $el.get(0),
     );
 });

@@ -10,18 +10,18 @@ import { Observable, Observer } from 'rxjs';
  */
 export function fromEventSource(
     url: string,
-    openObserver: Observer<any> = null
-) {
+    openObserver: Observer<Event> = null,
+): Observable<{ message: string }> {
     return new Observable<{ message: string }>(observer => {
         const source = new EventSource(url);
 
-        function onOpen(e) {
+        function onOpen(e: Event): void {
             openObserver.next(e);
             openObserver.complete();
             source.removeEventListener('open', onOpen, false);
         }
 
-        function onError(e) {
+        function onError(e): void {
             if (e.readyState === EventSource.CLOSED) {
                 observer.complete();
             } else {
@@ -29,7 +29,7 @@ export function fromEventSource(
             }
         }
 
-        function onMessage(e: MessageEvent) {
+        function onMessage(e: MessageEvent): void {
             try {
                 const data = JSON.parse(e.data);
                 observer.next(data);
@@ -40,7 +40,7 @@ export function fromEventSource(
         source.addEventListener('error', onError, false);
         source.addEventListener('message', onMessage, false);
 
-        return function() {
+        return function(): void {
             source.removeEventListener('error', onError, false);
             source.removeEventListener('message', onMessage, false);
             source.close();
