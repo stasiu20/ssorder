@@ -216,6 +216,36 @@ codeception:
   dependencies:
     - composer
 
+sitespeed:
+  stage: qa
+  variables:
+    URL: https://ssorder.snlb.pl
+    SITESPEED_VERSION: 11.9.3
+  before_script:
+    - TMPFILE=$(mktemp /tmp/sistespeed.XXXXXX)
+    - CSRF=$(curl -s --cookie-jar $TMPFILE $URL/site/login | grep 'meta name="csrf-token"'| grep -E -o 'content="(.*?)"' | cut -c10- | rev | cut -c2- | rev)
+    - curl -H X-CSRF-Token:${CSRF} --cookie-jar $TMPFILE --cookie $TMPFILE -X POST -d"LoginForm%5Busername%5D=sitespeed&LoginForm%5Bpassword%5D=${SISTESPEED_PASSWORD}&LoginForm%5BrememberMe%5D=0&LoginForm%5BrememberMe%5D=1&login-button="  $URL/site/login
+    - SESSION=$(cat  $TMPFILE | grep advanced-frontend | awk '{print $7}')
+    - SITESPEED_OPTIONS="--cookie advanced-frontend=${SESSION}"
+    - rm $TMPFILE
+  script:
+    - echo Use sitespeed at version "$SITESPEED_VERSION" with options "$SITESPEED_OPTIONS" and check url "$URL"
+    - mkdir gitlab-exporter
+    - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
+    - mkdir sitespeed-results
+    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL $SITESPEED_OPTIONS
+    - mv sitespeed-results/data/performance.json performance.json
+  artifacts:
+    paths:
+      - performance.json
+      - sitespeed-results/
+    reports:
+      performance: performance.json
+  only:
+    - schedules
+  tags:
+    - packer
+
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
