@@ -1,5 +1,7 @@
 <?php
 
+use yii\redis\Connection;
+use yii\redis\Session;
 use Aws\S3\S3Client;
 use common\services\FileService;
 use yii\di\Container;
@@ -24,6 +26,9 @@ return [
                 /** @var S3Client $s3Client */
                 $s3Client = $container->get(S3Client::class);
                 return new FileService($s3Client);
+            },
+            \common\component\SSEOrderMediator::class => function (Container $container, $params, $config) {
+                return new \common\component\SSEOrderMediator(Yii::$app->redis, Yii::$app->order);
             }
         ]
     ],
@@ -49,6 +54,17 @@ return [
         ],
         'order' => [
             'class' => \common\component\Order::className(),
+        ],
+        'session' => [
+            'class' => Session::class,
+        ],
+        'redis' => [
+            'class' => Connection::class,
+            'hostname' => getenv('REDIS_HOST'),
+            'port' => getenv('REDIS_PORT'),
+            'database' => getenv('REDIS_DATABASE'),
+            'connectionTimeout' => 2,
+            'dataTimeout' => 2
         ],
     ],
 ];

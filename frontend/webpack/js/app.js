@@ -1,1 +1,2 @@
-require('../css/app.scss');
+import '../css/app.scss';
+import './features/core/sse';

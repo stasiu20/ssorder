@@ -1,9 +1,43 @@
 {
-    "extends": "standard",
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "react"
+    ],
+    "extends": [
+        "standard",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "rules": {
-        "semi": ["off"],
-        "indent": ["error", 4],
-        "comma-dangle": ["error", "always-multiline"],
-        "space-before-function-paren": ["error", "never"]
+        "semi": [
+            "off"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "never"
+        ],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/prop-types": [0]
+    },
+    "globals": {
+        "$": "readonly"
+    },
+    "env": {
+        "browser": true
     }
 }

@@ -23,9 +23,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $uwagi
  * @property \frontend\models\Restaurants $restaurants
  * @property \frontend\models\Menu $menu
- * @property \common\models\User $user
+ * @property User $user
  * @property integer $realizedBy
- * @property \common\models\User $realizedByUser
+ * @property User $realizedByUser
+ * @property-read FoodRating $rating
  * @method softDelete
  */
 class Order extends \yii\db\ActiveRecord
@@ -95,18 +96,22 @@ class Order extends \yii\db\ActiveRecord
 
     public function getUser(): ActiveQuery
     {
-        return $this->hasOne(\common\models\User::className(), ['id'=>'userId']);
+        return $this->hasOne(User::class, ['id'=>'userId']);
     }
 
     public function getRealizedByUser(): ActiveQuery
     {
-        return $this->hasOne(\common\models\User::className(), ['id'=>'realizedBy']);
+        return $this->hasOne(User::class, ['id'=>'realizedBy']);
     }
 
     public function getMenu(): ActiveQuery
     {
+        return $this->hasOne(Menu::class, ['id'=>'foodId']);
+    }
 
-        return $this->hasOne(Menu::className(), ['id'=>'foodId']);
+    public function getRating(): ActiveQuery
+    {
+        return $this->hasOne(FoodRating::class, ['order_id' => 'id']);
     }
 
     public function getRestaurantName(): string

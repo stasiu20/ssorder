@@ -39,7 +39,11 @@
         "mmo/yii2-utils": "dev-master",
         "samdark/yii2-psr-log-target": "^1.1",
         "monolog/monolog": "^2.0",
-        "yii2tech/ar-softdelete": "^1.0"
+        "yii2tech/ar-softdelete": "^1.0",
+        "yiisoft/yii2-redis": "^2.0",
+        "ramsey/uuid": "^3.9",
+        "superbalist/php-pubsub-redis": "^2.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -84,6 +88,9 @@
         "phpcpd": "./vendor/bin/phpcpd --exclude=views/ --progress ./frontend/ ./common/ ./console/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
-        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text"
+        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
+        "all": [
+            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"
+        ]
     }
 }

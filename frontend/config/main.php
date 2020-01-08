@@ -29,6 +29,10 @@ return [
 
         $mediator = new \common\component\UserRestApiMediator();
         $mediator->mediate();
+
+        /** @var \common\component\SSEOrderMediator $mediator */
+        $mediator = Yii::$container->get(\common\component\SSEOrderMediator::class);
+        $mediator->mediate();
     }, function () {
         $filePath = Yii::getAlias('@root/VERSION');
         if (file_exists($filePath)) {

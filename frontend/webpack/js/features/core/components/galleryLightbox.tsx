@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import Lightbox from 'react-image-lightbox';
 
 interface RestaurantGalleryLightboxProps {
@@ -23,10 +23,11 @@ export default class RestaurantGalleryLightbox extends Component<
         };
     }
 
-    render() {
+    render(): ReactNode {
         const { photoIndex, isOpen } = this.state;
 
-        let images = this.props.images;
+        const images = this.props.images;
+        const prevIndex = (photoIndex + images.length - 1) % images.length;
         return (
             <div>
                 {images.map((item, index) => {
@@ -38,14 +39,18 @@ export default class RestaurantGalleryLightbox extends Component<
                                 </a>
                                 <a
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() =>
+                                    onClick={(): void =>
                                         this.setState({
                                             isOpen: true,
                                             photoIndex: index,
                                         })
                                     }
                                 >
-                                    <img className="menuImage" src={item.url} />
+                                    <img
+                                        alt={'menu image'}
+                                        className="menuImage"
+                                        src={item.url}
+                                    />
                                 </a>
                             </div>
                         </div>
@@ -56,21 +61,19 @@ export default class RestaurantGalleryLightbox extends Component<
                     <Lightbox
                         mainSrc={images[photoIndex].url}
                         nextSrc={images[(photoIndex + 1) % images.length].url}
-                        prevSrc={
-                            images[
-                                (photoIndex + images.length - 1) % images.length
-                            ].url
-                        }
+                        prevSrc={images[prevIndex].url}
                         reactModalStyle={{ overlay: { zIndex: 2000 } }}
-                        onCloseRequest={() => this.setState({ isOpen: false })}
-                        onMovePrevRequest={() =>
+                        onCloseRequest={(): void =>
+                            this.setState({ isOpen: false })
+                        }
+                        onMovePrevRequest={(): void =>
                             this.setState({
                                 photoIndex:
                                     (photoIndex + images.length - 1) %
                                     images.length,
                             })
                         }
-                        onMoveNextRequest={() =>
+                        onMoveNextRequest={(): void =>
                             this.setState({
                                 photoIndex: (photoIndex + 1) % images.length,
                             })

@@ -40,6 +40,11 @@ services:
             MYSQL_PASSWORD: $DB_PASSWORD
         ports:
             - "3307:3306"
+    redis:
+        image: redis:5.0-alpine
+        command: ["redis-server", "--appendonly", "yes"]
+        volumes:
+            - .runtime/redis:/data
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.8
         links:
@@ -49,6 +54,14 @@ services:
         labels:
             traefik.backend: "phpmyadmin"
             traefik.frontend.rule: "Host:phpmyadmin.lvh.me"
+    redis-web:
+        image: rediscommander/redis-commander:latest
+        environment:
+            - REDIS_HOSTS=local:redis:6379
+        labels:
+            traefik.backend: "redis-web"
+            traefik.port: "8081"
+            traefik.frontend.rule: "Host:redis.lvh.me"
     mailhog:
         image: mailhog/mailhog
         labels:

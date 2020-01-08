@@ -105,6 +105,10 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         $userId = $token->getClaim('uid');
+        if ($userId !== $accessToken->user_id) {
+            return null;
+        }
+
         $user = User::findOne($userId);
         if (null === $user) {
             return null;

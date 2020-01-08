@@ -216,6 +216,36 @@ codeception:
   dependencies:
     - composer
 
+sitespeed:
+  stage: qa
+  variables:
+    URL: https://ssorder.snlb.pl
+    SITESPEED_VERSION: 11.9.3
+  before_script:
+    - TMPFILE=$(mktemp /tmp/sistespeed.XXXXXX)
+    - CSRF=$(curl -s --cookie-jar $TMPFILE $URL/site/login | grep 'meta name="csrf-token"'| grep -E -o 'content="(.*?)"' | cut -c10- | rev | cut -c2- | rev)
+    - curl -H X-CSRF-Token:${CSRF} --cookie-jar $TMPFILE --cookie $TMPFILE -X POST -d"LoginForm%5Busername%5D=sitespeed&LoginForm%5Bpassword%5D=${SISTESPEED_PASSWORD}&LoginForm%5BrememberMe%5D=0&LoginForm%5BrememberMe%5D=1&login-button="  $URL/site/login
+    - SESSION=$(cat  $TMPFILE | grep advanced-frontend | awk '{print $7}')
+    - SITESPEED_OPTIONS="--cookie advanced-frontend=${SESSION}"
+    - rm $TMPFILE
+  script:
+    - echo Use sitespeed at version "$SITESPEED_VERSION" with options "$SITESPEED_OPTIONS" and check url "$URL"
+    - mkdir gitlab-exporter
+    - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
+    - mkdir sitespeed-results
+    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL $SITESPEED_OPTIONS
+    - mv sitespeed-results/data/performance.json performance.json
+  artifacts:
+    paths:
+      - performance.json
+      - sitespeed-results/
+    reports:
+      performance: performance.json
+  only:
+    - schedules
+  tags:
+    - packer
+
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
@@ -266,6 +296,30 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
+
+.trivy:
+  stage: qa
+  allow_failure: true
+  before_script:
+    - trivy --version
+    - trivy --clear-cache
+  dependencies: []
+  variables:
+    TRIVY_AUTH_URL: $CI_REGISTRY
+    TRIVY_USERNAME: $CI_REGISTRY_USER
+    TRIVY_PASSWORD: $CI_REGISTRY_PASSWORD
+  only:
+    - schedules
+  tags:
+    - packer
+  cache:
+    paths:
+      - $CI_PROJECT_DIR/.trivycache/
+
+trivy:develop:
+  extends: .trivy
+  script:
+    - trivy --exit-code 1 --cache-dir $CI_PROJECT_DIR/.trivycache/ --severity CRITICAL $CI_REGISTRY_IMAGE:latest
 
 tag_release:
   stage: deploy
@@ -322,7 +376,7 @@ deploy_production:
     - echo $PROD_SSORDER_PATH
     - echo "$PROD_CONFIG" > .env
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio}
+    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio,redis}
     - scp -P22 -r .env docker-swarm.yml deployer@192.168.15.28:${PROD_SSORDER_PATH}/
     - |
       ssh -p22 deployer@192.168.15.28 << EOF

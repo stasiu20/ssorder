@@ -11,15 +11,24 @@ use yii\web\UserEvent;
 class UserRestApiMediator
 {
     public const JWT_SESSION_KEY =  'jwt';
+    /**
+     * @var User
+     */
+    private $_user;
+
+    public function __construct(\yii\web\User $user = null)
+    {
+        $this->_user = $user ?: \Yii::$app->user;
+    }
 
     public function mediate(): void
     {
-        \Yii::$app->user->on(
+        $this->_user->on(
             User::EVENT_AFTER_LOGIN,
             [$this, 'getJWTTokenAfterLogin']
         );
 
-        \Yii::$app->user->on(
+        $this->_user->on(
             User::EVENT_BEFORE_LOGOUT,
             [$this, 'deleteJWTTokenBeforeLogout']
         );

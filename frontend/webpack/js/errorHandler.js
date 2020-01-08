@@ -9,7 +9,7 @@ window.addEventListener('error', function(e) {
         stack = ErrorStackParser.parse(error) || [];
     }
     const userAgent = navigator.userAgent;
-    let errorObj = { message, filename, lineno, colno, stack, userAgent };
+    const errorObj = { message, filename, lineno, colno, stack, userAgent };
     console.error(errorObj);
     ga('send', 'exception', {
         exDescription: JSON.stringify(errorObj),
@@ -22,6 +22,6 @@ window.addEventListener('error', function(e) {
         message,
         JSON.stringify(errorObj),
         undefined,
-        { NonInteraction: 1 }
+        { NonInteraction: 1 },
     );
 });

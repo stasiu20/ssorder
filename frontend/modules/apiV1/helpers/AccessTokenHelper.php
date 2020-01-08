@@ -10,6 +10,7 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Token;
 use Lcobucci\JWT\ValidationData;
+use Ramsey\Uuid\Uuid;
 
 class AccessTokenHelper
 {
@@ -36,9 +37,10 @@ class AccessTokenHelper
         }
         $signer = new Sha256();
         $token = (new Builder())
+            ->identifiedBy(Uuid::uuid4(), true)
             ->issuedAt($time) // Configures the time that the token was issue (iat claim)
             ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-            ->withClaim('uid', $user->getId()) // Configures a new claim, called "uid"
+            ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
             ->getToken($signer, new Key(self::getJwtSignKey())); // Retrieves the generated token
 
         return $token;
