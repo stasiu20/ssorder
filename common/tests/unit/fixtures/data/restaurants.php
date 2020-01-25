@@ -1,11 +1,11 @@
 <?php
 
+use common\tests\unit\fixtures\CategoryFixture;
 use yii\test\ActiveFixture;
 
 /** @var $this ActiveFixture */
-global $fixtures;
-/** @var ActiveFixture $fixtureCat */
-$fixtureCat = $fixtures[\common\tests\unit\fixtures\CategoryFixture::class];
+/** @var $fixtureCat ActiveFixture */
+$fixtureCat = \common\services\FixtureStore::getInstance()->getFixtureByClassName(CategoryFixture::class);
 return [
     'restaurant1' => [
         'restaurantName' => 'Thien Ly - tulibu dibu douchoo',

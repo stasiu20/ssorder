@@ -2,6 +2,7 @@
 
 namespace common\tests\unit\fixtures;
 
+use common\services\FixtureStore;
 use frontend\models\Category;
 use yii\test\ActiveFixture;
 
@@ -9,9 +10,9 @@ class CategoryFixture extends ActiveFixture
 {
     public $modelClass = Category::class;
 
-    public function beforeLoad()
+    public function beforeLoad(): void
     {
         parent::beforeLoad();
-        $GLOBALS['fixtures'][static::class] = $this;
+        FixtureStore::getInstance()->addFixture($this);
     }
 }

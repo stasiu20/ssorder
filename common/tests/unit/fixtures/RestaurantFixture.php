@@ -2,6 +2,7 @@
 
 namespace common\tests\unit\fixtures;
 
+use common\services\FixtureStore;
 use frontend\models\Restaurants;
 use yii\test\ActiveFixture;
 
@@ -10,9 +11,9 @@ class RestaurantFixture extends ActiveFixture
     public $modelClass = Restaurants::class;
     public $depends = [CategoryFixture::class];
 
-    public function beforeLoad()
+    public function beforeLoad(): void
     {
         parent::beforeLoad();
-        $GLOBALS['fixtures'][static::class] = $this;
+        FixtureStore::getInstance()->addFixture($this);
     }
 }
