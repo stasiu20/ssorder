@@ -16,8 +16,8 @@ services:
             traefik.frontend.rule: "Host:ssorder.lvh.me"
         environment:
             COMPOSER_AUTH: '{"github-oauth": {"github.com": "${COMPOSER_GITHUB_OAUTH}"}}'
-            PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME}"
-            XDEBUG_CONFIG: "remote_host=${MY_IP}"
+            PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME:-ssorder.lvh.me}"
+            XDEBUG_CONFIG: "remote_connect_back=0 remote_host=${MY_IP:-172.17.0.1} remote_enable=1"
     cli:
         image: edbizarro/gitlab-ci-pipeline-php:7.3
         volumes:
