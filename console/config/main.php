@@ -36,8 +36,9 @@ return [
     'controllerMap' => [
         'fixture' => [
             'class' => FixtureController::class,
-            'templatePath' => '@tests/_data/templates/fixtures',
-            'fixtureDataPath' => '@tests/_data/'
+            'templatePath' => '@tests/unit/fixtures/data/templates/fixtures',
+            'fixtureDataPath' => '@tests/unit/fixtures/data',
+            'namespace' => 'common\tests\unit\fixtures',
         ],
     ],
 ];

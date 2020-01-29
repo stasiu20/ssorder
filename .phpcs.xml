@@ -6,6 +6,7 @@
     <file>common/</file>
     <file>console/</file>
     <exclude-pattern>*/vendor/</exclude-pattern>
+    <exclude-pattern>*/provision/</exclude-pattern>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>

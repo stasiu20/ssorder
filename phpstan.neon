@@ -158,3 +158,17 @@ services:
         tags:
             - phpstan.rules.rule
     # end phpstan/phpstan-strict-rules
+    # start rules from ergebnis/phpstan-rules
+    -
+        class: Ergebnis\PHPStan\Rules\Expressions\NoCompactRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Ergebnis\PHPStan\Rules\Expressions\NoErrorSuppressionRule
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Ergebnis\PHPStan\Rules\Expressions\NoEvalRule
+        tags:
+            - phpstan.rules.rule
+    # end rules from ergebnis/phpstan-rules

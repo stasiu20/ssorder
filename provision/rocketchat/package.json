@@ -1,0 +1,17 @@
+{
+  "name": "provision-rocketchat-for-ssorder",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Marcin Morawski <marcin@morawskim.pl>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "envfile": "^4.5.0",
+    "rocketchat-api": "^1.0.4"
+  }
+}
