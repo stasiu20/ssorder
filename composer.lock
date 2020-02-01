@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4535c9c18cb7e029406b8dd24adcce05",
+    "content-hash": "60b1b2849db38705f289f6cc4d0e0230",
     "packages": [
         {
             "name": "2amigos/yii2-disqus-widget",
@@ -3609,17 +3609,11 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.8.0",
+            "version": "dev-picsum",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "f72816b43e74063c8b10357394b6bba8cb1c10de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/f72816b43e74063c8b10357394b6bba8cb1c10de",
-                "reference": "f72816b43e74063c8b10357394b6bba8cb1c10de",
-                "shasum": ""
+                "url": "https://github.com/morawskim/Faker",
+                "reference": "38d148979252bb4a50eda55cc6f658d75f3ce4b8"
             },
             "require": {
                 "php": "^5.3.3 || ^7.0"
@@ -3627,12 +3621,12 @@
             "require-dev": {
                 "ext-intl": "*",
                 "phpunit/phpunit": "^4.8.35 || ^5.7",
-                "squizlabs/php_codesniffer": "^1.5"
+                "squizlabs/php_codesniffer": "^2.9.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -3640,7 +3634,11 @@
                     "Faker\\": "src/Faker/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Faker\\Test\\": "test/Faker/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -3655,7 +3653,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2018-07-12T10:23:15+00:00"
+            "time": "2020-01-31T19:10:10+00:00"
         },
         {
             "name": "jakub-onderka/php-parallel-lint",
@@ -7890,12 +7888,20 @@
             "time": "2018-12-08T10:07:49+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "v1.8.0",
+            "alias_normalized": "1.8.0.0",
+            "version": "dev-picsum",
+            "package": "fzaninotto/faker"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widget-datepicker": 20,
         "kartik-v/yii2-widget-fileinput": 20,
-        "mmo/yii2-utils": 20
+        "mmo/yii2-utils": 20,
+        "fzaninotto/faker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

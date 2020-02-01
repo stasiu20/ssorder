@@ -2,7 +2,10 @@
 
 namespace common\tests\unit\fixtures;
 
+use common\enums\BucketEnum;
+use common\services\FileService;
 use common\services\FixtureStore;
+use Faker\Factory;
 use frontend\models\Restaurants;
 use yii\test\ActiveFixture;
 
@@ -15,5 +18,22 @@ class RestaurantFixture extends ActiveFixture
     {
         parent::beforeLoad();
         FixtureStore::getInstance()->addFixture($this);
+    }
+
+    public function afterLoad(): void
+    {
+        $faker = Factory::create();
+        /** @var Restaurants $restaurant */
+        foreach (array_keys($this->data) as $alias) {
+            $restaurant = $this->getModel($alias);
+            $path = $faker->picsum(null, 400, 400, true);
+
+            $key = basename($path);
+            $restaurant->img_url = $key;
+            /** @var FileService $fileService */
+            $fileService = \Yii::$container->get(FileService::class);
+            $fileService->storeFile(BucketEnum::RESTAURANT . '/' . $key, $path);
+            $restaurant->save(false);
+        }
     }
 }
