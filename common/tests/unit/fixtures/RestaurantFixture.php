@@ -7,6 +7,7 @@ use common\services\FileService;
 use common\services\FixtureStore;
 use Faker\Factory;
 use frontend\models\Restaurants;
+use Mmo\Faker\PicsumProvider;
 use yii\test\ActiveFixture;
 
 class RestaurantFixture extends ActiveFixture
@@ -23,6 +24,7 @@ class RestaurantFixture extends ActiveFixture
     public function afterLoad(): void
     {
         $faker = Factory::create();
+        $faker->addProvider(new PicsumProvider($faker));
         /** @var Restaurants $restaurant */
         foreach (array_keys($this->data) as $alias) {
             $restaurant = $this->getModel($alias);

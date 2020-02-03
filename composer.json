@@ -17,10 +17,6 @@
         {
             "type": "git",
             "url": "https://github.com/morawskim/yii2-utils"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/morawskim/Faker"
         }
     ],
     "require": {
@@ -67,7 +63,8 @@
         "phpstan/phpstan-deprecation-rules": "^0.11.2",
         "phpstan/phpstan-strict-rules": "^0.11.1",
         "ergebnis/phpstan-rules": "^0.14.2",
-        "fzaninotto/faker": "dev-picsum as v1.8.0"
+        "mmo/faker-images": "^0.1.0",
+        "fzaninotto/faker": "^1.9"
     },
     "config": {
         "process-timeout": 1800,
