@@ -7,6 +7,7 @@
 setup: .env
 	mkdir -p frontend/runtime/cache
 	chmod 777 frontend/runtime/cache
+	chmod 777 frontend/runtime
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
 	docker-compose up -d mongo
