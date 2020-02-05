@@ -29,6 +29,10 @@ services:
           - mysql
         links:
           - mysql
+        environment:
+            COMPOSER_AUTH: '{"github-oauth": {"github.com": "${COMPOSER_GITHUB_OAUTH}"}}'
+            PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME:-ssorder.lvh.me}"
+            XDEBUG_CONFIG: "remote_connect_back=0 remote_host=${MY_IP:-172.17.0.1} remote_enable=1"
     mysql:
         image: mysql:5.6
         volumes:
@@ -86,7 +90,6 @@ services:
           start_period: 3m
     rocketchat:
         image: rocketchat/rocket.chat:0.70.2 # upgrade to 0.70.4
-        restart: unless-stopped
         volumes:
             - .runtime/uploads:/app/uploads
         environment:
@@ -115,7 +118,6 @@ services:
 
     mongo:
         image: mongo:3.2
-        restart: unless-stopped
         volumes:
             - .runtime/data/db:/data/db
             #- ./data/dump:/dump
@@ -154,20 +156,20 @@ services:
             - traefik
         external_links:
             - traefik:ssorder.lvh.me
-    e2e-debug:
-      image: morawskim/node10-google-chrome:74.0.3729.131
-      command: node --inspect-brk=0.0.0.0:9229 ./node_modules/.bin/protractor protractor.conf.js
-      volumes:
-        - ./:/app
-      working_dir: /app/frontend
-      ports:
-        - "9229:9229"
-      depends_on:
-        - traefik
-      links:
-        - traefik
-      external_links:
-        - traefik:ssorder.lvh.me
+#    e2e-debug:
+#      image: morawskim/node10-google-chrome:74.0.3729.131
+#      command: node --inspect-brk=0.0.0.0:9229 ./node_modules/.bin/protractor protractor.conf.js
+#      volumes:
+#        - ./:/app
+#      working_dir: /app/frontend
+#      ports:
+#        - "9229:9229"
+#      depends_on:
+#        - traefik
+#      links:
+#        - traefik
+#      external_links:
+#        - traefik:ssorder.lvh.me
     newman:
         image: postman/newman:alpine
         volumes:

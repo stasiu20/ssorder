@@ -10,7 +10,7 @@ setup: .env
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
 	docker-compose up -d mongo
-	# in future move to wait_for script
+	# in future move to wait_for script, also for minio
 	sleep 5
 	docker-compose up -d mongo-init-replica
 	docker-compose up -d
@@ -18,6 +18,7 @@ setup: .env
 	docker-compose exec cli bash -c "cd frontend && yarn install --frozen-lock-file"
 	docker-compose exec cli bash -c 'cd frontend && yarn build'
 	docker-compose exec cli bash -c "./yii migrate/up --interactive 0"
+	docker-compose exec cli bash -c "./yii init/create-bucket"
 	docker-compose exec cli bash -c "./yii fixture/load '*' --interactive 0 "
 	docker-compose exec cli bash -c "cd provision/rocketchat/ && npm ci"
 	docker-compose exec cli bash -c "cd provision/rocketchat/ && node incomingIntegration.js"
