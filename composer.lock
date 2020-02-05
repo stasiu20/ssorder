@@ -1464,14 +1464,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/yii2-utils",
-                "reference": "b38af7a57057de50b381f42ea3239bd0b7d88d9f"
+                "reference": "eb23b0ea11485ac416ca0e1a2ffeaf143cfa2c68"
             },
             "require": {
+                "guzzlehttp/psr7": "^1.6",
                 "php": ">=7.2",
-                "yiisoft/yii2": "~2.0.13"
+                "yiisoft/yii2": "~2.0.14"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.3"
+            },
+            "suggest": {
+                "ext-intl": "Needed to generate slug by SlugGenerator's action"
             },
             "type": "library",
             "autoload": {
@@ -1494,7 +1498,7 @@
                 }
             ],
             "description": "A collection of extensions for Yii Framework 2.0",
-            "time": "2019-08-19T17:03:03+00:00"
+            "time": "2020-01-15T20:07:26+00:00"
         },
         {
             "name": "monolog/monolog",
