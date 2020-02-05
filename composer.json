@@ -80,7 +80,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "cp .env.dist .env",
         "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
         "phpcf": "./vendor/bin/phpcf ./frontend/ console/ ./common/",
         "codecept-common": "cd ./common && ../vendor/bin/codecept run unit",
