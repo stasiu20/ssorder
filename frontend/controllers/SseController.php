@@ -54,6 +54,10 @@ class SseController extends Controller
             ->set('Connection', 'keep-alive')
             ->set('X-Accel-Buffering', 'no');
         $response->send();
+        if (ob_get_level() > 0) {
+            ob_flush();
+        }
+        flush();
 
         $adapter = new \Superbalist\PubSub\Redis\RedisPubSubAdapter($client);
         $adapter->subscribe('sse', function ($message) {
