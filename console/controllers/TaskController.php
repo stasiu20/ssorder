@@ -99,7 +99,7 @@ class TaskController extends Controller
                         'html' => 'ratingReminder-html',
                         'text' => 'ratingReminder-text'
                     ],
-                    ['user' => $order->user]
+                    ['user' => $order->user, 'order' => $order]
                 )
                 ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
                 ->setTo($order->user->email)

@@ -29,7 +29,7 @@ return [
             'baseUrl' => '/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'hostInfo' => 'https://ssorder.snlb.pl'
+            'hostInfo' => getenv('PUBLIC_DOMAIN'),
         ],
 
     ],

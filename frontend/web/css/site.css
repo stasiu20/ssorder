@@ -150,6 +150,9 @@ a.desc:after {
     color: white;
     background-color: #9d9d9d;
 }
+.navbar.navbar-inverse h1 {
+    color: white;
+}
 
 .restaurant{
     float: left;
