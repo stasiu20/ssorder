@@ -11,6 +11,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-console',
+    'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',

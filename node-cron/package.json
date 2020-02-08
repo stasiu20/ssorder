@@ -1,0 +1,16 @@
+{
+  "name": "ssorder-scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcin Morawski <marcin@morawskim.pl>",
+  "license": "MIT",
+  "dependencies": {
+    "node-cron": "^2.0.3",
+    "shelljs": "^0.8.3"
+  }
+}
