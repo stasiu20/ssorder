@@ -40,6 +40,7 @@ return [
         } else {
             \Yii::$app->view->params['appVersion'] = new AppVersion([]);
         }
+        \frontend\helpers\GoogleAnalyticsHelper::registerJs();
     }],
     'modules' => [
         'apiV1' => [
@@ -52,7 +53,7 @@ return [
                 $analytics = new \TheIconic\Tracking\GoogleAnalytics\Analytics(true);
                 $analytics->setProtocolVersion('1')
                     ->setTrackingId(empty($params['ga_tracking_id']) ? null : $params['ga_tracking_id'])
-                    ->setAsyncRequest(true)
+                    ->setAsyncRequest(false)
                     ->setClientId($params['ga_client_id']);
                 if (!\Yii::$app->user->isGuest) {
                     $analytics->setUserId(\Yii::$app->user->id);
