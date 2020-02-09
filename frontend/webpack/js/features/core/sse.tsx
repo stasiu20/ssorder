@@ -15,7 +15,7 @@ $(function() {
         document.getElementById('react-toastify'),
     );
     if (EventSource) {
-        fromEventSource('/sse').subscribe(
+        const subscription = fromEventSource('/sse').subscribe(
             data => {
                 toast(data.message, { type: 'info' });
             },
@@ -26,5 +26,9 @@ $(function() {
                 });
             },
         );
+        // dla firefoxa...
+        window.addEventListener('beforeunload', () => {
+            subscription.unsubscribe();
+        });
     }
 });

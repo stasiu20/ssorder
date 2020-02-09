@@ -61,11 +61,19 @@ class SseController extends Controller
 
         $adapter = new \Superbalist\PubSub\Redis\RedisPubSubAdapter($client);
         $adapter->subscribe('sse', function ($message) {
-            $event = new ServerSentEvent(['data' => json_encode(['message' => $message])]);
-            echo $event;
-            flush();
+            $this->sendEvent($message);
         });
 
         return $response;
+    }
+
+    private function sendEvent($message): void
+    {
+        $event = new ServerSentEvent(['data' => json_encode(['message' => $message])]);
+        echo $event;
+        if (ob_get_level() > 0) {
+            ob_flush();
+        }
+        flush();
     }
 }
