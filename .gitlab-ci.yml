@@ -276,6 +276,13 @@ sitespeed:
     - merge_requests
     - chats
 
+docker:node:
+  extends: .docker
+  script:
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
+  only:
+    - develop
+
 docker:develop:
   extends: .docker
   script:
