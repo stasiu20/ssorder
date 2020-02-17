@@ -177,12 +177,12 @@ hadolint:
   stage: qa
   image: hadolint/hadolint:v1.16.3-debian
   script:
-    - hadolint frontend/Dockerfile
     - find -iname 'Dockerfile*' | xargs --max-lines=1 hadolint
   dependencies: []
   only:
     changes:
       - frontend/Dockerfile
+      - node-cron/Dockerfile
 
 security-checker:
   stage: qa
@@ -275,6 +275,17 @@ sitespeed:
     - web
     - merge_requests
     - chats
+
+docker:node:
+  extends: .docker
+  script:
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
+  only:
+    refs:
+      - develop
+#    //todo mmo: obraz wykorzystuje kod PHP, ktory moze sie zmienic
+    changes:
+      - "node-cron/*"
 
 docker:develop:
   extends: .docker

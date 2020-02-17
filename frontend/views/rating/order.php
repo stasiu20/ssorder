@@ -7,11 +7,13 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 RatingAsset::register($this);
+$this->title = 'Ocena zamówienia';
 
 /* @var $this \yii\web\View */
 /* @var $model FoodRating */
 ?>
-<div>
+<div class="row">
+    <div class="col-12">
     <?php $form = ActiveForm::begin() ?>
     <?= $form->field($model, 'rating')->widget(RatingWidget::class) ?>
     <?= $form->field($model, 'review')->textarea() ?>
@@ -24,4 +26,5 @@ RatingAsset::register($this);
     </div>
 
     <?php ActiveForm::end(); ?>
+    </div>
 </div>

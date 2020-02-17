@@ -49,6 +49,12 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - $PROD_SSORDER_PATH/.runtime/redis:/data
+  scheduler:
+    image: registry.sensilabs.pl/sensilabs/ssorder/scheduler
+    env_file:
+      - .env
+    depends_on:
+      - mysql
 networks:
   traefik:
     external: true

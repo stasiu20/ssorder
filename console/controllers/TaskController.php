@@ -3,11 +3,13 @@
 namespace console\controllers;
 
 use common\models\Order;
+use common\models\OrderFilters;
+use Yii;
 use yii\console\Controller;
 
 class TaskController extends Controller
 {
-    public function actionSetOrderPrice()
+    public function actionSetOrderPrice(): void
     {
         /** @var Order[] $orders */
         $orders = Order::findAll(['status' => Order::STATUS_REALIZED, 'price' => null]);
@@ -27,7 +29,7 @@ class TaskController extends Controller
         }
     }
 
-    public function actionSetRealizedBy($userId = 1)
+    public function actionSetRealizedBy($userId = 1): void
     {
         /** @var Order[] $orders */
         $orders = Order::findAll(['status' => Order::STATUS_REALIZED, 'realizedBy' => null]);
@@ -47,7 +49,7 @@ class TaskController extends Controller
         }
     }
 
-    public function actionSetTotalPrice()
+    public function actionSetTotalPrice(): void
     {
         /** @var Order[] $orders */
         $orders = Order::findAll(['status' => Order::STATUS_REALIZED, 'total_price' => null]);
@@ -73,6 +75,36 @@ class TaskController extends Controller
                 $order->total_price = \frontend\helpers\OrderCost::calculateOrderCost($record, $numOfOrders, $i);
                 $order->save(false, ['total_price']);
             }
+        }
+    }
+
+    public function actionSendMailWithRatingLink(): void
+    {
+        $filter = new OrderFilters();
+        $filter->status = Order::STATUS_REALIZED;
+        $filter->dateFrom = (new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d');
+        $filter->dateTo = (new \DateTime())->format('Y-m-d');
+        $query  = \common\models\OrderSearch::search($filter);
+
+        /** @var Order[] $orders */
+        $orders = $query->all();
+        foreach ($orders as $order) {
+            if ($order->rating) {
+                continue;
+            }
+
+            \Yii::$app->mailer
+                ->compose(
+                    [
+                        'html' => 'ratingReminder-html',
+                        'text' => 'ratingReminder-text'
+                    ],
+                    ['user' => $order->user, 'order' => $order]
+                )
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                ->setTo($order->user->email)
+                ->setSubject(sprintf('[%s] Oceń zamówienie', Yii::$app->name))
+                ->send();
         }
     }
 }
