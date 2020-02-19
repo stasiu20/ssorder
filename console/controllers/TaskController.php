@@ -105,6 +105,7 @@ class TaskController extends Controller
                 ->setTo($order->user->email)
                 ->setSubject(sprintf('[%s] Oceń zamówienie', Yii::$app->name))
                 ->send();
+            $this->stdout(sprintf("Send notify email to %s for order %d\n", $order->user->email, $order->id));
         }
     }
 }

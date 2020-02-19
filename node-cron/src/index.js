@@ -3,7 +3,10 @@ const shell = require('shelljs');
 
 cron.schedule('20 8 * * *', () => {
     shell.exec('php /var/www/html/yii task/send-mail-with-rating-link', function taskSendMailWithRatingLink(code, stdout, stderr) {
-        if (code !== 0) {
+        if (code === 0) {
+            console.log('Task task/send-mail-with-rating-link success');
+            console.log(stdout);
+        } else {
             console.error('Task task/send-mail-with-rating-link failed');
             console.error('Program output:', stdout);
             console.error('Program stderr:', stderr);
