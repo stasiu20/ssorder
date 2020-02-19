@@ -1,5 +1,6 @@
 <?php
 
+use yii\web\JsonParser;
 use Monolog\Logger;
 use samdark\log\PsrTarget;
 use mmo\yii2\helpers\AppVersionHelper;
@@ -71,7 +72,7 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
+                'application/json' => JsonParser::class,
             ]
         ],
         'user' => [

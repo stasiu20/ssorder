@@ -23,7 +23,9 @@ export default class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
     componentDidCatch(error, errorInfo): void {
         console.error('ERROR:');
         console.error({ error, errorInfo });
-        console.error(ErrorStackParser.parse(error));
+        if (error instanceof Error) {
+            console.error(ErrorStackParser.parse(error));
+        }
     }
 
     render(): ReactNode {

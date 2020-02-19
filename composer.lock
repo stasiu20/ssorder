@@ -1464,7 +1464,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/yii2-utils",
-                "reference": "eb23b0ea11485ac416ca0e1a2ffeaf143cfa2c68"
+                "reference": "bf70f36785fe9a80f525e81032c55baf21b3c280"
             },
             "require": {
                 "guzzlehttp/psr7": "^1.6",
@@ -1498,7 +1498,7 @@
                 }
             ],
             "description": "A collection of extensions for Yii Framework 2.0",
-            "time": "2020-01-15T20:07:26+00:00"
+            "time": "2020-02-17T18:49:25+00:00"
         },
         {
             "name": "monolog/monolog",

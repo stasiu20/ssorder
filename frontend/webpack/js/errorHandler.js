@@ -1,4 +1,3 @@
-/* global ga */
 import ErrorStackParser from 'error-stack-parser';
 
 window.addEventListener('error', function(e) {
@@ -10,18 +9,8 @@ window.addEventListener('error', function(e) {
     }
     const userAgent = navigator.userAgent;
     const errorObj = { message, filename, lineno, colno, stack, userAgent };
-    console.error(errorObj);
-    ga('send', 'exception', {
-        exDescription: JSON.stringify(errorObj),
-        exFatal: true,
+    const blob = new Blob([JSON.stringify(errorObj)], {
+        type: 'application/json',
     });
-    ga(
-        'send',
-        'event',
-        'window.error',
-        message,
-        JSON.stringify(errorObj),
-        undefined,
-        { NonInteraction: 1 },
-    );
+    navigator.sendBeacon('/error/reporting', blob);
 });
