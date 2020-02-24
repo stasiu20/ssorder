@@ -73,7 +73,8 @@ return [
             'csrfParam' => '_csrf-frontend',
             'parsers' => [
                 'application/json' => JsonParser::class,
-            ]
+            ],
+            'trustedHosts' => ['10.0.0.0/24'],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
