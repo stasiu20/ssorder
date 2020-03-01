@@ -64,7 +64,8 @@
         "phpstan/phpstan-strict-rules": "^0.11.1",
         "ergebnis/phpstan-rules": "^0.14.2",
         "mmo/faker-images": "^0.1.0",
-        "fzaninotto/faker": "^1.9"
+        "fzaninotto/faker": "^1.9",
+        "zircote/swagger-php": "^3.0"
     },
     "config": {
         "process-timeout": 1800,

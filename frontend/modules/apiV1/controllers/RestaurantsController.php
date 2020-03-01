@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
+use \OpenApi\Annotations as OA;
 
 class RestaurantsController extends Controller
 {
@@ -28,6 +29,25 @@ class RestaurantsController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/restaurants",
+     *      operationId="getRestaurantsList",
+     *      tags={"Restaurants"},
+     *      summary="Get list of restaurants",
+     *      description="Returns list of restaurants",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Restaurant"),
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
      * @return ActiveDataProvider
      */
     public function actionIndex()
@@ -40,6 +60,38 @@ class RestaurantsController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/restaurants/{restaurantId}/foods",
+     *     operationId="getRestaurantFoodsList",
+     *     tags={"Restaurants"},
+     *     summary="Get list of foods in restaurant",
+     *     description="Returns list of foods in restaurant",
+     *     @OA\Parameter(
+     *         name="restaurantId",
+     *         description="Restaurant id",
+     *         required=true,
+     *         in="path",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Food"),
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
      * @param int $restaurantId
      * @return ActiveDataProvider
      * @throws NotFoundHttpException
