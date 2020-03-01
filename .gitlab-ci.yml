@@ -135,6 +135,19 @@ phpcf:
   dependencies:
     - composer
 
+openapi:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - vendor/bin/openapi -b frontend/config/openapi-constant.php -o openapi.yml ./frontend/
+  dependencies:
+    - composer
+  artifacts:
+    paths:
+      - openapi.yml
+    expire_in: 30 days
+    when: on_success
+
 assets:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
@@ -146,6 +159,19 @@ assets:
     paths:
       - frontend/web/assets/build
       - frontend/webpack/stats.json
+    expire_in: 30 days
+    when: on_success
+
+redoc:
+  stage: build
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - npx redoc-cli bundle -o redoc/index.html openapi.yml
+  dependencies:
+    - openapi
+  artifacts:
+    paths:
+      - redoc/
     expire_in: 30 days
     when: on_success
 
