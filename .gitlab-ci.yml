@@ -139,7 +139,7 @@ openapi:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - vendor/bin/openapi -b frontend/config/openapi-constant.php -o openapi.yml ./frontend/
+    - composer run openapi
   dependencies:
     - composer
   artifacts:
@@ -166,7 +166,7 @@ redoc:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - npx redoc-cli bundle -o redoc/index.html openapi.yml
+    - composer run redoc
   dependencies:
     - openapi
   artifacts:
