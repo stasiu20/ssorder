@@ -2,15 +2,41 @@
 
 namespace frontend\modules\apiV1\models\request;
 
-use common\models\User;
 use yii\base\Model;
+use \OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     title="LoginRequest",
+ *     description="LoginRequest model",
+ *     @OA\Xml(
+ *         name="LoginRequest"
+ *     )
+ * )
+ */
 class LoginRequest extends Model
 {
-    /** @var string|null */
+    /**
+     * @OA\Property(
+     *     title="userName",
+     *     type="string",
+     *     description="User name",
+     *     example="sonia.kowalska",
+     * )
+     * @var string|null
+     */
     public $userName;
 
-    /** @var string|null */
+    /**
+     * @OA\Property(
+     *     title="password",
+     *     type="string",
+     *     format="password",
+     *     description="User password",
+     *     example="secretpassword",
+     * )
+     * @var string|null
+     */
     public $password;
 
     public function rules()
