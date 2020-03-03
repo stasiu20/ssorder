@@ -21,6 +21,11 @@ use \OpenApi\Annotations as OA;
  *      description="Prod API Server"
  * )
  *
+ * @OA\Server(
+ *      url=SSORDER_OPENAPI_HOST_DEVELOPER,
+ *      description="Developer (docker) API Server"
+ * )
+ *
  * @OA\Tag(
  *     name="Restaurants",
  *     description="API ""Endpoints"" of Restaurants"
