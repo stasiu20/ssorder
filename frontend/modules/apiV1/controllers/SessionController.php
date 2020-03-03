@@ -37,7 +37,7 @@ class SessionController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/sessions",
+     *     path="/session/login",
      *     operationId="login",
      *     tags={"Sessions"},
      *     summary="Login",
@@ -100,11 +100,12 @@ class SessionController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/sessions",
+     *     path="/session/logout",
      *     operationId="logout",
      *     tags={"Sessions"},
      *     summary="Logout",
      *     description="Logout",
+     *     security={{"jwtToken": {}}},
      *     @OA\Response(
      *         response=204,
      *         description="Successful operation",

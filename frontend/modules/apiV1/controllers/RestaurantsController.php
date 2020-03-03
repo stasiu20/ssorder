@@ -35,6 +35,7 @@ class RestaurantsController extends Controller
      *      tags={"Restaurants"},
      *      summary="Get list of restaurants",
      *      description="Returns list of restaurants",
+     *      security={{"jwtToken": {}}},
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -66,6 +67,7 @@ class RestaurantsController extends Controller
      *     tags={"Restaurants"},
      *     summary="Get list of foods in restaurant",
      *     description="Returns list of foods in restaurant",
+     *     security={{"jwtToken": {}}},
      *     @OA\Parameter(
      *         name="restaurantId",
      *         description="Restaurant id",

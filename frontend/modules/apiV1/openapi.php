@@ -29,4 +29,10 @@ use \OpenApi\Annotations as OA;
  *     name="Sessions",
  *     description="API ""Endpoints"" of Sessions"
  * )
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="jwt",
+ *     securityScheme="jwtToken"
+ * )
  */
