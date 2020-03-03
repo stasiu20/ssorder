@@ -175,6 +175,23 @@ redoc:
     expire_in: 30 days
     when: on_success
 
+swagger:
+  stage: build
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - mkdir swagger
+    - cp -r ./vendor/swagger-api/swagger-ui/dist ./swagger
+    - cp openapi.yml ./swagger
+    - sed -i -e's#https://petstore.swagger.io/v2/swagger.json#openapi.yml#' swagger/index.html
+  dependencies:
+    - composer
+    - openapi
+  artifacts:
+    paths:
+      - swagger/
+    expire_in: 30 days
+    when: on_success
+
 pretier:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3

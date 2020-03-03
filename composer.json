@@ -65,7 +65,8 @@
         "ergebnis/phpstan-rules": "^0.14.2",
         "mmo/faker-images": "^0.1.0",
         "fzaninotto/faker": "^1.9",
-        "zircote/swagger-php": "^3.0"
+        "zircote/swagger-php": "^3.0",
+        "swagger-api/swagger-ui": "^3.25"
     },
     "config": {
         "process-timeout": 1800,
