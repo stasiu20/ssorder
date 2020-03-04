@@ -144,7 +144,7 @@ openapi:
     - composer
   artifacts:
     paths:
-      - openapi.yml
+      - docs/openapi.yml
     expire_in: 30 days
     when: on_success
 
@@ -171,7 +171,7 @@ redoc:
     - openapi
   artifacts:
     paths:
-      - redoc/
+      - docs/redoc/
     expire_in: 30 days
     when: on_success
 
@@ -179,16 +179,15 @@ swagger:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - mkdir swagger
-    - cp -r ./vendor/swagger-api/swagger-ui/dist ./swagger
-    - cp openapi.yml ./swagger
-    - sed -i -e's#https://petstore.swagger.io/v2/swagger.json#openapi.yml#' swagger/index.html
+    - cp -rv ./vendor/swagger-api/swagger-ui/dist ./docs/swagger
+    - cp docs/openapi.yml ./docs/swagger
+    - sed -i -e's#https://petstore.swagger.io/v2/swagger.json#openapi.yml#' docs/swagger/index.html
   dependencies:
     - composer
     - openapi
   artifacts:
     paths:
-      - swagger/
+      - docs/swagger/
     expire_in: 30 days
     when: on_success
 
@@ -226,6 +225,7 @@ hadolint:
     changes:
       - frontend/Dockerfile
       - node-cron/Dockerfile
+      - docs/Dockerfile
 
 security-checker:
   stage: qa
@@ -329,6 +329,18 @@ docker:node:
 #    //todo mmo: obraz wykorzystuje kod PHP, ktory moze sie zmienic
     changes:
       - "node-cron/*"
+
+docker:docs:
+  extends: .docker
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
+  only:
+    - develop
+  dependencies:
+    - swagger
+    - openapi
+    - redoc
+    - version
 
 docker:develop:
   extends: .docker
