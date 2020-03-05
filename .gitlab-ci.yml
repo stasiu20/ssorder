@@ -452,3 +452,30 @@ deploy_production:
       EOF
     - >
       curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN
+
+deploy_docs:
+  stage: deploy
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  environment:
+    name: docs
+    url: https://developer.ssorder.snlb.pl
+  only:
+    - develop
+  when: manual
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - PROD_DOCS_PATH="/home/deployer/ssorder-developer"
+    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
+    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_DOCS_PATH
+    - scp -P22 -r docs/docker-swarm.yml deployer@192.168.15.28:${PROD_DOCS_PATH}/
+    - |
+      ssh -p22 deployer@192.168.15.28 << EOF
+        set -e
+        echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
+        docker --config $PROD_DOCS_PATH stack deploy --compose-file $PROD_DOCS_PATH/docker-swarm.yml --with-registry-auth ssorder-developer
+      EOF
