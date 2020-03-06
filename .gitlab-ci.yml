@@ -48,7 +48,7 @@ composer:
   script:
     - php -v
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-    - cd vendor && ln -s bower-asset/ bower
+    - cd vendor && cp -r bower-asset bower
   artifacts:
     paths:
       - vendor/
@@ -275,15 +275,13 @@ sitespeed:
     - echo Use sitespeed at version "$SITESPEED_VERSION" with options "$SITESPEED_OPTIONS" and check url "$URL"
     - mkdir gitlab-exporter
     - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
-    - mkdir sitespeed-results
-    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL $SITESPEED_OPTIONS
-    - mv sitespeed-results/data/performance.json performance.json
+    - mkdir docs/sitespeed
+    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder docs/sitespeed $URL $SITESPEED_OPTIONS
   artifacts:
     paths:
-      - performance.json
-      - sitespeed-results/
+      - docs/sitespeed/
     reports:
-      performance: performance.json
+      performance: docs/sitespeed/data/performance.json
   only:
     - schedules
   tags:
@@ -340,6 +338,7 @@ docker:docs:
     - swagger
     - openapi
     - redoc
+    - sitespeed
     - version
 
 docker:develop:
