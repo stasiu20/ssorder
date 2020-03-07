@@ -1,3 +1,5 @@
 redoc/
 swagger/
+codecept-frontend/
+codecept-common/
 openapi.yml

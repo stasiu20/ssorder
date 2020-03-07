@@ -258,6 +258,12 @@ codeception:
     - composer run codecept-frontend
   dependencies:
     - composer
+  artifacts:
+    paths:
+      - docs/codecept-frontend/
+      - docs/codecept-common/
+    expire_in: 30 days
+    when: on_success
 
 sitespeed:
   stage: qa
@@ -344,6 +350,7 @@ docker:docs:
     - openapi
     - redoc
     - sitespeed
+    - codeception
 
 docker:develop:
   extends: .docker
