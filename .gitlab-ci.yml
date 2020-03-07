@@ -329,17 +329,21 @@ docker:node:
       - "node-cron/*"
 
 docker:docs:
-  extends: .docker
+  stage: docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
   script:
     - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
   only:
-    - develop
+    - schedules
   dependencies:
     - swagger
     - openapi
     - redoc
     - sitespeed
-    - version
 
 docker:develop:
   extends: .docker
