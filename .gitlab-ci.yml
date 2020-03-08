@@ -482,27 +482,20 @@ deploy_production:
 
 deploy_docs:
   stage: deploy
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: docker:19.03-dind
   environment:
     name: docs
     url: https://developer.ssorder.snlb.pl
   only:
-    - develop
-  when: manual
+    - schedules
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - PROD_DOCS_PATH="/home/deployer/ssorder-developer"
+    - PROD_DOCS_PATH=$(mktemp -d)
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_DOCS_PATH
-    - scp -P22 -r docs/docker-swarm.yml deployer@192.168.15.28:${PROD_DOCS_PATH}/
-    - |
-      ssh -p22 deployer@192.168.15.28 << EOF
-        set -e
-        echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
-        docker --config $PROD_DOCS_PATH stack deploy --compose-file $PROD_DOCS_PATH/docker-swarm.yml --with-registry-auth ssorder-developer
-      EOF
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
+    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
