@@ -148,6 +148,23 @@ openapi:
     expire_in: 30 days
     when: on_success
 
+sonarcloud:
+  stage: qa
+  image:
+    name: sonarsource/sonar-scanner-cli
+    entrypoint: [""]
+  variables:
+    SONAR_TOKEN: '$SONAR_PROJECT_TOKEN'
+    SONAR_HOST_URL: "https://sonarcloud.io"
+    SONAR_PROJECT_BASE_DIR: '$CI_PROJECT_DIR'
+    GIT_DEPTH: 0
+  script:
+    - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.organization=morawskim -Dsonar.projectKey=ssorder
+  allow_failure: true
+  only:
+    - merge_requests
+    - master
+
 assets:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
