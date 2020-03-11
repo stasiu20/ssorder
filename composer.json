@@ -64,7 +64,9 @@
         "phpstan/phpstan-strict-rules": "^0.11.1",
         "ergebnis/phpstan-rules": "^0.14.2",
         "mmo/faker-images": "^0.1.0",
-        "fzaninotto/faker": "^1.9"
+        "fzaninotto/faker": "^1.9",
+        "zircote/swagger-php": "^3.0",
+        "swagger-api/swagger-ui": "^3.25"
     },
     "config": {
         "process-timeout": 1800,
@@ -82,8 +84,8 @@
     "scripts": {
         "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
         "phpcf": "./vendor/bin/phpcf ./frontend/ console/ ./common/",
-        "codecept-common": "cd ./common && ../vendor/bin/codecept run unit",
-        "codecept-frontend": "cd ./frontend && ../vendor/bin/codecept run unit",
+        "codecept-common": "cd ./common && ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
+        "codecept-frontend": "cd ./frontend && ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
         "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
         "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml",
         "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
@@ -91,8 +93,11 @@
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
+        "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./frontend/",
+        "redoc": "npx redoc-cli bundle -o docs/redoc/index.html docs/openapi.yml",
         "all": [
             "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"
-        ]
+        ],
+        "swagger": ["@openapi", "@redoc"]
     }
 }

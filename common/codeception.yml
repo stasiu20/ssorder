@@ -13,3 +13,13 @@ modules:
     config:
         Yii2:
             configFile: 'config/test-local.php'
+coverage:
+    enabled: true
+    include:
+        - behaviors/*
+        - component/*
+        - helpers/*
+        - iterators/*
+        - models/*
+        - services/*
+        - widgets/*

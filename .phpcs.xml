@@ -26,6 +26,17 @@
     <!-- Include some specific sniffs from the Generic standard -->
     <rule ref="Generic.Commenting.Todo"/>
 
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array" value="phpinfo=>null,var_dump=>null"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.NoSilencedErrors">
+        <properties>
+            <property name="error" value="true" />
+        </properties>
+    </rule>
+
     <!-- Run against the PHPCompatibility ruleset -->
     <!-- Require phpcompatibility/php-compatibility package -->
     <rule ref="PHPCompatibility"/>

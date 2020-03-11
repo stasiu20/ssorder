@@ -50,5 +50,8 @@
     "prettier": "prettier --check './webpack/**'",
     "stylelint": "stylelint ./webpack",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./webpack"
+  },
+  "resolutions": {
+    "**/**/acorn": "^7.1.1"
   }
 }

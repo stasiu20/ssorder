@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
+use \OpenApi\Annotations as OA;
 
 class SessionController extends Controller
 {
@@ -35,6 +36,42 @@ class SessionController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/session/login",
+     *     operationId="login",
+     *     tags={"Sessions"},
+     *     summary="Login",
+     *     description="Login return JWT token",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/LoginRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="type",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="data",
+     *                     type="string"
+     *                 ),
+     *                 example={"type": "auth", "data": "ASD45SDF4GFDGDFGVMNY"}
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *      ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Wrong username/password"
+     *     )
+     * )
      * @return array|LoginRequest
      * @throws InvalidConfigException
      */
@@ -62,6 +99,26 @@ class SessionController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *     path="/session/logout",
+     *     operationId="logout",
+     *     tags={"Sessions"},
+     *     summary="Logout",
+     *     description="Logout",
+     *     security={{"jwtToken": {}}},
+     *     @OA\Response(
+     *         response=204,
+     *         description="Successful operation",
+     *      ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *      ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     )
+     * )
      * @throws BadRequestHttpException
      * @throws Throwable
      * @throws StaleObjectException

@@ -4,6 +4,7 @@ namespace frontend\modules\apiV1;
 
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
+use yii\filters\Cors;
 use yii\web\Response;
 
 /**
@@ -38,6 +39,17 @@ class ApiV1Module extends \yii\base\Module
             'jwtAuth' => [
                 'class' => HttpBearerAuth::class,
                 'except' => ['session/login']
+            ],
+            'cors' => [
+                'class' => Cors::class,
+                'cors' => [
+                    'Origin' => explode(',', getenv('CORS_ALLOWED_ORIGIN')),
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Allow-Credentials' => null,
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Expose-Headers' => [],
+                ]
             ],
         ];
     }

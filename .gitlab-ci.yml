@@ -48,7 +48,7 @@ composer:
   script:
     - php -v
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-    - cd vendor && ln -s bower-asset/ bower
+    - cd vendor && cp -r bower-asset bower
   artifacts:
     paths:
       - vendor/
@@ -135,6 +135,36 @@ phpcf:
   dependencies:
     - composer
 
+openapi:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run openapi
+  dependencies:
+    - composer
+  artifacts:
+    paths:
+      - docs/openapi.yml
+    expire_in: 30 days
+    when: on_success
+
+sonarcloud:
+  stage: qa
+  image:
+    name: sonarsource/sonar-scanner-cli
+    entrypoint: [""]
+  variables:
+    SONAR_TOKEN: '$SONAR_PROJECT_TOKEN'
+    SONAR_HOST_URL: "https://sonarcloud.io"
+    SONAR_PROJECT_BASE_DIR: '$CI_PROJECT_DIR'
+    GIT_DEPTH: 0
+  script:
+    - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.organization=morawskim -Dsonar.projectKey=ssorder
+  allow_failure: true
+  only:
+    - merge_requests
+    - master
+
 assets:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
@@ -146,6 +176,35 @@ assets:
     paths:
       - frontend/web/assets/build
       - frontend/webpack/stats.json
+    expire_in: 30 days
+    when: on_success
+
+redoc:
+  stage: build
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run redoc
+  dependencies:
+    - openapi
+  artifacts:
+    paths:
+      - docs/redoc/
+    expire_in: 30 days
+    when: on_success
+
+swagger:
+  stage: build
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - cp -rv ./vendor/swagger-api/swagger-ui/dist ./docs/swagger
+    - cp docs/openapi.yml ./docs/swagger
+    - sed -i -e's#https://petstore.swagger.io/v2/swagger.json#openapi.yml#' docs/swagger/index.html
+  dependencies:
+    - composer
+    - openapi
+  artifacts:
+    paths:
+      - docs/swagger/
     expire_in: 30 days
     when: on_success
 
@@ -183,6 +242,7 @@ hadolint:
     changes:
       - frontend/Dockerfile
       - node-cron/Dockerfile
+      - docs/Dockerfile
 
 security-checker:
   stage: qa
@@ -215,6 +275,12 @@ codeception:
     - composer run codecept-frontend
   dependencies:
     - composer
+  artifacts:
+    paths:
+      - docs/codecept-frontend/
+      - docs/codecept-common/
+    expire_in: 30 days
+    when: on_success
 
 sitespeed:
   stage: qa
@@ -232,15 +298,13 @@ sitespeed:
     - echo Use sitespeed at version "$SITESPEED_VERSION" with options "$SITESPEED_OPTIONS" and check url "$URL"
     - mkdir gitlab-exporter
     - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
-    - mkdir sitespeed-results
-    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL $SITESPEED_OPTIONS
-    - mv sitespeed-results/data/performance.json performance.json
+    - mkdir docs/sitespeed
+    - docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder docs/sitespeed $URL $SITESPEED_OPTIONS
   artifacts:
     paths:
-      - performance.json
-      - sitespeed-results/
+      - docs/sitespeed/
     reports:
-      performance: performance.json
+      performance: docs/sitespeed/data/performance.json
   only:
     - schedules
   tags:
@@ -286,6 +350,24 @@ docker:node:
 #    //todo mmo: obraz wykorzystuje kod PHP, ktory moze sie zmienic
     changes:
       - "node-cron/*"
+
+docker:docs:
+  stage: docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
+  only:
+    - schedules
+  dependencies:
+    - swagger
+    - openapi
+    - redoc
+    - sitespeed
+    - codeception
 
 docker:develop:
   extends: .docker
@@ -397,3 +479,23 @@ deploy_production:
       EOF
     - >
       curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN
+
+deploy_docs:
+  stage: deploy
+  image: docker:19.03-dind
+  environment:
+    name: docs
+    url: https://developer.ssorder.snlb.pl
+  only:
+    - schedules
+  before_script:
+    - 'which ssh-agent || ( apk update && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - PROD_DOCS_PATH=$(mktemp -d)
+    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
+    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
