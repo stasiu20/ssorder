@@ -1,5 +1,5 @@
 [![Gitter](https://badges.gitter.im/ssorder/community.svg)](https://gitter.im/ssorder/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ssorder&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ssorder)
 # ssorder
 
 A web application created by intern. Currently develop after hours as an opensource project. It is used to order and settle meals for employees. "Sandbox" for introducing new technological solutions.
