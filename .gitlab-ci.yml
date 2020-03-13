@@ -310,6 +310,21 @@ sitespeed:
   tags:
     - packer
 
+newman:
+  stage: qa
+  image:
+    name: postman/newman:alpine
+    entrypoint: [""]
+  script:
+    - echo "$PROD_CONFIG" > .env
+    - source .env
+    - >
+      for dir in integration-tests/tests/*/; do
+        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli ${dir}/ssorder.postman_collection.json
+      done
+  only:
+    - schedules
+
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
