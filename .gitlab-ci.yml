@@ -316,12 +316,17 @@ newman:
     name: postman/newman:alpine
     entrypoint: [""]
   script:
+    - npm install -g newman-reporter-html
     - echo "$PROD_CONFIG" > .env
     - source .env
     - >
       for dir in integration-tests/tests/*/; do
-        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli ${dir}/ssorder.postman_collection.json
+        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
       done
+  artifacts:
+    paths:
+      - docs/newman/
+    when: always
   only:
     - schedules
 
@@ -383,6 +388,7 @@ docker:docs:
     - redoc
     - sitespeed
     - codeception
+    - newman
 
 docker:develop:
   extends: .docker
