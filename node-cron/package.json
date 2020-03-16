@@ -10,7 +10,8 @@
   "author": "Marcin Morawski <marcin@morawskim.pl>",
   "license": "MIT",
   "dependencies": {
-    "node-cron": "^2.0.3",
-    "shelljs": "^0.8.3"
+    "ioredis": "^4.16.0",
+    "nconf": "^0.10.0",
+    "node-cron": "^2.0.3"
   }
 }

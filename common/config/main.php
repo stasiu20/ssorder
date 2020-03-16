@@ -1,5 +1,7 @@
 <?php
 
+use yii\queue\redis\Queue;
+use yii\queue\serializers\JsonSerializer;
 use yii\redis\Connection;
 use yii\redis\Session;
 use Aws\S3\S3Client;
@@ -65,6 +67,11 @@ return [
             'database' => getenv('REDIS_DATABASE'),
             'connectionTimeout' => 2,
             'dataTimeout' => 2
+        ],
+        'queue' => [
+            'class' => Queue::class,
+            'channel' => 'queue',
+            'serializer' => JsonSerializer::class,
         ],
     ],
 ];

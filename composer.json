@@ -43,7 +43,8 @@
         "yiisoft/yii2-redis": "^2.0",
         "ramsey/uuid": "^3.9",
         "superbalist/php-pubsub-redis": "^2.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "yiisoft/yii2-queue": "^2.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

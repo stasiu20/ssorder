@@ -363,13 +363,13 @@ newman:
 docker:node:
   extends: .docker
   script:
-      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
+      - /kaniko/executor --context $CI_PROJECT_DIR/node-cron --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
   only:
     refs:
       - develop
-#    //todo mmo: obraz wykorzystuje kod PHP, ktory moze sie zmienic
     changes:
       - "node-cron/*"
+      - .gitlab-ci.yml
 
 docker:docs:
   stage: docker

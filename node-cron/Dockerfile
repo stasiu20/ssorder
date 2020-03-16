@@ -1,7 +1,7 @@
-FROM edbizarro/gitlab-ci-pipeline-php:7.3
-
-WORKDIR /var/www/html
-COPY --chown=php:php ./ /var/www/html
-WORKDIR /var/www/html/node-cron
+FROM node:12.16-alpine
+USER node
+WORKDIR /home/node
+COPY --chown=node:node package.json package-lock.json ./
 RUN npm ci --only=production
+COPY --chown=node:node ./src/ ./src/
 CMD [ "node", "src/index.js" ]

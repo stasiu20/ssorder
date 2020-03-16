@@ -13,7 +13,7 @@ return [
     'id' => 'app-console',
     'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'queue'],
     'controllerNamespace' => 'console\controllers',
     'components' => [
         'log' => [
