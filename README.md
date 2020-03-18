@@ -16,6 +16,8 @@ A web application created by intern. Currently develop after hours as an opensou
 * React.js
 * Redis Pub/Sub and SSE
 * Customised Bootstrap 4
+* OpenAPI to describe REST API
+* Deploy by Docker
 
 ## Setup
 
