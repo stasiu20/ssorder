@@ -65,8 +65,10 @@ return [
             'hostname' => getenv('REDIS_HOST'),
             'port' => getenv('REDIS_PORT'),
             'database' => getenv('REDIS_DATABASE'),
-            'connectionTimeout' => 2,
-            'dataTimeout' => 2
+            'connectionTimeout' => 5,
+            'dataTimeout' => 5,
+            'retries' => 3,
+            'retryInterval' => 500,
         ],
         'queue' => [
             'class' => Queue::class,
