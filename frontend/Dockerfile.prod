@@ -3,7 +3,7 @@ FROM php:7.3-apache
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
-SHELL ["/bin/sh", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
 # hadolint ignore=DL3008
@@ -24,5 +24,8 @@ RUN docker-php-ext-install \
         pdo_mysql \
         intl \
         gmp
+
+RUN echo -e "no\nno\nno\n" | pecl install redis && \
+    echo "extension=redis.so" | tee /usr/local/etc/php/conf.d/redis.ini
 
 COPY --chown=www-data:www-data ./ /app
