@@ -1509,9 +1509,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/yii2-utils",
-                "reference": "bf70f36785fe9a80f525e81032c55baf21b3c280"
+                "reference": "fe81326395b30bd6d53df55d51f28cef8d06eda1"
             },
             "require": {
+                "endclothing/prometheus_client_php": "^1.0",
                 "guzzlehttp/psr7": "^1.6",
                 "php": ">=7.2",
                 "yiisoft/yii2": "~2.0.14"
@@ -1543,7 +1544,7 @@
                 }
             ],
             "description": "A collection of extensions for Yii Framework 2.0",
-            "time": "2020-02-17T18:49:25+00:00"
+            "time": "2020-03-23T19:34:59+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4075,6 +4076,7 @@
             ],
             "description": "This tool check syntax of PHP files about 20x faster than serial check.",
             "homepage": "https://github.com/JakubOnderka/PHP-Parallel-Lint",
+            "abandoned": "php-parallel-lint/php-parallel-lint",
             "time": "2018-02-24T15:31:20+00:00"
         },
         {
