@@ -12,8 +12,6 @@ async function addSendNotifyMailTaskToQueue(client) {
     } catch (e) {
         console.error(e);
         throw Error("Can't add task to queue");
-    } finally {
-        client.disconnect();
     }
 }
 module.exports = addSendNotifyMailTaskToQueue;

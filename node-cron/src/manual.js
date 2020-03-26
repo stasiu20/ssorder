@@ -5,6 +5,7 @@ async function run() {
     try {
         await addSendNotifyMailTaskToQueue(RedisClient);
         console.log('Task to send notification mail finished');
+        RedisClient.disconnect();
     } catch (e) {
         console.error(e);
     }
