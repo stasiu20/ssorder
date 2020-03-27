@@ -12,6 +12,7 @@
   "dependencies": {
     "ioredis": "^4.16.0",
     "nconf": "^0.10.0",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "winston": "^3.2.1"
   }
 }

@@ -1,5 +1,6 @@
 const Redis = require('ioredis');
 const nconf = require('nconf');
+const logger = require('./winston');
 
 nconf.argv().env().file({file: __dirname + '/../config.json'});
 const RedisClient = new Redis({
@@ -8,8 +9,7 @@ const RedisClient = new Redis({
     db: nconf.get('REDIS_DB'),
 });
 RedisClient.on('error', err => {
-    console.error('REDIS: FAILED');
-    console.error(err);
+    logger.error(`REDIS FAILED: ${err}`);
     process.exit(1)
 });
 module.exports = RedisClient;

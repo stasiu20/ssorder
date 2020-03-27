@@ -1,3 +1,5 @@
+const logger = require('./winston');
+
 async function addSendNotifyMailTaskToQueue(client) {
     const date = new Date();
     const QUEUE_ID = await client.incr('queue.message_id');
@@ -10,7 +12,7 @@ async function addSendNotifyMailTaskToQueue(client) {
             .lpush('queue.waiting', QUEUE_ID)
             .exec();
     } catch (e) {
-        console.error(e);
+        logger.error(e);
         throw Error("Can't add task to queue");
     }
 }
