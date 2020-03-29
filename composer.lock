@@ -1509,7 +1509,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/yii2-utils",
-                "reference": "fe81326395b30bd6d53df55d51f28cef8d06eda1"
+                "reference": "b623417ec3c7463654efae1b98f40276b4d7a9bc"
             },
             "require": {
                 "endclothing/prometheus_client_php": "^1.0",
@@ -1544,7 +1544,7 @@
                 }
             ],
             "description": "A collection of extensions for Yii Framework 2.0",
-            "time": "2020-03-23T19:34:59+00:00"
+            "time": "2020-03-29T10:59:15+00:00"
         },
         {
             "name": "monolog/monolog",

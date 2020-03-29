@@ -126,4 +126,9 @@ return [
         ],
     ],
     'params' => $params,
+    'as prometheus' => [
+        'class' => \mmo\yii2\behaviors\PrometheusBehavior::class,
+        'namespace' => 'ssorder',
+        'collectorRegistry' => \Prometheus\CollectorRegistry::class
+    ],
 ];
