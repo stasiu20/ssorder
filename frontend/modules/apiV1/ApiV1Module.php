@@ -30,16 +30,6 @@ class ApiV1Module extends \yii\base\Module
     public function behaviors()
     {
         return [
-            'contentNegotiator' => [
-                'class' => ContentNegotiator::class,
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                ],
-            ],
-            'jwtAuth' => [
-                'class' => HttpBearerAuth::class,
-                'except' => ['session/login']
-            ],
             'cors' => [
                 'class' => Cors::class,
                 'cors' => [
@@ -50,6 +40,16 @@ class ApiV1Module extends \yii\base\Module
                     'Access-Control-Max-Age' => 86400,
                     'Access-Control-Expose-Headers' => [],
                 ]
+            ],
+            'contentNegotiator' => [
+                'class' => ContentNegotiator::class,
+                'formats' => [
+                    'application/json' => Response::FORMAT_JSON,
+                ],
+            ],
+            'jwtAuth' => [
+                'class' => HttpBearerAuth::class,
+                'except' => ['session/login']
             ],
         ];
     }

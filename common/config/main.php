@@ -1,5 +1,7 @@
 <?php
 
+use yii\queue\redis\Queue;
+use yii\queue\serializers\JsonSerializer;
 use yii\redis\Connection;
 use yii\redis\Session;
 use Aws\S3\S3Client;
@@ -9,7 +11,7 @@ use yii\di\Container;
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'container' => [
-        'definitions' => [
+        'singletons' => [
             S3Client::class => function ($container, $params, $config) {
                 return new S3Client([
                     'version' => 'latest',
@@ -29,7 +31,17 @@ return [
             },
             \common\component\SSEOrderMediator::class => function (Container $container, $params, $config) {
                 return new \common\component\SSEOrderMediator(Yii::$app->redis, Yii::$app->order);
-            }
+            },
+            \Prometheus\CollectorRegistry::class => function ($container, $params, $config) {
+                return new \Prometheus\CollectorRegistry(new \Prometheus\Storage\Redis([
+                    'host' => getenv('REDIS_HOST'),
+                    'port' => (int)getenv('REDIS_PORT'),
+                    'timeout' => 0.3,
+                    'read_timeout' => 5,
+                    'persistent_connections' => false,
+                    'password' => null,
+                ]));
+            },
         ]
     ],
     'components' => [
@@ -64,7 +76,14 @@ return [
             'port' => getenv('REDIS_PORT'),
             'database' => getenv('REDIS_DATABASE'),
             'connectionTimeout' => 2,
-            'dataTimeout' => 2
+            'dataTimeout' => 5,
+            'retries' => 3,
+            'retryInterval' => 500,
+        ],
+        'queue' => [
+            'class' => Queue::class,
+            'channel' => 'queue',
+            'serializer' => JsonSerializer::class,
         ],
     ],
 ];

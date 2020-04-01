@@ -11,10 +11,10 @@ setup: .env
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
 	docker-compose up -d mongo
-	# in future move to wait_for script, also for minio
-	sleep 5
+	docker-compose run --rm wait -c mongo:27017 -t 15
 	docker-compose up -d mongo-init-replica
 	docker-compose up -d
+	docker-compose run --rm wait -c minio:9000 -t 15
 	docker-compose exec cli bash -c "composer install"
 	docker-compose exec cli bash -c "cd frontend && yarn install --frozen-lock-file"
 	docker-compose exec cli bash -c 'cd frontend && yarn build'
@@ -28,3 +28,6 @@ setup: .env
 
 restore-db:
 	docker exec -i $(shell docker-compose ps -q mysql) mysql -ussorder -pssorderpassword  -D ssorder < ssorder-backup.sql
+
+hadolint:
+	docker run --rm -v $PWD:/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"

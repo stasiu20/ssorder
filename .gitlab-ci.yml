@@ -310,6 +310,26 @@ sitespeed:
   tags:
     - packer
 
+newman:
+  stage: qa
+  image:
+    name: postman/newman:alpine
+    entrypoint: [""]
+  script:
+    - npm install -g newman-reporter-html
+    - echo "$PROD_CONFIG" > .env
+    - source .env
+    - >
+      for dir in integration-tests/tests/*/; do
+        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
+      done
+  artifacts:
+    paths:
+      - docs/newman/
+    when: always
+  only:
+    - schedules
+
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
@@ -343,13 +363,13 @@ sitespeed:
 docker:node:
   extends: .docker
   script:
-      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
+      - /kaniko/executor --context $CI_PROJECT_DIR/node-cron --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
   only:
     refs:
       - develop
-#    //todo mmo: obraz wykorzystuje kod PHP, ktory moze sie zmienic
     changes:
       - "node-cron/*"
+      - .gitlab-ci.yml
 
 docker:docs:
   stage: docker
@@ -368,6 +388,7 @@ docker:docs:
     - redoc
     - sitespeed
     - codeception
+    - newman
 
 docker:develop:
   extends: .docker

@@ -15,6 +15,18 @@ services:
         traefik.port: 80
         traefik.backend: "ssorder"
         traefik.frontend.rule: "Host:ssorder.snlb.pl"
+    healthcheck:
+      test: curl --fail -s http://localhost/ || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  queue:
+    image: registry.sensilabs.pl/sensilabs/ssorder
+    entrypoint: ["php", "./yii", "queue/listen", "--verbose"]
+    env_file:
+      - .env
+    depends_on:
+      - redis
   minio:
     image: minio/minio:RELEASE.2019-08-21T19-40-07Z
     volumes:

@@ -119,10 +119,16 @@ return [
             'rules' => [//'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                'v1/restaurants' => 'apiV1/restaurants/index',
+                'v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
                 'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
-                'GET v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
             ],
         ],
     ],
     'params' => $params,
+    'as prometheus' => [
+        'class' => \mmo\yii2\behaviors\PrometheusBehavior::class,
+        'namespace' => 'ssorder',
+        'collectorRegistry' => \Prometheus\CollectorRegistry::class
+    ],
 ];

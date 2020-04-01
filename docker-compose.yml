@@ -181,3 +181,5 @@ services:
         external_links:
             - traefik:ssorder.lvh.me
         entrypoint: '/tests/entrypoint.sh'
+    wait:
+        image: dokku/wait

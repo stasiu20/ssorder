@@ -26,6 +26,9 @@ RUN docker-php-ext-install \
         intl \
         gmp
 
+RUN echo -e "no\nno\nno\n" | pecl install redis && \
+    echo "extension=redis.so" | tee /usr/local/etc/php/conf.d/redis.ini
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
         --filename=composer \

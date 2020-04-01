@@ -77,35 +77,4 @@ class TaskController extends Controller
             }
         }
     }
-
-    public function actionSendMailWithRatingLink(): void
-    {
-        $filter = new OrderFilters();
-        $filter->status = Order::STATUS_REALIZED;
-        $filter->dateFrom = (new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d');
-        $filter->dateTo = (new \DateTime())->format('Y-m-d');
-        $query  = \common\models\OrderSearch::search($filter);
-
-        /** @var Order[] $orders */
-        $orders = $query->all();
-        foreach ($orders as $order) {
-            if ($order->rating) {
-                continue;
-            }
-
-            \Yii::$app->mailer
-                ->compose(
-                    [
-                        'html' => 'ratingReminder-html',
-                        'text' => 'ratingReminder-text'
-                    ],
-                    ['user' => $order->user, 'order' => $order]
-                )
-                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                ->setTo($order->user->email)
-                ->setSubject(sprintf('[%s] Oceń zamówienie', Yii::$app->name))
-                ->send();
-            $this->stdout(sprintf("Send notify email to %s for order %d\n", $order->user->email, $order->id));
-        }
-    }
 }
