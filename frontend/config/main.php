@@ -31,6 +31,9 @@ return [
         $mediator = new \common\component\UserRestApiMediator();
         $mediator->mediate();
 
+        $mediator = new \common\events\listeners\NewOrderPrometheus();
+        $mediator->mediate();
+
         /** @var \common\component\SSEOrderMediator $mediator */
         $mediator = Yii::$container->get(\common\component\SSEOrderMediator::class);
         $mediator->mediate();
@@ -128,7 +131,7 @@ return [
     'params' => $params,
     'as prometheus' => [
         'class' => \mmo\yii2\behaviors\PrometheusBehavior::class,
-        'namespace' => 'ssorder',
+        'namespace' => $params['prometheus.namespace'],
         'collectorRegistry' => \Prometheus\CollectorRegistry::class
     ],
 ];
