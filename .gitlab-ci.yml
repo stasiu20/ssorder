@@ -170,12 +170,14 @@ assets:
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
     - cd frontend && yarn build
+    - npx webpack-bundle-analyzer $CI_PROJECT_DIR/frontend/webpack/stats.json $CI_PROJECT_DIR/frontend/web/assets/build/ --no-open --mode static --report $CI_PROJECT_DIR/docs/webpack-bundle-analyzer.html
   dependencies:
     - yarn
   artifacts:
     paths:
       - frontend/web/assets/build
       - frontend/webpack/stats.json
+      - docs/webpack-bundle-analyzer.html
     expire_in: 30 days
     when: on_success
 
@@ -389,6 +391,7 @@ docker:docs:
     - sitespeed
     - codeception
     - newman
+    - assets
 
 docker:develop:
   extends: .docker
