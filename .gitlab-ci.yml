@@ -418,25 +418,24 @@ docker:rc:
   stage: qa
   allow_failure: true
   before_script:
+    - echo CACHE_DIR - $CACHE_DIR
     - trivy --version
-    - trivy --clear-cache
+    - trivy --clear-cache --cache-dir $CACHE_DIR
   dependencies: []
   variables:
     TRIVY_AUTH_URL: $CI_REGISTRY
     TRIVY_USERNAME: $CI_REGISTRY_USER
     TRIVY_PASSWORD: $CI_REGISTRY_PASSWORD
+    CACHE_DIR: $CI_PROJECT_DIR/.trivycache/
   only:
     - schedules
   tags:
     - packer
-  cache:
-    paths:
-      - $CI_PROJECT_DIR/.trivycache/
 
 trivy:develop:
   extends: .trivy
   script:
-    - trivy --exit-code 1 --cache-dir $CI_PROJECT_DIR/.trivycache/ --severity CRITICAL $CI_REGISTRY_IMAGE:latest
+    - trivy --debug --timeout=2m --exit-code 1 --cache-dir $CACHE_DIR --severity CRITICAL $CI_REGISTRY_IMAGE:latest
 
 tag_release:
   stage: deploy
