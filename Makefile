@@ -30,4 +30,4 @@ restore-db:
 	docker exec -i $(shell docker-compose ps -q mysql) mysql -ussorder -pssorderpassword  -D ssorder < ssorder-backup.sql
 
 hadolint:
-	docker run --rm -v $PWD:/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"
+	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"

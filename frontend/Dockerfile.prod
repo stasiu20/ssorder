@@ -28,4 +28,7 @@ RUN docker-php-ext-install \
 RUN echo -e "no\nno\nno\n" | pecl install redis && \
     echo "extension=redis.so" | tee /usr/local/etc/php/conf.d/redis.ini
 
+RUN echo -e "expose_php=0\n" | tee /usr/local/etc/php/conf.d/ssorder.ini && \
+    echo -e "ServerSignature Off\nServerTokens Prod\n" | tee /etc/apache2/conf-enabled/ssorder.conf
+
 COPY --chown=www-data:www-data ./ /app
