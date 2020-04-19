@@ -75,6 +75,20 @@ yarn:
     paths:
       - /home/php/.cache/yarn/v1
 
+diff-composer-packages:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - /pipeline/scripts/prev-file-content.rb $CI_PROJECT_DIR/.git composer.lock > /tmp/composer.lock.old || (test $? -eq 101 && exit 0)
+    - /pipeline/scripts/diff-composer.rb /tmp/composer.lock.old > /tmp/composer.old.diff
+    - /pipeline/scripts/diff-composer.rb composer.lock > /tmp/composer.diff
+    - cat /tmp/composer.old.diff
+    - cat /tmp/composer.diff
+    - diff -u /tmp/composer.old.diff /tmp/composer.diff || test $? -eq 1
+  only:
+    changes:
+      - composer.lock
+
 codestyle:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
