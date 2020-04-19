@@ -522,3 +522,13 @@ deploy_docs:
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
+
+check_ssl_cert:
+  stage: deploy
+  image: morawskim/pipeline-scripts
+  only:
+    - schedules
+  script:
+    - /pipeline/scripts/ssl-check.rb ssorder.snlb.pl
+    - /pipeline/scripts/ssl-check.rb developer.ssorder.snlb.pl
+    - /pipeline/scripts/ssl-check.rb cdn.ssorder.snlb.pl
