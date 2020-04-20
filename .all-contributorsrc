@@ -1,0 +1,60 @@
+{
+  "projectName": "ssorder",
+  "projectOwner": "stasiu20",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 80,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "stasiu20",
+      "name": "stasiu20",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/24654238?v=4",
+      "profile": "https://github.com/stasiu20",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "morawskim",
+      "name": "Marcin Morawski",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1105278?v=4",
+      "profile": "http://morawskim.pl",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "themalek",
+      "name": "Tomasz",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/14993588?v=4",
+      "profile": "https://github.com/themalek",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rrudowski",
+      "name": "rrudowski",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/19334982?v=4",
+      "profile": "https://github.com/rrudowski",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "fuss86",
+      "name": "Przemyslaw Fusik",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12829566?v=4",
+      "profile": "https://github.com/fuss86",
+      "contributions": [
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
