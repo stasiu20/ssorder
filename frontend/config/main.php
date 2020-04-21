@@ -31,7 +31,14 @@ return [
         $mediator = new \common\component\UserRestApiMediator();
         $mediator->mediate();
 
-        $mediator = new \common\events\listeners\NewOrderPrometheus();
+        /** @var \common\component\Order $order */
+        $order = \Yii::$app->order;
+        /** @var \common\services\SSOrderMetrics $metrics */
+        $metrics = Yii::$container->get(\common\services\SSOrderMetrics::class);
+        $mediator = new \common\events\listeners\NewOrderPrometheus(
+            $order,
+            $metrics
+        );
         $mediator->mediate();
 
         /** @var \common\component\SSEOrderMediator $mediator */

@@ -8,6 +8,11 @@ use Aws\S3\S3Client;
 use common\services\FileService;
 use yii\di\Container;
 
+$params = array_merge(
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
+);
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'container' => [
@@ -42,6 +47,14 @@ return [
                     'password' => null,
                 ]));
             },
+            \common\services\SSOrderMetrics::class => [function (Container $container, $params, $config) {
+                /** @var \Prometheus\CollectorRegistry $collectorRegistry */
+                $collectorRegistry = $container->get(\Prometheus\CollectorRegistry::class);
+                return new \common\services\SSOrderMetrics(
+                    $collectorRegistry,
+                    $params['namespace']
+                );
+            }, ['namespace' => $params['prometheus.namespace']]]
         ]
     ],
     'components' => [
