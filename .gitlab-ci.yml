@@ -410,21 +410,21 @@ docker:docs:
 docker:develop:
   extends: .docker
   script:
-      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
 
 docker:master:
   extends: .docker
   script:
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - master
 
 docker:rc:
   extends: .docker
   script:
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
 

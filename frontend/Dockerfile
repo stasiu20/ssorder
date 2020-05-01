@@ -1,5 +1,5 @@
 # hadolint ignore=DL3006
-FROM phpstorm/php-73-apache-xdebug-27 as build
+FROM php:7.3-apache as build
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
@@ -28,12 +28,23 @@ RUN mkdir -p /artifacts \
     && cp -r --parents /usr/local/etc/php/conf.d/ /artifacts/
 
 # hadolint ignore=DL3006
-FROM phpstorm/php-73-apache-xdebug-27
+FROM php:7.3-apache as intermediate
+
+ARG WITH_XDEBUG=false
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
+
+RUN if [[ $WITH_XDEBUG = "true" ]]; then \
+    pecl install xdebug-2.7.0 \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+  fi
 
 RUN apt-get update && \
     apt-get -y install \
@@ -54,3 +65,6 @@ RUN echo -e "expose_php=0\n" | tee /usr/local/etc/php/conf.d/ssorder.ini && \
 
 COPY --from=build /artifacts/ /artifacts
 RUN cp -rv /artifacts/* /
+
+FROM php:7.3-apache
+COPY --chown=www-data:www-data ./ /app

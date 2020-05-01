@@ -1,7 +1,12 @@
 version: '3.4'
 services:
     ssorder:
-        build: frontend
+        build:
+            context: frontend
+            dockerfile: Dockerfile
+            target: intermediate
+            args:
+                - WITH_XDEBUG=true
         volumes:
             - ./:/app
         depends_on:
