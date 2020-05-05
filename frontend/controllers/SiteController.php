@@ -115,12 +115,9 @@ class SiteController extends Controller
                     ->all();
         }
 
-        $chunkSize = 4;
-        $restaurants = ArrayHelper::fillToMultiply($restaurants, $chunkSize);
-
         $categorys = Category::findActive()->all();
         return $this->render('index', [
-                    'restaurants' => new ChunkedIterator(new \ArrayIterator($restaurants), $chunkSize),
+                    'restaurants' => $restaurants,
                     'categorys' => $categorys,
                     'pagination' => $pagination,
         ]);
