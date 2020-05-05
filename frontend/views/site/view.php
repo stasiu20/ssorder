@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'again' => function ($url, $model, $key) {
                         return \yii\helpers\Html::a(
-                            ' <span class="glyphicon glyphicon-cutlery"></span>',
+                            ' <span class="material-icons">restaurant</span>',
                             \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
                             ['title' => Yii::t('app', 'Smakowało? Zamów raz jeszcze!')]
                         );

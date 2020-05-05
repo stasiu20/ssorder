@@ -1,12 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
 <div class="restaurants-form">
@@ -32,17 +32,17 @@ use yii\widgets\MaskedInput;
             'alias' => 'decimal',
             'groupSeparator' => '',
             'autoGroup' => true,
-            
+
         ],
         'options'=>[
             'style'=>'width:80px',
             'class' => 'form-control',
-            
+
         ]
     ]);
 ?>
 
-    
+
 
 
 

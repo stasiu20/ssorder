@@ -57,7 +57,7 @@ GridView::widget([
                 $foodName = $data->menu->foodName;
                 return "$foodName";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
         ],
 //            'foodInfo',
         [ 'attribute' => 'foodInfo',
@@ -67,7 +67,7 @@ GridView::widget([
                 $foodInfo = $data->menu->foodInfo;
                 return "$foodInfo";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
         ],
         'uwagi',
         [
@@ -115,22 +115,6 @@ GridView::widget([
             ],
         ]);
 ?>
-        <div style="float: right">
-        <?= Html::a('Zrealizuj', ["order-completed?id=$restaurant->id"], ['class' => 'btn btn-primary'], ['title' => 'zamów',]); ?>
+<div class="text-right">
+    <?= Html::a('Zrealizuj', ["order-completed?id=$restaurant->id"], ['class' => 'btn btn-primary'], ['title' => 'zamów',]); ?>
 </div>
-
-
-<!--['class' => 'yii\grid\ActionColumn',
-            'template' => '{zrealizuj}',
-            'buttons' => [
-                'zrealizuj' => function($url, $restaurant) {
-                    if ($restaurant->status === 0) {
-                        //TO DOO action w kontrolerze do zmiany statusu
-                        return Html::a('Zrealizuj', ["restaurant"], ['class' => 'btn btn-primary'], ['title' => 'zamów',
-                        ]);
-                    }
-                },
-                    ],
-                    'contentOptions' => ['class' => 'text-center',
-                    ],
-                ],-->

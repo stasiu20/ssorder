@@ -53,7 +53,7 @@ use common\models\Order; ?>
             'buttons' => [
                 'again' => function ($url, $model, $key) {
                     return \yii\helpers\Html::a(
-                        ' <span class="glyphicon glyphicon-cutlery"></span>',
+                        ' <span class="material-icons">restaurant</span>',
                         \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
                         ['title' => 'Smakowało? Zamów raz jeszcze!']
                     );
@@ -64,7 +64,7 @@ use common\models\Order; ?>
                     }
 
                     return \yii\helpers\Html::a(
-                        ' <span class="glyphicon glyphicon-thumbs-up"></span>',
+                        ' <span class="material-icons">thumb_up</span>',
                         \yii\helpers\Url::to(['/rating/order', 'orderId' => $model->id]),
                         ['title' => 'Oceń!']
                     );

@@ -25,15 +25,15 @@ export default class RestaurantLogoLightbox extends Component<
         const { isOpen } = this.state;
 
         return (
-            <div>
+            <>
                 <a
                     style={{ cursor: 'pointer' }}
                     onClick={(): void => this.setState({ isOpen: true })}
                 >
                     <img
+                        style={{ width: '100%' }}
                         alt={'logo'}
                         src={this.props.src}
-                        className="img-responsive img-thumbnail"
                     />
                 </a>
                 {isOpen && (
@@ -45,7 +45,7 @@ export default class RestaurantLogoLightbox extends Component<
                         }
                     />
                 )}
-            </div>
+            </>
         );
     }
 }

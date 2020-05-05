@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'categoryName',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => \common\widgets\grid\ActionMaterialIconColumn::class],
         ],
     ]); ?>
 </div>

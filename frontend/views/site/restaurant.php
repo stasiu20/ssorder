@@ -27,13 +27,13 @@ RestaurantAsset::register($this);
             <h1><?= Html::encode("{$restaurant->restaurantName}"); ?></h1>
             <p>
                 <?=
-                Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['restaurants/update', 'id' => $restaurant->id], [
+                Html::a('<span class="material-icons">edit</span>', ['restaurants/update', 'id' => $restaurant->id], [
                     'title' => 'Edytuj restaurację',
                 ]);
 ?>
-                <?= Html::a('<span class="glyphicon glyphicon-trash"></span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
+                <?= Html::a('<span class="material-icons">delete</span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
-            <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class ="img-restaurant"></div>
+            <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-restaurant"></div>
             <h5>Numer telefonu:</h5>
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
             <h5>Koszt dowozu:</h5>
@@ -72,7 +72,7 @@ RestaurantAsset::register($this);
 
                 <h3>Menu</h3>
                 <p>
-                    <?= Html::a('Dodaj pozycję w Menu', ['create', 'id' => $restaurant->id], ['class' => 'btn btn-custom']); ?>
+                    <?= Html::a('Dodaj pozycję w Menu', ['create', 'id' => $restaurant->id], ['class' => 'btn btn-primary']); ?>
                 </p>
             </div>
 
@@ -84,8 +84,8 @@ RestaurantAsset::register($this);
                     'tableOptions' => ['class' => 'table  table-bordered table-hover'],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'foodName',
-                        'foodInfo',
+                        ['attribute' => 'foodName', 'contentOptions' => ['class' => 'text-right text-wrap']],
+                        ['attribute' => 'foodInfo', 'contentOptions' => ['class' => 'text-right text-wrap']],
                         ['attribute' => 'foodPrice',
                             'format' => 'raw',
                             'value' => function ($data) {
@@ -93,11 +93,11 @@ RestaurantAsset::register($this);
                             },
                             'contentOptions' => ['class' => 'text-right'],
                         ],
-                        ['class' => 'yii\grid\ActionColumn',
+                        ['class' => \common\widgets\grid\ActionMaterialIconColumn::class,
                             'template' => '{order}  {view}  {update} {delete}',
                             'buttons' => [
                                 'order' => function ($url, $restaurant) {
-                                    return Html::a('<span class="glyphicon glyphicon-cutlery"></span>', ['order/uwagi', 'id' => $restaurant->id], [
+                                    return Html::a('<span class="material-icons">restaurant</span>', ['order/uwagi', 'id' => $restaurant->id], [
                                                 'title' => 'zamów',
                                     ]);
                                 },

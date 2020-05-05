@@ -1,11 +1,8 @@
-* {
-    font-family: 'Open Sans';
-}
-
 html,
 body {
     height: 100%;
     background-color: #F5F3EE;
+    font-family: 'Open Sans';
 }
 
 .wrap {
@@ -14,28 +11,6 @@ body {
     margin: 0 auto -60px;
     padding: 0 0 60px;
 
-}
-
-.wrap > .container {
-    padding: 100px 15px 20px;
-}
-
-.footer {
-    height: 60px;
-    background-color: #333;
-    /* border-top: 1px solid #ddd; */
-    padding-top: 20px;
-    color: #fff;
-}
-
-.jumbotron {
-    text-align: center;
-    background-color: transparent;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
 }
 
 .not-set {
@@ -248,15 +223,7 @@ a.desc:after {
     /*background-color: #555;
     color: black;*/
 }
-.jumbotron{
 
-    padding-top: 1px;
-
-}
-.info{
-
-
-}
 .content > h3 > a{
 
     color: black;
@@ -265,12 +232,6 @@ a.desc:after {
 .content > h3 > a:hover{
 
     color:red;
-
-}
-.img-restaurant{
-    max-height: 200px;
-    max-width: 200px;
-
 
 }
 
@@ -360,17 +321,6 @@ div.img span {
     left:100%;
 }
 
-#restaurants-tel_number{
-    width: 120px;
-
-}
-
-#restaurants-delivery_price{
-    width: 80px;
-}
-#restaurants-pack_price{
-    width: 80px;
-}
 #menu-foodprice{
     width: 80px;
 }
@@ -409,12 +359,6 @@ div.img span {
     padding: 10px;
 }
 
-@media (min-width: 1200px){
-    .container {
-        width: 90%;
-    }
-}
-
 a {
     text-decoration: none;
     color: #ff3971;
@@ -440,8 +384,4 @@ a {
 
 body table td.no-right-border {
     border-right: 1px solid transparent;;
-}
-
-#restaurants-card-container .row+.row {
-    margin-top: 1rem;
 }

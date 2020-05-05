@@ -80,7 +80,7 @@ $formatter = \Yii::$app->formatter;
             'buttons' => [
                 'again' => function ($url, $model, $key) {
                     return \yii\helpers\Html::a(
-                        ' <span class="glyphicon glyphicon-cutlery"></span>',
+                        ' <span class="material-icons">restaurant</span>',
                         \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
                         ['title' => 'Smakowało? Zamów raz jeszcze!']
                     );

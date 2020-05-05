@@ -45,15 +45,13 @@ AppAsset::register($this);
     <?= $content ?>
     <div id="react-toastify"></div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">
-            &copy; Stasiu 2017 - <?= date('Y') ?>
-        </p>
-        <p class="pull-right">
-            <?= Yii::t('app', 'Wersja') ?> <?= $appVersion->getVersion(); ?>
-        </p>
-    </div>
+<footer class="footer clearfix p-4">
+    <p class="float-left">
+        &copy; Stasiu 2017 - <?= date('Y') ?>
+    </p>
+    <p class="float-right">
+        <?= Yii::t('app', 'Wersja') ?> <?= $appVersion->getVersion(); ?>
+    </p>
 </footer>
 <?php $this->endBody() ?>
 </body>

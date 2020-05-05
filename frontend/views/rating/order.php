@@ -4,7 +4,7 @@ use common\models\FoodRating;
 use common\widgets\React\RatingWidget;
 use frontend\assets\RatingAsset;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 RatingAsset::register($this);
 $this->title = 'Ocena zamówienia';

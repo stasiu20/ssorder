@@ -21,6 +21,9 @@ return [
     'language' => 'pl-PL',
     'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
+    'aliases' => [
+        '@npm'   => '@vendor/npm-asset',
+    ],
     'bootstrap' => ['log', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
         $mediator->mediate();
@@ -121,6 +124,96 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+
+        'assetManager' => [
+            'bundles' => [
+                \yii\bootstrap\BootstrapAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                ],
+                \yii\bootstrap\BootstrapPluginAsset::class => [
+                    'sourcePath' => null,
+                    'js' => [],
+                ],
+                \yii\bootstrap4\BootstrapAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                ],
+                \yii\bootstrap4\BootstrapPluginAsset::class => [
+                    'sourcePath' => null,
+                    'js' => [],
+                ],
+//                \yii\web\JqueryAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'depends' => [
+//                        \app\assets\AppAsset::class
+//                    ]
+//                ],
+//                \yii\web\YiiAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'depends' => [
+//                        \app\assets\AppAsset::class
+//                    ]
+//                ],
+//                \yii\grid\GridViewAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\captcha\CaptchaAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                ],
+//                \yii\widgets\MaskedInputAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\widgets\ActiveFormAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\widgets\PjaxAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                ],
+//                \yii\validators\PunycodeAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\validators\ValidationAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\gii\GiiAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\DebugAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => [],
+//                    'depends' => [
+//                        \app\assets\Yii2DebugAsset::class
+//                    ]
+//                ],
+//                \yii\debug\TimelineAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\DbAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\UserswitchAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ]
+            ],
         ],
 
         'urlManager' => [

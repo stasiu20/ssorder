@@ -15,38 +15,36 @@ use yii\helpers\Html;
 $this->title = 'Zamówienia - ' . $date->format('Y-m-d');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-    <div class="col-xs-12 text-center">
-        <h1>
-            <?php if ($sevenDaysAgo >= $minDate): ?>
-                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysAgo->format('Y-m-d')]); ?>">
-                    <span class="glyphicon glyphicon-backward"></span></a>
-            <?php endif ?>
-            <?php if ($date > $minDate): ?>
-                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
-                            class="glyphicon glyphicon-chevron-left"></span></a>
-            <?php endif ?>
-            Zamówienia z Dnia: <?= $date->format('d-m-Y') ?>
-            <?php if ($tomorrow <= $today): ?>
-                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span
-                            class="glyphicon glyphicon-chevron-right"></span></a>
-            <?php endif; ?>
-            <?php if ($sevenDaysNext <= $today): ?>
-                <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
-                    <span class="glyphicon glyphicon-forward"></span>
-                </a>
-            <?php endif ?>
-        </h1>
-    </div>
-</div>
+<h2 class="text-center">
+    <?php if ($sevenDaysAgo >= $minDate): ?>
+        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysAgo->format('Y-m-d')]); ?>">
+            <span class="material-icons">fast_rewind</span></a>
+    <?php endif ?>
+    <?php if ($date > $minDate): ?>
+        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
+                    class="material-icons">keyboard_arrow_left</span></a>
+    <?php endif ?>
+    Zamówienia z Dnia: <?= $date->format('d-m-Y') ?>
+    <?php if ($tomorrow <= $today): ?>
+        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span
+                    class="material-icons">keyboard_arrow_right</span></a>
+    <?php endif; ?>
+    <?php if ($sevenDaysNext <= $today): ?>
+        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
+            <span class="material-icons">fast_forward</span>
+        </a>
+    <?php endif ?>
+</h2>
+
 <?php
 $userName = Yii::$app->user->identity->username;
 
 $formatter = \Yii::$app->formatter;
 ?>
 <p>sortuj według: <?= $sort->link('restaurant'); ?></p>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
     <thead>
+    <tr>
     <th>l.p.</th>
     <th>Nazwa Żarcia</th>
     <th>Nazwa Restauracji</th>
@@ -57,6 +55,7 @@ $formatter = \Yii::$app->formatter;
     <th>Status</th>
     <th>Do rozliczenia</th>
     <th>Akcje</th>
+    </tr>
     </thead>
     <tbody>
     <?php
@@ -69,7 +68,7 @@ $formatter = \Yii::$app->formatter;
         }
         $mapIndex[$order->restaurantId] += 1;
         $delete = ($userName === $order->user['username'] ? Html::a('usuń', ['delete'], [
-            'class' => 'btn btn-custom',
+            'class' => 'btn btn-sm btn-danger',
             'style' => 'margin-right:10px',
             'data' => [
                 'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
@@ -79,7 +78,7 @@ $formatter = \Yii::$app->formatter;
             ],
         ]) : '');
         $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ['edit'], [
-            'class' => 'btn btn-custom',
+            'class' => 'btn btn-sm btn-secondary',
             'style' => 'margin-right:10px',
             'data' => [
                 'method' => 'post',
@@ -118,13 +117,13 @@ $formatter = \Yii::$app->formatter;
                 } ?>
 
                 <?php if ($order->canBeRealized()): ?>
-                    <?= Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-custom']); ?>
+                    <?= Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-sm btn-primary']); ?>
                 <?php endif; ?>
 
                 <?php if ($order->isRealized()): ?>
                     <a title="Smakowało? Zamów raz jeszcze!" class=""
                        href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">
-                        <span class="glyphicon glyphicon-cutlery"></span>
+                        <span class="material-icons">restaurant</span>
                     </a>
                 <?php endif; ?>
             </td>

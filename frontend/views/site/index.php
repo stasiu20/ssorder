@@ -12,27 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //var_dump($identity = Yii::$app->user->identity->username);die;
 ?>
 <div class="site-index">
-    <div class="jumbotron">
-        <h2>To co dziś zamawiamy?!</h2>
-    </div>
+    <h2 class="text-center mb-4">To co dziś zamawiamy?!</h2>
     <div class="body-content">
         <div class="row">
-            <div class="col-lg-2">
-                <div id="sidebarDiv">
-                    <h3>Kategorie:</h3>
-                    <ul id="sidebar">
-                        <?php
-                        foreach ($categorys as $category) {
-                            ?>
-                            <li><a href="?id=<?= $category->id ?>"><?= $category->categoryName ?></a></li>
-                            <?php
-                        }
-                        ?>
-                        <li><a href="?id=0">Wszystko</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div id="restaurants-card-container" class="col-lg-10 bs4" style="background-color: #F5F3EE">
                 <?php foreach ($restaurants as $restaurant): ?>
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                                     <?php if ($restaurant instanceof \frontend\models\Restaurants): ?>

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
              'pack_price',
              'img_url:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => \common\widgets\grid\ActionMaterialIconColumn::class],
         ],
     ]); ?>
 </div>

@@ -53,5 +53,9 @@
   },
   "resolutions": {
     "**/**/acorn": "^7.1.1"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
   }
 }

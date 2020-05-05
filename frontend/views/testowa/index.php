@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'adres',
             'status',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => \common\widgets\grid\ActionMaterialIconColumn::class],
         ],
     ]); ?>
 </div>
