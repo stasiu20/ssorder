@@ -12,22 +12,13 @@ use yii\widgets\MaskedInput;
 ?>
 
 <div class="restaurants-form">
-    <?php $form = ActiveForm::begin([
-        'options' => [
-            'layout' => 'horizontal',
-            'fieldConfig' => [
-                'template' => "{label}\n<div class=\"col-md-10\">{input}</div>\n<div class=\"col-md-offset-2 col-md-10\">{error}</div>",
-            ],
-        ]
-    ])
-    ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'restaurantName')->textInput(); ?>
 
     <?= $form->field($model, 'tel_number')->widget(MaskedInput::className(), [
         'mask' => ['29999-99-99', '999-999-999',],
     ]); ?>
-
 
     <?= $form->field($model, 'delivery_price')->widget(MaskedInput::className(), [
         'clientOptions' => [
@@ -45,8 +36,11 @@ use yii\widgets\MaskedInput;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'categoryId')->dropdownList(ArrayHelper::map(Category::find()->all(), 'id',
-        'categoryName'), ['prompt' => '---Wybierz Kategorię---']) ?>
+    <?= $form->field($model, 'categoryId')
+        ->dropdownList(
+            ArrayHelper::map(Category::find()->all(), 'id', 'categoryName'),
+            ['prompt' => '---Wybierz Kategorię---']
+        ) ?>
 
     <?php if (!$model->isNewRecord): ?>
         <?= \common\widgets\VaadinUpload::widget([
@@ -58,8 +52,10 @@ use yii\widgets\MaskedInput;
     <?php endif; ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Dodaj' : 'Edytuj',
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+            $model->isNewRecord ? 'Dodaj' : 'Edytuj',
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        ) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

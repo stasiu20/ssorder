@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 class ActionMaterialIconColumn extends \yii\grid\ActionColumn
 {
-    protected function initDefaultButtons()
+    protected function initDefaultButtons(): void
     {
         $this->initDefaultButton('view', 'pageview');
         $this->initDefaultButton('update', 'edit');
@@ -17,7 +17,7 @@ class ActionMaterialIconColumn extends \yii\grid\ActionColumn
         ]);
     }
 
-    protected function initDefaultButton($name, $iconName, $additionalOptions = [])
+    protected function initDefaultButton($name, $iconName, $additionalOptions = []): void
     {
         if (!isset($this->buttons[$name]) && strpos($this->template, '{' . $name . '}') !== false) {
             $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {

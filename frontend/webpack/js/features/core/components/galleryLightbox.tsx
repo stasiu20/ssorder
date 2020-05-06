@@ -32,8 +32,14 @@ export default class RestaurantGalleryLightbox extends Component<
             <div className={'restaurant-gallery'}>
                 {images.map((item, index) => {
                     return (
-                        <div className="restaurant-gallery__container" key={item.id}>
-                            <a className={'restaurant-gallery__delete'} href={item.deleteUrl}>
+                        <div
+                            className="restaurant-gallery__container"
+                            key={item.id}
+                        >
+                            <a
+                                className={'restaurant-gallery__delete'}
+                                href={item.deleteUrl}
+                            >
                                 <span className="material-icons">delete</span>
                             </a>
                             <a

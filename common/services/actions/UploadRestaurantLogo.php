@@ -13,11 +13,11 @@ class UploadRestaurantLogo
     /**
      * @var FileService
      */
-    private $fileService;
+    private $_fileService;
 
     public function __construct(FileService $fileService)
     {
-        $this->fileService = $fileService;
+        $this->_fileService = $fileService;
     }
 
     public function run(Restaurants $restaurant, UploadedFile $uploadedFile): void
@@ -28,12 +28,12 @@ class UploadRestaurantLogo
         $oldImgUrl = $restaurant->img_url;
         $restaurant->img_url = $key;
         if ($restaurant->validate()) {
-            $this->fileService->storeFile(
+            $this->_fileService->storeFile(
                 BucketEnum::RESTAURANT . '/' . $key,
                 $restaurant->imageFile->tempName
             );
             if (!empty($oldImgUrl)) {
-                $this->fileService->deleteFile(
+                $this->_fileService->deleteFile(
                     FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url)
                 );
             }
