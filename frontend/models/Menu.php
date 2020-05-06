@@ -15,6 +15,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $foodName
  * @property string $foodInfo
  * @property double|string $foodPrice
+ * @property-read string $deletedAt
  * @property Restaurants $restaurant
  * @property Restaurants[] $restaurants
  * @method softDelete

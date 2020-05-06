@@ -2,16 +2,12 @@
 
 use frontend\assets\RestaurantAsset;
 use frontend\helpers\FileServiceViewHelper;
+use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
-use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use kartik\file\FileInput;
-use frontend\models\Imagesmenu;
 
 /** @var Restaurants $restaurant */
 /** @var Imagesmenu[] $imagesMenu */
@@ -66,7 +62,7 @@ RestaurantAsset::register($this);
 
                 <h3>Menu</h3>
                 <p>
-                    <?= Html::a('Dodaj pozycję w Menu', ['create', 'id' => $restaurant->id], ['class' => 'btn btn-primary']); ?>
+                    <?= Html::a('Dodaj pozycję w Menu', ['menu/create', 'id' => $restaurant->id], ['class' => 'btn btn-primary']); ?>
                 </p>
             </div>
 
@@ -88,7 +84,8 @@ RestaurantAsset::register($this);
                             'contentOptions' => ['class' => 'text-right'],
                         ],
                         ['class' => \common\widgets\grid\ActionMaterialIconColumn::class,
-                            'template' => '{order}  {view}  {update} {delete}',
+                            'controller' => 'menu',
+                            'template' => '{order} {view} {update} {delete}',
                             'buttons' => [
                                 'order' => function ($url, $restaurant) {
                                     return Html::a('<span class="material-icons">restaurant</span>', ['order/uwagi', 'id' => $restaurant->id], [

@@ -46,7 +46,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'index', 'upload', 'restaurant', 'delete', 'update', 'category', 'restaurant', 'view', 'create'],
+                'only' => ['logout', 'signup', 'index', 'upload', 'restaurant', 'category', 'restaurant'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -54,7 +54,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index', 'upload', 'restaurant', 'update', 'delete', 'category', 'restaurant', 'view', 'create'],
+                        'actions' => ['logout', 'index', 'upload', 'restaurant', 'category', 'restaurant'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -282,7 +282,7 @@ class SiteController extends Controller
         $restaurants = Restaurants::find()->all();
         $model = new Imagesmenu();
         $dataProvider = new ActiveDataProvider([
-            'query' => Menu::find()->where(['restaurantId' => $id]),
+            'query' => Menu::find()->where(['restaurantId' => $id])->andWhere(['deletedAt' => null]),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -296,102 +296,6 @@ class SiteController extends Controller
                     'model' => $model,
                     'imagesMenu' => $imagesMenu,
         ]);
-    }
-
-    /**
-     * @param $id int
-     * @return string
-     * @throws NotFoundHttpException
-     */
-    public function actionView($id)
-    {
-        /** @var Menu $menu */
-        $menu = Menu::findOne($id);
-        $restaurant = $menu->restaurant;
-
-        $filters = new OrderFilters();
-        $filters->status = Order::STATUS_REALIZED;
-        $filters->foodId = $id;
-        $lastOrdersProvider = new ActiveDataProvider([
-            'query' => OrderSearch::search($filters),
-            'pagination' => new Pagination(),
-            'sort' => History::getDefaultSort()
-        ]);
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'restaurant' => $restaurant,
-            'lastOrdersProvider' => $lastOrdersProvider
-        ]);
-    }
-
-    /**
-     * @param $id int
-     * @return Menu
-     * @throws NotFoundHttpException
-     */
-    protected function findModel($id): Menu
-    {
-        if (($model = Menu::findOne($id)) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    /**
-     * @param $id int
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            $menu = $model;
-            $restaurant = $menu->restaurant;
-            return $this->render('updateMenu', [
-                        'model' => $model,
-                        'restaurant' => $restaurant,
-            ]);
-        }
-    }
-
-    /**
-     * @param $id int
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate($id)
-    {
-        $model = new Menu();
-        $restaurant = Restaurants::findOne($id);
-        $model->restaurantId = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['restaurant', 'id' => $restaurant->id]);
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-                        'restaurant' => $restaurant,
-            ]);
-        }
-    }
-
-    /**
-     * @param $id int
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($id)
-    {
-        $menu = $this->findModel($id);
-        $restaurant = $menu->restaurant;
-        $menu->softDelete();
-
-        return $this->redirect(['restaurant', 'id' => $restaurant->id]);
     }
 
     /**

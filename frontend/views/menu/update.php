@@ -4,7 +4,7 @@ use frontend\models\Restaurants;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Restaurants */
+/* @var $model \frontend\models\Menu */
 /* @var $restaurant Restaurants */
 
 $url = $restaurant->id;

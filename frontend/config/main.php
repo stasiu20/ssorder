@@ -231,6 +231,11 @@ return [
                 ],
                 'restaurants/add' => 'restaurants/create',
 
+                'menu/<id:\d+>' => 'menu/view',
+                'menu/<id:\d+>/delete' => 'menu/delete',
+                'menu/<id:\d+>/update' => 'menu/update',
+                'restaurants/<id:\d+>/add-food' => 'menu/create',
+
                 //'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
