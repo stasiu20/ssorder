@@ -41,19 +41,13 @@ RestaurantAsset::register($this);
             <h5>Koszt opakowania:</h5>
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->pack_price}"); ?> zł </h3>
             <div class="menuImg">
-                <h4>
-                    <?php
-                        $form = ActiveForm::begin([
-                            'options' => ['enctype' => 'multipart/form-data'],
-                            'action' => ["site/addimages?restaurantId= $restaurant->id"]
-                        ]);
-                        echo $form->field($model, 'imagesMenu_url')->widget(FileInput::classname(), [
-                            'options' => ['accept' => 'image/*'],
-                            'language' => 'pl',
-                        ]);
-                        ActiveForm::end();
-                        ?>
-                </h4>
+                <?= \common\widgets\VaadinUpload::widget([
+                    'target' => \yii\helpers\Url::to(['/upload/image', 'id' => $restaurant->id]),
+                    'accept' => 'image/*',
+                    'maxFiles' => 1,
+                    'formDataName' => 'imagesMenu_url'
+                ]) ?>
+
                 <?php if ($imagesMenu) {
                     echo '<h3>Galeria</h3>';
                 } ?>

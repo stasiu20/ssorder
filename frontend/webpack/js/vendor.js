@@ -9,3 +9,4 @@ require('material-icons');
 require('rxjs');
 require('react-toastify');
 require('bootstrap/dist/js/bootstrap.min');
+require('@vaadin/vaadin-upload');

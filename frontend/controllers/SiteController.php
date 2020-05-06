@@ -276,10 +276,8 @@ class SiteController extends Controller
      */
     public function actionRestaurant($id)
     {
-
         $restaurant = Restaurants::findOne($id);
         $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
-        //$menu = Restaurants::findOne($id);
         $menu = $restaurant->menu;
         $restaurants = Restaurants::find()->all();
         $model = new Imagesmenu();
@@ -394,44 +392,6 @@ class SiteController extends Controller
         $menu->softDelete();
 
         return $this->redirect(['restaurant', 'id' => $restaurant->id]);
-    }
-
-    /**
-     * @param $restaurantId int
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\di\NotInstantiableException
-     */
-    public function actionAddimages($restaurantId)
-    {
-        $model = new Imagesmenu();
-        $restaurant = Restaurants::findOne($restaurantId);
-        if (null === $restaurant) {
-            throw new NotFoundHttpException('Restaurant not exists');
-        }
-
-        if (Yii::$app->request->isPost) {
-            $model->restaurantId = $restaurant->id;
-            $model->imageFile = UploadedFile::getInstance($model, 'imagesMenu_url');
-
-            if ($model->validate()) {
-                /** @var FileService $fileService */
-                $fileService = Yii::$container->get(FileService::class);
-                $key = $model->getTmpFileKey();
-                $fileService->storeFile(
-                    BucketEnum::MENU . '/' . $key,
-                    $model->imageFile->tempName
-                );
-                $model->imagesMenu_url = $key;
-                $model->save(false);
-            }
-            return $this->redirect(["site/restaurant?id=$restaurantId"]);
-        }
-
-        return $this->render('uploadImagesMenu', [
-            'model' => $model,
-        ]);
     }
 
     /**

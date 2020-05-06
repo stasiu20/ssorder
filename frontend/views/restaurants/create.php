@@ -7,7 +7,7 @@ use frontend\models\Restaurants;
 /* @var $model app\models\Restaurants */
 
 $this->title = 'Create Restaurants';
-$this->params['breadcrumbs'][] = ['label' => 'Restaurants', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Restaurants', 'url' => ['/restaurants']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="restaurants-create">

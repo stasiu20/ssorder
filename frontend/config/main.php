@@ -219,7 +219,19 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [//'/<id:\d+>' => 'site/index',
+            'rules' => [
+                'restaurants' => 'site/index',
+                [
+                    'pattern' => 'restaurants/<id:\d+>/update',
+                    'route' => 'restaurants/update',
+                ],
+                [
+                    'pattern' => 'restaurants/<id:\d+>',
+                    'route' => 'site/restaurant',
+                ],
+                'restaurants/add' => 'restaurants/create',
+
+                //'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 'v1/restaurants' => 'apiV1/restaurants/index',
