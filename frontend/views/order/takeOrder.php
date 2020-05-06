@@ -36,10 +36,10 @@ OrderRealiseAsset::register($this);
     return [
         'id' => $imageMenu->id,
         'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
-        'deleteUrl' => Url::toRoute(['site/image', 'id' => $imageMenu->restaurantId, 'url' => $imageMenu->imagesMenu_url])
+        'deleteUrl' => Url::toRoute(['restaurants/delete-image', 'id' => $imageMenu->id])
     ];
 }, $imagesMenu); ?>
-<div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery" class="menuImg"></div>
+<div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery"></div>
 <br />
 
 <?=

@@ -36,7 +36,7 @@ RestaurantAsset::register($this);
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->delivery_price}"); ?> zł</h3>
             <h5>Koszt opakowania:</h5>
             <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->pack_price}"); ?> zł </h3>
-            <div class="menuImg">
+            <div>
                 <?= \common\widgets\VaadinUpload::widget([
                     'target' => \yii\helpers\Url::to(['/upload/image', 'id' => $restaurant->id]),
                     'accept' => 'image/*',
@@ -51,7 +51,7 @@ RestaurantAsset::register($this);
                     return [
                         'id' => $imageMenu->id,
                         'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
-                        'deleteUrl' => Url::toRoute(['site/image', 'id' => $imageMenu->restaurantId, 'url' => $imageMenu->imagesMenu_url])
+                        'deleteUrl' => Url::toRoute(['restaurants/delete-image', 'id' => $imageMenu->id])
                     ];
                 }, $imagesMenu); ?>
                 <div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery"></div>

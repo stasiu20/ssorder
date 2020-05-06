@@ -27,7 +27,7 @@ $formatter = \Yii::$app->formatter;
     </p>
 </div>
 
-<div class="menuImg" style="float:left">
+<div style="float:left">
 
     <?php foreach ($imagesMenu as $imageMenu): ?>
         <div class="responsive">

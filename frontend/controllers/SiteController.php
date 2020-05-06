@@ -277,7 +277,7 @@ class SiteController extends Controller
     public function actionRestaurant($id)
     {
         $restaurant = Restaurants::findOne($id);
-        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
+        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id, 'deletedAt' => null])->all();
         $menu = $restaurant->menu;
         $restaurants = Restaurants::find()->all();
         $model = new Imagesmenu();
@@ -296,26 +296,5 @@ class SiteController extends Controller
                     'model' => $model,
                     'imagesMenu' => $imagesMenu,
         ]);
-    }
-
-    /**
-     * @param $url string
-     * @param $id int
-     * @return \yii\web\Response
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionImage($url, $id)
-    {
-        $img = Imagesmenu::findOne(['imagesMenu_url' => $url]);
-        $restaurantId = Yii::$app->request->get('id');
-
-        if ($img && Yii::$app->request->isGet) {
-            /** @var FileService $fileService */
-            $fileService = Yii::$container->get(FileService::class);
-            $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
-            $img->softDelete();
-            return $this->redirect("restaurant?id=$restaurantId");
-        }
     }
 }

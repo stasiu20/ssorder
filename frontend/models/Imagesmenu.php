@@ -14,6 +14,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property integer $id
  * @property integer $restaurantId
  * @property string $imagesMenu_url
+ * @property-read string $deletedAt
  * @method softDelete
  */
 class Imagesmenu extends \yii\db\ActiveRecord

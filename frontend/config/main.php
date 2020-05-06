@@ -230,6 +230,7 @@ return [
                     'route' => 'site/restaurant',
                 ],
                 'restaurants/add' => 'restaurants/create',
+                'images/<id:\d+>/delete' => 'restaurants/delete-image',
 
                 'menu/<id:\d+>' => 'menu/view',
                 'menu/<id:\d+>/delete' => 'menu/delete',

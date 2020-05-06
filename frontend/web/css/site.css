@@ -242,83 +242,14 @@ a.desc:after {
 
 }
 
-
-
-div.img {
-    border: 1px solid #ccc;
-    /*margin: 5px;
-    border: 1px solid #ccc;
-    float: left;
-    width: 180px;
-    */
-}
-
-div.img:hover {
-    border: 1px solid #777;
-}
-
-div.img img {
-    width: 100%;
-    height: auto;
-}
-.menuImg{
-    margin: 20px 0;
-}
-.menuImage{
-    width: 50px;
-    height: 25px;
-
-}
-
 * {
     box-sizing: border-box;
-}
-
-.responsive {
-    padding: 0 6px;
-    float: left;
-    width: 24.99999%;
-}
-
-@media only screen and (max-width: 700px){
-    .responsive {
-        width: 49.99999%;
-        margin: 6px 0;
-    }
-}
-
-@media only screen and (max-width: 500px){
-    .responsive {
-        width: 100%;
-    }
 }
 
 .clearfix:after {
     content: "";
     display: table;
     clear: both;
-}
-/* delete image*/
-div.img {
-    position: relative;
-    float:left;
-    margin:5px;
-}
-div.img:hover img{
-    opacity: 0.5;
-}
-div.img:hover span {
-    display: block;
-}
-div.img span {
-    position:absolute;
-    display:none;
-    cursor: pointer;
-
-}
-div.img span {
-    top:40;
-    left:100%;
 }
 
 .file-caption-main{

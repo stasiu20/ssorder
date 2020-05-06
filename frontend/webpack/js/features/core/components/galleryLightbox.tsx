@@ -29,30 +29,28 @@ export default class RestaurantGalleryLightbox extends Component<
         const images = this.props.images;
         const prevIndex = (photoIndex + images.length - 1) % images.length;
         return (
-            <div>
+            <div className={'restaurant-gallery'}>
                 {images.map((item, index) => {
                     return (
-                        <div className="responsive" key={item.id}>
-                            <div className="img">
-                                <a className="delete" href={item.deleteUrl}>
-                                    <span className="glyphicon glyphicon-remove-sign" />
-                                </a>
-                                <a
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={(): void =>
-                                        this.setState({
-                                            isOpen: true,
-                                            photoIndex: index,
-                                        })
-                                    }
-                                >
-                                    <img
-                                        alt={'menu image'}
-                                        className="menuImage"
-                                        src={item.url}
-                                    />
-                                </a>
-                            </div>
+                        <div className="restaurant-gallery__container" key={item.id}>
+                            <a className={'restaurant-gallery__delete'} href={item.deleteUrl}>
+                                <span className="material-icons">delete</span>
+                            </a>
+                            <a
+                                style={{ cursor: 'pointer' }}
+                                onClick={(): void =>
+                                    this.setState({
+                                        isOpen: true,
+                                        photoIndex: index,
+                                    })
+                                }
+                            >
+                                <img
+                                    alt={'menu image'}
+                                    className="restaurant-gallery__photo"
+                                    src={item.url}
+                                />
+                            </a>
                         </div>
                     );
                 })}

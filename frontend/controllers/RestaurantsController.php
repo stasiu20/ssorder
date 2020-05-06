@@ -2,17 +2,15 @@
 
 namespace frontend\controllers;
 
-use common\enums\BucketEnum;
 use common\services\FileService;
 use frontend\helpers\FileServiceViewHelper;
-use Yii;
+use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
-use frontend\models\RestaurantsSearch;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\UploadedFile;
 
 /**
  * RestaurantsController implements the CRUD actions for Restaurants model.
@@ -108,6 +106,28 @@ class RestaurantsController extends Controller
         $fileService->deleteFile(FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url));
         $restaurant->softDelete();
         return $this->redirect(['site/index']);
+    }
+
+    /**
+     * @param $id int Image id
+     * @return \yii\web\Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDeleteImage(int $id)
+    {
+        $img = Imagesmenu::findOne($id);
+        if (!$img) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var FileService $fileService */
+        $fileService = Yii::$container->get(FileService::class);
+        $fileService->deleteFile(
+            FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url)
+        );
+        $img->softDelete();
+        return $this->redirect(['site/restaurant', 'id' => $img->restaurantId]);
     }
 
     /**
