@@ -93,7 +93,6 @@ AppAsset::register($this);
         <?= Yii::t('app', 'Wersja') ?> <?= $appVersion->getVersion(); ?>
     </p>
 </footer>
-<script src="/js/lightbox-plus-jquery.js"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

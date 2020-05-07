@@ -2,35 +2,22 @@
 
 namespace frontend\controllers;
 
-use common\enums\BucketEnum;
-use common\helpers\ArrayHelper;
-use common\iterators\ChunkedIterator;
-use common\models\History;
-use common\models\Order;
-use common\models\OrderFilters;
-use common\models\OrderSearch;
-use common\services\FileService;
-use frontend\helpers\FileServiceViewHelper;
-use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-use frontend\models\Restaurants;
-use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
-use frontend\models\Menu;
-use yii\data\ActiveDataProvider;
-use frontend\models\MenuSearch;
-use yii\data\Pagination;
 use frontend\models\Category;
 use frontend\models\Imagesmenu;
+use frontend\models\Menu;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+use frontend\models\Restaurants;
+use frontend\models\SignupForm;
+use Yii;
+use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -157,39 +144,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                        'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-
-    /**
      * Signs user up.
      *
      * @return mixed
@@ -257,17 +211,6 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
                     'model' => $model,
         ]);
-    }
-
-    /**
-     * @param $id int
-     * @return string
-     */
-    public function actionCategory($id): string
-    {
-        $categorys = \frontend\models\Category::findOne($id);
-
-        return $this->render('category', ['categorys' => $categorys]);
     }
 
     /**
