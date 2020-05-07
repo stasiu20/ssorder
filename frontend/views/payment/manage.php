@@ -9,7 +9,7 @@ echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'summary' => '',
     'showFooter' => true,
-    'tableOptions' => ['class' => 'table  table-bordered table-hover'],
+    'tableOptions' => ['class' => 'table table-bordered table-hover payment-manage'],
     'columns' => [
         [
             'class' => 'yii\grid\SerialColumn',

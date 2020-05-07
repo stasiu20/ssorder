@@ -1,7 +1,18 @@
-* {
+*,
+*::after,
+*::before {
     margin: 0;
     padding: 0;
+    box-sizing: inherit; //from body element
 }
 table {
     border-collapse: collapse;
+}
+body {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: $color-primary-light;
 }

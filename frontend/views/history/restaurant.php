@@ -17,7 +17,7 @@ $formatter = \Yii::$app->formatter;
 ?>
 
 <div style="float: left">
-    <div class ="img-restaurant"><img class ="img-circle" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
+    <div><img class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
 </div>
 <div class="info" style="float:left">
     <h6><b>Info</b></h6>

@@ -5,8 +5,14 @@
 @import './vendors/react-components';
 
 @import 'base/reset';
+@import 'base/typography';
+@import 'base/utils';
 @import 'layout/navbar';
 @import 'layout/footer';
+@import 'layout/page';
 @import './components/card';
+@import './components/restaurant';
 @import './components/restaurant-gallery';
+@import './components/yii2-grid-view';
 @import './pages/home';
+@import './pages/payment-manage';

@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </div>
                                             <div class="app-card__side app-card__side--back text-center">
                                                 <div class="app-card__side-container">
-                                                    <h4 class="mb-small"><?= $restaurant->restaurantName ?></h4>
+                                                    <h4 class="mb-2"><?= $restaurant->restaurantName ?></h4>
                                                     <a class="btn btn-light btn-lg" href="<?= Url::to(['restaurants/details', 'id' => $restaurant->id]) ?>"><?= Yii::t('app', 'Order') ?></a>
                                                 </div>
                                             </div>

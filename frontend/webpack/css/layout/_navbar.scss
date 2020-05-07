@@ -1,3 +1,25 @@
 .navbar {
     background-color: $color-primary;
+
+    .nav-link {
+        transition: all 0.7s;
+        color: $color-white;
+        border-bottom: 3px solid transparent;
+        background: linear-gradient(
+            120deg,
+            transparent 0%,
+            transparent 50%,
+            $color-white 50%
+        );
+        background-size: 300%;
+
+        &:hover {
+            background-position: 100%;
+            color: #7d1935;
+        }
+
+        &.active {
+            border-bottom: 3px solid $color-white;
+        }
+    }
 }

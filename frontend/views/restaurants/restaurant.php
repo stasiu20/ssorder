@@ -30,12 +30,15 @@ RestaurantAsset::register($this);
                 <?= Html::a('<span class="material-icons">delete</span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
             <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-restaurant"></div>
-            <h5>Numer telefonu:</h5>
-            <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
-            <h5>Koszt dowozu:</h5>
-            <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->delivery_price}"); ?> zł</h3>
-            <h5>Koszt opakowania:</h5>
-            <h3 class="restaurant-summary"><?= Html::encode("{$restaurant->pack_price}"); ?> zł </h3>
+
+            <div class="restaurant-details">
+                <h5>Numer telefonu:</h5>
+                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
+                <h5>Koszt dowozu:</h5>
+                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->delivery_price}"); ?> zł</h3>
+                <h5>Koszt opakowania:</h5>
+                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->pack_price}"); ?> zł </h3>
+            </div>
             <div>
                 <?= \common\widgets\VaadinUpload::widget([
                     'target' => \yii\helpers\Url::to(['/upload/image', 'id' => $restaurant->id]),

@@ -45,7 +45,7 @@ AppAsset::register($this);
         'brandLabel' => '<img src="/image/sensilabs-logo.png">',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark sticky-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark sticky-top',
         ],
     ]);
     if (Yii::$app->user->isGuest) {

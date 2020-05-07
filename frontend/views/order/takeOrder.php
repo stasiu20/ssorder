@@ -22,7 +22,7 @@ OrderRealiseAsset::register($this);
 ?>
 
 <div class="d-flex flex-row">
-    <div class ="img-restaurant"><img class ="img-circle" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
+    <div><img alt="restaurant logo" class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
     <div class="ml-4">
         <h6><b>Info</b></h6>
         <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
