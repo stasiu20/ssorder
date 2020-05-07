@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var \DateTime $date */
 /** @var \DateTime $yesterday */
@@ -91,9 +92,9 @@ $formatter = \Yii::$app->formatter;
 
         <tr>
             <td><?= $i; ?></td>
-            <td><a href="/site/view?id=<?= $order->menu->id ?>&order=true"><?= $order->menu->foodName ?></a></td>
+            <td><a href="<?= Url::toRoute(['menu/view', 'id' => $order->menu->id]) ?>"><?= $order->menu->foodName ?></a></td>
             <td>
-                <a href="/site/restaurant?id=<?= $order->menu->restaurant->id ?>"><?= $order->menu->restaurant->restaurantName ?></a>
+                <a href="<?= Url::toRoute(['restaurants/details', 'id' => $order->menu->restaurant->id]) ?>"><?= $order->menu->restaurant->restaurantName ?></a>
             </td>
             <td><?= $formatter->asCurrency($order->getPrice()) ?></td>
             <td>
@@ -134,7 +135,7 @@ $formatter = \Yii::$app->formatter;
     <?php foreach ($summary->getData() as $row): ?>
         <tr>
             <td colspan="3" class="text-right">
-                <a href="<?= \yii\helpers\Url::to(['/site/restaurant', 'id' => $row->restaurant->id]); ?>">
+                <a href="<?= \yii\helpers\Url::to(['restaurants/details', 'id' => $row->restaurant->id]); ?>">
                     <?= $row->restaurant->restaurantName ?> (<?= sprintf('%d / %d', $row->numOfRealizedOrders, $row->allOrders) ?>)
                 </a>
             </td>

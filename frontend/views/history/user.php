@@ -14,7 +14,7 @@ use common\models\Order; ?>
             'attribute' => 'restaurantId',
             'filter' => \frontend\models\Restaurants::restaurantsAsArray(),
             'value' => function (\common\models\Order $order) {
-                return \yii\helpers\Html::a($order->getRestaurantName(), \yii\helpers\Url::to(['site/restaurant', 'id' => $order->restaurantId]));
+                return \yii\helpers\Html::a($order->getRestaurantName(), \yii\helpers\Url::to(['restaurants/details', 'id' => $order->restaurantId]));
             }
         ],
         [

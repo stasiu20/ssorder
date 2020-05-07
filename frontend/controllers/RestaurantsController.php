@@ -4,9 +4,12 @@ namespace frontend\controllers;
 
 use common\services\FileService;
 use frontend\helpers\FileServiceViewHelper;
+use frontend\models\Category;
 use frontend\models\Imagesmenu;
+use frontend\models\Menu;
 use frontend\models\Restaurants;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -42,6 +45,45 @@ class RestaurantsController extends Controller
         ];
     }
 
+    public function actionIndex()
+    {
+        $query = Restaurants::findActiveRestaurants();
+        $restaurants = $query->orderBy('restaurantName')->all();
+        $categorys = Category::findActive()->all();
+        return $this->render('index', [
+            'restaurants' => $restaurants,
+            'categorys' => $categorys,
+        ]);
+    }
+
+    /**
+     * @param $id int
+     * @return string
+     */
+    public function actionDetails($id)
+    {
+        $restaurant = $this->findModel($id);
+        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id, 'deletedAt' => null])->all();
+        $menu = $restaurant->menu;
+        $restaurants = Restaurants::find()->all();
+        $model = new Imagesmenu();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Menu::find()->where(['restaurantId' => $id])->andWhere(['deletedAt' => null]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('restaurant', [
+            'restaurant' => $restaurant,
+            'menu' => $menu,
+            'dataProvider' => $dataProvider,
+            'restaurants' => $restaurants,
+            'model' => $model,
+            'imagesMenu' => $imagesMenu,
+        ]);
+    }
+
     /**
      * Creates a new Restaurants model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -75,7 +117,7 @@ class RestaurantsController extends Controller
         $model->validate();
         $model->save();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/restaurant', 'id' => $model->id]);
+            return $this->redirect(['restaurants/details', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $model,
@@ -105,7 +147,7 @@ class RestaurantsController extends Controller
         }
         $fileService->deleteFile(FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url));
         $restaurant->softDelete();
-        return $this->redirect(['site/index']);
+        return $this->redirect(['restaurants/index']);
     }
 
     /**
@@ -127,7 +169,7 @@ class RestaurantsController extends Controller
             FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url)
         );
         $img->softDelete();
-        return $this->redirect(['site/restaurant', 'id' => $img->restaurantId]);
+        return $this->redirect(['restaurants/details', 'id' => $img->restaurantId]);
     }
 
     /**

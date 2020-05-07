@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <div class="app-card__side app-card__side--back text-center">
                                                 <div class="app-card__side-container">
                                                     <h4 class="mb-small"><?= $restaurant->restaurantName ?></h4>
-                                                    <a class="btn btn-light btn-lg" href="<?= Url::to(['/site/restaurant', 'id' => $restaurant->id]) ?>"><?= Yii::t('app', 'Order') ?></a>
+                                                    <a class="btn btn-light btn-lg" href="<?= Url::to(['restaurants/details', 'id' => $restaurant->id]) ?>"><?= Yii::t('app', 'Order') ?></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,6 +63,5 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                 <?php endforeach; ?>
             </div>
-            <footer class="container-fluid text-center"><?= LinkPager::widget(['pagination' => $pagination]) ?></footer>
         </div>
     </div>

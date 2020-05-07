@@ -5,6 +5,7 @@ use yii\grid\SerialColumn;
 use yii\data\DataProviderInterface;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -15,10 +16,13 @@ use yii\widgets\DetailView;
 $request = Yii::$app->request;
 $order = $request->get('order');
 
-$url = $restaurant->id;
 $restaurantName = $restaurant->restaurantName;
 $this->title = $model->foodName;
-$order == true ? $this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => ['/order/index']] :  $this->params['breadcrumbs'][] = ['label' => "$restaurantName", 'url' => ["site/restaurant?id=$url"]];
+if ($order) {
+    $this->params['breadcrumbs'][] = ['label' => 'Zamówienia', 'url' => Url::toRoute(['/order/index'])];
+} else {
+    $this->params['breadcrumbs'][] = ['label' => $restaurantName, 'url' => Url::toRoute(['restaurants/details', 'id' => $restaurant->id])];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="restaurants-view">
@@ -77,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'again' => function ($url, $model, $key) {
                         return \yii\helpers\Html::a(
                             ' <span class="material-icons">restaurant</span>',
-                            \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
+                            Url::to(['/order/again', 'id' => $model->id]),
                             ['title' => Yii::t('app', 'Smakowało? Zamów raz jeszcze!')]
                         );
                     }

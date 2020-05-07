@@ -17,7 +17,7 @@ export class HomePageObject {
         await element(by.linkText(linkText)).click();
         await browser.driver.wait(function () {
             return browser.driver.getCurrentUrl().then(function (url) {
-                return new RegExp('/site/restaurant').test(url);
+                return new RegExp(/restaurants\/[\d]+\/details/).test(url);
             });
         }, 10000, 'I am not at restaurant page');
 

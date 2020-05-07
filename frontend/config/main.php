@@ -21,6 +21,7 @@ return [
     'language' => 'pl-PL',
     'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'restaurants',
     'aliases' => [
         '@npm'   => '@vendor/npm-asset',
     ],
@@ -220,14 +221,14 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'restaurants' => 'site/index',
+                'restaurants' => 'restaurants/index',
                 [
                     'pattern' => 'restaurants/<id:\d+>/update',
                     'route' => 'restaurants/update',
                 ],
                 [
                     'pattern' => 'restaurants/<id:\d+>',
-                    'route' => 'site/restaurant',
+                    'route' => 'restaurants/details',
                 ],
                 'restaurants/add' => 'restaurants/create',
                 'images/<id:\d+>/delete' => 'restaurants/delete-image',

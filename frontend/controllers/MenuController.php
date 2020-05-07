@@ -78,7 +78,7 @@ class MenuController extends Controller
 
         $model->restaurantId = $id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/restaurant', 'id' => $restaurant->id]);
+            return $this->redirect(['restaurants/details', 'id' => $restaurant->id]);
         }
         return $this->render('create', [
             'model' => $model,
@@ -117,7 +117,7 @@ class MenuController extends Controller
         $menu = $this->findModel($id);
         $restaurant = $menu->restaurant;
         $menu->softDelete();
-        return $this->redirect(['site/restaurant', 'id' => $restaurant->id]);
+        return $this->redirect(['restaurants/details', 'id' => $restaurant->id]);
     }
 
     /**

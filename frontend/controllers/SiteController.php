@@ -73,44 +73,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function actionIndex($id = 0)
-    {
-
-        if ($id > 0) {           //tu trzeba dać && nie więcej niż ostatni rekord w bazie
-            $query = Restaurants::findActiveRestaurants()->andWhere(['categoryId' => $id]);
-            $pagination = new Pagination([
-                'defaultPageSize' => 10,
-                'totalCount' => $query->count(),]);
-            $restaurants = $query->orderBy('restaurantName')
-                    ->offset($pagination->offset)
-                    ->limit($pagination->limit)
-                    ->all();
-            //$restaurants = $category->restaurants;
-        } else {
-            $query = Restaurants::findActiveRestaurants();
-            $pagination = new Pagination([
-                'defaultPageSize' => 20,
-                'totalCount' => $query->count(),]);
-            $restaurants = $query->orderBy('restaurantName')
-                    ->offset($pagination->offset)
-                    ->limit($pagination->limit)
-                    ->all();
-        }
-
-        $categorys = Category::findActive()->all();
-        return $this->render('index', [
-                    'restaurants' => $restaurants,
-                    'categorys' => $categorys,
-                    'pagination' => $pagination,
-        ]);
-    }
-
-    /**
      * Logs in a user.
      *
      * @return mixed
@@ -210,34 +172,6 @@ class SiteController extends Controller
 
         return $this->render('resetPassword', [
                     'model' => $model,
-        ]);
-    }
-
-    /**
-     * @param $id int
-     * @return string
-     */
-    public function actionRestaurant($id)
-    {
-        $restaurant = Restaurants::findOne($id);
-        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id, 'deletedAt' => null])->all();
-        $menu = $restaurant->menu;
-        $restaurants = Restaurants::find()->all();
-        $model = new Imagesmenu();
-        $dataProvider = new ActiveDataProvider([
-            'query' => Menu::find()->where(['restaurantId' => $id])->andWhere(['deletedAt' => null]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-
-        return $this->render('restaurant', ['restaurant' => $restaurant,
-                    'menu' => $menu,
-                    'dataProvider' => $dataProvider,
-                    'restaurants' => $restaurants,
-                    'model' => $model,
-                    'imagesMenu' => $imagesMenu,
         ]);
     }
 }

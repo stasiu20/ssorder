@@ -9,7 +9,7 @@ use frontend\models\Menu;
 $this->title = 'Dodaj pozycję w menu';
 $this->params['breadcrumbs'][] = [
     'label' => $restaurant->restaurantName,
-    'url' => \yii\helpers\Url::toRoute(['site/restaurant', 'id' => $restaurant->id]),
+    'url' => \yii\helpers\Url::toRoute(['restaurants/details', 'id' => $restaurant->id]),
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
