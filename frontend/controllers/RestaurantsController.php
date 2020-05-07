@@ -63,7 +63,7 @@ class RestaurantsController extends Controller
     public function actionDetails($id)
     {
         $restaurant = $this->findModel($id);
-        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id, 'deletedAt' => null])->all();
+        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
         $menu = $restaurant->menu;
         $restaurants = Restaurants::find()->all();
         $model = new Imagesmenu();
@@ -163,12 +163,12 @@ class RestaurantsController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $img->delete();
         /** @var FileService $fileService */
         $fileService = Yii::$container->get(FileService::class);
         $fileService->deleteFile(
             FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url)
         );
-        $img->softDelete();
         return $this->redirect(['restaurants/details', 'id' => $img->restaurantId]);
     }
 
