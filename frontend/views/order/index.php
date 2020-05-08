@@ -1,5 +1,7 @@
 <?php
 
+use common\helpers\OrderView;
+use common\models\Order;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -10,28 +12,28 @@ use yii\helpers\Url;
 /** @var \DateTime $minDate */
 /** @var \DateTime $sevenDaysAgo */
 /** @var \DateTime $sevenDaysNext */
-/** @var \common\models\Order $order */
+/** @var mixed $orderCollection */
 /** @var \frontend\models\OrdersSummary $summary */
 
 $this->title = 'Zamówienia - ' . $date->format('Y-m-d');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h2 class="text-center">
+<h2 class="text-center mb-3">
     <?php if ($sevenDaysAgo >= $minDate): ?>
-        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysAgo->format('Y-m-d')]); ?>">
+        <a href="<?= Url::to(['/order', 'date' => $sevenDaysAgo->format('Y-m-d')]); ?>">
             <span class="material-icons">fast_rewind</span></a>
     <?php endif ?>
     <?php if ($date > $minDate): ?>
-        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
+        <a href="<?= Url::to(['/order', 'date' => $yesterday->format('Y-m-d')]) ?>"><span
                     class="material-icons">keyboard_arrow_left</span></a>
     <?php endif ?>
     Zamówienia z Dnia: <?= $date->format('d-m-Y') ?>
     <?php if ($tomorrow <= $today): ?>
-        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span
+        <a href="<?= Url::to(['/order', 'date' => $tomorrow->format('Y-m-d')]) ?>"><span
                     class="material-icons">keyboard_arrow_right</span></a>
     <?php endif; ?>
     <?php if ($sevenDaysNext <= $today): ?>
-        <a href="<?= \yii\helpers\Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
+        <a href="<?= Url::to(['/order', 'date' => $sevenDaysNext->format('Y-m-d')]); ?>">
             <span class="material-icons">fast_forward</span>
         </a>
     <?php endif ?>
@@ -39,112 +41,118 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $userName = Yii::$app->user->identity->username;
-
 $formatter = \Yii::$app->formatter;
 ?>
-<p>sortuj według: <?= $sort->link('restaurant'); ?></p>
-<table class="table table-striped table-bordered">
-    <thead>
-    <tr>
-    <th>l.p.</th>
-    <th>Nazwa Żarcia</th>
-    <th>Nazwa Restauracji</th>
-    <th>Cena</th>
-    <th title="Do zapłaty (cena żarca wraz z opakowaniem i dowozem)">Do zapłaty</th>
-    <th>Uwagi</th>
-    <th>Kto Zamawia</th>
-    <th>Status</th>
-    <th>Do rozliczenia</th>
-    <th>Akcje</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $mapIndex = [];
-    $i = 0;
-    foreach ($model as $order):
-        ++$i;
-        if (!isset($mapIndex[$order->restaurantId])) {
-            $mapIndex[$order->restaurantId] = -1;
-        }
-        $mapIndex[$order->restaurantId] += 1;
-        $delete = ($userName === $order->user['username'] ? Html::a('usuń', ['delete'], [
-            'class' => 'btn btn-sm btn-danger',
-            'style' => 'margin-right:10px',
-            'data' => [
-                'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
-                'method' => 'post',
-                'params' => ['id' => $order->id]
 
-            ],
-        ]) : '');
-        $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ['edit'], [
-            'class' => 'btn btn-sm btn-secondary',
-            'style' => 'margin-right:10px',
-            'data' => [
-                'method' => 'post',
-                'params' => ['name' => Yii::$app->user->identity->username, 'id' => $order->id],
-
-            ]
-        ]) : '');
-        $takeRestaurantId = $order->menu->restaurant->id;
-        ?>
-
-        <tr>
-            <td><?= $i; ?></td>
-            <td><a href="<?= Url::toRoute(['menu/view', 'id' => $order->menu->id]) ?>"><?= $order->menu->foodName ?></a></td>
-            <td>
-                <a href="<?= Url::toRoute(['restaurants/details', 'id' => $order->menu->restaurant->id]) ?>"><?= $order->menu->restaurant->restaurantName ?></a>
-            </td>
-            <td><?= $formatter->asCurrency($order->getPrice()) ?></td>
-            <td>
-                <?= $formatter->asCurrency($order->total_price); ?>
-            </td>
-            <td><?= $order->uwagi ?></td>
-            <td><?= $order->user['username'] ?></td>
-            <td style="color: <?= $order->status == \common\models\Order::STATUS_NOT_REALIZED ? 'red' : 'green'; ?>">
-                <?= Yii::t('app', 'ORDER_STATUS_' . $order->status); ?>
-            </td>
-            <td class="<?= $order->isRealized() ? \common\helpers\OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) : ''; ?>">
-                <?php if ($order->isRealized()): ?>
-                    <span title="<?= \common\helpers\OrderView::getOrderChangeTitle($order); ?>">
-                        <?= $formatter->asCurrency(abs($order->paymentChange($order->total_price))); ?>
-                    </span>
-                <?php endif ?>
-            </td>
-            <td>
-                <?php if ($order->status == 0) {
-                    echo $delete . $edit;
-                } ?>
-
-                <?php if ($order->canBeRealized()): ?>
-                    <?= Html::a('Zrealizuj', ["restaurant?id=$takeRestaurantId"], ['class' => 'btn btn-sm btn-primary']); ?>
+<?php foreach ($orderCollection as $restaurantId => $orders): ?>
+<?php /** @var $orders Order[]  */ ?>
+<?php $summaryRow = $summary->getDataForRestaurant($restaurantId); ?>
+<div class="accordion" id="accordionOrders">
+    <div class="card">
+        <div class="card-header order-card__header" id="panelHeaderRestaurant<?= $restaurantId ?>" data-toggle="collapse"
+             data-target="#panelRestaurant<?= $restaurantId ?>">
+            <h2>
+                <a href="<?= Url::toRoute(['restaurants/details', 'id' => $orders[0]->menu->restaurant->id]) ?>"><?= $orders[0]->menu->restaurant->restaurantName ?></a>
+            </h2>
+            <div>
+                <span class="order-card__label">CENA / DO ZAPŁATY / DO ROZLICZENIA:</span>
+                <span class="order-card__value">
+                    <?= $formatter->asCurrency($summaryRow->price) ?> /
+                    <?= $formatter->asCurrency($summaryRow->getCostWithDelivery()) ?> /
+                    <?= $formatter->asCurrency($summaryRow->change) ?>
+                </span>
+            </div>
+            <div>
+                <span class="order-card__label">Zamówień / Zrealizowanych</span>
+                <span class="order-card__value"><?= $summaryRow->allOrders ?> / <?= $summaryRow->numOfRealizedOrders ?></span>
+            </div>
+            <div class="order-card__buttons">
+                <?php if ($summaryRow->allOrders !== $summaryRow->numOfRealizedOrders): ?>
+                    <?= Html::a('Zrealizuj', Url::toRoute(['/order/restaurant', 'id' => $restaurantId]), ['class' => 'btn btn-sm btn-primary']) ?>
                 <?php endif; ?>
+            </div>
+        </div>
 
-                <?php if ($order->isRealized()): ?>
-                    <a title="Smakowało? Zamów raz jeszcze!" class=""
-                       href="<?= \yii\helpers\Url::to(['/order/again', 'id' => $order->id]) ?>">
-                        <span class="material-icons">restaurant</span>
-                    </a>
-                <?php endif; ?>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-    <?php foreach ($summary->getData() as $row): ?>
-        <tr>
-            <td colspan="3" class="text-right">
-                <a href="<?= \yii\helpers\Url::to(['restaurants/details', 'id' => $row->restaurant->id]); ?>">
-                    <?= $row->restaurant->restaurantName ?> (<?= sprintf('%d / %d', $row->numOfRealizedOrders, $row->allOrders) ?>)
-                </a>
-            </td>
-            <td class="text-left"><?= $formatter->asCurrency($row->price) ?></td>
-            <td colspan="4" class="text-left"><?= $formatter->asCurrency($row->getCostWithDelivery()) ?></td>
-            <td colspan="2" class="text-left <?= \common\helpers\OrderView::getSettlementCssClass($row->change); ?>">
-                <span><?= $formatter->asCurrency($row->change) ?></span>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-    </tfoot>
-</table>
+        <?php foreach ($orders as $order): ?>
+            <?php
+            $delete = ($userName === $order->user['username'] ? Html::a('usuń', ['delete'], [
+                'class' => 'btn btn-sm btn-danger',
+                'data' => [
+                    'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
+                    'method' => 'post',
+                    'params' => ['id' => $order->id]
+
+                ],
+            ]) : '');
+            $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ['edit'], [
+                'class' => 'btn btn-sm btn-secondary',
+                'data' => [
+                    'method' => 'post',
+                    'params' => ['name' => Yii::$app->user->identity->username, 'id' => $order->id],
+
+                ]
+            ]) : '');
+            ?>
+            <div id="panelRestaurant<?= $restaurantId ?>" class="collapse show" data-parent="#accordionOrders">
+                <div class="card-body order-card">
+                    <div class="order-card__row">
+                        <a class="text-truncate" href="<?= Url::toRoute(['menu/view', 'id' => $order->menu->id]) ?>"><?= $order->menu->foodName ?></a>
+                        <div class="order-card__buttons">
+                            <?php if ($order->isRealized()): ?>
+                                <a title="Smakowało? Zamów raz jeszcze!" href="<?= Url::to(['/order/again', 'id' => $order->id]) ?>">
+                                    <span class="material-icons">restaurant</span>
+                                </a>
+                            <?php else: ?>
+                                <?= $delete . $edit ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <div class="order-card__row">
+                        <div>
+                            <span class="order-card__label">Kto:</span>
+                            <span class="order-card__value"><?= $order->user->username ?></span>
+                        </div>
+                        <div>
+                            <span class="order-card__label">Status:</span>
+                            <span style="color: <?= !$order->isRealized() ? 'red' : 'green' ?>">
+                                <?= Yii::t('app', 'ORDER_STATUS_' . $order->status) ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="order-card__row">
+                        <div>
+                            <span class="order-card__label">Cena:</span>
+                            <span class="order-card__value"><?= $formatter->asCurrency($order->getPrice()) ?></span>
+                        </div>
+                        <div>
+                            <span class="order-card__label">Do zapłaty:</span>
+                            <span class="order-card__value"><?= $formatter->asCurrency($order->total_price) ?></span>
+                        </div>
+                        <div>
+                            <span class="order-card__label">Do rozliczenia: </span>
+                            <span class="order-card__value">
+                                <?php if ($order->isRealized()): ?>
+                                    <span class="<?= OrderView::getSettlementCssClass($order->paymentChange($order->total_price)) ?>">
+                                    <span title="<?= OrderView::getOrderChangeTitle($order) ?>">
+                                        <?= $formatter->asCurrency(abs($order->paymentChange($order->total_price))) ?>
+                                    </span>
+                                <?php else: echo $formatter->asCurrency(null) ?>
+                                <?php endif ?>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="d-inline-block mb-2 order-card__label font-weight-bold">Uwagi:</span>
+                        <p class="order-card__remarks"><?= nl2br($order->uwagi) ?></p>
+                    </div>
+
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endforeach; ?>
