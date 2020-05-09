@@ -44,9 +44,14 @@ $userId = Yii::$app->user->identity->id;
 $formatter = \Yii::$app->formatter;
 ?>
 
+<?php if (empty($orderCollection)): ?>
+    <h2>Brak złożonych zamówień</h2>
+    <h3><a href="<?= Url::toRoute(['/restaurants']) ?>">Przejdź do listy restauracji</a></h3>
+<?php endif; ?>
+
 <?php foreach ($orderCollection as $restaurantId => $orders): ?>
-<?php /** @var $orders Order[]  */ ?>
-<?php $summaryRow = $summary->getDataForRestaurant($restaurantId); ?>
+    <?php /** @var $orders Order[]  */ ?>
+    <?php $summaryRow = $summary->getDataForRestaurant($restaurantId); ?>
 <div class="accordion" id="accordionOrders">
     <div class="card">
         <div class="card-header order-card__header" id="panelHeaderRestaurant<?= $restaurantId ?>" data-toggle="collapse"
@@ -133,7 +138,8 @@ $formatter = \Yii::$app->formatter;
                                     <span title="<?= OrderView::getOrderChangeTitle($order) ?>">
                                         <?= $formatter->asCurrency(abs($order->paymentChange($order->total_price))) ?>
                                     </span>
-                                <?php else: echo $formatter->asCurrency(null) ?>
+                                <?php else:
+                                    echo $formatter->asCurrency(null) ?>
                                 <?php endif ?>
                                 </span>
                             </span>
