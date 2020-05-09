@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\LinkPager;
 use yii\web\JsonParser;
 use Monolog\Logger;
 use samdark\log\PsrTarget;
@@ -79,6 +80,11 @@ return [
 
                 return $analytics;
             },
+            yii\grid\GridView::class => [
+                'pager' => [
+                    'class' => LinkPager::class,
+                ],
+            ],
         ]
     ],
     'controllerNamespace' => 'frontend\controllers',
