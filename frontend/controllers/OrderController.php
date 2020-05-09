@@ -117,11 +117,7 @@ class OrderController extends Controller
 
     public function actionAgain($id)
     {
-        $order = Order::findOne($id);
-        if (null === $order) {
-            throw new NotFoundHttpException('Order not exist');
-        }
-
+        $order = $this->findOrder($id);
         $order = $order->cloneOrder();
 
         return $this->render('again', [
@@ -143,42 +139,49 @@ class OrderController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    protected function findOrder($id): Order
+    {
+        if (($model = Order::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     public function actionDelete()
     {
         if (null !== Yii::$app->request->post('id')) {
-            $id= Yii::$app->request->post('id');
-            $model = Order::findOne($id);
+            $id = Yii::$app->request->post('id');
+            $model = $this->findOrder($id);
+            if (!$model->isCreatedByUser(Yii::$app->user->identity->id) || $model->isRealized()) {
+                throw new NotFoundHttpException();
+            }
             $model->softDelete();
             return $this->redirect(['index']);
         }
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
+        $order = $this->findOrder($id);
+        if (!$order->isCreatedByUser(Yii::$app->user->identity->id) || $order->isRealized()) {
+            throw new NotFoundHttpException();
+        }
+        $model = Menu::findOne($order->foodId);
 
-        if (Yii::$app->request->isPost && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
-            $id= Yii::$app->request->post('id');
-            $order = Order::findOne($id);
-            $model = Menu::findOne($order->foodId);
-
-            return $this->render('uwagi', [
-                    'model' => $model,
-                    'order' => $order
-            ]);
-        } else if (null !== Yii::$app->request->post('Order')) {
-            $id= Yii::$app->request->post('Order')['orderId'];
-            $order = Order::findOne($id);
+        if (Yii::$app->request->isPost) {
             $order->load(Yii::$app->request->post());
             $orderUwagi = strip_tags($order->uwagi);
             $order->uwagi = $orderUwagi;
-            $order->update();
-            //$order->save();
             if ($order->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['order/index']);
             }
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->render('uwagi', [
+            'model' => $model,
+            'order' => $order
+        ]);
     }
 
     public function actionRestaurant($id)

@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </h2>
 
 <?php
-$userName = Yii::$app->user->identity->username;
+$userId = Yii::$app->user->identity->id;
 $formatter = \Yii::$app->formatter;
 ?>
 
@@ -75,7 +75,7 @@ $formatter = \Yii::$app->formatter;
 
         <?php foreach ($orders as $order): ?>
             <?php
-            $delete = ($userName === $order->user['username'] ? Html::a('usuń', ['delete'], [
+            $delete = ($userId === $order->userId ? Html::a('usuń', ['delete'], [
                 'class' => 'btn btn-sm btn-danger',
                 'data' => [
                     'confirm' => 'Jesteś pewien, że chcesz odmówić to zamówienie?',
@@ -84,13 +84,8 @@ $formatter = \Yii::$app->formatter;
 
                 ],
             ]) : '');
-            $edit = ($userName == $order->user['username'] ? Html::a('edytuj', ['edit'], [
+            $edit = ($userId === $order->userId ? Html::a('edytuj', ['/order/edit', 'id' => $order->id], [
                 'class' => 'btn btn-sm btn-secondary',
-                'data' => [
-                    'method' => 'post',
-                    'params' => ['name' => Yii::$app->user->identity->username, 'id' => $order->id],
-
-                ]
             ]) : '');
             ?>
             <div id="panelRestaurant<?= $restaurantId ?>" class="collapse show" data-parent="#accordionOrders">
