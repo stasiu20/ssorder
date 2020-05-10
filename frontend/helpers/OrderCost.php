@@ -3,6 +3,7 @@
 namespace frontend\helpers;
 
 use common\models\Order;
+use Money\Money;
 
 class OrderCost
 {
@@ -18,19 +19,9 @@ class OrderCost
             return;
         }
         $cost = $order->getPriceWithPack();
-        $deliveryCost = round(
-            $order->restaurants->delivery_price / $numOfOrders,
-            2,
-            PHP_ROUND_HALF_DOWN
-        );
-        if ($numOfOrders == $index + 1) {
-            $sumPreviousDeliveryCost = round(
-                $deliveryCost * ($numOfOrders - 1),
-                2,
-                PHP_ROUND_HALF_DOWN
-            );
-            $deliveryCost = $order->restaurants->delivery_price - $sumPreviousDeliveryCost;
-        }
-        return $cost + $deliveryCost;
+
+        $total = Money::PLN(round($order->restaurants->delivery_price * 100));
+        $allocation = $total->allocateTo($numOfOrders);
+        return $cost + ($allocation[$index]->getAmount()) / 100;
     }
 }

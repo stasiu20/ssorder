@@ -232,11 +232,7 @@ class OrderController extends Controller
         $count = count($orders);
         for ($i = 0; $i < $count; $i++) {
             $order = $orders[$i];
-            $order->price = $order->getPrice();
-            $order->status = Order::STATUS_REALIZED;
-            if (null === $order->realizedBy) {
-                $order->realizedBy = Yii::$app->user->identity->id;
-            }
+            $order->realizeOrder(Yii::$app->user->identity->id);
             $order->total_price = OrderCost::calculateOrderCost($order, $count, $i);
             $order->save();
         }

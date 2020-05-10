@@ -168,6 +168,15 @@ class Order extends \yii\db\ActiveRecord
         return $this->status == self::STATUS_REALIZED;
     }
 
+    public function realizeOrder(int $realizedByIfNotSet): void
+    {
+        $this->price = $this->getPrice();
+        $this->status = self::STATUS_REALIZED;
+        if (null === $this->realizedBy) {
+            $this->realizedBy = $realizedByIfNotSet;
+        }
+    }
+
     public function getPriceWithPack(): float
     {
         return 0.0 + $this->getPrice() + $this->restaurants->pack_price;

@@ -48,7 +48,8 @@
         "endclothing/prometheus_client_php": "^1.0",
         "yiisoft/yii2-bootstrap4": "^2.0",
         "tightenco/collect": "^7.9",
-        "laminas/laminas-diagnostics": "^1.6"
+        "laminas/laminas-diagnostics": "^1.6",
+        "moneyphp/money": "^3.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
