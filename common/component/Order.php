@@ -10,10 +10,10 @@ class Order extends Component
 {
     /**
      * @param \common\models\Order $order
-     * @param string|OrderSource $source
+     * @param OrderSource $source
      * @return bool
      */
-    public function addOrder(\common\models\Order $order, $source)
+    public function addOrder(\common\models\Order $order, OrderSource $source)
     {
         $result = $order->save();
         if (false === $result) {

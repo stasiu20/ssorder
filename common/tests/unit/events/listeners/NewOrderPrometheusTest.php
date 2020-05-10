@@ -38,7 +38,7 @@ class NewOrderPrometheusTest extends Unit
 
         $orderComponent->trigger(
             NewOrderEvent::EVENT_NEW_ORDER,
-            NewOrderEvent::factoryFromOrder($order, OrderSource::WEB)
+            NewOrderEvent::factoryFromOrder($order, OrderSource::WEB())
         );
         $this->assertCount(1, $collectorRegistry->getMetricFamilySamples());
         $this->assertCount(1, $collectorRegistry->getMetricFamilySamples()[0]->getSamples());

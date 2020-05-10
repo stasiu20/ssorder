@@ -105,7 +105,7 @@ class OrderController extends Controller
 
             /** @var \common\component\Order $orderComponent */
             $orderComponent = Yii::$app->order;
-            if ($orderComponent->addOrder($order, OrderSource::WEB)) {
+            if ($orderComponent->addOrder($order, OrderSource::WEB())) {
                 return $this->redirect(['index']);
             }
         }

@@ -49,7 +49,8 @@
         "yiisoft/yii2-bootstrap4": "^2.0",
         "tightenco/collect": "^7.9",
         "laminas/laminas-diagnostics": "^1.6",
-        "moneyphp/money": "^3.3"
+        "moneyphp/money": "^3.3",
+        "myclabs/php-enum": "^1.7"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -72,7 +73,8 @@
         "mmo/faker-images": "^0.1.0",
         "fzaninotto/faker": "^1.9",
         "zircote/swagger-php": "^3.0",
-        "swagger-api/swagger-ui": "^3.25"
+        "swagger-api/swagger-ui": "^3.25",
+        "timeweb/phpstan-enum": "^2.2"
     },
     "config": {
         "process-timeout": 1800,
