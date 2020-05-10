@@ -31,6 +31,6 @@ class SSEOrderMediator
 
     public function newOrder(NewOrderEvent $event): void
     {
-        $this->_redis->publish('sse', $event->getTextMessage());
+        $this->_redis->publish('sse', str_replace([':hamburger:',  ':hotdog:'], [''], $event->getTextMessage()));
     }
 }
