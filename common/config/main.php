@@ -54,7 +54,32 @@ return [
                     $collectorRegistry,
                     $params['namespace']
                 );
-            }, ['namespace' => $params['prometheus.namespace']]]
+            }, ['namespace' => $params['prometheus.namespace']]],
+            \Laminas\Diagnostics\Runner\Runner::class => function (Container $container, $params, $config) {
+                $runner = new \Laminas\Diagnostics\Runner\Runner();
+                $runner->addCheck(new \Laminas\Diagnostics\Check\GuzzleHttpService(
+                    getenv('S3CLIENT_ENDPOINT'),
+                    [],
+                    [],
+                    403
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\GuzzleHttpService(
+                    getenv('ROCKET_CHAT_ENDPOINT')
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\PhpFlag(['expose_php'], false));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\Redis(
+                    getenv('REDIS_HOST'),
+                    getenv('REDIS_PORT'),
+                    false
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\PDOCheck(
+                    getenv('DB_DSN'),
+                    getenv('DB_USERNAME'),
+                    getenv('DB_PASSWORD')
+                ));
+
+                return $runner;
+            },
         ]
     ],
     'components' => [
