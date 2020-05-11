@@ -28,7 +28,6 @@ class RestaurantsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['delete', 'update', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
