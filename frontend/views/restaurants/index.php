@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($restaurants as $restaurant): ?>
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                                     <?php if ($restaurant instanceof \frontend\models\Restaurants): ?>
-                                        <div class="app-card mb-4">
+                                        <div class="app-card mb-5">
                                             <div class="app-card__side app-card__side--front">
                                                 <div class="app-card__header">
                                                     <img class="app-card__img" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" alt="<?= $restaurant->restaurantName ?>" />
@@ -50,6 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                 <span><?= $restaurant->pack_price ?></span>
                                                             </div>
                                                         </li>
+                                                    </ul>
+                                                    <button class="app-card__show-more btn btn-block btn-secondary">Szczegóły</button>
                                                 </div>
                                             </div>
                                             <div class="app-card__side app-card__side--back text-center">

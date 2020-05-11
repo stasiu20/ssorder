@@ -1,4 +1,4 @@
-$card-height: 360px;
+$card-height: 400px;
 
 .app-card {
     position: relative;
@@ -27,6 +27,15 @@ $card-height: 360px;
             text-transform: uppercase;
             padding: 0.2rem 0.4rem;
             background-image: linear-gradient(to right, orange, orangered);
+        }
+    }
+
+    &__show-more {
+        display: none;
+        text-transform: uppercase;
+
+        @media screen and (hover: none) {
+            display: block;
         }
     }
 
