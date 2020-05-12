@@ -17,10 +17,12 @@ A web application created by intern. Currently develop after hours as an opensou
 * JSON REST API (JWT Token, postman/newman tests)
 * Pair programming
 * React.js
-* Redis Pub/Sub and SSE
+* Redis Pub/Sub, SSE and queue
 * Customised Bootstrap 4
 * OpenAPI to describe REST API
 * Deploy by Docker
+* Checking status of third party services (diagnostic tests)
+* Prometheus metrics
 
 ## Setup
 
