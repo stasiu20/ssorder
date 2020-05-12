@@ -1,5 +1,6 @@
 <?php
 
+use common\behaviors\PrometheusMemoryBehavior;
 use yii\bootstrap4\LinkPager;
 use yii\web\JsonParser;
 use Monolog\Logger;
@@ -258,4 +259,9 @@ return [
         'namespace' => $params['prometheus.namespace'],
         'collectorRegistry' => \Prometheus\CollectorRegistry::class
     ],
+    'as metrics' => [
+        'class' => \mmo\yii2\filters\PrometheusWebMetrics::class,
+        'namespace' => 'ssorder2',
+        'collectorRegistry' => \Prometheus\CollectorRegistry::class,
+    ]
 ];

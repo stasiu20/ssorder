@@ -1339,7 +1339,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/yii2-utils",
-                "reference": "f90ecbce2596b2b28f0faf4d3faefaf1af388d00"
+                "reference": "5ed3a111add7cb584365751b75d9ac917219fcaf"
             },
             "require": {
                 "endclothing/prometheus_client_php": "^1.0",
@@ -1377,7 +1377,7 @@
                 }
             ],
             "description": "A collection of extensions for Yii Framework 2.0",
-            "time": "2020-05-10T07:12:51+00:00"
+            "time": "2020-05-11T11:11:27+00:00"
         },
         {
             "name": "moneyphp/money",
