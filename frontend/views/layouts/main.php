@@ -18,6 +18,7 @@ use common\widgets\Alert;
 
 AppAsset::register($this);
 \frontend\assets\WebpackAsset::register($this);
+\frontend\helpers\GoogleAnalyticsHelper::registerJs();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

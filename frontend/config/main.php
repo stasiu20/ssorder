@@ -56,7 +56,6 @@ return [
         } else {
             \Yii::$app->view->params['appVersion'] = new AppVersion([]);
         }
-        \frontend\helpers\GoogleAnalyticsHelper::registerJs();
     }],
     'modules' => [
         'apiV1' => [
