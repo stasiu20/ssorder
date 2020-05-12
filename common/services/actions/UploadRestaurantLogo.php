@@ -34,7 +34,7 @@ class UploadRestaurantLogo
             );
             if (!empty($oldImgUrl)) {
                 $this->_fileService->deleteFile(
-                    FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url)
+                    FileServiceViewHelper::getRestaurantImageKey($oldImgUrl)
                 );
             }
         }
