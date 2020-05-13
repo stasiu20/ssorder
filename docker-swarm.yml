@@ -30,7 +30,7 @@ services:
   minio:
     image: minio/minio:RELEASE.2019-08-21T19-40-07Z
     volumes:
-      - $PROD_SSORDER_PATH/.runtime/minio:/data
+      - minio:/data
     env_file:
       - .env
     command: server /data
@@ -51,22 +51,26 @@ services:
   mysql:
     image: mysql:5.6
     volumes:
-      - $PROD_SSORDER_PATH/.runtime/mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
     env_file:
       - .env
-    ports:
-      - "3306:3306"
   redis:
     image: redis:5.0-alpine
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - $PROD_SSORDER_PATH/.runtime/redis:/data
+      - redis:/data
   scheduler:
     image: registry.sensilabs.pl/sensilabs/ssorder/scheduler
     env_file:
       - .env
     depends_on:
       - mysql
+
+volumes:
+  minio:
+  mysql:
+  redis:
+
 networks:
   traefik:
     external: true
