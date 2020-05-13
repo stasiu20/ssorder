@@ -66,5 +66,5 @@ RUN echo -e "expose_php=0\n" | tee /usr/local/etc/php/conf.d/ssorder.ini && \
 COPY --from=build /artifacts/ /artifacts
 RUN cp -rv /artifacts/* /
 
-FROM php:7.3-apache
+FROM intermediate
 COPY --chown=www-data:www-data ./ /app
