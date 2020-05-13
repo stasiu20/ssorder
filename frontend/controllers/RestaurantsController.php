@@ -2,24 +2,24 @@
 
 namespace frontend\controllers;
 
-use common\enums\BucketEnum;
 use common\services\FileService;
 use frontend\helpers\FileServiceViewHelper;
-use Yii;
+use frontend\models\Category;
+use frontend\models\Imagesmenu;
+use frontend\models\Menu;
 use frontend\models\Restaurants;
-use frontend\models\RestaurantsSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\UploadedFile;
 
 /**
  * RestaurantsController implements the CRUD actions for Restaurants model.
  */
 class RestaurantsController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -28,15 +28,8 @@ class RestaurantsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'delete', 'update', 'create'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'update', 'delete', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,30 +44,42 @@ class RestaurantsController extends Controller
         ];
     }
 
-    /**
-     * Lists all Restaurants models.
-     * @return mixed
-     */
     public function actionIndex()
     {
-        $searchModel = new RestaurantsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $query = Restaurants::findActiveRestaurants();
+        $restaurants = $query->orderBy('restaurantName')->all();
+        $categorys = Category::findActive()->all();
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'restaurants' => $restaurants,
+            'categorys' => $categorys,
         ]);
     }
 
     /**
-     * Displays a single Restaurants model.
-     * @param integer $id
-     * @return mixed
+     * @param $id int
+     * @return string
      */
-    public function actionView($id)
+    public function actionDetails($id)
     {
-        return $this->render('view', [
-                    'model' => $this->findModel($id),
+        $restaurant = $this->findModel($id);
+        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
+        $menu = $restaurant->menu;
+        $restaurants = Restaurants::find()->all();
+        $model = new Imagesmenu();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Menu::find()->where(['restaurantId' => $id])->andWhere(['deletedAt' => null]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('restaurant', [
+            'restaurant' => $restaurant,
+            'menu' => $menu,
+            'dataProvider' => $dataProvider,
+            'restaurants' => $restaurants,
+            'model' => $model,
+            'imagesMenu' => $imagesMenu,
         ]);
     }
 
@@ -86,14 +91,15 @@ class RestaurantsController extends Controller
     public function actionCreate()
     {
         $model = new Restaurants();
+        $model->scenario = Restaurants::SCENARIO_UPDATE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-            ]);
+            return $this->redirect(['restaurants/update', 'id' => $model->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -104,23 +110,17 @@ class RestaurantsController extends Controller
      */
     public function actionUpdate($id)
     {
-
         $model = $this->findModel($id);
-        $model->scenario = 'update';
+        $model->scenario = Restaurants::SCENARIO_UPDATE;
         $model->load(Yii::$app->request->post());
-//        var_dump($model);die;
-
         $model->validate();
-//    var_dump($model->validate(), $model->errors);die;
         $model->save();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['site/restaurant', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                        'model' => $model,
-            ]);
+            return $this->redirect(['restaurants/details', 'id' => $model->id]);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -140,45 +140,35 @@ class RestaurantsController extends Controller
         $fileService = Yii::$container->get(FileService::class);
         /** @var  $imgs */
         $imgs = $restaurant->imagesmenu;
-
         foreach ($imgs as $img) {
             $fileService->deleteFile(FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url));
             $img->softDelete();
         }
         $fileService->deleteFile(FileServiceViewHelper::getRestaurantImageKey($restaurant->img_url));
         $restaurant->softDelete();
-        return $this->redirect(['site/index']);
+        return $this->redirect(['restaurants/index']);
     }
 
     /**
-     * @return string|\yii\web\Response
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\di\NotInstantiableException
+     * @param $id int Image id
+     * @return \yii\web\Response
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionUpload()
+    public function actionDeleteImage(int $id)
     {
-        $model = new Restaurants();
-        $model->scenario = 'upload';
-        $model->load(\Yii::$app->request->post());
-
-        if (Yii::$app->request->isPost) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $key = $model->getTmpFileKey();
-            $model->img_url = $key;
-            if ($model->validate()) {
-                /** @var FileService $fileService */
-                $fileService = Yii::$container->get(FileService::class);
-                $fileService->storeFile(
-                    BucketEnum::RESTAURANT . '/' . $key,
-                    $model->imageFile->tempName
-                );
-                $model->save(false);
-                return $this->redirect(['index']);
-            }
+        $img = Imagesmenu::findOne($id);
+        if (!$img) {
+            throw new NotFoundHttpException();
         }
 
-        return $this->render('upload', ['model' => $model,
-        ]);
+        $img->delete();
+        /** @var FileService $fileService */
+        $fileService = Yii::$container->get(FileService::class);
+        $fileService->deleteFile(
+            FileServiceViewHelper::getMenuImageKey($img->imagesMenu_url)
+        );
+        return $this->redirect(['restaurants/details', 'id' => $img->restaurantId]);
     }
 
     /**
@@ -192,8 +182,7 @@ class RestaurantsController extends Controller
     {
         if (($model = Restaurants::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

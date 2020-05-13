@@ -1,7 +1,12 @@
 version: '3.4'
 services:
     ssorder:
-        build: frontend
+        build:
+            context: frontend
+            dockerfile: Dockerfile
+            target: intermediate
+            args:
+                - WITH_XDEBUG=true
         volumes:
             - ./:/app
         depends_on:
@@ -36,7 +41,7 @@ services:
     mysql:
         image: mysql:5.6
         volumes:
-            - .runtime/mysqldata:/var/lib/mysql
+            - mysql:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: $DB_DATABASE_NAME
@@ -48,7 +53,7 @@ services:
         image: redis:5.0-alpine
         command: ["redis-server", "--appendonly", "yes"]
         volumes:
-            - .runtime/redis:/data
+            - redis:/data
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.8
         links:
@@ -74,7 +79,7 @@ services:
     minio:
         image: minio/minio:RELEASE.2019-08-21T19-40-07Z
         volumes:
-          - .runtime/minio:/data
+          - minio:/data
         labels:
             traefik.port: "9000"
             traefik.frontend.rule: "Host:minio.lvh.me"
@@ -91,7 +96,7 @@ services:
     rocketchat:
         image: rocketchat/rocket.chat:0.70.2 # upgrade to 0.70.4
         volumes:
-            - .runtime/uploads:/app/uploads
+            - rocketchat-uploads:/app/uploads
         environment:
             - PORT=3000
             - ROOT_URL=${ROCKETCHAT_URL:-http://localhost:3000}
@@ -119,7 +124,7 @@ services:
     mongo:
         image: mongo:3.2
         volumes:
-            - .runtime/data/db:/data/db
+            - mongodb:/data/db
             #- ./data/dump:/dump
         command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
         labels:
@@ -189,7 +194,7 @@ services:
             - ssorder
         volumes:
             - ./provision/prometheus.yml:/etc/prometheus/prometheus.yml
-            - ./runtime/prometheus:/prometheus
+            - prometheus-tsdb:/prometheus
         labels:
             traefik.port: "9090"
             traefik.backend: "prometheus"
@@ -214,3 +219,11 @@ services:
             traefik.port: "3000"
             traefik.backend: "grafana"
             traefik.frontend.rule: "Host: grafana.lvh.me"
+
+volumes:
+    mysql:
+    redis:
+    minio:
+    rocketchat-uploads:
+    mongodb:
+    prometheus-tsdb:

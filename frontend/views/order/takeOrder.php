@@ -22,7 +22,7 @@ OrderRealiseAsset::register($this);
 ?>
 
 <div class="d-flex flex-row">
-    <div class ="img-restaurant"><img class ="img-circle" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
+    <div><img alt="restaurant logo" class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
     <div class="ml-4">
         <h6><b>Info</b></h6>
         <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
@@ -36,10 +36,10 @@ OrderRealiseAsset::register($this);
     return [
         'id' => $imageMenu->id,
         'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
-        'deleteUrl' => Url::toRoute(['site/image', 'id' => $imageMenu->restaurantId, 'url' => $imageMenu->imagesMenu_url])
+        'deleteUrl' => Url::toRoute(['restaurants/delete-image', 'id' => $imageMenu->id])
     ];
 }, $imagesMenu); ?>
-<div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery" class="menuImg"></div>
+<div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery"></div>
 <br />
 
 <?=
@@ -57,7 +57,7 @@ GridView::widget([
                 $foodName = $data->menu->foodName;
                 return "$foodName";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
         ],
 //            'foodInfo',
         [ 'attribute' => 'foodInfo',
@@ -67,7 +67,7 @@ GridView::widget([
                 $foodInfo = $data->menu->foodInfo;
                 return "$foodInfo";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
         ],
         'uwagi',
         [
@@ -115,22 +115,6 @@ GridView::widget([
             ],
         ]);
 ?>
-        <div style="float: right">
-        <?= Html::a('Zrealizuj', ["order-completed?id=$restaurant->id"], ['class' => 'btn btn-primary'], ['title' => 'zamów',]); ?>
+<div class="text-right">
+    <?= Html::a('Zrealizuj', ["order-completed?id=$restaurant->id"], ['class' => 'btn btn-primary'], ['title' => 'zamów',]); ?>
 </div>
-
-
-<!--['class' => 'yii\grid\ActionColumn',
-            'template' => '{zrealizuj}',
-            'buttons' => [
-                'zrealizuj' => function($url, $restaurant) {
-                    if ($restaurant->status === 0) {
-                        //TO DOO action w kontrolerze do zmiany statusu
-                        return Html::a('Zrealizuj', ["restaurant"], ['class' => 'btn btn-primary'], ['title' => 'zamów',
-                        ]);
-                    }
-                },
-                    ],
-                    'contentOptions' => ['class' => 'text-center',
-                    ],
-                ],-->

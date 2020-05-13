@@ -13,15 +13,15 @@ class NewOrderEvent extends Event
     /** @var Order */
     public $order;
 
-    /** @var OrderSource|string */
+    /** @var OrderSource */
     public $source;
 
     /**
      * @param Order $order
-     * @param string|OrderSource $source
+     * @param OrderSource $source
      * @return NewOrderEvent
      */
-    public static function factoryFromOrder(Order $order, $source): NewOrderEvent
+    public static function factoryFromOrder(Order $order, OrderSource $source): NewOrderEvent
     {
         $obj = new static();
         $obj->order = $order;

@@ -4,13 +4,28 @@ namespace common\events\listeners;
 
 use common\component\Order;
 use common\events\NewOrderEvent;
-use Prometheus\CollectorRegistry;
+use common\services\SSOrderMetrics;
 
 class NewOrderPrometheus
 {
+    /**
+     * @var Order
+     */
+    private $_order;
+    /**
+     * @var SSOrderMetrics
+     */
+    private $_metrics;
+
+    public function __construct(Order $order, SSOrderMetrics $metrics)
+    {
+        $this->_order = $order;
+        $this->_metrics = $metrics;
+    }
+
     public function mediate(): void
     {
-        $this->getOrderComponent()->on(
+        $this->_order->on(
             NewOrderEvent::EVENT_NEW_ORDER,
             [$this, 'newOrder']
         );
@@ -18,32 +33,6 @@ class NewOrderPrometheus
 
     public function newOrder(NewOrderEvent $event): void
     {
-        $this->getCollectorRegistry()
-            ->getOrRegisterCounter(
-                $this->getNamespace(),
-                'orders_total',
-                'Counter of orders',
-                ['source']
-            )->inc([$event->source]);
-    }
-
-    protected function getCollectorRegistry(): CollectorRegistry
-    {
-        /** @var CollectorRegistry $collectorRegistry */
-        $collectorRegistry = \Yii::$container->get(CollectorRegistry::class);
-        return $collectorRegistry;
-    }
-
-    /**
-     * @return Order
-     */
-    protected function getOrderComponent(): Order
-    {
-        return \Yii::$app->order;
-    }
-
-    protected function getNamespace(): string
-    {
-        return \Yii::$app->params['prometheus.namespace'];
+        $this->_metrics->incrementOrderCounter($event->source);
     }
 }

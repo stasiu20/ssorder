@@ -38,6 +38,7 @@ phpunit.phar
 /frontend/runtime/cache
 /frontend/runtime/debug
 /frontend/runtime/gii-2.0.10
+/frontend/tests/docs/
 
 /.runtime/
 /.env

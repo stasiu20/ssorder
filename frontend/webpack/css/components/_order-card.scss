@@ -1,0 +1,45 @@
+.order-card {
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &__buttons {
+        &:empty {
+            display: none;
+        }
+
+        & > *:not(:last-child) {
+            margin-right: 0.6rem;
+        }
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__row:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+
+    &__label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+
+    &__value {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    &__remarks {
+        font-size: 0.85rem;
+    }
+}

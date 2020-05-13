@@ -2,12 +2,12 @@
 
 use yii\helpers\Html;
 use frontend\models\Restaurants;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $order \common\models\Order */
-$url = 'site/restaurant?id=' . $order->restaurants->id;
 $this->title = 'Zamówienie: ' . $order->menu->foodName;
-$this->params['breadcrumbs'][] = ['label' => $order->restaurants->restaurantName, 'url' => [$url]];
+$this->params['breadcrumbs'][] = ['label' => $order->restaurants->restaurantName, 'url' => Url::toRoute(['restaurants/details', 'id' => $order->restaurants->id])];
 
 $this->params['breadcrumbs'][] = 'Uwagi';
 ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Uwagi';
             $this->render('_formUwagi', [
                 'model' => $order->restaurants,
                 'order' => $order,
-                'action' => \yii\helpers\Url::to(['/order/uwagi', 'id' => $order->menu->id])
+                'action' => Url::to(['/order/uwagi', 'id' => $order->menu->id])
             ])
                         ?>
         </div>

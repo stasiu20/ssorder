@@ -2,12 +2,12 @@
 
 use frontend\models\Menu;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model Menu */
-$url = 'site/restaurant?id=' . $model->restaurant->id;
 $this->title = 'Zamówienie: ' . $model->foodName;
-$this->params['breadcrumbs'][] = ['label' => $model->restaurant->restaurantName, 'url' => [$url]];
+$this->params['breadcrumbs'][] = ['label' => $model->restaurant->restaurantName, 'url' => Url::toRoute(['restaurants/details', 'id' => $model->restaurant->id])];
 
 $this->params['breadcrumbs'][] = 'Uwagi';
 ?>

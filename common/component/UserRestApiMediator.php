@@ -36,7 +36,7 @@ class UserRestApiMediator
 
     public function getJWTTokenAfterLogin(UserEvent $event): void
     {
-        if ($this->isRequestForApiModule()) {
+        if ($this->isRequestForApiModule($event)) {
             return;
         }
 
@@ -49,7 +49,7 @@ class UserRestApiMediator
 
     public function deleteJWTTokenBeforeLogout(UserEvent $event): void
     {
-        if ($this->isRequestForApiModule()) {
+        if ($this->isRequestForApiModule($event)) {
             return;
         }
 
@@ -60,8 +60,17 @@ class UserRestApiMediator
         AccessTokenHelper::deleteToken($token);
     }
 
-    private function isRequestForApiModule(): bool
+    private function isRequestForApiModule(UserEvent $event): bool
     {
-        return \Yii::$app->controller->module instanceof ApiV1Module;
+        $controller = \Yii::$app->controller;
+        // jeden z paneli pakietu yii2-debug sprwadza czy uzytkownik jest zalogowany.
+        // Wyzwala sie akcja autologowania na podstawie cookie.
+        // Parsowanie requesta jeszcze sie nie odbylo.
+        // Nie mamy wiec modulu ani kontrolera skad przychodzi request.
+        // API nie korzysta z cookie wiec wiemy ze te logowanie przyszlo z web.
+        if (!$controller && $event->cookieBased) {
+            return false;
+        }
+        return $controller->module instanceof ApiV1Module;
     }
 }

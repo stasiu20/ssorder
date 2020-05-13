@@ -75,6 +75,20 @@ yarn:
     paths:
       - /home/php/.cache/yarn/v1
 
+diff-composer-packages:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - /pipeline/scripts/prev-file-content.rb $CI_PROJECT_DIR/.git composer.lock > /tmp/composer.lock.old || (test $? -eq 101 && exit 0)
+    - /pipeline/scripts/diff-composer.rb /tmp/composer.lock.old > /tmp/composer.old.diff
+    - /pipeline/scripts/diff-composer.rb composer.lock > /tmp/composer.diff
+    - cat /tmp/composer.old.diff
+    - cat /tmp/composer.diff
+    - diff -u /tmp/composer.old.diff /tmp/composer.diff || test $? -eq 1
+  only:
+    changes:
+      - composer.lock
+
 codestyle:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
@@ -396,21 +410,21 @@ docker:docs:
 docker:develop:
   extends: .docker
   script:
-      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:latest
+      - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:latest
   only:
     - develop
 
 docker:master:
   extends: .docker
   script:
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - master
 
 docker:rc:
   extends: .docker
   script:
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile.prod --destination $CI_REGISTRY_IMAGE:$VERSION
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
 
@@ -475,7 +489,7 @@ tag_release:
 
 deploy_production:
   stage: deploy
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: docker:19.03-dind
   environment:
     name: production
     url: https://ssorder.snlb.pl
@@ -483,23 +497,17 @@ deploy_production:
 #    - master
   when: manual
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'which ssh-agent || ( apk update && apk add openssh-client )'
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - echo $PROD_SSORDER_PATH
+    - TMP_PATH=$(mktemp -d)
     - echo "$PROD_CONFIG" > .env
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - ssh -p22 deployer@192.168.15.28 mkdir -p $PROD_SSORDER_PATH/.runtime/{mysql,minio,redis}
-    - scp -P22 -r .env docker-swarm.yml deployer@192.168.15.28:${PROD_SSORDER_PATH}/
-    - |
-      ssh -p22 deployer@192.168.15.28 << EOF
-        set -e
-        echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_SSORDER_PATH/config.json
-        env PROD_SSORDER_PATH=${PROD_SSORDER_PATH} docker --config $PROD_SSORDER_PATH stack deploy --compose-file $PROD_SSORDER_PATH/docker-swarm.yml --with-registry-auth ssorder-prod
-      EOF
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
+    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
     - >
       curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN
 
@@ -522,3 +530,13 @@ deploy_docs:
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
+
+check_ssl_cert:
+  stage: deploy
+  image: morawskim/pipeline-scripts
+  only:
+    - schedules
+  script:
+    - /pipeline/scripts/ssl-check.rb ssorder.snlb.pl
+    - /pipeline/scripts/ssl-check.rb developer.ssorder.snlb.pl
+    - /pipeline/scripts/ssl-check.rb cdn.ssorder.snlb.pl

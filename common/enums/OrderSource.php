@@ -2,8 +2,14 @@
 
 namespace common\enums;
 
-class OrderSource
+use MyCLabs\Enum\Enum;
+
+/**
+ * @method static OrderSource WEB()
+ * @method static OrderSource BOT()
+ */
+class OrderSource extends Enum
 {
-    const WEB = 'web';
-    const BOT = 'bot';
+    public const WEB = 'web';
+    public const BOT = 'bot';
 }

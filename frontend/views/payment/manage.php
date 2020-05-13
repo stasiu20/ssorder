@@ -3,13 +3,13 @@
 /** @var \frontend\models\OrdersSummary $summary  */
 
 $this->title = 'Zarządzanie wpłatami';
-$form = \yii\bootstrap\ActiveForm::begin();
+$form = \yii\bootstrap4\ActiveForm::begin();
 
 echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'summary' => '',
     'showFooter' => true,
-    'tableOptions' => ['class' => 'table  table-bordered table-hover'],
+    'tableOptions' => ['class' => 'table table-bordered table-hover payment-manage'],
     'columns' => [
         [
             'class' => 'yii\grid\SerialColumn',
@@ -23,7 +23,7 @@ echo \yii\grid\GridView::widget([
                 $foodName = $data->menu->foodName;
                 return "$foodName";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
             'footerOptions' => ['class' => 'no-right-border']
         ],
 //            'foodInfo',
@@ -34,7 +34,7 @@ echo \yii\grid\GridView::widget([
                 $foodInfo = $data->menu->foodInfo;
                 return "$foodInfo";
             },
-            'contentOptions' => ['class' => 'text-left'],
+            'contentOptions' => ['class' => 'text-left text-wrap'],
             'footerOptions' => ['class' => 'no-right-border']
         ],
         [
@@ -70,7 +70,7 @@ echo \yii\grid\GridView::widget([
             'name' => function (\common\models\Order $order) {
                 return sprintf('price[%d]', $order->id);
             },
-            'footer' => \yii\bootstrap\Html::submitButton('Zapisz', ['class' => 'btn btn-success']),
+            'footer' => \yii\bootstrap4\Html::submitButton('Zapisz', ['class' => 'btn btn-success']),
             'footerOptions' => ['class' => 'text-right']
         ],
         [
@@ -86,4 +86,4 @@ echo \yii\grid\GridView::widget([
     ],
 ]);
 
-\yii\bootstrap\ActiveForm::end();
+\yii\bootstrap4\ActiveForm::end();

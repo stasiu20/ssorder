@@ -2,33 +2,29 @@
 
 namespace frontend\controllers;
 
-use common\component\RocketChat;
 use common\enums\OrderSource;
 use common\events\BeforeRealizedOrdersEvent;
-use common\events\NewOrderEvent;
 use common\events\Orders;
 use common\events\RealizedOrdersEvent;
 use common\models\History;
+use common\models\Order;
 use common\models\OrderFilters;
 use common\models\OrderSearch;
+use common\repositories\OrderRepository;
 use frontend\helpers\OrderCost;
+use frontend\models\Imagesmenu;
+use frontend\models\Menu;
+use frontend\models\Restaurants;
 use frontend\services\OrderSummaryStatics;
+use Tightenco\Collect\Support\Collection;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\data\Sort;
+use yii\filters\AccessControl;
 use yii\validators\DateValidator;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use common\models\Order;
-use frontend\models\Menu;
-use yii\data\ActiveDataProvider;
-use yii\data\Sort;
-use yii\grid\ActionColumn;
-use frontend\models\Restaurants;
-use frontend\models\Imagesmenu;
 use yii\web\NotFoundHttpException;
 
 class OrderController extends Controller
@@ -36,24 +32,16 @@ class OrderController extends Controller
 
     public function behaviors()
     {
-
         return [
-                'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'index', 'upload', 'restaurant', 'delete', 'update', 'category', 'restaurant', 'view', 'create'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'upload', 'restaurant', 'update', 'delete', 'category', 'restaurant', 'view', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
-                ],
+            ],
         ];
     }
 
@@ -71,31 +59,16 @@ class OrderController extends Controller
         $sevenDaysAgo = $date->sub(new \DateInterval('P7D'));
         $sevenDaysFuture = $date->add(new \DateInterval('P7D'));
 
-        $sort = new Sort([
-            'attributes' => [
-                'restaurant' => [
-                    'asc' => ['restaurantId' => SORT_ASC],
-                    'desc' => ['restaurantId' => SORT_DESC],
-                    'default' => SORT_DESC,
-                    'label' => 'Restauracji',
-                ],
-            ],
-        ]);
-
-
         $filters = new OrderFilters();
         $filters->dateFrom = $date->format('Y-m-d');
         $filters->dateTo = $tomorrow->format('Y-m-d');
-        $model = OrderSearch::search($filters)
-                ->orderBy($sort->orders)
-                ->all();
 
-        $statics = new OrderSummaryStatics();
-        $summary = $statics->getStatics($model);
+        /** @var OrderRepository $orderRepository */
+        $orderRepository = Yii::$container->get(OrderRepository::class);
+        [$orders, $summary] = $orderRepository->ordersByRestaurantWithStats($filters);
 
         return $this->render('index', [
-            'model' => $model,
-            'sort' => $sort,
+            'orderCollection' => $orders,
             'date' => $date,
             'minDate' => \DateTime::createFromFormat('Y-m-d', '2000-01-01'),
             'today' => new \DateTime('now'),
@@ -103,7 +76,7 @@ class OrderController extends Controller
             'yesterday' => $yesterday,
             'sevenDaysAgo' => $sevenDaysAgo,
             'sevenDaysNext' => $sevenDaysFuture,
-            'summary' => $summary
+            'summary' => $summary,
         ]);
     }
 
@@ -124,7 +97,7 @@ class OrderController extends Controller
 
             /** @var \common\component\Order $orderComponent */
             $orderComponent = Yii::$app->order;
-            if ($orderComponent->addOrder($order, OrderSource::WEB)) {
+            if ($orderComponent->addOrder($order, OrderSource::WEB())) {
                 return $this->redirect(['index']);
             }
         }
@@ -136,11 +109,7 @@ class OrderController extends Controller
 
     public function actionAgain($id)
     {
-        $order = Order::findOne($id);
-        if (null === $order) {
-            throw new NotFoundHttpException('Order not exist');
-        }
-
+        $order = $this->findOrder($id);
         $order = $order->cloneOrder();
 
         return $this->render('again', [
@@ -162,42 +131,49 @@ class OrderController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    protected function findOrder($id): Order
+    {
+        if (($model = Order::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     public function actionDelete()
     {
         if (null !== Yii::$app->request->post('id')) {
-            $id= Yii::$app->request->post('id');
-            $model = Order::findOne($id);
+            $id = Yii::$app->request->post('id');
+            $model = $this->findOrder($id);
+            if (!$model->isCreatedByUser(Yii::$app->user->identity->id) || $model->isRealized()) {
+                throw new NotFoundHttpException();
+            }
             $model->softDelete();
             return $this->redirect(['index']);
         }
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
+        $order = $this->findOrder($id);
+        if (!$order->isCreatedByUser(Yii::$app->user->identity->id) || $order->isRealized()) {
+            throw new NotFoundHttpException();
+        }
+        $model = Menu::findOne($order->foodId);
 
-        if (Yii::$app->request->isPost && Yii::$app->request->post('name')==Yii::$app->user->identity->username) {
-            $id= Yii::$app->request->post('id');
-            $order = Order::findOne($id);
-            $model = Menu::findOne($order->foodId);
-
-            return $this->render('uwagi', [
-                    'model' => $model,
-                    'order' => $order
-            ]);
-        } else if (null !== Yii::$app->request->post('Order')) {
-            $id= Yii::$app->request->post('Order')['orderId'];
-            $order = Order::findOne($id);
+        if (Yii::$app->request->isPost) {
             $order->load(Yii::$app->request->post());
             $orderUwagi = strip_tags($order->uwagi);
             $order->uwagi = $orderUwagi;
-            $order->update();
-            //$order->save();
             if ($order->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['order/index']);
             }
-        } else {
-            return $this->redirect(['index']);
         }
+
+        return $this->render('uwagi', [
+            'model' => $model,
+            'order' => $order
+        ]);
     }
 
     public function actionRestaurant($id)
@@ -248,11 +224,7 @@ class OrderController extends Controller
         $count = count($orders);
         for ($i = 0; $i < $count; $i++) {
             $order = $orders[$i];
-            $order->price = $order->getPrice();
-            $order->status = Order::STATUS_REALIZED;
-            if (null === $order->realizedBy) {
-                $order->realizedBy = Yii::$app->user->identity->id;
-            }
+            $order->realizeOrder(Yii::$app->user->identity->id);
             $order->total_price = OrderCost::calculateOrderCost($order, $count, $i);
             $order->save();
         }

@@ -1,5 +1,7 @@
 <?php
 
+use common\behaviors\PrometheusMemoryBehavior;
+use yii\bootstrap4\LinkPager;
 use yii\web\JsonParser;
 use Monolog\Logger;
 use samdark\log\PsrTarget;
@@ -21,6 +23,10 @@ return [
     'language' => 'pl-PL',
     'name' => 'SSOrder',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'restaurants',
+    'aliases' => [
+        '@npm'   => '@vendor/npm-asset',
+    ],
     'bootstrap' => ['log', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
         $mediator->mediate();
@@ -31,7 +37,14 @@ return [
         $mediator = new \common\component\UserRestApiMediator();
         $mediator->mediate();
 
-        $mediator = new \common\events\listeners\NewOrderPrometheus();
+        /** @var \common\component\Order $order */
+        $order = \Yii::$app->order;
+        /** @var \common\services\SSOrderMetrics $metrics */
+        $metrics = Yii::$container->get(\common\services\SSOrderMetrics::class);
+        $mediator = new \common\events\listeners\NewOrderPrometheus(
+            $order,
+            $metrics
+        );
         $mediator->mediate();
 
         /** @var \common\component\SSEOrderMediator $mediator */
@@ -44,7 +57,6 @@ return [
         } else {
             \Yii::$app->view->params['appVersion'] = new AppVersion([]);
         }
-        \frontend\helpers\GoogleAnalyticsHelper::registerJs();
     }],
     'modules' => [
         'apiV1' => [
@@ -68,6 +80,11 @@ return [
 
                 return $analytics;
             },
+            yii\grid\GridView::class => [
+                'pager' => [
+                    'class' => LinkPager::class,
+                ],
+            ],
         ]
     ],
     'controllerNamespace' => 'frontend\controllers',
@@ -116,10 +133,118 @@ return [
             'errorAction' => 'site/error',
         ],
 
+        'assetManager' => [
+            'bundles' => [
+                \yii\bootstrap\BootstrapAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                ],
+                \yii\bootstrap\BootstrapPluginAsset::class => [
+                    'sourcePath' => null,
+                    'js' => [],
+                ],
+                \yii\bootstrap4\BootstrapAsset::class => [
+                    'sourcePath' => null,
+                    'css' => [],
+                ],
+                \yii\bootstrap4\BootstrapPluginAsset::class => [
+                    'sourcePath' => null,
+                    'js' => [],
+                ],
+//                \yii\web\JqueryAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'depends' => [
+//                        \app\assets\AppAsset::class
+//                    ]
+//                ],
+//                \yii\web\YiiAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'depends' => [
+//                        \app\assets\AppAsset::class
+//                    ]
+//                ],
+//                \yii\grid\GridViewAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\captcha\CaptchaAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                ],
+//                \yii\widgets\MaskedInputAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\widgets\ActiveFormAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\widgets\PjaxAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                ],
+//                \yii\validators\PunycodeAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\validators\ValidationAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ],
+//                \yii\gii\GiiAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\DebugAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => [],
+//                    'depends' => [
+//                        \app\assets\Yii2DebugAsset::class
+//                    ]
+//                ],
+//                \yii\debug\TimelineAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\DbAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => [],
+//                    'css' => []
+//                ],
+//                \yii\debug\UserswitchAsset::class => [
+//                    'sourcePath' => null,
+//                    'js' => []
+//                ]
+            ],
+        ],
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [//'/<id:\d+>' => 'site/index',
+            'rules' => [
+                'restaurants' => 'restaurants/index',
+                [
+                    'pattern' => 'restaurants/<id:\d+>/update',
+                    'route' => 'restaurants/update',
+                ],
+                [
+                    'pattern' => 'restaurants/<id:\d+>',
+                    'route' => 'restaurants/details',
+                ],
+                'restaurants/add' => 'restaurants/create',
+                'images/<id:\d+>/delete' => 'restaurants/delete-image',
+
+                'menu/<id:\d+>' => 'menu/view',
+                'menu/<id:\d+>/delete' => 'menu/delete',
+                'menu/<id:\d+>/update' => 'menu/update',
+                'restaurants/<id:\d+>/add-food' => 'menu/create',
+
+                //'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 'v1/restaurants' => 'apiV1/restaurants/index',
@@ -134,4 +259,9 @@ return [
         'namespace' => $params['prometheus.namespace'],
         'collectorRegistry' => \Prometheus\CollectorRegistry::class
     ],
+    'as metrics' => [
+        'class' => \mmo\yii2\filters\PrometheusWebMetrics::class,
+        'namespace' => 'ssorder2',
+        'collectorRegistry' => \Prometheus\CollectorRegistry::class,
+    ]
 ];

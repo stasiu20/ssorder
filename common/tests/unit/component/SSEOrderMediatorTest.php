@@ -43,6 +43,6 @@ class SSEOrderMediatorTest extends Unit
         $orderComponent = new Order();
         $mediator = new SSEOrderMediator($redisMock, $orderComponent);
         $mediator->mediate();
-        $orderComponent->addOrder($orderActiveRecordMock, OrderSource::WEB);
+        $orderComponent->addOrder($orderActiveRecordMock, OrderSource::WEB());
     }
 }

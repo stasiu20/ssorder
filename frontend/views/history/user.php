@@ -1,24 +1,29 @@
 <?php
+
+use yii\grid\ActionColumn;
+use yii\grid\DataColumn;
+use yii\grid\SerialColumn;
+use common\models\Order;
+
 /** @var $dataProvider \yii\data\DataProviderInterface */
 /** @var $searchModel \common\models\OrderFilters */
 
-use common\models\Order; ?>
-<?= \yii\grid\GridView::widget([
+echo \yii\grid\GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+        ['class' => SerialColumn::class],
         [
-            'class' => 'yii\grid\DataColumn',
+            'class' => DataColumn::class,
             'format' => 'html',
             'attribute' => 'restaurantId',
             'filter' => \frontend\models\Restaurants::restaurantsAsArray(),
             'value' => function (\common\models\Order $order) {
-                return \yii\helpers\Html::a($order->getRestaurantName(), \yii\helpers\Url::to(['site/restaurant', 'id' => $order->restaurantId]));
+                return \yii\helpers\Html::a($order->getRestaurantName(), \yii\helpers\Url::to(['restaurants/details', 'id' => $order->restaurantId]));
             }
         ],
         [
-            'class' => 'yii\grid\DataColumn',
+            'class' => DataColumn::class,
             'format' => 'text',
             'attribute' => 'foodName',
             'value' => function (\common\models\Order $order) {
@@ -26,7 +31,7 @@ use common\models\Order; ?>
             }
         ],
         [
-            'class' => 'yii\grid\DataColumn',
+            'class' => DataColumn::class,
             'attribute' => 'date',
             'filter' => \common\widgets\DateRangePicker::widget([
                 'model' => $searchModel,
@@ -38,22 +43,20 @@ use common\models\Order; ?>
             }
         ],
         [
-            'class' => 'yii\grid\DataColumn',
+            'class' => DataColumn::class,
             'format' => 'html',
             'attribute' => 'price',
             'value' => function (\common\models\Order $order) {
                 return Yii::$app->formatter->asCurrency($order->getPrice());
             }
         ],
-
-
         [
-            'class' => 'yii\grid\ActionColumn',
+            'class' => ActionColumn::class,
             'template' => '{again} {rating}',
             'buttons' => [
                 'again' => function ($url, $model, $key) {
                     return \yii\helpers\Html::a(
-                        ' <span class="glyphicon glyphicon-cutlery"></span>',
+                        ' <span class="material-icons">restaurant</span>',
                         \yii\helpers\Url::to(['/order/again', 'id' => $model->id]),
                         ['title' => 'Smakowało? Zamów raz jeszcze!']
                     );
@@ -64,7 +67,7 @@ use common\models\Order; ?>
                     }
 
                     return \yii\helpers\Html::a(
-                        ' <span class="glyphicon glyphicon-thumbs-up"></span>',
+                        ' <span class="material-icons">thumb_up</span>',
                         \yii\helpers\Url::to(['/rating/order', 'orderId' => $model->id]),
                         ['title' => 'Oceń!']
                     );

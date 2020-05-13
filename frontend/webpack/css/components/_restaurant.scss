@@ -1,0 +1,11 @@
+.restaurant-details {
+    &__summary {
+        color: $color-primary-light;
+        font-weight: 800;
+        font-size: 1.2rem;
+    }
+
+    &__logo {
+        max-height: 250px;
+    }
+}

@@ -41,7 +41,7 @@ class ReorderCommand extends BaseObject implements Command
                 try {
                     /** @var \common\component\Order $orderComponent */
                     $orderComponent = \Yii::$app->order;
-                    $orderComponent->addOrder($newOrder, OrderSource::BOT);
+                    $orderComponent->addOrder($newOrder, OrderSource::BOT());
                     return \Yii::$app->view->render('/rocket-chat/commands/reorder', ['newOrder' => $newOrder]);
                 } catch (\Exception $e) {
                     return \Yii::$app->view->render('/rocket-chat/partials/error', ['message' => 'Błąd zapisu']);

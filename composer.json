@@ -17,17 +17,17 @@
         {
             "type": "git",
             "url": "https://github.com/morawskim/yii2-utils"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
     ],
     "require": {
 		"php": ">=7.3.0",
         "yiisoft/yii2": "^2.0.15",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
 		"kartik-v/yii2-widget-datepicker": "@dev",
-		"2amigos/yii2-gallery-widget": "~1.0",
-		"2amigos/yii2-disqus-widget" : "~1.0",
-		"kartik-v/yii2-widget-fileinput": "@dev",
 		"borales/yii2-phone-input": "*",
         "kartik-v/yii2-date-range": "^1.6",
         "bt/rocketchat-php": "^1.1",
@@ -45,7 +45,12 @@
         "superbalist/php-pubsub-redis": "^2.0",
         "ext-json": "*",
         "yiisoft/yii2-queue": "^2.3",
-        "endclothing/prometheus_client_php": "^1.0"
+        "endclothing/prometheus_client_php": "^1.0",
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "tightenco/collect": "^7.9",
+        "laminas/laminas-diagnostics": "^1.6",
+        "moneyphp/money": "^3.3",
+        "myclabs/php-enum": "^1.7"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -68,7 +73,8 @@
         "mmo/faker-images": "^0.1.0",
         "fzaninotto/faker": "^1.9",
         "zircote/swagger-php": "^3.0",
-        "swagger-api/swagger-ui": "^3.25"
+        "swagger-api/swagger-ui": "^3.25",
+        "timeweb/phpstan-enum": "^2.2"
     },
     "config": {
         "process-timeout": 1800,
@@ -79,7 +85,7 @@
     },
     "extra": {
         "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
+            "npm-asset-library": "vendor/npm-asset",
             "bower-asset-library": "vendor/bower"
         }
     },

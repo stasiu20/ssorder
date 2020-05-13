@@ -1,17 +1,19 @@
-@import '../../web/css/bs4.css';
-@import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~react-image-lightbox/style.css';
+@import './abstracts/variables';
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/utilities/flex';
-@import '~bootstrap/scss/utilities/display';
-@import '~bootstrap/scss/utilities/spacing';
+@import './vendors/bootstrap';
+@import './vendors/icons';
+@import './vendors/react-components';
 
-@import '~material-icons/iconfont/material-icons';
-@import '~react-toastify/scss/main';
-
-.restaurant-details {
-    font-size: 150%;
-}
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/utils';
+@import 'layout/navbar';
+@import 'layout/footer';
+@import 'layout/page';
+@import './components/card';
+@import './components/order-card';
+@import './components/restaurant';
+@import './components/restaurant-gallery';
+@import './components/yii2-grid-view';
+@import './pages/home';
+@import './pages/payment-manage';

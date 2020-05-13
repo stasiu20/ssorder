@@ -8,6 +8,11 @@ use Aws\S3\S3Client;
 use common\services\FileService;
 use yii\di\Container;
 
+$params = array_merge(
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
+);
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'container' => [
@@ -41,6 +46,39 @@ return [
                     'persistent_connections' => false,
                     'password' => null,
                 ]));
+            },
+            \common\services\SSOrderMetrics::class => [function (Container $container, $params, $config) {
+                /** @var \Prometheus\CollectorRegistry $collectorRegistry */
+                $collectorRegistry = $container->get(\Prometheus\CollectorRegistry::class);
+                return new \common\services\SSOrderMetrics(
+                    $collectorRegistry,
+                    $params['namespace']
+                );
+            }, ['namespace' => $params['prometheus.namespace']]],
+            \Laminas\Diagnostics\Runner\Runner::class => function (Container $container, $params, $config) {
+                $runner = new \Laminas\Diagnostics\Runner\Runner();
+                $runner->addCheck(new \Laminas\Diagnostics\Check\GuzzleHttpService(
+                    getenv('S3CLIENT_ENDPOINT'),
+                    [],
+                    [],
+                    403
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\GuzzleHttpService(
+                    getenv('ROCKET_CHAT_ENDPOINT')
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\PhpFlag(['expose_php'], false));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\Redis(
+                    getenv('REDIS_HOST'),
+                    getenv('REDIS_PORT'),
+                    false
+                ));
+                $runner->addCheck(new \Laminas\Diagnostics\Check\PDOCheck(
+                    getenv('DB_DSN'),
+                    getenv('DB_USERNAME'),
+                    getenv('DB_PASSWORD')
+                ));
+
+                return $runner;
             },
         ]
     ],
