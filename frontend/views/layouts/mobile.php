@@ -42,7 +42,7 @@ AppAsset::register($this);
         </div>
     </nav>
 </header>
-<div class="container-fluid flex-grow-1">
+<div class="container-fluid flex-grow-1 mt-3">
     <?= $content ?>
     <div id="react-toastify"></div>
 </div>
