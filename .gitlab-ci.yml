@@ -509,7 +509,7 @@ deploy_production:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
     - >
-      curl -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' https://chat.sensilabs.pl/hooks/$PROD_ROCKET_CHAT_NOTIFY_TOKEN
+      DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
 
 deploy_docs:
   stage: deploy
