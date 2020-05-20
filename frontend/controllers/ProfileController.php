@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\User;
+use common\transformers\UserProfileTransformer;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -30,14 +31,12 @@ class ProfileController extends Controller
         /** @var User $user */
         $user = \Yii::$app->user->identity;
 
-        if (\Yii::$app->request->isPost) {
-            if ($user->load(\Yii::$app->request->post()) && $user->save()) {
-                \Yii::$app->getSession()->setFlash('success', ' Your Profile has been saved.');
-            }
-        }
+        /** @var UserProfileTransformer $transformer */
+        $transformer = \Yii::$container->get(UserProfileTransformer::class);
 
         return $this->render('index', [
-            'user' => $user
+            'user' => $user,
+            'userData' => $transformer->transform($user),
         ]);
     }
 }

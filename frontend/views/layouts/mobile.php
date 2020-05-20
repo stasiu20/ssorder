@@ -43,6 +43,7 @@ AppAsset::register($this);
     </nav>
 </header>
 <div class="container-fluid flex-grow-1 mt-3">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <?= $content ?>
     <div id="react-toastify"></div>
 </div>
