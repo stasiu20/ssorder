@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormikProps, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import FormFieldText from '../../core/components/formFieldText';
+import FormFieldText from '../../form/components/formFieldText';
 import { useAsync } from 'react-async';
 import { toast } from 'react-toastify';
 

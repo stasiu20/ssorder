@@ -17,7 +17,7 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'restaurantName')->textInput(); ?>
 
     <?= $form->field($model, 'tel_number')->widget(MaskedInput::className(), [
-        'mask' => ['29999-99-99', '999-999-999',],
+        'mask' => ['99 999 99 99', '999 999 999',],
     ]); ?>
 
     <?= $form->field($model, 'delivery_price')->widget(MaskedInput::className(), [

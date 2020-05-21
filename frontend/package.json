@@ -9,6 +9,7 @@
     "@babel/preset-react": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.8.0",
     "@symfony/webpack-encore": "^0.24.0",
+    "@types/cleave.js": "^1.4.2",
     "@types/jasmine": "^3.3.12",
     "@types/jquery": "^3.3.31",
     "@types/react": "^16.9.11",
@@ -65,10 +66,13 @@
   },
   "dependencies": {
     "@vaadin/vaadin-upload": "^4.3.0",
+    "cleave.js": "^1.6.0",
     "formik": "^2.1.4",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "react-async": "^10.0.1",
+    "reactstrap": "^8.4.1",
+    "reactstrap-formik": "^1.0.9",
     "yup": "^0.28.5"
   }
 }
