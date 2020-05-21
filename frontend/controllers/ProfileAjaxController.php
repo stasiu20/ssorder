@@ -4,9 +4,10 @@ namespace frontend\controllers;
 
 use common\models\User;
 use common\transformers\UserProfileTransformer;
-use yii\base\Controller;
+use yii\rest\Controller;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -28,6 +29,12 @@ class ProfileAjaxController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'verbFilter' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'update-profile' => ['POST'],
                 ],
             ],
         ];
