@@ -45,6 +45,7 @@ $(document).ready(function() {
         render(
             <SSOrderApp>
                 <RestaurantForm
+                    restaurantId={restaurantData['id'] || null}
                     categories={categories}
                     initValues={restaurantDataValues}
                 />

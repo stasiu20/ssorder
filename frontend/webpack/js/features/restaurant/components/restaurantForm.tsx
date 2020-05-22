@@ -22,6 +22,7 @@ interface Values {
 interface RestaurantFormProps {
     initValues: Values;
     categories: { [key: number]: string };
+    restaurantId: number | null;
 }
 
 const mapCategoryDictToOptions = (dict: {
@@ -51,7 +52,11 @@ const validationSchema = Yup.object<Partial<Values>>({
 });
 
 const submitForm = (
-    [values, setSubmitting]: [Values, (isSubmitting: boolean) => void],
+    [values, setSubmitting, restaurantId]: [
+        Values,
+        (isSubmitting: boolean) => void,
+        number | null,
+    ],
     props,
     { signal },
 ): Promise<{ id: number }> => {
@@ -59,7 +64,10 @@ const submitForm = (
         Accept: 'application/json',
         'Content-Type': 'application/json',
     };
-    return fetch('/restaurant-ajax/create', {
+    const url = restaurantId
+        ? `/restaurant-ajax/update?id=${restaurantId}`
+        : '/restaurant-ajax/create';
+    return fetch(url, {
         signal,
         headers,
         method: 'POST',
@@ -71,6 +79,7 @@ const submitForm = (
 };
 
 const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
+    const { restaurantId } = props;
     const { run } = useAsync({
         deferFn: submitForm,
         onReject: () =>
@@ -85,7 +94,7 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
         <Formik
             initialValues={props.initValues}
             onSubmit={(values, { setSubmitting }): void => {
-                run(values, setSubmitting);
+                run(values, setSubmitting, restaurantId);
             }}
             validationSchema={validationSchema}
         >
@@ -132,6 +141,14 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         placeholder="Category"
                         label="Category"
                     />
+                    {props.restaurantId && (
+                        <vaadin-upload
+                            target={`/upload/restaurant-logo?id=${props.restaurantId}`}
+                            accept="image/*"
+                            max-files={1}
+                            form-data-name="imageFile"
+                        />
+                    )}
                     <button
                         disabled={formik.isSubmitting}
                         type="submit"
