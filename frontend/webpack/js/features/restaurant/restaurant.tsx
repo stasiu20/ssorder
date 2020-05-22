@@ -6,8 +6,10 @@ import RestaurantGalleryLightbox from '../core/components/galleryLightbox';
 import RestaurantLogoLightbox from './components/logo';
 import SSOrderApp from '../core/components/SSOrderApp';
 import RestaurantForm from './components/restaurantForm';
+import { store } from '../core/redux';
+import { setRestaurantCategoriesActionCreator } from '../core/redux/dictionary/actions';
 
-$(document).ready(function() {
+$(function() {
     const $el = $('#react-restaurant-gallery');
     if ($el.length) {
         const data = $el.data('gallery');
@@ -42,11 +44,12 @@ $(document).ready(function() {
             categoryId: restaurantData['categoryId'] || '',
         };
 
+        store.dispatch(setRestaurantCategoriesActionCreator(categories));
+
         render(
             <SSOrderApp>
                 <RestaurantForm
                     restaurantId={restaurantData['id'] || null}
-                    categories={categories}
                     initValues={restaurantDataValues}
                 />
             </SSOrderApp>,

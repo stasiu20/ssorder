@@ -11,6 +11,9 @@ import FormFieldText from '../../form/components/formFieldText';
 import CleavePrice from '../../form/components/cleavePrice';
 import CleavePhone from '../../form/components/cleavePhone';
 import '@availity/phone/src/validatePhone';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../core/redux';
+import { Dict } from '../../core/redux/dictionary/types';
 
 interface Values {
     restaurantName: string;
@@ -22,13 +25,12 @@ interface Values {
 
 interface RestaurantFormProps {
     initValues: Values;
-    categories: { [key: number]: string };
     restaurantId: number | null;
 }
 
-const mapCategoryDictToOptions = (dict: {
-    [key: number]: string;
-}): { id: string; name: string }[] => {
+const mapCategoryDictToOptions = (
+    dict: Dict,
+): { id: string; name: string }[] => {
     return Object.entries(dict).map(([id, name]) => {
         return { name, id };
     });
@@ -81,6 +83,9 @@ const submitForm = (
 
 const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
     const { restaurantId } = props;
+    const categories = useSelector<AppState, Dict>(
+        state => state.dict.restaurantCategories,
+    );
     const { run } = useAsync({
         deferFn: submitForm,
         onReject: () =>
@@ -136,7 +141,7 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         inputprops={{
                             name: 'categoryId',
                             id: 'restaurantFormCategory',
-                            options: mapCategoryDictToOptions(props.categories),
+                            options: mapCategoryDictToOptions(categories),
                             defaultOption: 'Choose category',
                         }}
                         placeholder="Category"
