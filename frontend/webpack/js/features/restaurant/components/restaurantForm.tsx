@@ -10,6 +10,7 @@ import { ReactstrapInput, ReactstrapSelect } from 'reactstrap-formik';
 import FormFieldText from '../../form/components/formFieldText';
 import CleavePrice from '../../form/components/cleavePrice';
 import CleavePhone from '../../form/components/cleavePhone';
+import '@availity/phone/src/validatePhone';
 
 interface Values {
     restaurantName: string;
@@ -39,7 +40,7 @@ const validationSchema = Yup.object<Partial<Values>>({
         .max(200, 'Invalid restaurant name'),
     tel_number: Yup.string()
         .required('Required')
-        .max(15),
+        .validatePhone('This phone number is invalid.', false, 'PL'),
     delivery_price: Yup.number()
         .required('Required')
         .min(0, 'Wrong price')

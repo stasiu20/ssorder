@@ -65,10 +65,12 @@
     "**/**/acorn": "^7.1.1"
   },
   "dependencies": {
+    "@availity/phone": "^1.1.18",
     "@vaadin/vaadin-upload": "^4.3.0",
     "cleave.js": "^1.6.0",
     "formik": "^2.1.4",
     "jquery": "^3.5.1",
+    "libphonenumber-js": "^1.7.38",
     "popper.js": "^1.16.1",
     "react-async": "^10.0.1",
     "reactstrap": "^8.4.1",
