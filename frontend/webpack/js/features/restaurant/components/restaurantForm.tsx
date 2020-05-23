@@ -13,7 +13,7 @@ import CleavePhone from '../../form/components/cleavePhone';
 import '@availity/phone/src/validatePhone';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
-import { Dict } from '../../core/redux/dictionary/types';
+import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
 import { useAppCtx } from '../../core/context/app';
 import definedMessages, { KEYS } from '../translation/pl';
 import { addMessages } from '../../core/translations/pl';
@@ -32,7 +32,7 @@ interface RestaurantFormProps {
 }
 
 const mapCategoryDictToOptions = (
-    dict: Dict,
+    dict: DictRestaurantCategories,
 ): { id: string; name: string }[] => {
     return Object.entries(dict).map(([id, name]) => {
         return { name, id };
@@ -87,7 +87,7 @@ const submitForm = (
 const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
     const { restaurantId } = props;
     const app = useAppCtx();
-    const categories = useSelector<AppState, Dict>(
+    const categories = useSelector<AppState, DictRestaurantCategories>(
         state => state.dict.restaurantCategories,
     );
     const { run } = useAsync({

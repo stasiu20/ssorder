@@ -1,11 +1,15 @@
 import { ActionCreator } from 'redux';
-import { Dict, SettingRestaurantCategoriesAction } from './types';
+import {
+    ACTIONS_DICT,
+    DictRestaurantCategories,
+    SettingRestaurantCategoriesAction,
+} from './types';
 
 export const setRestaurantCategoriesActionCreator: ActionCreator<SettingRestaurantCategoriesAction> = (
-    categories: Dict,
+    categories: DictRestaurantCategories,
 ) => {
     const action: SettingRestaurantCategoriesAction = {
-        type: 'SettingRestaurantCategories',
+        type: ACTIONS_DICT.SET_RESTAURANT_CAT,
         categories,
     };
     return action;

@@ -1,6 +1,6 @@
 // import update from 'immutability-helper';
 import { Reducer } from 'redux';
-import { DictionaryState, DictionaryActions } from './types';
+import { ACTIONS_DICT, DictionaryActions, DictionaryState } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
 const neverReached = (never: never): void => {};
@@ -14,7 +14,7 @@ const reducer: Reducer<DictionaryState, DictionaryActions> = (
     action,
 ) => {
     switch (action.type) {
-        case 'SettingRestaurantCategories':
+        case ACTIONS_DICT.SET_RESTAURANT_CAT:
             return { ...state, restaurantCategories: action.categories };
         default:
             return state;

@@ -1,16 +1,18 @@
 import { Action } from 'redux';
 
-export interface Dict {
-    [key: string]: string;
-}
+export const ACTIONS_DICT = {
+    SET_RESTAURANT_CAT: 'SettingRestaurantCategories',
+} as const;
+
+export type DictRestaurantCategories = Record<number, string>;
 
 export interface DictionaryState {
-    readonly restaurantCategories: Dict;
+    readonly restaurantCategories: DictRestaurantCategories;
 }
 
 export interface SettingRestaurantCategoriesAction
-    extends Action<'SettingRestaurantCategories'> {
-    categories: Dict;
+    extends Action<typeof ACTIONS_DICT.SET_RESTAURANT_CAT> {
+    categories: DictRestaurantCategories;
 }
 
 export type DictionaryActions = SettingRestaurantCategoriesAction;
