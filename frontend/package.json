@@ -74,6 +74,7 @@
     "libphonenumber-js": "^1.7.38",
     "popper.js": "^1.16.1",
     "react-async": "^10.0.1",
+    "react-intl": "^4.5.10",
     "react-redux": "^7.2.0",
     "reactstrap": "^8.4.1",
     "reactstrap-formik": "^1.0.9",

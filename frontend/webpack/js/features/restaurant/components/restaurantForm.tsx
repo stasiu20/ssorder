@@ -14,6 +14,9 @@ import '@availity/phone/src/validatePhone';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
 import { Dict } from '../../core/redux/dictionary/types';
+import { useAppCtx } from '../../core/context/app';
+import definedMessages, { KEYS } from '../translation/pl';
+import { addMessages } from '../../core/translations/pl';
 
 interface Values {
     restaurantName: string;
@@ -83,15 +86,21 @@ const submitForm = (
 
 const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
     const { restaurantId } = props;
+    const app = useAppCtx();
     const categories = useSelector<AppState, Dict>(
         state => state.dict.restaurantCategories,
     );
     const { run } = useAsync({
         deferFn: submitForm,
         onReject: () =>
-            toast('Error during saving', { type: 'error', autoClose: false }),
+            toast(app.translate('error' as KEYS), {
+                type: 'error',
+                autoClose: false,
+            }),
         onResolve: response => {
-            toast('Restaurant created!', { type: 'success' });
+            toast(app.translate('restaurantSaved' as KEYS), {
+                type: 'success',
+            });
             window.location.href = `/restaurants/${response.id}/update`;
         },
     });
@@ -110,29 +119,25 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         component={ReactstrapInput}
                         type="text"
                         name="restaurantName"
-                        placeholder="Restaurant name"
-                        label="Restaurant name"
+                        label={app.translate('restaurantName' as KEYS)}
                         id="restaurantFormName"
                     />
                     <Field
                         component={FormFieldText}
                         name="tel_number"
-                        placeholder="Enter phone number"
-                        label="Phone number"
+                        label={app.translate('phoneNumber' as KEYS)}
                         type={CleavePhone}
                     />
                     <Field
                         component={FormFieldText}
                         name="delivery_price"
-                        placeholder="Delivery price"
-                        label="Delivery price"
+                        label={app.translate('deliveryPrice' as KEYS)}
                         type={CleavePrice}
                     />
                     <Field
                         component={FormFieldText}
                         name="pack_price"
-                        placeholder="Pack price"
-                        label="Pack price"
+                        label={app.translate('packPrice' as KEYS)}
                         type={CleavePrice}
                     />
                     <Field
@@ -142,10 +147,12 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                             name: 'categoryId',
                             id: 'restaurantFormCategory',
                             options: mapCategoryDictToOptions(categories),
-                            defaultOption: 'Choose category',
+                            defaultOption: app.translate(
+                                'chooseCategory' as KEYS,
+                            ),
                         }}
                         placeholder="Category"
-                        label="Category"
+                        label={app.translate('category' as KEYS)}
                     />
                     {props.restaurantId && (
                         <vaadin-upload
@@ -160,7 +167,7 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         type="submit"
                         className="btn btn-primary"
                     >
-                        Save
+                        {app.translate('save' as KEYS)}
                     </button>
                 </Form>
             )}
@@ -169,4 +176,5 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
 };
 
 RestaurantForm.defaultProps = {};
+addMessages(definedMessages);
 export default RestaurantForm;

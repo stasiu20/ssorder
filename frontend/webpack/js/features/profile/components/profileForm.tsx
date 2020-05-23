@@ -4,6 +4,9 @@ import * as Yup from 'yup';
 import FormFieldText from '../../form/components/formFieldText';
 import { useAsync } from 'react-async';
 import { toast } from 'react-toastify';
+import { useAppCtx } from '../../core/context/app';
+import definedMessages, { KEYS } from '../translation/pl';
+import { addMessages } from '../../core/translations/pl';
 
 interface Values {
     email: string;
@@ -53,11 +56,16 @@ const submitForm = (
 };
 
 const ProfileForm: React.FC<FormProps> = props => {
+    const app = useAppCtx();
     const { run } = useAsync({
         deferFn: submitForm,
         onReject: () =>
-            toast('Error during saving', { type: 'error', autoClose: false }),
-        onResolve: () => toast('Saved!', { type: 'success' }),
+            toast(app.translate('error' as KEYS), {
+                type: 'error',
+                autoClose: false,
+            }),
+        onResolve: () =>
+            toast(app.translate('saved' as KEYS), { type: 'success' }),
     });
 
     return (
@@ -74,21 +82,21 @@ const ProfileForm: React.FC<FormProps> = props => {
                         component={FormFieldText}
                         type="email"
                         name="email"
-                        placeholder="Email"
-                        label="Email"
+                        placeholder={app.translate('email' as KEYS)}
+                        label={app.translate('email' as KEYS)}
                     />
                     <Field
                         component={FormFieldText}
                         type="text"
                         name="rocketChatId"
-                        placeholder="Rocketchat Id"
-                        label="Rocketchat Id"
+                        placeholder={app.translate('rocketchatId' as KEYS)}
+                        label={app.translate('rocketchatId' as KEYS)}
                     />
                     <Field
                         autoComplete="new-password"
                         type="password"
                         name="newPassword"
-                        label="Nowe hasło"
+                        label={app.translate('newPassword' as KEYS)}
                         component={FormFieldText}
                     />
                     <button
@@ -96,7 +104,7 @@ const ProfileForm: React.FC<FormProps> = props => {
                         type="submit"
                         className="btn btn-primary"
                     >
-                        Aktualizuj
+                        {app.translate('update' as KEYS)}
                     </button>
                 </Form>
             )}
@@ -104,4 +112,5 @@ const ProfileForm: React.FC<FormProps> = props => {
     );
 };
 
+addMessages(definedMessages);
 export default ProfileForm;
