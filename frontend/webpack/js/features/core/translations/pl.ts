@@ -1,4 +1,4 @@
-const messages = {};
+const messages: Record<string, string> = {};
 
 export function getMessages(): Readonly<Record<string, string>> {
     return messages;

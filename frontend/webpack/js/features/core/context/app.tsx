@@ -14,7 +14,7 @@ function factoryAppContext(intl: IntlShape): AppContextType {
     };
 }
 
-const AppContext = React.createContext<AppContextType | null>(null);
+const AppContext = React.createContext<AppContextType | undefined>(undefined);
 
 const AppCtxProvider: React.FC = ({ children }) => {
     const intl = useIntl();

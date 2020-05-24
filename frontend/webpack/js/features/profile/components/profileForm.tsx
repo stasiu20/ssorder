@@ -2,7 +2,7 @@ import React from 'react';
 import { FormikProps, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import FormFieldText from '../../form/components/formFieldText';
-import { useAsync } from 'react-async';
+import { DeferFn, useAsync } from 'react-async';
 import { toast } from 'react-toastify';
 import { useAppCtx } from '../../core/context/app';
 import definedMessages, { KEYS } from '../translation/pl';
@@ -29,11 +29,11 @@ const validationSchema = Yup.object<Partial<Values>>({
         .max(200, 'Password too long'),
 });
 
-const submitForm = (
-    [values, setSubmitting]: [Values, (isSubmitting: boolean) => void],
-    props,
-    { signal },
-): Promise<unknown> => {
+const submitForm: DeferFn<void> = (args, props, { signal }): Promise<void> => {
+    const [values, setSubmitting] = args as [
+        Values,
+        (isSubmitting: boolean) => void,
+    ];
     const headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const submitForm = (
 
 const ProfileForm: React.FC<FormProps> = props => {
     const app = useAppCtx();
-    const { run } = useAsync({
+    const { run } = useAsync<void>({
         deferFn: submitForm,
         onReject: () =>
             toast(app.translate('error' as KEYS), {

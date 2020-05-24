@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorStackParser from 'error-stack-parser';
 
 interface ErrorBoundaryState {
@@ -11,16 +11,13 @@ interface ErrorBoundaryState {
  * @link https://pl.reactjs.org/docs/hooks-faq.html#do-hooks-cover-all-use-cases-for-classes
  */
 export default class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false };
-    }
+    state: ErrorBoundaryState = { hasError: false };
 
     static getDerivedStateFromError(error: Error): ErrorBoundaryState {
         return { hasError: true, error: error };
     }
 
-    componentDidCatch(error, errorInfo): void {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         console.error('ERROR:');
         console.error({ error, errorInfo });
         if (error instanceof Error) {

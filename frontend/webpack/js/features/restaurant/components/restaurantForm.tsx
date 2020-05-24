@@ -4,7 +4,7 @@ import React from 'react';
 import { FormikProps, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useAsync } from 'react-async';
+import { useAsync, DeferFn } from 'react-async';
 import 'cleave.js/dist/addons/cleave-phone.pl.js';
 import { ReactstrapInput, ReactstrapSelect } from 'reactstrap-formik';
 import FormFieldText from '../../form/components/formFieldText';
@@ -24,6 +24,10 @@ interface Values {
     delivery_price: number;
     pack_price: number;
     categoryId: number;
+}
+
+interface RestaurantSaveResponse {
+    id: number;
 }
 
 interface RestaurantFormProps {
@@ -57,15 +61,16 @@ const validationSchema = Yup.object<Partial<Values>>({
     categoryId: Yup.number().required('Required'),
 });
 
-const submitForm = (
-    [values, setSubmitting, restaurantId]: [
+const submitForm: DeferFn<RestaurantSaveResponse> = (
+    args,
+    props,
+    { signal },
+): Promise<RestaurantSaveResponse> => {
+    const [values, setSubmitting, restaurantId] = args as [
         Values,
         (isSubmitting: boolean) => void,
         number | null,
-    ],
-    props,
-    { signal },
-): Promise<{ id: number }> => {
+    ];
     const headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -90,7 +95,7 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
     const categories = useSelector<AppState, DictRestaurantCategories>(
         state => state.dict.restaurantCategories,
     );
-    const { run } = useAsync({
+    const { run } = useAsync<RestaurantSaveResponse>({
         deferFn: submitForm,
         onReject: () =>
             toast(app.translate('error' as KEYS), {

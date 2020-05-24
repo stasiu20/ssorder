@@ -10,14 +10,16 @@ import { Observable, Observer } from 'rxjs';
  */
 export function fromEventSource(
     url: string,
-    openObserver: Observer<Event> = null,
+    openObserver?: Observer<Event>,
 ): Observable<{ message: string }> {
     return new Observable<{ message: string }>(observer => {
         const source = new EventSource(url);
 
         function onOpen(e: Event): void {
-            openObserver.next(e);
-            openObserver.complete();
+            if (openObserver) {
+                openObserver.next(e);
+                openObserver.complete();
+            }
             source.removeEventListener('open', onOpen, false);
         }
 

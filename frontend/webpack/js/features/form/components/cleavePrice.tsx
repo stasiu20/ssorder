@@ -8,7 +8,7 @@ const stripCharacters = (value: string): string => {
 
 const CleavePrice: React.FunctionComponent<ChildComponentProps> = props => {
     const { field, form } = props;
-    field.onChange = (event): void => {
+    field.onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const cleanValue = stripCharacters(event.target.value);
         form.setFieldValue(field.name, cleanValue);
     };

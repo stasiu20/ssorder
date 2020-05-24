@@ -23,8 +23,8 @@ const FormFieldText: React.FC<AppFieldProps> = ({ label, type, ...props }) => {
     const inputAttributes = toTextFieldProp(rest);
 
     const renderField = (
-        type: string | React.ComponentType<ChildComponentProps>,
-    ): JSX.Element => {
+        type?: string | React.ComponentType<ChildComponentProps>,
+    ): React.ReactNode => {
         if (typeof type === 'function') {
             return React.createElement(type, {
                 field,
