@@ -54,7 +54,10 @@ Encore
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
-
+    .configureBabel(() => {}, {
+        // useBuiltIns: 'usage',
+        corejs: 3,
+    })
     // uncomment if you're having problems with a jQuery plugin
     // .autoProvidejQuery()
 ;
