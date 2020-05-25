@@ -50,7 +50,8 @@
         "tightenco/collect": "^7.9",
         "laminas/laminas-diagnostics": "^1.6",
         "moneyphp/money": "^3.3",
-        "myclabs/php-enum": "^1.7"
+        "myclabs/php-enum": "^1.7",
+        "hyperia/yii2-secure-headers": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
