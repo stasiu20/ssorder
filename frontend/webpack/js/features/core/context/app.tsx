@@ -1,7 +1,7 @@
 import React from 'react';
 import { IntlShape, MessageDescriptor, useIntl } from 'react-intl';
 
-interface AppContextType {
+export interface AppContextType {
     translate: (messageId: string) => string;
     translateMsgDescriptor: (message: MessageDescriptor) => string;
 }

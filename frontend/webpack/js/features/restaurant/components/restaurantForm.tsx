@@ -14,7 +14,7 @@ import '@availity/phone/src/validatePhone';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
 import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
-import { useAppCtx } from '../../core/context/app';
+import { AppContextType, useAppCtx } from '../../core/context/app';
 import definedMessages, { KEYS } from '../translation/pl';
 import { addMessages } from '../../core/translations/pl';
 
@@ -43,23 +43,26 @@ const mapCategoryDictToOptions = (
     });
 };
 
-const validationSchema = Yup.object<Partial<Values>>({
-    restaurantName: Yup.string()
-        .required('Required')
-        .max(200, 'Invalid restaurant name'),
-    tel_number: Yup.string()
-        .required('Required')
-        .validatePhone('This phone number is invalid.', false, 'PL'),
-    delivery_price: Yup.number()
-        .required('Required')
-        .min(0, 'Wrong price')
-        .max(100, 'Wrong price'),
-    pack_price: Yup.number()
-        .required('Required')
-        .min(0, 'Wrong price')
-        .max(100, 'Wrong price'),
-    categoryId: Yup.number().required('Required'),
-});
+const validationSchema = (
+    appContext: AppContextType,
+): Yup.Schema<Partial<Values>> =>
+    Yup.object<Partial<Values>>({
+        restaurantName: Yup.string()
+            .required(appContext.translate('Required'))
+            .max(200, appContext.translate('InvalidRestaurantName')),
+        tel_number: Yup.string()
+            .required(appContext.translate('Required'))
+            .validatePhone(appContext.translate('PhoneInvalid'), false, 'PL'),
+        delivery_price: Yup.number()
+            .required(appContext.translate('Required'))
+            .min(0, appContext.translate('wrongPrice'))
+            .max(100, appContext.translate('wrongPrice')),
+        pack_price: Yup.number()
+            .required(appContext.translate('Required'))
+            .min(0, appContext.translate('wrongPrice'))
+            .max(100, appContext.translate('wrongPrice')),
+        categoryId: Yup.number().required(appContext.translate('Required')),
+    });
 
 const submitForm: DeferFn<RestaurantSaveResponse> = (
     args,
@@ -116,7 +119,9 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
             onSubmit={(values, { setSubmitting }): void => {
                 run(values, setSubmitting, restaurantId);
             }}
-            validationSchema={validationSchema}
+            validationSchema={(): Yup.Schema<Partial<Values>> =>
+                validationSchema(app)
+            }
         >
             {(formik: FormikProps<Values>): JSX.Element => (
                 <Form>

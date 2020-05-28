@@ -1,4 +1,13 @@
-const messages: Record<string, string> = {};
+const messages: Record<string, string> = {
+    Required: 'Pole wymagane',
+    PhoneInvalid: 'Numer telefonu jest niepoprawny',
+    wrongPrice: 'Niepoprawna cena',
+    InvalidRestaurantName: 'Niepoprawna nazwa restauracji',
+    InvalidEmail: 'Niepoprawny adres email',
+    InvalidRocketChatId: 'Niepoprawny numer rocket chat',
+    InvalidPasswordTooLong: 'Hasło zbyt długie',
+    InvalidPasswordTooShort: 'Hasło zbyt krótkie',
+};
 
 export function getMessages(): Readonly<Record<string, string>> {
     return messages;

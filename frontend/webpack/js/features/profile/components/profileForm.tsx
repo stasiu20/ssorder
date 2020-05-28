@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import FormFieldText from '../../form/components/formFieldText';
 import { DeferFn, useAsync } from 'react-async';
 import { toast } from 'react-toastify';
-import { useAppCtx } from '../../core/context/app';
+import { AppContextType, useAppCtx } from '../../core/context/app';
 import definedMessages, { KEYS } from '../translation/pl';
 import { addMessages } from '../../core/translations/pl';
 
@@ -18,16 +18,22 @@ interface FormProps {
     initUserData: Values;
 }
 
-const validationSchema = Yup.object<Partial<Values>>({
-    email: Yup.string()
-        .required('Required')
-        .max(200, 'Invalid email address')
-        .email('Invalid email address'),
-    rocketChatId: Yup.string().max(20, 'Invalid rocketchat ID'),
-    newPassword: Yup.string()
-        .min(4, 'Password too short')
-        .max(200, 'Password too long'),
-});
+const validationSchema = (
+    appContext: AppContextType,
+): Yup.Schema<Partial<Values>> =>
+    Yup.object<Partial<Values>>({
+        email: Yup.string()
+            .required(appContext.translate('Required'))
+            .max(200, appContext.translate('InvalidEmail'))
+            .email(appContext.translate('InvalidEmail')),
+        rocketChatId: Yup.string().max(
+            20,
+            appContext.translate('InvalidRocketChatId'),
+        ),
+        newPassword: Yup.string()
+            .min(4, appContext.translate('InvalidPasswordTooShort'))
+            .max(200, appContext.translate('InvalidPasswordTooLong')),
+    });
 
 const submitForm: DeferFn<void> = (args, props, { signal }): Promise<void> => {
     const [values, setSubmitting] = args as [
@@ -74,7 +80,9 @@ const ProfileForm: React.FC<FormProps> = props => {
             onSubmit={(values, { setSubmitting }): void => {
                 run(values, setSubmitting);
             }}
-            validationSchema={validationSchema}
+            validationSchema={(): Yup.Schema<Partial<Values>> =>
+                validationSchema(app)
+            }
         >
             {(formik: FormikProps<Values>): JSX.Element => (
                 <Form>
