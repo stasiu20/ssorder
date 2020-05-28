@@ -70,7 +70,8 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['email', 'email'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            ['new_password', 'string', 'length' => [4, 20]],
+            ['email', 'string', 'max' => 200],
+            ['new_password', 'string', 'length' => [4, 200]],
             ['new_password', 'filter', 'filter' => function ($value) {
                 if (!empty($value)) {
                     $this->setPassword($value);

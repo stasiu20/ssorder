@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   ssorder:
-    image: registry.sensilabs.pl/sensilabs/ssorder
+    image: registry.gitlab.com/morawskim/ssorder
     env_file:
       - .env
     depends_on:
@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 3
   queue:
-    image: registry.sensilabs.pl/sensilabs/ssorder
+    image: registry.gitlab.com/morawskim/ssorder
     entrypoint: ["php", "./yii", "queue/listen", "--verbose"]
     env_file:
       - .env
@@ -60,7 +60,7 @@ services:
     volumes:
       - redis:/data
   scheduler:
-    image: registry.sensilabs.pl/sensilabs/ssorder/scheduler
+    image: registry.gitlab.com/morawskim/ssorder/scheduler
     env_file:
       - .env
     depends_on:

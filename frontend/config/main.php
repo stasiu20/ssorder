@@ -1,6 +1,6 @@
 <?php
 
-use common\behaviors\PrometheusMemoryBehavior;
+use hyperia\security\Headers;
 use yii\bootstrap4\LinkPager;
 use yii\web\JsonParser;
 use Monolog\Logger;
@@ -27,7 +27,7 @@ return [
     'aliases' => [
         '@npm'   => '@vendor/npm-asset',
     ],
-    'bootstrap' => ['log', function () {
+    'bootstrap' => ['log', 'headers', function () {
         $mediator = new \common\component\RocketChatOrderMediator();
         $mediator->mediate();
 
@@ -252,6 +252,26 @@ return [
                 'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
             ],
         ],
+        'headers' => [
+            'class' => Headers::class,
+            'xssProtection' => true,
+            'xFrameOptions' => 'DENY',
+            'upgradeInsecureRequests' => false,
+            'cspDirectives' => [
+                'script-src' => "'self' 'unsafe-inline' www.google-analytics.com",
+                'style-src' => "'self' 'unsafe-inline' fonts.googleapis.com",
+                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl",
+                'connect-src' => '*',
+                'font-src' => '* data:',
+                'object-src' => '*',
+                'media-src' => '*',
+                'form-action' => '*',
+                'frame-src' => "'self'",
+                'child-src' => '*',
+                'worker-src' => "'self'"
+            ],
+//            'referrerPolicy' => 'no-referrer',
+        ]
     ],
     'params' => $params,
     'as prometheus' => [

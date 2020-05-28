@@ -77,6 +77,7 @@ AppAsset::register($this);
     ?>
 
     <div class="container my-4">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

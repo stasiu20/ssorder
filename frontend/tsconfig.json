@@ -3,7 +3,12 @@
     "target": "es6",
     "jsx": "preserve",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "plugins": [
+      { "name": "typescript-plugin-css-modules" }
+    ]
   },
   "include": [
     "webpack/js/**/*"

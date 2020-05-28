@@ -30,6 +30,7 @@ Encore
     .addEntry('restaurant', './webpack/js/restaurant.js')
     .addEntry('orderRealise', './webpack/js/orderRealise.js')
     .addEntry('rating', './webpack/js/rating.js')
+    .addEntry('profile', './webpack/js/profile.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -53,7 +54,10 @@ Encore
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
-
+    .configureBabel(() => {}, {
+        // useBuiltIns: 'usage',
+        corejs: 3,
+    })
     // uncomment if you're having problems with a jQuery plugin
     // .autoProvidejQuery()
 ;

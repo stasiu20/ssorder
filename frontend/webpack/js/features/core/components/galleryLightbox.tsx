@@ -14,14 +14,10 @@ export default class RestaurantGalleryLightbox extends Component<
     RestaurantGalleryLightboxProps,
     RestaurantGalleryLightboxState
 > {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            photoIndex: 0,
-            isOpen: false,
-        };
-    }
+    state: RestaurantGalleryLightboxState = {
+        photoIndex: 0,
+        isOpen: false,
+    };
 
     render(): ReactNode {
         const { photoIndex, isOpen } = this.state;

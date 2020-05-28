@@ -71,9 +71,8 @@ class Restaurants extends ActiveRecord
             [['delivery_price', 'pack_price'], 'default', 'value' => 0],
             [['delivery_price', 'pack_price'], 'number', 'min' => 0, 'max' => 999.99],
             [[ 'categoryId'], 'integer'],
-            [['tel_number'],'string','length'=>[11, 12]],
-            ['tel_number', 'match', 'pattern' => '/([0-9]{3}-[0-9]{3}-[0-9]{3})|([0-9]{4}-[0-9]{2}-[0-9]{2})/']
-            //[['tel_number'], PhoneInputValidator::className(), 'region' => ['PL']],
+            [['tel_number'],'string','max' => 12],
+            [['tel_number'], PhoneInputValidator::class, 'default_region' => 'PL', 'region' => ['PL']],
         ];
     }
 

@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   docs:
-    image: registry.sensilabs.pl/sensilabs/ssorder/docs
+    image: registry.gitlab.com/morawskim/ssorder/docs
     networks:
       - default
       - traefik

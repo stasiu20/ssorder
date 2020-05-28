@@ -19,7 +19,6 @@ coverage:
         - behaviors/*
         - component/*
         - helpers/*
-        - iterators/*
         - models/*
         - services/*
         - widgets/*

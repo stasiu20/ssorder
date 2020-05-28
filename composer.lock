@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57e74a50bb5d11031eff02ec997efb2a",
+    "content-hash": "17cdf8b7b719fdcb17a0ebc363c895e3",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -194,7 +194,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -278,7 +278,7 @@
             "version": "3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
@@ -925,6 +925,56 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "hyperia/yii2-secure-headers",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hyperia-sk/yii2-secure-headers.git",
+                "reference": "8781bd0098f53b4647b978872d22fc5fbe00cec4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperia-sk/yii2-secure-headers/zipball/8781bd0098f53b4647b978872d22fc5fbe00cec4",
+                "reference": "8781bd0098f53b4647b978872d22fc5fbe00cec4",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7",
+                "symfony/var-dumper": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "hyperia\\security\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukas Hrdlicka",
+                    "email": "lukas.hrdlicka@hyperia.sk"
+                },
+                {
+                    "name": "Lukas Mestan",
+                    "email": "lukas.mestan@hyperia.sk"
+                }
+            ],
+            "description": "Secure headers for your Yii2 app",
+            "keywords": [
+                "extension",
+                "headers",
+                "secure",
+                "yii2"
+            ],
+            "time": "2017-07-24T07:06:51+00:00"
         },
         {
             "name": "kartik-v/yii2-date-range",
@@ -3569,7 +3619,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {

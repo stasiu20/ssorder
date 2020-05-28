@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { render } from 'react-dom';
 import Rating from 'react-rating';
-import ErrorBoundary from '../core/components/errorBoundary';
+import SSOrderApp from '../core/components/SSOrderApp';
 
 interface RatingProps {
     legacyFieldSelector: string;
@@ -30,9 +30,9 @@ const RatingLegacy: FunctionComponent<RatingProps> = props => {
 
 $(function() {
     render(
-        <ErrorBoundary>
+        <SSOrderApp>
             <RatingLegacy legacyFieldSelector={'#foodrating-rating'} />
-        </ErrorBoundary>,
+        </SSOrderApp>,
         $('#foodrating-rating')
             .closest('.react-wrapper')
             .find('.react-view-container')
