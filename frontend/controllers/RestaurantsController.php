@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\services\FileService;
+use common\transformers\RestaurantCollectionTransformer;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Category;
 use frontend\models\Imagesmenu;
@@ -52,6 +53,7 @@ class RestaurantsController extends Controller
         return $this->render('index', [
             'restaurants' => $restaurants,
             'categorys' => $categorys,
+            'transformer' => Yii::$container->get(RestaurantCollectionTransformer::class),
         ]);
     }
 

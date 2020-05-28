@@ -8,6 +8,7 @@ import SSOrderApp from '../core/components/SSOrderApp';
 import RestaurantForm from './components/restaurantForm';
 import { store } from '../core/redux';
 import { setRestaurantCategoriesActionCreator } from '../core/redux/dictionary/actions';
+import RestaurantCardsCollection from './components/restaurantCardCollection';
 
 $(function() {
     const $el = $('#react-restaurant-gallery');
@@ -54,6 +55,17 @@ $(function() {
                 />
             </SSOrderApp>,
             $elRestaurantForm.get(0),
+        );
+    }
+
+    const $elRestaurantCards = $('#react-restaurant-cards');
+    if ($elRestaurantCards.length) {
+        const restaurants = window['__APP_DATA__']['restaurants'];
+        render(
+            <SSOrderApp>
+                <RestaurantCardsCollection restaurants={restaurants} />
+            </SSOrderApp>,
+            $elRestaurantCards.get(0),
         );
     }
 });
