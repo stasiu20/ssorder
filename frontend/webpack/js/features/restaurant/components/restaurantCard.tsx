@@ -4,6 +4,9 @@ import { useAppCtx } from '../../core/context/app';
 import { addMessages } from '../../core/translations/pl';
 import definedMessages from '../translation/pl-card';
 import styles from './restaurantCard.scss?module';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../core/redux';
+import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
 
 interface Props {
     restaurant: Restaurant;
@@ -12,6 +15,9 @@ interface Props {
 const RestaurantCard: React.FC<Props> = props => {
     const { restaurant } = props;
     const appCtx = useAppCtx();
+    const categories = useSelector<AppState, DictRestaurantCategories>(
+        state => state.dict.restaurantCategories,
+    );
 
     return (
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -40,7 +46,10 @@ const RestaurantCard: React.FC<Props> = props => {
                                     >
                                         restaurant
                                     </span>
-                                    <span>{restaurant.category}</span>
+                                    <span>
+                                        {categories[restaurant.category] ||
+                                            restaurant.category}
+                                    </span>
                                 </div>
                             </li>
                             <li>

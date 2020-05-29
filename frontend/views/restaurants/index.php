@@ -1,11 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 
-use frontend\helpers\FileServiceViewHelper;
-use yii\helpers\Html;
 use frontend\models\Category;
-use yii\helpers\Url;
-use yii\widgets\LinkPager;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Order you posiłek';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,7 +11,10 @@ $this->params['breadcrumbs'][] = $this->title;
 /** @var $transformer \common\transformers\RestaurantCollectionTransformer */
 
 \frontend\assets\RestaurantAsset::register($this);
-$this->registerJsVar('__APP_DATA__', ['restaurants' => $transformer->transform($restaurants)])
+$this->registerJsVar('__APP_DATA__', [
+    'restaurants' => $transformer->transform($restaurants),
+    'categories' => ArrayHelper::map(Category::find()->all(), 'id', 'categoryName'),
+])
 ?>
 <div class="site-index">
     <h2 class="text-center mb-4">To co dziś zamawiamy?!</h2>

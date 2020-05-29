@@ -478,7 +478,7 @@ tag_release:
     - git --version
     - git config --add user.name "${GITLAB_USER_NAME}"
     - git config --add user.email "${GITLAB_USER_EMAIL}"
-    - git remote set-url --push origin ssh://git@gitlab.com:morawskim/ssorder.git
+    - git remote set-url --push origin ssh://git@gitlab.com/morawskim/ssorder.git
     - git remote -v
     - git tag -a $VERSION -m "Releasing version v${VERSION} (by gitlab-ci)"
     - git push -o ci.skip origin --tags
