@@ -46,7 +46,10 @@ const RestaurantCard: React.FC<Props> = props => {
                                     >
                                         restaurant
                                     </span>
-                                    <span>{categories[restaurant.category] || restaurant.category}</span>
+                                    <span>
+                                        {categories[restaurant.category] ||
+                                            restaurant.category}
+                                    </span>
                                 </div>
                             </li>
                             <li>
