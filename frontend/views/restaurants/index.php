@@ -8,11 +8,11 @@ $this->title = 'Order you posiłek';
 $this->params['breadcrumbs'][] = $this->title;
 
 /** @var $restaurants \frontend\models\Restaurants[] */
-/** @var $transformer \common\transformers\RestaurantCollectionTransformer */
+/** @var $restaurantFrontendData array */
 
 \frontend\assets\RestaurantAsset::register($this);
 $this->registerJsVar('__APP_DATA__', [
-    'restaurants' => $transformer->transform($restaurants),
+    'restaurants' => $restaurantFrontendData,
     'categories' => ArrayHelper::map(Category::find()->all(), 'id', 'categoryName'),
 ])
 ?>

@@ -80,6 +80,9 @@ return [
 
                 return $runner;
             },
+            \League\Fractal\Manager::class => function (Container $container, $params, $config) {
+                return new \League\Fractal\Manager();
+            },
         ]
     ],
     'components' => [

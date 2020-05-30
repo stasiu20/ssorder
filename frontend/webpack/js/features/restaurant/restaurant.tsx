@@ -60,7 +60,7 @@ $(function() {
 
     const $elRestaurantCards = $('#react-restaurant-cards');
     if ($elRestaurantCards.length) {
-        const restaurants = window['__APP_DATA__']['restaurants'];
+        const restaurants = window['__APP_DATA__']['restaurants']['data'];
         const categories = window['__APP_DATA__']['categories'];
         store.dispatch(setRestaurantCategoriesActionCreator(categories));
         render(

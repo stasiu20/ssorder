@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
+use common\resources\RestaurantResource;
 use common\services\FileService;
-use common\transformers\RestaurantCollectionTransformer;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Category;
 use frontend\models\Imagesmenu;
 use frontend\models\Menu;
 use frontend\models\Restaurants;
+use League\Fractal\Manager;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -50,10 +51,14 @@ class RestaurantsController extends Controller
         $query = Restaurants::findActiveRestaurants();
         $restaurants = $query->orderBy('restaurantName')->all();
         $categorys = Category::findActive()->all();
+        /** @var Manager $fractalManager */
+        $fractalManager = Yii::$container->get(Manager::class);
+        $restaurantData = $fractalManager->createData(RestaurantResource::factoryCollection($restaurants))->toArray();
+
         return $this->render('index', [
             'restaurants' => $restaurants,
             'categorys' => $categorys,
-            'transformer' => Yii::$container->get(RestaurantCollectionTransformer::class),
+            'restaurantFrontendData' => $restaurantData,
         ]);
     }
 
