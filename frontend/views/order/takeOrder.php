@@ -24,7 +24,7 @@ OrderRealiseAsset::register($this);
 <div class="d-flex flex-row">
     <div><img alt="restaurant logo" class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
     <div class="ml-4">
-        <h6><b>Info</b></h6>
+        <h6><strong>Info</strong></h6>
         <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
             cena za dowóz: <?= Html::encode("{$formatter->asCurrency($restaurant->delivery_price)}"); ?><br/>
             cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?>

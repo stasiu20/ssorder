@@ -17,10 +17,10 @@ $formatter = \Yii::$app->formatter;
 ?>
 
 <div style="float: left">
-    <div><img class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
+    <div><img alt="logo <?= $restaurant->restaurantName ?>" class ="clip-circle restaurant-details__logo" src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>"></div>
 </div>
 <div class="info" style="float:left">
-    <h6><b>Info</b></h6>
+    <h6><strong>Info</strong></h6>
     <p>nr tel.: <?= Html::encode("{$restaurant->tel_number}"); ?><br/>
         cena za dowóz: <?= Html::encode("{$formatter->asCurrency($restaurant->delivery_price)}"); ?><br/>
         cena za opakowanie: <?= Html::encode("{$formatter->asCurrency($restaurant->pack_price)}"); ?>
@@ -34,7 +34,7 @@ $formatter = \Yii::$app->formatter;
 
             <div class="img">
                 <a href="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url) ?>" data-lightbox="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>" data-title="My caption">
-                    <img class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
+                    <img alt="menu photo" class="menuImage" src="<?= FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url); ?>"/>
                 </a>
             </div>
         </div>
