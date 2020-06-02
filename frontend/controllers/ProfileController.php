@@ -3,7 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\User;
-use common\transformers\UserProfileTransformer;
+use common\resources\UserProfileResource;
+use League\Fractal\Manager;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -31,12 +32,13 @@ class ProfileController extends Controller
         /** @var User $user */
         $user = \Yii::$app->user->identity;
 
-        /** @var UserProfileTransformer $transformer */
-        $transformer = \Yii::$container->get(UserProfileTransformer::class);
+        /** @var Manager $fractalManager */
+        $fractalManager = \Yii::$container->get(Manager::class);
+        $userData = $fractalManager->createData(UserProfileResource::factoryItem($user))->toArray();
 
         return $this->render('index', [
             'user' => $user,
-            'userData' => $transformer->transform($user),
+            'userData' => $userData,
         ]);
     }
 }

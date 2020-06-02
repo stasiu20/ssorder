@@ -3,11 +3,12 @@
 namespace frontend\controllers;
 
 use common\models\User;
-use common\transformers\UserProfileTransformer;
-use yii\rest\Controller;
+use common\resources\UserProfileResource;
+use League\Fractal\Manager;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\filters\VerbFilter;
+use yii\rest\Controller;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -49,9 +50,9 @@ class ProfileAjaxController extends Controller
         }
 
         if ($user->save()) {
-            /** @var UserProfileTransformer $transformer */
-            $transformer = \Yii::$container->get(UserProfileTransformer::class);
-            return $transformer->transform($user);
+            /** @var Manager $fractalManager */
+            $fractalManager = \Yii::$container->get(Manager::class);
+            return $fractalManager->createData(UserProfileResource::factoryItem($user))->toArray();
         }
 
         return $user;

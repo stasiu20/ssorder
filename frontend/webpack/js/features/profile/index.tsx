@@ -4,7 +4,7 @@ import SSOrderApp from '../core/components/SSOrderApp';
 import ProfileForm from './components/profileForm';
 
 $(function() {
-    const userData = window['__APP_DATA__']['userData'];
+    const userData = window['__APP_DATA__']['userData']['data'];
     const $el = $('#react-profile');
 
     render(
