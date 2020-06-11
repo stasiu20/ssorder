@@ -268,9 +268,10 @@ return [
                 'form-action' => '*',
                 'frame-src' => "'self'",
                 'child-src' => '*',
-                'worker-src' => "'self'"
+                'worker-src' => "'self'",
+                'manifest-src' => "'self'",
             ],
-//            'referrerPolicy' => 'no-referrer',
+            'referrerPolicy' => 'no-referrer',
         ]
     ],
     'params' => $params,

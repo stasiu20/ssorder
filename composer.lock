@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c36fdabebd475e965518e824991fdac",
+    "content-hash": "838d9a718fdcbb5d6eef079240fe6736",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -253,12 +253,12 @@
             "version": "v12.4.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:Bluefieldscom/intl-tel-input.git",
+                "url": "https://github.com/jackocnr/intl-tel-input.git",
                 "reference": "2afde58af3d7db953ba505946a5aac3c3176ed0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bluefieldscom/intl-tel-input/zipball/2afde58af3d7db953ba505946a5aac3c3176ed0b",
+                "url": "https://api.github.com/repos/jackocnr/intl-tel-input/zipball/2afde58af3d7db953ba505946a5aac3c3176ed0b",
                 "reference": "2afde58af3d7db953ba505946a5aac3c3176ed0b"
             },
             "require": {
@@ -278,7 +278,7 @@
             "version": "3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
@@ -928,17 +928,11 @@
         },
         {
             "name": "hyperia/yii2-secure-headers",
-            "version": "1.1.2",
+            "version": "dev-feature-manifest-src",
             "source": {
                 "type": "git",
-                "url": "https://github.com/hyperia-sk/yii2-secure-headers.git",
-                "reference": "8781bd0098f53b4647b978872d22fc5fbe00cec4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hyperia-sk/yii2-secure-headers/zipball/8781bd0098f53b4647b978872d22fc5fbe00cec4",
-                "reference": "8781bd0098f53b4647b978872d22fc5fbe00cec4",
-                "shasum": ""
+                "url": "https://github.com/morawskim/yii2-secure-headers",
+                "reference": "ac7b48949ccfb41e0d9654682102c31f4eee8942"
             },
             "require": {
                 "yiisoft/yii2": "*"
@@ -953,7 +947,11 @@
                     "hyperia\\security\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "hyperia\\security\\tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -974,7 +972,10 @@
                 "secure",
                 "yii2"
             ],
-            "time": "2017-07-24T07:06:51+00:00"
+            "support": {
+                "source": "https://github.com/hyperia-sk/yii2-secure-headers/"
+            },
+            "time": "2020-06-10T16:56:40+00:00"
         },
         {
             "name": "kartik-v/yii2-date-range",
@@ -3683,7 +3684,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:twbs/bootstrap.git",
+                "url": "https://github.com/twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -8810,11 +8811,19 @@
             "time": "2019-11-30T13:35:44+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "1.1.99",
+            "alias_normalized": "1.1.99.0",
+            "version": "dev-feature-manifest-src",
+            "package": "hyperia/yii2-secure-headers"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widget-datepicker": 20,
-        "mmo/yii2-utils": 20
+        "mmo/yii2-utils": 20,
+        "hyperia/yii2-secure-headers": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
