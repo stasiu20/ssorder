@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f65cf09353b075bc72af724776df3207",
+    "content-hash": "7601ae538f6dd93b38635d02c6a0fd30",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -873,11 +873,17 @@
         },
         {
             "name": "hyperia/yii2-secure-headers",
-            "version": "dev-feature-manifest-src",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/morawskim/yii2-secure-headers",
-                "reference": "ac7b48949ccfb41e0d9654682102c31f4eee8942"
+                "url": "https://github.com/hyperia-sk/yii2-secure-headers.git",
+                "reference": "cf4d78e4dcabd6afced81c4aaa3c56b0fecd1d3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hyperia-sk/yii2-secure-headers/zipball/cf4d78e4dcabd6afced81c4aaa3c56b0fecd1d3d",
+                "reference": "cf4d78e4dcabd6afced81c4aaa3c56b0fecd1d3d",
+                "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "*"
@@ -892,11 +898,7 @@
                     "hyperia\\security\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "hyperia\\security\\tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -917,10 +919,7 @@
                 "secure",
                 "yii2"
             ],
-            "support": {
-                "source": "https://github.com/hyperia-sk/yii2-secure-headers/"
-            },
-            "time": "2020-06-10T16:56:40+00:00"
+            "time": "2020-06-11T13:24:14+00:00"
         },
         {
             "name": "kartik-v/yii2-date-range",
@@ -9154,7 +9153,7 @@
         {
             "alias": "1.1.99",
             "alias_normalized": "1.1.99.0",
-            "version": "dev-feature-manifest-src",
+            "version": "9999999-dev",
             "package": "hyperia/yii2-secure-headers"
         }
     ],

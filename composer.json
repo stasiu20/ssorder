@@ -19,10 +19,6 @@
             "url": "https://github.com/morawskim/yii2-utils"
         },
         {
-            "type": "git",
-            "url": "https://github.com/morawskim/yii2-secure-headers"
-        },
-        {
             "type": "composer",
             "url": "https://asset-packagist.org"
         }
@@ -54,7 +50,7 @@
         "laminas/laminas-diagnostics": "^1.6",
         "moneyphp/money": "^3.3",
         "myclabs/php-enum": "^1.7",
-        "hyperia/yii2-secure-headers": "dev-feature-manifest-src as 1.1.99",
+        "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
         "league/fractal": "^0.19.2",
         "minishlink/web-push": "^5.2"
     },
