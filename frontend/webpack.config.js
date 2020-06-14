@@ -1,6 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
+const ssorderConfiguration = require(path.join(__dirname, 'webpack/config.js'));
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -60,6 +61,9 @@ Encore
     })
     // uncomment if you're having problems with a jQuery plugin
     // .autoProvidejQuery()
+    .addExternals({
+        appConfig: JSON.stringify(ssorderConfiguration),
+    })
 ;
 
 Encore.addPlugin(

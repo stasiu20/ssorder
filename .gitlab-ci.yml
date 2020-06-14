@@ -183,6 +183,7 @@ assets:
   stage: build
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
+    - cd frontend/webpack/ && ln -s config-prod.js config.js
     - cd frontend && yarn build
     - npx webpack-bundle-analyzer $CI_PROJECT_DIR/frontend/webpack/stats.json $CI_PROJECT_DIR/frontend/web/assets/build/ --no-open --mode static --report $CI_PROJECT_DIR/docs/webpack-bundle-analyzer.html
   dependencies:
