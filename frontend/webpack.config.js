@@ -32,6 +32,7 @@ Encore
     .addEntry('orderRealise', './webpack/js/orderRealise.js')
     .addEntry('rating', './webpack/js/rating.js')
     .addEntry('profile', './webpack/js/profile.js')
+    .addEntry('pwa', './webpack/js/pwa.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
