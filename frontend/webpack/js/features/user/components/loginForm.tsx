@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useAsync } from 'react-async';
 import userService, { LoginResponse } from '../userService';
 import { ReactstrapInput } from 'reactstrap-formik';
+import authTokenService from '../../core/services/authTokenService';
 
 interface Values {
     username: string;
@@ -44,7 +45,10 @@ const LoginForm: React.FC<Props> = props => {
                 toast.error('Error during sign in.', { autoClose: false });
             }
         },
-        onResolve: () => toast.success('Logged'),
+        onResolve: response => {
+            authTokenService.storeToken(response.token);
+            toast.success('Logged');
+        },
     });
 
     return (

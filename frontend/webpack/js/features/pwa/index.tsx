@@ -5,6 +5,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import RestaurantCardsCollection from '../restaurant/components/restaurantCardCollection';
 import ProtectedRoute from '../core/components/protectedRouter';
+import PageLogin from './components/pageLogin';
 
 $(function() {
     const $el = $('#react-pwa');
@@ -14,12 +15,7 @@ $(function() {
             <Router>
                 <Switch>
                     <Route path="/login">
-                        <LoginForm
-                            initialValues={{
-                                username: '',
-                                password: '',
-                            }}
-                        />
+                        <PageLogin />
                     </Route>
                     <ProtectedRoute path="/">
                         <h2 className="text-center mb-4">
