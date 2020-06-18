@@ -1,10 +1,8 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "d53716b8-fe82-4047-b7a0-038fb00e3873",
 		"name": "ssorder restaurants",
-		"_postman_id": "056e6914-0eac-8d52-0b92-075881ea6136",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -31,23 +29,31 @@
 				}
 			],
 			"request": {
-				"url": "{{BASE_URL}}/{{API_VERSION}}/session/login",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "{{HEADER_CONTENT_TYPE}}",
-						"description": ""
+						"value": "{{HEADER_CONTENT_TYPE}}"
 					},
 					{
 						"key": "Accept",
-						"value": "{{HEADER_ACCEPT}}",
-						"description": ""
+						"value": "{{HEADER_ACCEPT}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"session",
+						"login"
+					]
 				},
 				"description": "success log in"
 			},
@@ -59,61 +65,65 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "4ff51374-fbfb-436f-8d35-0c682e35df96",
 						"exec": [
 							"pm.test(\"Lista restauracji\", function() {",
 							"    pm.response.to.have.status(200);",
 							"    pm.response.to.be.json;",
 							"    ",
-							"    pm.expect(pm.response.headers.get('X-Pagination-Current-Page')).to.eql('1');",
-							"    pm.response.to.have.header('X-Pagination-Page-Count');",
-							"    pm.response.to.have.header('X-Pagination-Per-Page');",
-							"    pm.response.to.have.header('X-Pagination-Total-Count');",
+							"    // pm.expect(pm.response.headers.get('X-Pagination-Current-Page')).to.eql('1');",
+							"    // pm.response.to.have.header('X-Pagination-Page-Count');",
+							"    // pm.response.to.have.header('X-Pagination-Per-Page');",
+							"    // pm.response.to.have.header('X-Pagination-Total-Count');",
 							"",
-							"    var response = pm.response.json();",
+							"    var response = pm.response.json().data;",
 							"    pm.expect(response).to.be.a('array');",
 							"    ",
 							"    pm.expect(response[0]).to.be.a('object');",
 							"    pm.expect(response[0]).to.have.property('id').and.to.be.a('number');",
-							"    pm.expect(response[0]).to.have.property('restaurantName').and.to.be.a('string');",
-							"    pm.expect(response[0]).to.have.property('phoneNumber').and.to.be.a('string');",
+							"    pm.expect(response[0]).to.have.property('name').and.to.be.a('string');",
+							"    pm.expect(response[0]).to.have.property('telNumber').and.to.be.a('string');",
 							"    pm.expect(response[0]).to.have.property('deliveryPrice').and.to.be.a('number');",
 							"    pm.expect(response[0]).to.have.property('packPrice').and.to.be.a('number');",
-							"    pm.expect(response[0]).to.have.property('imgUrl').and.to.be.a('string');",
-							"    pm.expect(response[0]).to.have.property('categoryId').and.to.be.a('number');",
+							"    pm.expect(response[0]).to.have.property('imageUrl').and.to.be.a('string');",
+							"    pm.expect(response[0]).to.have.property('category').and.to.be.a('number');",
 							"});",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"url": "{{BASE_URL}}/{{API_VERSION}}/restaurants/index",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "{{HEADER_CONTENT_TYPE}}",
-						"description": ""
+						"value": "{{HEADER_CONTENT_TYPE}}"
 					},
 					{
 						"key": "Accept",
-						"value": "{{HEADER_ACCEPT}}",
-						"description": ""
+						"value": "{{HEADER_ACCEPT}}"
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer {{ACCESS_TOKEN}}",
-						"description": ""
+						"value": "Bearer {{ACCESS_TOKEN}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
-				},
-				"description": ""
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/restaurants/index",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"restaurants",
+						"index"
+					]
+				}
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

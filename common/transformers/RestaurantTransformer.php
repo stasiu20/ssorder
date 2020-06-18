@@ -19,8 +19,8 @@ class RestaurantTransformer extends TransformerAbstract
             'name' => $data->restaurantName,
             'category' => $data->categoryId,
             'imageUrl' => null === $data->img_url ? null : FileServiceViewHelper::getRestaurantImageUrl($data->img_url),
-            'packPrice' => $data->pack_price,
-            'deliveryPrice' => $data->delivery_price,
+            'packPrice' => (float)$data->pack_price,
+            'deliveryPrice' => (float)$data->delivery_price,
             'telNumber' => $data->tel_number,
         ];
     }

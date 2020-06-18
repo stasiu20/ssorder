@@ -3,9 +3,9 @@ import { render } from 'react-dom';
 import SSOrderApp from '../core/components/SSOrderApp';
 import React from 'react';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import RestaurantCardsCollection from '../restaurant/components/restaurantCardCollection';
 import ProtectedRoute from '../core/components/protectedRouter';
 import PageLogin from './components/pageLogin';
+import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 
 $(function() {
     const $el = $('#react-pwa');
@@ -21,7 +21,7 @@ $(function() {
                         <h2 className="text-center mb-4">
                             To co dziś zamawiamy?!
                         </h2>
-                        <RestaurantCardsCollection restaurants={[]} />
+                        <RestaurantsFetch />
                     </ProtectedRoute>
                 </Switch>
             </Router>

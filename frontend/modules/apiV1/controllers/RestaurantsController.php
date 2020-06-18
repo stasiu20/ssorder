@@ -2,9 +2,11 @@
 
 namespace frontend\modules\apiV1\controllers;
 
+use common\resources\RestaurantResource;
 use frontend\models\Restaurants;
 use frontend\modules\apiV1\models\Food;
-use frontend\modules\apiV1\models\Restaurant;
+use League\Fractal\Manager;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
@@ -49,15 +51,16 @@ class RestaurantsController extends Controller
      *          description="Forbidden"
      *      )
      * )
-     * @return ActiveDataProvider
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
      */
-    public function actionIndex()
+    public function actionIndex(): array
     {
-        $restaurants = Restaurants::findActiveRestaurants();
-        $restaurants->modelClass = Restaurant::class;
-        return new ActiveDataProvider([
-            'query' => $restaurants
-        ]);
+        $restaurants = Restaurants::findActiveRestaurants()->all();
+
+        /** @var Manager $fractalManager */
+        $fractalManager = Yii::$container->get(Manager::class);
+        return $fractalManager->createData(RestaurantResource::factoryCollection($restaurants))->toArray();
     }
 
     /**

@@ -26,15 +26,15 @@ class Restaurant extends Restaurants
      *     example="1",
      * )
      * @OA\Property(
-     *     property="restaurantName",
-     *     title="restaurantName",
+     *     property="name",
+     *     title="name",
      *     type="string",
      *     description="Name of the restaurant",
      *     example="Pizza Pomidor",
      * )
      * @OA\Property(
-     *     property="phoneNumber",
-     *     title="phoneNumber",
+     *     property="telNumber",
+     *     title="telNumber",
      *     type="string",
      *     description="Restaurant's phone number",
      *     example="874585985",
@@ -55,13 +55,13 @@ class Restaurant extends Restaurants
      * )
      * @OA\Property(
      *     property="imageUrl",
-     *     title="imgUrl",
+     *     title="imageUrl",
      *     type="string",
      *     description="URL to restaurant image",
      *     example="/foo.png",
      * )
      * @OA\Property(
-     *     property="categoryId",
+     *     property="category",
      *     title="categoryId",
      *     type="integer",
      *     description="Category to which restaurant is assigned",
