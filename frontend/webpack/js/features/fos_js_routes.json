@@ -1,0 +1,35 @@
+{
+    "base_url": "",
+    "routes": {
+        "restaurant": {
+            "tokens": [["text", "/restaurants/details"]],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
+        },
+        "pwa-restaurant": {
+            "tokens": [
+                ["variable", "/", "[^/]+?", "id"],
+                ["text", "/menu"]
+            ],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
+        },
+        "order": {
+            "tokens": [["text", "/order/uwagi"]],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
+        },
+        "pwa-order": {
+            "tokens": [
+                ["variable", "/", "[^/]+?", "id"],
+                ["text", "/order"]
+            ],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
+        }
+    }
+}

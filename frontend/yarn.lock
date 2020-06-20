@@ -9546,6 +9546,11 @@ symbol-observable@^1.2.0:
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
   integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
+symfony-ts-router@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/symfony-ts-router/-/symfony-ts-router-1.0.6.tgz#eb24016145da3c53dd8f65d8e58d38d74edc9918"
+  integrity sha512-IxoNSkmHYUrDaovDgtqXjrCodqGQEMqbLiZq1wEvwfb4SqHIMr+qKjbxJGBeToEUUy7ZlBGE+RjfV75Uttb4tQ==
+
 synchronous-promise@^2.0.10:
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.12.tgz#219934f23c19c9aa716276cf2e1f8d4e5b04d07f"

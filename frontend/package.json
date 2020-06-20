@@ -84,6 +84,7 @@
     "reactstrap-formik": "^1.0.9",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "symfony-ts-router": "^1.0.6",
     "yup": "^0.28.5"
   }
 }
