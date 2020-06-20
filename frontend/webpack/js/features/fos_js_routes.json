@@ -30,6 +30,18 @@
             "defaults": {},
             "requirements": {},
             "hosttokens": []
+        },
+        "home": {
+            "tokens": [["text", "/"]],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
+        },
+        "pwa-home": {
+            "tokens": [["text", "/"]],
+            "defaults": {},
+            "requirements": {},
+            "hosttokens": []
         }
     }
 }

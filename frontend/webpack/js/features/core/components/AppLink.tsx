@@ -4,7 +4,7 @@ import { isPwaApp } from '../../utils';
 
 interface Props {
     to: string;
-    className: string;
+    className?: string;
 }
 
 const AppLink: React.FC<Props> = props => {

@@ -6,6 +6,7 @@ import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import ProtectedRoute from '../core/components/protectedRouter';
 import PageLogin from './components/pageLogin';
 import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
+import PageRestaurantMenu from './components/pageRestaurantMenu';
 
 $(function() {
     const $el = $('#react-pwa');
@@ -17,6 +18,9 @@ $(function() {
                     <Route path="/login">
                         <PageLogin />
                     </Route>
+                    <ProtectedRoute path="/menu/:restaurant" exact>
+                        <PageRestaurantMenu />
+                    </ProtectedRoute>
                     <ProtectedRoute path="/">
                         <h2 className="text-center mb-4">
                             To co dziś zamawiamy?!

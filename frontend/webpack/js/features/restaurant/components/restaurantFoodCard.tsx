@@ -5,6 +5,7 @@ import styles from './restaurantFoodCard.scss?module';
 import { useAppCtx } from '../../core/context/app';
 import { useIntl } from 'react-intl';
 import { generateUrl } from '../../utils';
+import Currency from './currency';
 
 interface Props {
     food: Food;
@@ -29,7 +30,7 @@ const RestaurantFoodCard: React.FC<Props> = props => {
                 }
             >
                 <span className={`${styles['food-card__price']}`}>
-                    {inlt.formatNumber(food.foodPrice)}
+                    <Currency value={food.foodPrice} />
                 </span>
                 <AppLink
                     to={generateUrl('order', { id: food.id })}

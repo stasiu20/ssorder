@@ -12,7 +12,7 @@ export function isPwaApp(): boolean {
 
 export function generateUrl(
     routerName: ROUTE_NAME,
-    params: Record<string, number | string>,
+    params: Record<string, number | string> = {},
 ): string {
     if (isPwaApp()) {
         routerName = `pwa-${routerName.toString()}` as ROUTE_NAME;
