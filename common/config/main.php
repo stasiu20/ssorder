@@ -85,7 +85,7 @@ return [
                 return new \League\Fractal\Manager();
             },
             CreateOrder::class => function (Container $container, $params, $config) {
-                return new CreateOrder(Yii::$app->order);
+                return new CreateOrder(Yii::$app->order, new \common\repositories\MenuRepository());
             },
         ]
     ],
