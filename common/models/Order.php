@@ -12,10 +12,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * This is the model class for table "order".
  *
  * @property integer $id
- * @property integer $foodId
+ * @property integer|string $foodId
  * @property integer $userId
  * @property integer $status
- * @property integer $restaurantId
+ * @property integer|string $restaurantId
  * @property float $price
  * @property float $pay_amount
  * @property float $total_price

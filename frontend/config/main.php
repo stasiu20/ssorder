@@ -249,6 +249,7 @@ return [
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 'v1/restaurants' => 'apiV1/restaurants/index',
                 'v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
+                'POST v1/orders' => 'apiV1/order/create',
                 'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
             ],
         ],

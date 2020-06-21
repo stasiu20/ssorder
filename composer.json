@@ -103,7 +103,7 @@
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
-        "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./frontend/",
+        "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./common ./frontend/",
         "redoc": "npx redoc-cli bundle -o docs/redoc/index.html docs/openapi.yml",
         "all": [
             "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"
