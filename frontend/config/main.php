@@ -261,7 +261,7 @@ return [
             'cspDirectives' => [
                 'script-src' => "'self' 'unsafe-inline' www.google-analytics.com",
                 'style-src' => "'self' 'unsafe-inline' fonts.googleapis.com",
-                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl",
+                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl stats.g.doubleclick.net",
                 'connect-src' => '*',
                 'font-src' => '* data:',
                 'object-src' => '*',
