@@ -7,6 +7,7 @@ import ProtectedRoute from '../core/components/protectedRouter';
 import PageLogin from './components/pageLogin';
 import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
+import PageMakeOrder from './components/pageMakeOrder';
 
 $(function() {
     const $el = $('#react-pwa');
@@ -18,6 +19,9 @@ $(function() {
                     <Route path="/login">
                         <PageLogin />
                     </Route>
+                    <ProtectedRoute path="/order/:foodId" exact>
+                        <PageMakeOrder />
+                    </ProtectedRoute>
                     <ProtectedRoute path="/menu/:restaurant" exact>
                         <PageRestaurantMenu />
                     </ProtectedRoute>
