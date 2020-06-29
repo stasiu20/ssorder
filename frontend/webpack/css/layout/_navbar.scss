@@ -1,6 +1,12 @@
 .navbar {
     background-color: $color-primary;
     color: $color-white;
+    transform: translateY(-100%);
+    transition: all 0.3s;
+
+    &--visible {
+        transform: translateY(0);
+    }
 
     .nav-link {
         transition: all 0.7s;

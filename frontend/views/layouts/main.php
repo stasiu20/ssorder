@@ -44,10 +44,11 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
+        'id' => 'navbar',
         'brandLabel' => '<img src="/image/sensilabs-logo.png">',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-dark sticky-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark sticky-top navbar--visible',
         ],
     ]);
     if (Yii::$app->user->isGuest) {

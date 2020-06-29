@@ -8,12 +8,14 @@ import PageLogin from './components/pageLogin';
 import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
 import PageMakeOrder from './components/pageMakeOrder';
+import ToggleNavbarOnScroll from './components/toggleNavbarOnScroll';
 
 $(function() {
     const $el = $('#react-pwa');
 
     render(
         <SSOrderApp>
+            <ToggleNavbarOnScroll />
             <Router>
                 <Switch>
                     <Route path="/login">
