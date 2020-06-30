@@ -3,6 +3,8 @@
     color: $color-white;
     transform: translateY(-100%);
     transition: all 0.3s;
+    position: fixed;
+    width: 100%;
 
     &--visible {
         transform: translateY(0);
@@ -29,4 +31,8 @@
             border-bottom: 3px solid $color-white;
         }
     }
+}
+
+body {
+    margin-top: 78px;
 }
