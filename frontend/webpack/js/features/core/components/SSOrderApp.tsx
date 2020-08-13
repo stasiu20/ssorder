@@ -5,6 +5,7 @@ import { store } from '../redux';
 import { IntlProvider } from 'react-intl';
 import { getMessages } from '../translations/pl';
 import { AppCtxProvider } from '../context/app';
+import { ServiceContainerCtxProvider } from '../context/serviceContainer';
 
 const SSOrderApp: React.FC = props => {
     const messages = getMessages();
@@ -12,9 +13,11 @@ const SSOrderApp: React.FC = props => {
         <React.StrictMode>
             <ErrorBoundary>
                 <Provider store={store}>
-                    <IntlProvider locale={'pl'} messages={messages}>
-                        <AppCtxProvider>{props.children}</AppCtxProvider>
-                    </IntlProvider>
+                    <ServiceContainerCtxProvider>
+                        <IntlProvider locale={'pl'} messages={messages}>
+                            <AppCtxProvider>{props.children}</AppCtxProvider>
+                        </IntlProvider>
+                    </ServiceContainerCtxProvider>
                 </Provider>
             </ErrorBoundary>
         </React.StrictMode>

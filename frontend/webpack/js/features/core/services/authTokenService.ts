@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 
-class AuthTokenService {
+export class AuthTokenService {
     private _subject = new BehaviorSubject<boolean>(false);
 
     constructor() {

@@ -1,20 +1,26 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { useFetch } from 'react-async';
+import { useAsync } from 'react-async';
 import RestaurantCardsCollection from './restaurantCardCollection';
 import { Restaurant } from '../types';
-import authTokenService from '../../core/services/authTokenService';
+import { useServiceContainer } from '../../core/context/serviceContainer';
+import ApiService from '../../core/services/ApiService';
+
+const asyncFn = (
+    props: { apiService: ApiService },
+    { signal }: AbortController,
+): Promise<{ data: Restaurant[] }> => {
+    return props.apiService.fetchRestaurant(signal);
+};
 
 const RestaurantsFetch: React.FC = () => {
-    // todo mmo custom hook
-    const token = authTokenService.getToken();
-    const { data, error, isPending } = useFetch<{ data: Restaurant[] }>(
-        '/v1/restaurants',
-        { headers: { Authorization: `Bearer ${token}` } },
+    const serviceContainer = useServiceContainer();
+    const { data, error, isPending } = useAsync<{ data: Restaurant[] }>(
+        asyncFn as any,
         {
             onReject: () =>
                 toast.error('Error during fetching', { autoClose: false }),
-            json: true,
+            apiService: serviceContainer.apiService,
         },
     );
 
