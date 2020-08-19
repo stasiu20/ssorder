@@ -5,6 +5,7 @@ import RestaurantCardsCollection from './restaurantCardCollection';
 import { Restaurant } from '../types';
 import { useServiceContainer } from '../../core/context/serviceContainer';
 import ApiService from '../../core/services/ApiService';
+import FetchError from '../../pwa/components/fetchError';
 
 const asyncFn = (
     props: { apiService: ApiService },
@@ -25,7 +26,13 @@ const RestaurantsFetch: React.FC = () => {
     );
 
     if (isPending) return <span>Loading...</span>;
-    if (error) return <span>{`Something went wrong: ${error.message}`}</span>;
+    if (error) {
+        return (
+            <FetchError
+                error={error}
+            >{`Something went wrong: ${error.message}`}</FetchError>
+        );
+    }
     if (data) {
         return (
             <div className={'row'}>
