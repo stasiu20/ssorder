@@ -9,7 +9,7 @@ interface Props {
 }
 
 const is401ResponseError = (error: Error): boolean =>
-    error instanceof ResponseError && error.response.status === 401;
+    error instanceof ResponseError && error.is401Response;
 
 const FetchError: React.FC<Props> = props => {
     const { error } = props;

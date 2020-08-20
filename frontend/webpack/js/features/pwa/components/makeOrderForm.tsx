@@ -1,10 +1,11 @@
 import React from 'react';
-import { FormikProps, Formik, Form, Field } from 'formik';
+import { FormikProps, Formik, Form, Field, FormikHelpers } from 'formik';
 import { useAsync } from 'react-async';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
-import authTokenService from '../../core/services/authTokenService';
+import { useServiceContainer } from '../../core/context/serviceContainer';
+import ApiService from '../../core/services/ApiService';
 
 interface Values {
     remarks: string;
@@ -20,47 +21,39 @@ const validationSchema = Yup.object<Partial<Values>>({
     remarks: Yup.string(),
 });
 
-const submitForm = (args, props, { signal }): Promise<void> => {
-    const token = authTokenService.getToken();
-
+const submitForm = (
+    args,
+    props: { apiService: ApiService; foodId: number },
+): Promise<void> => {
     // Still waiting for https://github.com/async-library/react-async/pull/247
-    const [values, setSubmitting] = args as [
-        Values,
-        (isSubmitting: boolean) => void,
-    ];
-    const headers = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-    };
-    return fetch('/v1/orders', {
-        signal,
-        headers,
-        method: 'POST',
-        body: JSON.stringify({ ...values, foodId: 75 }),
-    })
-        .then(res => (res.ok ? res : Promise.reject(res)))
-        .then(res => res.json())
-        .finally(() => setSubmitting(false));
+    const [values, formikHelpers] = args as [Values, FormikHelpers<Values>];
+
+    return props.apiService
+        .createOrder(props.foodId, values.remarks)
+        .finally(() => formikHelpers.setSubmitting(false));
 };
 
 const MakeOrderForm: React.FC<Props> = props => {
+    const serviceContainer = useServiceContainer();
     const { initialValues } = props;
     const { run } = useAsync<void>({
-        deferFn: submitForm,
+        deferFn: submitForm as any,
         onReject: () =>
             toast('Error during saving', { type: 'error', autoClose: false }),
         onResolve: () => {
             toast('Order saved!', { type: 'success' });
             props.onSuccess();
         },
+        apiService: serviceContainer.apiService,
+        foodId: props.foodId,
+        watch: props.foodId,
     });
 
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }): void => {
-                run(values, setSubmitting);
+            onSubmit={(values, formikHelpers): void => {
+                run(values, formikHelpers, serviceContainer.apiService);
             }}
             validationSchema={validationSchema}
         >

@@ -1,6 +1,6 @@
 import HttpService from './httpService';
 import { AuthTokenService } from './authTokenService';
-import { Restaurant } from '../../restaurant/types';
+import { Food, Restaurant } from '../../restaurant/types';
 
 export default class ApiService {
     private httpService: HttpService;
@@ -17,5 +17,27 @@ export default class ApiService {
             '/v1/restaurants',
             { headers: { Authorization: `Bearer ${token}` }, signal },
         );
+    }
+
+    fetchRestaurantMenu(restaurantId: number, signal: AbortSignal) {
+        const token = this.authTokenService.getToken();
+        return this.httpService.request<{ data: Food[] }>(
+            `/v1/restaurants/${restaurantId}/foods`,
+            { headers: { Authorization: `Bearer ${token}` }, signal },
+        );
+    }
+
+    createOrder(foodId: number, remarks = '') {
+        const token = this.authTokenService.getToken();
+        const headers = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        };
+        return this.httpService.request<void>('/v1/orders', {
+            headers,
+            method: 'POST',
+            body: JSON.stringify({ remarks: remarks, foodId: foodId }),
+        });
     }
 }

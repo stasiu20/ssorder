@@ -28,9 +28,9 @@ const RestaurantsFetch: React.FC = () => {
     if (isPending) return <span>Loading...</span>;
     if (error) {
         return (
-            <FetchError
-                error={error}
-            >{`Something went wrong: ${error.message}`}</FetchError>
+            <FetchError error={error}>
+                {`Something went wrong: ${error.message}`}
+            </FetchError>
         );
     }
     if (data) {

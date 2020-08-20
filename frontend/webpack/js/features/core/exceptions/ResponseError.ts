@@ -10,4 +10,8 @@ export default class ResponseError extends Error {
     get response(): Response {
         return this._response;
     }
+
+    get is401Response(): boolean {
+        return this.response.status === 401;
+    }
 }
