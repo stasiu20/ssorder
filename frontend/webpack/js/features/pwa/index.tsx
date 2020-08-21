@@ -9,6 +9,7 @@ import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
 import PageMakeOrder from './components/pageMakeOrder';
 import ToggleNavbarOnScroll from './components/toggleNavbarOnScroll';
+import InitPWA from './components/initPwa';
 
 $(function() {
     const $el = $('#react-pwa');
@@ -16,25 +17,27 @@ $(function() {
     render(
         <SSOrderApp>
             <ToggleNavbarOnScroll />
-            <Router>
-                <Switch>
-                    <Route path="/login">
-                        <PageLogin />
-                    </Route>
-                    <ProtectedRoute path="/order/:foodId" exact>
-                        <PageMakeOrder />
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/menu/:restaurant" exact>
-                        <PageRestaurantMenu />
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/">
-                        <h2 className="text-center mb-4">
-                            To co dziś zamawiamy?!
-                        </h2>
-                        <RestaurantsFetch />
-                    </ProtectedRoute>
-                </Switch>
-            </Router>
+            <InitPWA>
+                <Router>
+                    <Switch>
+                        <Route path="/login">
+                            <PageLogin />
+                        </Route>
+                        <ProtectedRoute path="/order/:foodId" exact>
+                            <PageMakeOrder />
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/menu/:restaurant" exact>
+                            <PageRestaurantMenu />
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/">
+                            <h2 className="text-center mb-4">
+                                To co dziś zamawiamy?!
+                            </h2>
+                            <RestaurantsFetch />
+                        </ProtectedRoute>
+                    </Switch>
+                </Router>
+            </InitPWA>
         </SSOrderApp>,
         $el.get(0),
     );

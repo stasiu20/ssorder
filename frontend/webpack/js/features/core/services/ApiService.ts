@@ -1,6 +1,7 @@
 import HttpService from './httpService';
 import { AuthTokenService } from './authTokenService';
-import { Food, Restaurant } from '../../restaurant/types';
+import { Food, Restaurant, RestaurantCategory } from '../../restaurant/types';
+import { DictRestaurantCategories } from '../redux/dictionary/types';
 
 export default class ApiService {
     private httpService: HttpService;
@@ -9,6 +10,25 @@ export default class ApiService {
     constructor(httpService: HttpService, authTokenService: AuthTokenService) {
         this.httpService = httpService;
         this.authTokenService = authTokenService;
+    }
+
+    fetchRestaurantCategoriesDict(
+        signal: AbortSignal,
+    ): Promise<DictRestaurantCategories> {
+        const token = this.authTokenService.getToken();
+        return this.httpService
+            .request<{ data: RestaurantCategory[] }>('/v1/dict/categories', {
+                headers: { Authorization: `Bearer ${token}` },
+                signal,
+            })
+            .then(data => {
+                const result = {};
+                data.data.forEach(item => {
+                    result[item.id] = item.name;
+                });
+
+                return result;
+            });
     }
 
     fetchRestaurant(signal: AbortSignal) {

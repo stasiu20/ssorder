@@ -15,3 +15,8 @@ export interface Food {
     foodInfo: string;
     foodPrice: number;
 }
+
+export interface RestaurantCategory {
+    id: number;
+    name: string;
+}
