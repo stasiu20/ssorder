@@ -31,8 +31,8 @@ class RestaurantTransformerTest extends Unit
         $this->assertArrayHasKey('deliveryPrice', $array);
         $this->assertArrayHasKey('telNumber', $array);
 
-        if (null === $restaurant->img_url) {
-            $this->assertEquals($restaurant->img_url, $array['imageUrl']);
+        if (empty($restaurant->img_url)) {
+            $this->assertNull($array['imageUrl']);
         } else {
             $this->assertStringEndsWith($restaurant->img_url, $array['imageUrl']);
         }
@@ -62,6 +62,15 @@ class RestaurantTransformerTest extends Unit
         $restaurant2->delivery_price = 3;
         $restaurant2->tel_number = '741-852-852';
         $restaurant2->img_url = 'test.jpg';
+
+        $restaurant3 = new RestaurantFake();
+        $restaurant3->id = 3;
+        $restaurant3->restaurantName = 'bar';
+        $restaurant3->categoryId = 3;
+        $restaurant3->pack_price = 3;
+        $restaurant3->delivery_price = 2;
+        $restaurant3->tel_number = '741-852-963';
+        $restaurant3->img_url = '';
 
         $restaurant3 = new RestaurantFake();
 
