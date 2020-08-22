@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "d9ab6fb8-5861-4fb3-ad87-6e0020c23812",
+		"name": "ssorder dicts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth - success login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Udane logowanie\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('type').to.eql('auth');",
+							"    pm.expect(response).to.have.property('data').and.to.be.a('string');",
+							"    ",
+							"    pm.environment.set(\"ACCESS_TOKEN\", response.data);",
+							"});",
+							""
+						],
+						"id": "06e3604a-a32b-4d0c-aee3-6672588a171d"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}"
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"session",
+						"login"
+					]
+				},
+				"description": "success log in"
+			},
+			"response": []
+		},
+		{
+			"name": "Dict - categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "40a77c77-eeba-4db0-9719-6c82f43420c2",
+						"exec": [
+							"pm.test(\"Dict restaurant categories\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be",
+							"",
+							"    var response = pm.response.json().data;",
+							"    pm.expect(response).to.be.a('array');",
+							"    ",
+							"    pm.expect(response[0]).to.be.a('object');",
+							"    pm.expect(response[0]).to.have.property('id').and.to.be.a('number');",
+							"    pm.expect(response[0]).to.have.property('name').and.to.be.a('string');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}"
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ACCESS_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/dictionaries/categories",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"dictionaries",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

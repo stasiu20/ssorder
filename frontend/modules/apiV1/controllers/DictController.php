@@ -28,7 +28,7 @@ class DictController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/dict/categories",
+     *      path="/dictionaries/categories",
      *      operationId="getRestaurantCategories",
      *      tags={"Dict"},
      *      summary="Get dict of restaurant categories",

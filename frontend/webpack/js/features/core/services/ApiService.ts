@@ -17,10 +17,13 @@ export default class ApiService {
     ): Promise<DictRestaurantCategories> {
         const token = this.authTokenService.getToken();
         return this.httpService
-            .request<{ data: RestaurantCategory[] }>('/v1/dict/categories', {
-                headers: { Authorization: `Bearer ${token}` },
-                signal,
-            })
+            .request<{ data: RestaurantCategory[] }>(
+                '/v1/dictionaries/categories',
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    signal,
+                },
+            )
             .then(data => {
                 const result = {};
                 data.data.forEach(item => {
