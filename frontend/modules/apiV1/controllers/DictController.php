@@ -26,6 +26,30 @@ class DictController extends Controller
         return $parent;
     }
 
+    /**
+     * @OA\Get(
+     *      path="/dict/categories",
+     *      operationId="getRestaurantCategories",
+     *      tags={"Dict"},
+     *      summary="Get dict of restaurant categories",
+     *      description="Returns dict of restaurant categories",
+     *      security={{"jwtToken": {}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/RestaurantCategory"),
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     * )
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\di\NotInstantiableException
+     */
     public function actionCategories()
     {
         /** @var Category[] $categories */
