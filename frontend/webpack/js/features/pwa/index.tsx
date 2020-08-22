@@ -17,8 +17,8 @@ $(function() {
     render(
         <SSOrderApp>
             <ToggleNavbarOnScroll />
-            <InitPWA>
-                <Router>
+            <Router>
+                <InitPWA>
                     <Switch>
                         <Route path="/login">
                             <PageLogin />
@@ -36,8 +36,8 @@ $(function() {
                             <RestaurantsFetch />
                         </ProtectedRoute>
                     </Switch>
-                </Router>
-            </InitPWA>
+                </InitPWA>
+            </Router>
         </SSOrderApp>,
         $el.get(0),
     );
