@@ -87,6 +87,7 @@
     "libphonenumber-js": "^1.7.38",
     "popper.js": "^1.16.1",
     "react-async": "^10.0.1",
+    "react-error-boundary": "^3.0.2",
     "react-intl": "^4.5.10",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",

@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorBoundary from './errorBoundary';
+import AppErrorBoundary from './ErrorBoundary';
 import { Provider } from 'react-redux';
 import { store } from '../redux';
 import { IntlProvider } from 'react-intl';
@@ -11,7 +11,7 @@ const SSOrderApp: React.FC = props => {
     const messages = getMessages();
     return (
         <React.StrictMode>
-            <ErrorBoundary>
+            <AppErrorBoundary>
                 <Provider store={store}>
                     <ServiceContainerCtxProvider>
                         <IntlProvider locale={'pl'} messages={messages}>
@@ -19,7 +19,7 @@ const SSOrderApp: React.FC = props => {
                         </IntlProvider>
                     </ServiceContainerCtxProvider>
                 </Provider>
-            </ErrorBoundary>
+            </AppErrorBoundary>
         </React.StrictMode>
     );
 };
