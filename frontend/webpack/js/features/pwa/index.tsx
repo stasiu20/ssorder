@@ -8,11 +8,19 @@ import PageLogin from './components/pageLogin';
 import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
 import PageMakeOrder from './components/pageMakeOrder';
-import ToggleNavbarOnScroll from './components/toggleNavbarOnScroll';
 import InitPWA from './components/initPwa';
+import AppNavbar from './components/navbar';
+import ToggleNavbarOnScroll from './components/toggleNavbarOnScroll';
 
 $(function() {
     const $el = $('#react-pwa');
+
+    render(
+        <>
+            <AppNavbar />
+        </>,
+        document.getElementById('react-navbar'),
+    );
 
     render(
         <SSOrderApp>
