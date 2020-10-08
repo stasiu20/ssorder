@@ -1,32 +1,13 @@
 import React from 'react';
-import ApiService from '../services/ApiService';
-import authTokenService, {
-    AuthTokenService,
-} from '../services/authTokenService';
-import HttpService from '../services/httpService';
-
-interface AppServiceContainer {
-    apiService: ApiService;
-    authTokenService: AuthTokenService;
-}
-
-function factoryServiceContainer(): AppServiceContainer {
-    const apiService = new ApiService(new HttpService(), authTokenService);
-    return {
-        apiService,
-        authTokenService: authTokenService,
-    };
-}
+import { AppServiceContainer, ContainerService } from '../ServiceContainer';
 
 const ServiceContainerContext = React.createContext<
     AppServiceContainer | undefined
 >(undefined);
 
 const ServiceContainerCtxProvider: React.FC = ({ children }) => {
-    const ctx = factoryServiceContainer();
-
     return (
-        <ServiceContainerContext.Provider value={ctx}>
+        <ServiceContainerContext.Provider value={ContainerService}>
             {children}
         </ServiceContainerContext.Provider>
     );

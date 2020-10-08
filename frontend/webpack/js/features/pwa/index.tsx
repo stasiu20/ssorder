@@ -26,25 +26,23 @@ $(function() {
         <SSOrderApp>
             <ToggleNavbarOnScroll />
             <Router>
-                <InitPWA>
-                    <Switch>
-                        <Route path="/login">
-                            <PageLogin />
-                        </Route>
-                        <ProtectedRoute path="/order/:foodId" exact>
-                            <PageMakeOrder />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/menu/:restaurant" exact>
-                            <PageRestaurantMenu />
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/">
-                            <h2 className="text-center mb-4">
-                                To co dziś zamawiamy?!
-                            </h2>
-                            <RestaurantsFetch />
-                        </ProtectedRoute>
-                    </Switch>
-                </InitPWA>
+                <Switch>
+                    <Route path="/login">
+                        <PageLogin />
+                    </Route>
+                    <ProtectedRoute path="/order/:foodId" exact>
+                        <PageMakeOrder />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/menu/:restaurant" exact>
+                        <PageRestaurantMenu />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/">
+                        <h2 className="text-center mb-4">
+                            To co dziś zamawiamy?!
+                        </h2>
+                        <RestaurantsFetch />
+                    </ProtectedRoute>
+                </Switch>
             </Router>
         </SSOrderApp>,
         $el.get(0),

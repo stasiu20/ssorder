@@ -16,10 +16,11 @@ const reducer: Reducer<DictionaryState, DictionaryActions> = (
     switch (action.type) {
         case ACTIONS_DICT.SET_RESTAURANT_CAT:
             return { ...state, restaurantCategories: action.categories };
+        case ACTIONS_DICT.FETCH_RESTAURANT_CAT:
+            return { ...state, fetchingRestaurant: action.flag };
         default:
+            neverReached(action);
             return state;
-        // neverReached(action);
-        // break;
     }
 };
 

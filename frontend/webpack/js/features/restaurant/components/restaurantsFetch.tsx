@@ -6,6 +6,8 @@ import { Restaurant } from '../types';
 import { useServiceContainer } from '../../core/context/serviceContainer';
 import ApiService from '../../core/services/ApiService';
 import FetchError from '../../pwa/components/fetchError';
+import { useDispatch } from 'react-redux';
+import { fetchRestaurantCategoriesActionCreator } from '../../core/redux/dictionary/actions';
 
 const asyncFn = (
     props: { apiService: ApiService },
@@ -16,6 +18,9 @@ const asyncFn = (
 
 const RestaurantsFetch: React.FC = () => {
     const serviceContainer = useServiceContainer();
+    const dispatch = useDispatch();
+    dispatch(fetchRestaurantCategoriesActionCreator());
+
     const { data, error, isPending } = useAsync<{ data: Restaurant[] }>(
         asyncFn as any,
         {
