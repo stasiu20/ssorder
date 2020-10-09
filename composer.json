@@ -32,7 +32,6 @@
         "kartik-v/yii2-date-range": "^1.6",
         "bt/rocketchat-php": "^1.1",
         "theiconic/php-ga-measurement-protocol": "^2.0",
-        "spomky-labs/jose": "^6.1",
         "lcobucci/jwt": "^3.3",
         "symfony/dotenv": "^3.4",
         "aws/aws-sdk-php": "^3.24.3",
@@ -51,7 +50,9 @@
         "laminas/laminas-diagnostics": "^1.6",
         "moneyphp/money": "^3.3",
         "myclabs/php-enum": "^1.7",
-        "hyperia/yii2-secure-headers": "^1.1"
+        "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
+        "league/fractal": "^0.19.2",
+        "minishlink/web-push": "^5.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -102,7 +103,7 @@
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
-        "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./frontend/",
+        "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./common ./frontend/",
         "redoc": "npx redoc-cli bundle -o docs/redoc/index.html docs/openapi.yml",
         "all": [
             "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"

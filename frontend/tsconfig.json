@@ -6,11 +6,17 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
     "plugins": [
       { "name": "typescript-plugin-css-modules" }
     ]
   },
   "include": [
     "webpack/js/**/*"
+  ],
+  "exclude": [
+    "webpack/js/**/*.spec.ts",
+    "webpack/js/**/*.spec.tsx",
+    "node_modules/"
   ]
 }

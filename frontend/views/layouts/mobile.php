@@ -36,7 +36,7 @@ AppAsset::register($this);
 <header>
     <nav class="navbar navbar-inverse px-4">
         <div class="d-flex flex-column flex-md-row justify-content-sm-between">
-            <a class="navbar-brand align-self-center" href="/"><img src="/image/sensilabs-logo.png"></a>
+            <a class="navbar-brand align-self-center" href="/"><img alt="logo" src="/image/sensilabs-logo.png"></a>
             <h1 class="align-self-center"><?= $this->title ?></h1>
             <p></p>
         </div>

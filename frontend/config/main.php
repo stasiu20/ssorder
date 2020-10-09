@@ -247,8 +247,10 @@ return [
                 //'/<id:\d+>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
                   //'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                'v1/dictionaries/categories' => 'apiV1/dict/categories',
                 'v1/restaurants' => 'apiV1/restaurants/index',
                 'v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
+                'POST v1/orders' => 'apiV1/order/create',
                 'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
             ],
         ],
@@ -260,7 +262,7 @@ return [
             'cspDirectives' => [
                 'script-src' => "'self' 'unsafe-inline' www.google-analytics.com",
                 'style-src' => "'self' 'unsafe-inline' fonts.googleapis.com",
-                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl",
+                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl stats.g.doubleclick.net",
                 'connect-src' => '*',
                 'font-src' => '* data:',
                 'object-src' => '*',
@@ -268,9 +270,10 @@ return [
                 'form-action' => '*',
                 'frame-src' => "'self'",
                 'child-src' => '*',
-                'worker-src' => "'self'"
+                'worker-src' => "'self'",
+                'manifest-src' => "'self'",
             ],
-//            'referrerPolicy' => 'no-referrer',
+            'referrerPolicy' => 'no-referrer',
         ]
     ],
     'params' => $params,

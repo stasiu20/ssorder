@@ -1,6 +1,14 @@
 .navbar {
     background-color: $color-primary;
     color: $color-white;
+    transform: translateY(-100%);
+    transition: all 0.3s;
+    position: fixed;
+    width: 100%;
+
+    &--visible {
+        transform: translateY(0);
+    }
 
     .nav-link {
         transition: all 0.7s;
@@ -23,4 +31,12 @@
             border-bottom: 3px solid $color-white;
         }
     }
+
+    &.navbar-dark .navbar-nav .nav-link {
+        color: $color-white;
+    }
+}
+
+body {
+    margin-top: 78px;
 }

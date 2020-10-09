@@ -39,6 +39,7 @@ phpunit.phar
 /frontend/runtime/debug
 /frontend/runtime/gii-2.0.10
 /frontend/tests/docs/
+/frontend/webpack/config.js
 
 /.runtime/
 /.env

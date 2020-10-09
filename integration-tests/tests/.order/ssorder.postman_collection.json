@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "58befb0e-76cc-4f05-bca1-6fcce4f4bac2",
+		"name": "ssorder new order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth - success login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Udane logowanie\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    var response = pm.response.json();",
+							"    pm.expect(response).to.be.a('object');",
+							"    pm.expect(response).to.have.property('type').to.eql('auth');",
+							"    pm.expect(response).to.have.property('data').and.to.be.a('string');",
+							"    ",
+							"    pm.environment.set(\"ACCESS_TOKEN\", response.data);",
+							"});",
+							""
+						],
+						"id": "8c5ff51f-77f1-4373-a8ee-fcc852471b40"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}"
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"{{userName}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/session/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"session",
+						"login"
+					]
+				},
+				"description": "success log in"
+			},
+			"response": []
+		},
+		{
+			"name": "New order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6f26a54-445d-4d7d-9f67-87a368bf4887",
+						"exec": [
+							"pm.test(\"New order\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.json;",
+							"",
+							"    var data = pm.response.json().data;",
+							"    pm.expect(data).to.be.a('object');",
+							"    ",
+							"    pm.expect(data).to.have.property('id').and.to.be.a('number');",
+							"    pm.expect(data).to.have.property('foodId').and.to.equal(Number(pm.variables.get(\"foodId\")));",
+							"    pm.expect(data).to.have.property('restaurantId').and.to.be.a('number');",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{HEADER_CONTENT_TYPE}}"
+					},
+					{
+						"key": "Accept",
+						"value": "{{HEADER_ACCEPT}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ACCESS_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"foodId\": \"{{foodId}}\",\n\t\"remarks\": \"Without sauce\"\n}\n"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/{{API_VERSION}}/orders",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"{{API_VERSION}}",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

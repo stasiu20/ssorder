@@ -3,15 +3,20 @@
 namespace common\transformers;
 
 use common\models\User;
+use League\Fractal\TransformerAbstract;
 
-class UserProfileTransformer implements Transformer
+class UserProfileTransformer extends TransformerAbstract
 {
     /**
-     * @param User $data
+     * @param User $user
      * @return array
      */
-    public function transform($data): array
+    public function transform(User $user): array
     {
-        return $data->toArray(['email', 'rocketchat_id']);
+        return [
+            'id' => $user->id,
+            'email' => $user->email,
+            'rocketchat_id' => $user->rocketchat_id,
+        ];
     }
 }

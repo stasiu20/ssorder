@@ -7,6 +7,8 @@ import styles from './restaurantCard.scss?module';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
 import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
+import AppLink from '../../core/components/AppLink';
+import { generateUrl } from '../../utils';
 
 interface Props {
     restaurant: Restaurant;
@@ -101,12 +103,14 @@ const RestaurantCard: React.FC<Props> = props => {
                 >
                     <div className={`${styles['app-card__side-container']}`}>
                         <h4 className="mb-2">{restaurant.name}</h4>
-                        <a
+                        <AppLink
                             className={`btn btn-light btn-lg`}
-                            href={`/restaurants/details?id=${restaurant.id}`}
+                            to={generateUrl('restaurant', {
+                                id: restaurant.id,
+                            })}
                         >
                             {appCtx.translate('Order')}
-                        </a>
+                        </AppLink>
                     </div>
                 </div>
             </div>

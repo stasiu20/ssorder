@@ -2,6 +2,7 @@
 
 namespace frontend\modules\apiV1;
 
+use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\filters\Cors;
@@ -23,8 +24,9 @@ class ApiV1Module extends \yii\base\Module
     public function init(): void
     {
         parent::init();
-        \Yii::$app->user->enableSession = false;
-        \Yii::$app->request->enableCsrfCookie = false;
+        Yii::$app->user->switchIdentity(null);
+        Yii::$app->user->enableSession = false;
+        Yii::$app->request->enableCsrfCookie = false;
     }
 
     public function behaviors()

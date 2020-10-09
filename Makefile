@@ -10,6 +10,7 @@ setup: .env
 	chmod 777 frontend/runtime
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
+	ln -s config-dev.js frontend/webpack/config.js
 	docker-compose up -d mongo
 	docker-compose run --rm wait -c mongo:27017 -t 15
 	docker-compose up -d mongo-init-replica

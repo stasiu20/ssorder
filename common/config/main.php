@@ -1,5 +1,6 @@
 <?php
 
+use common\services\actions\CreateOrder;
 use yii\queue\redis\Queue;
 use yii\queue\serializers\JsonSerializer;
 use yii\redis\Connection;
@@ -79,6 +80,12 @@ return [
                 ));
 
                 return $runner;
+            },
+            \League\Fractal\Manager::class => function (Container $container, $params, $config) {
+                return new \League\Fractal\Manager();
+            },
+            CreateOrder::class => function (Container $container, $params, $config) {
+                return new CreateOrder(Yii::$app->order, new \common\repositories\MenuRepository());
             },
         ]
     ],

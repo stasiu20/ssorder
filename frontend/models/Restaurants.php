@@ -24,6 +24,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property-read Category $category
  * @property-read Menu[] $menu
  * @property-read Imagesmenu[] $imagesmenu
+ * @property-read string|null $deletedAt
  * @method softDelete
  */
 class Restaurants extends ActiveRecord
@@ -55,6 +56,11 @@ class Restaurants extends ActiveRecord
     {
         $query = static::find();
         return $query->andWhere(['is', 'deletedAt', null]);
+    }
+
+    public function isActive(): bool
+    {
+        return null === $this->deletedAt;
     }
 
     /**

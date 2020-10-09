@@ -25,6 +25,7 @@ AppAsset::register($this);
 <html lang="pl">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/image/sensisoft.png" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,10 +44,11 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
+        'id' => 'navbar',
         'brandLabel' => '<img src="/image/sensilabs-logo.png">',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-dark sticky-top',
+            'class' => 'navbar navbar-expand-lg navbar-dark sticky-top navbar--visible',
         ],
     ]);
     if (Yii::$app->user->isGuest) {
