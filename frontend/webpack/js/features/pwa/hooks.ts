@@ -38,12 +38,10 @@ export function useApiFetch<T>(
     );
 }
 
-export function useScrollToggle(
-    element: HTMLElement,
-    toggleClassName: string,
-): void {
+export function useScrollToggle(defaultValue: boolean): boolean {
     /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
-    let prevScrollPos = usePreviousValue(0);
+    const [prevScrollPos, setCurrentScrollPos] = useState<number>(0);
+    const [visible, setVisible] = useState<boolean>(defaultValue);
     const tolerance = 30;
 
     const onWindowScrollHandler = useThrottledFn(() => {
@@ -54,17 +52,20 @@ export function useScrollToggle(
         }
 
         if (prevScrollPos <= currentScrollPos) {
-            element.classList.add(toggleClassName);
+            setVisible(true);
         } else {
-            element.classList.remove(toggleClassName);
+            setVisible(false);
         }
-        prevScrollPos = currentScrollPos;
-    }, 200);
+        setCurrentScrollPos(currentScrollPos);
+    }, 450);
 
     useEffect(() => {
         // don't forget to cancel debounced
-        return (): void => onWindowScrollHandler.cancel();
-    });
-
+        return (): void => {
+            onWindowScrollHandler.cancel();
+        };
+    }, []);
     useWindowScroll(onWindowScrollHandler);
+
+    return visible;
 }
