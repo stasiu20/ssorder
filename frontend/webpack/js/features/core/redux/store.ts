@@ -8,7 +8,7 @@ import {
 import thunk from 'redux-thunk';
 import { AppState } from './types';
 import { dictReducer } from './dictionary';
-import { ContainerService } from '../ServiceContainer';
+import { getContainerService } from '../ServiceContainer';
 
 // prettier-ignore
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +17,11 @@ function configureStore(): Store<AppState> {
     return createStore(
         combineReducers<AppState>({ dict: dictReducer }),
         composeEnhancers(
-            applyMiddleware(thunk.withExtraArgument({ ContainerService })),
+            applyMiddleware(
+                thunk.withExtraArgument({
+                    ContainerService: getContainerService(),
+                }),
+            ),
         ),
     );
 }

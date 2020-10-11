@@ -17,4 +17,8 @@ function factoryServiceContainer(): AppServiceContainer {
     };
 }
 
-export const ContainerService = factoryServiceContainer();
+const ContainerService = factoryServiceContainer();
+
+export function getContainerService(): AppServiceContainer {
+    return ContainerService;
+}

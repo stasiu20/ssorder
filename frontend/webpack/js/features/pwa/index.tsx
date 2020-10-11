@@ -1,4 +1,3 @@
-import LoginForm from '../user/components/loginForm';
 import { render } from 'react-dom';
 import SSOrderApp from '../core/components/SSOrderApp';
 import React from 'react';
@@ -8,23 +7,20 @@ import PageLogin from './components/pageLogin';
 import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
 import PageMakeOrder from './components/pageMakeOrder';
-import InitPWA from './components/initPwa';
 import AppNavbar from './components/navbar';
-import ToggleNavbarOnScroll from './components/toggleNavbarOnScroll';
 
 $(function() {
     const $el = $('#react-pwa');
 
     render(
-        <>
+        <SSOrderApp>
             <AppNavbar />
-        </>,
+        </SSOrderApp>,
         document.getElementById('react-navbar'),
     );
 
     render(
         <SSOrderApp>
-            <ToggleNavbarOnScroll />
             <Router>
                 <Switch>
                     <Route path="/login">

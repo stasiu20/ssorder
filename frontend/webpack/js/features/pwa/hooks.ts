@@ -1,4 +1,3 @@
-import authTokenService from '../core/services/authTokenService';
 import { useEffect, useState } from 'react';
 import { FetchOptions, useFetch } from 'react-async';
 import {
@@ -6,12 +5,14 @@ import {
     usePreviousValue,
     useThrottledFn,
 } from 'beautiful-react-hooks';
+import { useServiceContainer } from '../core/context/serviceContainer';
 
 export function useAuthStatus(): boolean {
+    const container = useServiceContainer();
     const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const subscription = authTokenService
+        const subscription = container.authTokenService
             .isAuthenticated$()
             .subscribe(value => {
                 setAuthenticated(value);
@@ -27,7 +28,8 @@ export function useApiFetch<T>(
     init: RequestInit,
     options: FetchOptions<T>,
 ) {
-    const token = authTokenService.getToken();
+    const container = useServiceContainer();
+    const token = container.authTokenService.getToken();
     return useFetch<T>(
         resource,
         // todo mmo merge headers

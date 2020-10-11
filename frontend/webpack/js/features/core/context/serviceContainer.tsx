@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppServiceContainer, ContainerService } from '../ServiceContainer';
+import { AppServiceContainer, getContainerService } from '../ServiceContainer';
 
 const ServiceContainerContext = React.createContext<
     AppServiceContainer | undefined
@@ -7,7 +7,7 @@ const ServiceContainerContext = React.createContext<
 
 const ServiceContainerCtxProvider: React.FC = ({ children }) => {
     return (
-        <ServiceContainerContext.Provider value={ContainerService}>
+        <ServiceContainerContext.Provider value={getContainerService()}>
             {children}
         </ServiceContainerContext.Provider>
     );
