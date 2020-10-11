@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '../../user/components/loginForm';
+import LoginForm from './loginForm';
 import { Redirect } from 'react-router-dom';
 import { useAuthStatus } from '../hooks';
 
