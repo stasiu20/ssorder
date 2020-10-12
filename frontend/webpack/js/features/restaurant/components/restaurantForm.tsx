@@ -15,8 +15,6 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
 import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
 import { AppContextType, useAppCtx } from '../../core/context/app';
-import definedMessages, { KEYS } from '../translation/pl';
-import { addMessages } from '../../core/translations/pl';
 
 interface Values {
     restaurantName: string;
@@ -101,12 +99,12 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
     const { run } = useAsync<RestaurantSaveResponse>({
         deferFn: submitForm,
         onReject: () =>
-            toast(app.translate('error' as KEYS), {
+            toast(app.translate('error'), {
                 type: 'error',
                 autoClose: false,
             }),
         onResolve: response => {
-            toast(app.translate('restaurantSaved' as KEYS), {
+            toast(app.translate('restaurantSaved'), {
                 type: 'success',
             });
             window.location.href = `/restaurants/${response.id}/update`;
@@ -129,25 +127,25 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         component={ReactstrapInput}
                         type="text"
                         name="restaurantName"
-                        label={app.translate('restaurantName' as KEYS)}
+                        label={app.translate('restaurantName')}
                         id="restaurantFormName"
                     />
                     <Field
                         component={FormFieldText}
                         name="tel_number"
-                        label={app.translate('phoneNumber' as KEYS)}
+                        label={app.translate('phoneNumber')}
                         type={CleavePhone}
                     />
                     <Field
                         component={FormFieldText}
                         name="delivery_price"
-                        label={app.translate('deliveryPrice' as KEYS)}
+                        label={app.translate('deliveryPrice')}
                         type={CleavePrice}
                     />
                     <Field
                         component={FormFieldText}
                         name="pack_price"
-                        label={app.translate('packPrice' as KEYS)}
+                        label={app.translate('packPrice')}
                         type={CleavePrice}
                     />
                     <Field
@@ -157,12 +155,10 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                             name: 'categoryId',
                             id: 'restaurantFormCategory',
                             options: mapCategoryDictToOptions(categories),
-                            defaultOption: app.translate(
-                                'chooseCategory' as KEYS,
-                            ),
+                            defaultOption: app.translate('chooseCategory'),
                         }}
                         placeholder="Category"
-                        label={app.translate('category' as KEYS)}
+                        label={app.translate('category')}
                     />
                     {props.restaurantId && (
                         <vaadin-upload
@@ -177,7 +173,7 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
                         type="submit"
                         className="btn btn-primary"
                     >
-                        {app.translate('save' as KEYS)}
+                        {app.translate('save')}
                     </button>
                 </Form>
             )}
@@ -186,5 +182,4 @@ const RestaurantForm: React.FunctionComponent<RestaurantFormProps> = props => {
 };
 
 RestaurantForm.defaultProps = {};
-addMessages(definedMessages);
 export default RestaurantForm;
