@@ -9,6 +9,7 @@ export type DictRestaurantCategories = Record<number, string>;
 
 export interface DictionaryState {
     readonly restaurantCategories: DictRestaurantCategories;
+    readonly fetchingRestaurant: boolean;
 }
 
 export interface SettingRestaurantCategoriesAction
