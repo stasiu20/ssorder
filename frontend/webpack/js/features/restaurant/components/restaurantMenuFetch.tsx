@@ -5,14 +5,14 @@ import RestaurantFoodCardCollection from './restaurantFoodCardCollection';
 import FetchError from '../../pwa/components/fetchError';
 import { useServiceContainer } from '../../core/context/serviceContainer';
 import { useAsync } from 'react-async';
-import ApiService from '../../core/services/ApiService';
+import { ApiServiceType } from '../../contract';
 
 interface Props {
     restaurantId: number;
 }
 
 const asyncFn = (
-    props: { apiService: ApiService; restaurantId: number },
+    props: { apiService: ApiServiceType; restaurantId: number },
     { signal }: AbortController,
 ): Promise<{ data: Food[] }> => {
     return props.apiService.fetchRestaurantMenu(props.restaurantId, signal);

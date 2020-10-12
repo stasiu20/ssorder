@@ -4,10 +4,10 @@ import authTokenService, {
 } from './services/authTokenService';
 import HttpService from './services/httpService';
 import { UserService } from './services/userService';
-import { UserServiceType } from '../contract';
+import { ApiServiceType, UserServiceType } from '../contract';
 
 export interface AppServiceContainer {
-    apiService: ApiService;
+    apiService: ApiServiceType;
     authTokenService: AuthTokenService;
     userService: UserServiceType;
 }
