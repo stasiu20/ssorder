@@ -32,20 +32,25 @@ $card-height: 400px;
     }
 
     &__show-more {
-        display: none;
+        display: none !important;
         text-transform: uppercase;
 
         @media screen and (hover: none) {
-            display: block;
+            display: block !important;
         }
     }
 
     &__details {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
         ul {
             margin: 0 auto;
             padding: 0;
             list-style: none;
             width: 75%;
+            flex-grow: 1;
             li {
                 text-align: center;
                 font-size: 0.9rem;
@@ -69,6 +74,8 @@ $card-height: 400px;
 
         &--front {
             background-color: #fff;
+            display: flex;
+            flex-direction: column;
         }
         &--back {
             background-image: linear-gradient(
