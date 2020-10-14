@@ -71,7 +71,10 @@
     "audit-ci": "audit-ci -m",
     "prettier": "prettier --check './webpack/**'",
     "stylelint": "stylelint ./webpack",
-    "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./webpack"
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./webpack",
+
+    "pwa:watch": "encore dev --config webpack-pwa.config.js --watch",
+    "pwa:build": "encore production --config webpack-pwa.config.js --progress"
   },
   "resolutions": {
     "**/**/acorn": "^7.1.1"

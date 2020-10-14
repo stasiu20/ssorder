@@ -2,10 +2,21 @@
 
 namespace frontend\assets;
 
+use yii\web\JqueryAsset;
+
 class PwaAsset extends WebpackAsset
 {
-    public $entryPoint = 'pwa';
+    /** @var string  */
+    public $entryPointsFile = '@webroot/assets/pwa/entrypoints.json';
+    /** @var string  */
+    public $entryPoint = 'app';
+
+    /** @var string  */
+    public $basePath = '@webroot/assets/pwa';
+    /** @var string  */
+    public $baseUrl = '@web/assets/pwa';
+
     public $depends = [
-        WebpackAsset::class,
+        JqueryAsset::class
     ];
 }
