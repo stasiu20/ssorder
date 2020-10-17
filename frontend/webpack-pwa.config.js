@@ -1,5 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
-// const WorkboxPlugin = require('workbox-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
@@ -82,19 +82,23 @@ Encore
     })
 ;
 
-// Encore.addPlugin(
-//     new WorkboxPlugin.InjectManifest({
-//         swSrc: './assets/js/sw.ts',
-//         swDest: '../sw.js',
-//         maximumFileSizeToCacheInBytes: 10485760,
-//         additionalManifestEntries: [
-//             { url: '/manifest.json', revision: calculateChecksum(path.resolve(__dirname, 'public/manifest.json')) },
-//             { url: '/assets/style.css', revision: calculateChecksum(path.resolve(__dirname, 'public/assets/style.css')) },
-//             { url: '/assets/pwa64.png', revision: calculateChecksum(path.resolve(__dirname, 'public/assets/pwa64.png')) },
-//             { url: '/assets/pwa128.png', revision: calculateChecksum(path.resolve(__dirname, 'public/assets/pwa128.png')) },
-//             { url: '/assets/pwa512.png', revision: calculateChecksum(path.resolve(__dirname, 'public/assets/pwa512.png')) },
-//         ],
-//     })
-// );
+Encore.addPlugin(
+    new WorkboxPlugin.InjectManifest({
+        swSrc: './webpack/js/sw.ts',
+        swDest: '../../sw.js',
+        maximumFileSizeToCacheInBytes: 10485760,
+        additionalManifestEntries: [
+            { url: '/manifest.json', revision: calculateChecksum(path.resolve(__dirname, 'web/manifest.json')) },
+            { url: '/image/icons/icon-72x72.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-72x72.png')) },
+            { url: '/image/icons/icon-96x96.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-96x96.png')) },
+            { url: '/image/icons/icon-128x128.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-128x128.png')) },
+            { url: '/image/icons/icon-144x144.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-144x144.png')) },
+            { url: '/image/icons/icon-152x152.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-152x152.png')) },
+            { url: '/image/icons/icon-192x192.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-192x192.png')) },
+            { url: '/image/icons/icon-384x384.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-384x384.png')) },
+            { url: '/image/icons/icon-512x512.png', revision: calculateChecksum(path.resolve(__dirname, 'web/image/icons/icon-512x512.png')) },
+        ],
+    }),
+);
 
 module.exports = Encore.getWebpackConfig();

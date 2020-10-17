@@ -8,7 +8,17 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "plugins": [
-      { "name": "typescript-plugin-css-modules" }
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "customMatcher": "\\.(c|sa|sc)ss\\?module$"
+        }
+      }
+    ],
+    "lib": [
+      "es6",
+      "webworker",
+      "dom"
     ]
   },
   "include": [

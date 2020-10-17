@@ -58,7 +58,8 @@
     "typescript": "^3.8.0",
     "typescript-plugin-css-modules": "^2.3.0",
     "webpack-bundle-analyzer": "^3.6.1",
-    "webpack-notifier": "^1.7.0"
+    "webpack-notifier": "^1.7.0",
+    "workbox-webpack-plugin": "^5.1.4"
   },
   "private": true,
   "scripts": {
@@ -72,7 +73,6 @@
     "prettier": "prettier --check './webpack/**'",
     "stylelint": "stylelint ./webpack",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./webpack",
-
     "pwa:watch": "encore dev --config webpack-pwa.config.js --watch",
     "pwa:build": "encore production --config webpack-pwa.config.js --progress"
   },
