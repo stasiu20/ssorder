@@ -102,7 +102,7 @@
         "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml",
         "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
         "phpcpd": "./vendor/bin/phpcpd --exclude=views/ ./frontend/ ./common/ ./console/",
-        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude api/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
         "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./common ./frontend/",

@@ -23,6 +23,25 @@ services:
             COMPOSER_AUTH: '{"github-oauth": {"github.com": "${COMPOSER_GITHUB_OAUTH}"}}'
             PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME:-ssorder.lvh.me}"
             XDEBUG_CONFIG: "remote_connect_back=0 remote_host=${MY_IP:-172.17.0.1} remote_enable=1"
+    api-web:
+        image: nginx:1.19-alpine
+        depends_on:
+            - api-fpm
+        labels:
+            traefik.backend: "ssorder-api"
+            traefik.frontend.rule: "Host:api.ssorder.lvh.me"
+        volumes:
+            - ./api:/var/www/html
+            - ./provision/nginx/vhost-api.conf:/etc/nginx/conf.d/default.conf
+    api-fpm:
+        image: php:7.3-fpm
+        volumes:
+            - ./api:/var/www/html
+        depends_on:
+          - mysql
+        environment:
+            PHP_IDE_CONFIG: "serverName=${DEV_SERVER_NAME:-api.ssorder.lvh.me}"
+            XDEBUG_CONFIG: "remote_connect_back=0 remote_host=${MY_IP:-172.17.0.1} remote_enable=1"
     cli:
         image: edbizarro/gitlab-ci-pipeline-php:7.3
         volumes:
