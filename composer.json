@@ -96,8 +96,8 @@
     "scripts": {
         "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
         "phpcf": "./vendor/bin/phpcf ./frontend/ console/ ./common/",
-        "codecept-common": "cd ./common && ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
-        "codecept-frontend": "cd ./frontend && ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
+        "codecept-common": "cd ./common && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
+        "codecept-frontend": "cd ./frontend && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
         "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
         "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./frontend/,./common/,./console/ text ./phpmd-ruleset.xml",
         "phploc": "./vendor/bin/phploc ./frontend/ ./common/ ./console/",
