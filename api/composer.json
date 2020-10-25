@@ -12,6 +12,19 @@
         "symfony/yaml": "5.1.*"
     },
     "require-dev": {
+        "ergebnis/phpstan-rules": "^0.15.2",
+        "escapestudios/symfony2-coding-standard": "^3.11",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpmd/phpmd": "^2.9",
+        "phpstan/phpstan": "^0.12.52",
+        "phpstan/phpstan-deprecation-rules": "^0.12.5",
+        "phpstan/phpstan-strict-rules": "^0.12.5",
+        "sebastian/phpcpd": "^6.0",
+        "sensiolabs/security-checker": "^6.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "timeweb/phpstan-enum": "^2.2",
+        "wapmorgan/php-code-fixer": "^2.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -42,13 +55,26 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
+        "phpcf": "./vendor/bin/phpcf ./src/",
+        "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
+        "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./src/ text ./phpmd-ruleset.xml",
+        "phploc": "./vendor/bin/phploc ./src/",
+        "phpcpd": "./vendor/bin/phpcpd ./src/",
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
+        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
+        "all": [
+            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan"
         ]
     },
     "conflict": {

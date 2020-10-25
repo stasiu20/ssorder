@@ -11,6 +11,16 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
+api_pipeline:
+  stage: qa
+  only:
+    changes:
+      - api/*
+  trigger:
+    include:
+      - local: api/.gitlab-ci.yml
+    strategy: depend
+
 commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
