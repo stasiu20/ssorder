@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react';
-import ApiService from '../../core/services/ApiService';
 import { useServiceContainer } from '../../core/context/serviceContainer';
 import { useAsync } from 'react-async';
 import { DictRestaurantCategories } from '../../core/redux/dictionary/types';
 import { useDispatch } from 'react-redux';
 import { setRestaurantCategoriesActionCreator } from '../../core/redux/dictionary/actions';
+import { ApiServiceType } from '../../contract';
 
 const asyncFn = (
-    props: { apiService: ApiService },
+    props: { apiService: ApiServiceType },
     { signal }: AbortController,
 ): Promise<DictRestaurantCategories> => {
     return props.apiService.fetchRestaurantCategoriesDict(signal);

@@ -37,7 +37,10 @@ export const fetchRestaurantCategoriesActionCreator = (): ThunkAction<
 > => {
     return function(dispatch, getStore, { ContainerService }): void {
         const store = getStore();
-        if (Object.keys(store.dict.restaurantCategories).length > 1) {
+        if (
+            store.dict.fetchingRestaurant ||
+            Object.keys(store.dict.restaurantCategories).length > 1
+        ) {
             return;
         }
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <rule ref="PSR2"/>
+    <!-- To list all Sniffers run ./vendor/bin/phpcs -e -->
+    <!-- Include some specific sniffs from the Generic standard -->
+    <rule ref="Generic.Commenting.Todo"/>
+    <!--    Forbid empty statements eg. CATCH block-->
+    <rule ref="Generic.CodeAnalysis.EmptyStatement">
+        <!-- But allow empty catch -->
+         <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCatch"/>
+    </rule>
+    <rule ref="Squiz.Commenting.EmptyCatchComment"/>
+
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="is_null" value="null"/>
+                <element key="create_function" value="null"/>
+                <element key="phpinfo" value="null"/>
+                <element key="var_dump" value="null"/>
+
+                <element key="chop" value="rtrim"/>
+                <element key="close" value="closedir"/>
+                <element key="compact" value="null"/>
+                <element key="delete" value="unset"/>
+                <element key="doubleval" value="floatval"/>
+                <element key="doubleval" value="floatval"/>
+                <element key="extract" value="null" />
+                <element key="fputs" value="fwrite" />
+                <element key="ini_alter" value="ini_set" />
+                <element key="is_double" value="is_float" />
+                <element key="is_integer" value="is_int" />
+                <element key="is_long" value="is_int" />
+                <element key="is_null" value="null" />
+                <element key="is_real" value="is_float" />
+                <element key="is_writeable" value="is_writable" />
+                <element key="join" value="implode" />
+                <element key="key_exists" value="array_key_exists" />
+                <element key="pos" value="current" />
+                <element key="settype" value="null" />
+                <element key="show_source" value="highlight_file" />
+                <element key="sizeof" value="count" />
+                <element key="strchr" value="strst" />
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.NoSilencedErrors">
+        <properties>
+            <property name="error" value="true" />
+        </properties>
+    </rule>
+
+    <!-- Run against the PHPCompatibility ruleset -->
+    <!-- Require phpcompatibility/php-compatibility package -->
+    <rule ref="PHPCompatibility"/>
+    <!-- Check for cross-version support for PHP 7.3 and higher. -->
+    <config name="testVersion" value="7.3-"/>
+    <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
+
+    <rule ref="PSR12"/>
+    <rule ref="./vendor/escapestudios/symfony2-coding-standard/Symfony/ruleset.xml">
+        <exclude name="Symfony.Commenting.FunctionComment.Missing"/>
+        <exclude name="Symfony.Commenting.ClassComment.Missing"/>
+        <exclude name="Symfony.Commenting.Annotations"/>
+        <exclude name="Symfony.Functions.Arguments"/>
+        <exclude name="Symfony.NamingConventions.ValidClassName"/>
+        <rule ref="Symfony.Formatting.BlankLineBeforeReturnSniff" />
+    </rule>
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true"/>
+            <property name="spacing" value="1"/>
+        </properties>
+    </rule>
+
+    <file>bin/</file>
+    <file>config/</file>
+    <file>public/</file>
+    <file>src/</file>
+    <!-- <file>tests/</file> -->
+    <exclude-pattern>public/index.php</exclude-pattern>
+    <exclude-pattern>config/preload.php</exclude-pattern>
+    <exclude-pattern>src/Kernel.php</exclude-pattern>
+    <exclude-pattern>src/Migrations/</exclude-pattern>
+</ruleset>

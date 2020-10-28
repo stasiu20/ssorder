@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset
+        name="mmo"
+        xmlns="http://www.addiks.net/xmlns/pmd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.addiks.net/xmlns/pmd http://files.addiks.de/xmlns/phpmd.xsd"
+        xsi:noNamespaceSchemaLocation=" http://files.addiks.de/xmlns/phpmd.xsd">
+    <description>Ruleset for ssorder API</description>
+
+
+    <rule ref="rulesets/cleancode.xml">
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/design.xml"/>
+
+    <!-- importing naming and excluding ShortVariable to be adjusted after -->
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortVariable"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml"/>
+        <exclude name="StaticAccess"/>
+    </rule>
+    <rule ref="rulesets/controversial.xml">
+        <exclude name="CamelCasePropertyName"/>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="minimum" value="2"/>
+            <property name="exceptions" description="Comma-separated list of exceptions" value="i"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/controversial.xml/CamelCasePropertyName">
+        <properties>
+            <property name="allow-underscore" value="true"/>
+        </properties>
+    </rule>
+</ruleset>

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { RouteProps } from 'react-router';
-import authTokenService from '../services/authTokenService';
+import { useServiceContainer } from '../context/serviceContainer';
 
 const ProtectedRoute: React.FC<RouteProps> = props => {
+    const container = useServiceContainer();
     const { children, ...rest } = props;
     return (
         <Route
             {...rest}
             render={({ location }): React.ReactNode =>
-                authTokenService.isAuthenticated() ? (
+                container.authTokenService.isAuthenticated() ? (
                     children
                 ) : (
                     <Redirect

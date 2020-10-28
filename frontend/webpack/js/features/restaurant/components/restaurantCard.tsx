@@ -1,8 +1,6 @@
 import React from 'react';
 import { Restaurant } from '../types';
 import { useAppCtx } from '../../core/context/app';
-import { addMessages } from '../../core/translations/pl';
-import definedMessages from '../translation/pl-card';
 import styles from './restaurantCard.scss?module';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../core/redux';
@@ -118,5 +116,4 @@ const RestaurantCard: React.FC<Props> = props => {
     );
 };
 
-addMessages(definedMessages);
 export default RestaurantCard;

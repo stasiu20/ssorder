@@ -7,18 +7,31 @@ const messages: Record<string, string> = {
     InvalidRocketChatId: 'Niepoprawny numer rocket chat',
     InvalidPasswordTooLong: 'Hasło zbyt długie',
     InvalidPasswordTooShort: 'Hasło zbyt krótkie',
+
+    update: 'Aktualizuj',
+    newPassword: 'Nowe hasło',
+    rocketchatId: 'Rocketchat ID',
+    email: 'Email',
+    error: 'Błąd podczas zapisu',
+    saved: 'Zapisano',
+    invalidEmail: 'Niepoprawny adres email',
+    invalidRocketChatId: 'Niepoprawny numer rocketchar',
+    passwordTooShort: 'Zbyt krótkie hasło',
+    passwordTooLong: 'Zbyt długie hasło',
+
+    Details: 'Szczegóły',
+    Order: 'Zamów',
+
+    restaurantSaved: 'Restauracja zapisana',
+    restaurantName: 'Nazwa restauracji',
+    phoneNumber: 'Numer telefonu',
+    deliveryPrice: 'Cena dostawy',
+    packPrice: 'Cena opakowania',
+    chooseCategory: 'Wybierz kategorię',
+    category: 'Kategoria',
+    save: 'Zapisz',
 };
 
 export function getMessages(): Readonly<Record<string, string>> {
     return messages;
-}
-
-export function addMessage(id: string, message: string): void {
-    messages[id] = message;
-}
-
-export function addMessages(messages: Record<string, string>): void {
-    Object.entries(messages).forEach(([key, value]) => {
-        addMessage(key, value);
-    });
 }

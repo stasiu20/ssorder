@@ -7,6 +7,7 @@ const neverReached = (never: never): void => {};
 
 const initialState: DictionaryState = {
     restaurantCategories: {},
+    fetchingRestaurant: false,
 };
 
 const reducer: Reducer<DictionaryState, DictionaryActions> = (

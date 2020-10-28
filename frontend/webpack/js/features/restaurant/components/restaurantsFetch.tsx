@@ -4,13 +4,13 @@ import { useAsync } from 'react-async';
 import RestaurantCardsCollection from './restaurantCardCollection';
 import { Restaurant } from '../types';
 import { useServiceContainer } from '../../core/context/serviceContainer';
-import ApiService from '../../core/services/ApiService';
 import FetchError from '../../pwa/components/fetchError';
 import { useDispatch } from 'react-redux';
 import { fetchRestaurantCategoriesActionCreator } from '../../core/redux/dictionary/actions';
+import { ApiServiceType } from '../../contract';
 
 const asyncFn = (
-    props: { apiService: ApiService },
+    props: { apiService: ApiServiceType },
     { signal }: AbortController,
 ): Promise<{ data: Restaurant[] }> => {
     return props.apiService.fetchRestaurant(signal);

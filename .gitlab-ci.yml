@@ -11,6 +11,16 @@ variables:
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
 
+api_pipeline:
+  stage: qa
+  only:
+    changes:
+      - api/*
+  trigger:
+    include:
+      - local: api/.gitlab-ci.yml
+    strategy: depend
+
 commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
@@ -185,12 +195,14 @@ assets:
   script:
     - ln -s config-prod.js frontend/webpack/config.js
     - cd frontend && yarn build
+    - yarn pwa:build
     - npx webpack-bundle-analyzer $CI_PROJECT_DIR/frontend/webpack/stats.json $CI_PROJECT_DIR/frontend/web/assets/build/ --no-open --mode static --report $CI_PROJECT_DIR/docs/webpack-bundle-analyzer.html
   dependencies:
     - yarn
   artifacts:
     paths:
       - frontend/web/assets/build
+      - frontend/web/assets/pwa
       - frontend/webpack/stats.json
       - docs/webpack-bundle-analyzer.html
     expire_in: 30 days

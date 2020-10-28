@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
 import { useServiceContainer } from '../../core/context/serviceContainer';
-import ApiService from '../../core/services/ApiService';
+import { ApiServiceType } from '../../contract';
 
 interface Values {
     remarks: string;
@@ -23,7 +23,7 @@ const validationSchema = Yup.object<Partial<Values>>({
 
 const submitForm = (
     args,
-    props: { apiService: ApiService; foodId: number },
+    props: { apiService: ApiServiceType; foodId: number },
 ): Promise<void> => {
     // Still waiting for https://github.com/async-library/react-async/pull/247
     const [values, formikHelpers] = args as [Values, FormikHelpers<Values>];

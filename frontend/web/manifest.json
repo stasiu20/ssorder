@@ -1,7 +1,7 @@
 {
   "name": "SSOrder",
   "short_name": "SSOrder",
-  "start_url": "/",
+  "start_url": "/pwa",
   "display": "standalone",
   "background_color": "#f5f5f5",
   "theme_color": "#7d1935",

@@ -3,9 +3,9 @@ import { FormikProps, Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useAsync } from 'react-async';
-import userService, { LoginResponse } from '../userService';
 import { ReactstrapInput } from 'reactstrap-formik';
-import authTokenService from '../../core/services/authTokenService';
+import { useServiceContainer } from '../../core/context/serviceContainer';
+import { LoginResponseType, UserServiceType } from '../../contract';
 
 interface Values {
     username: string;
@@ -23,21 +23,27 @@ const validationSchema = Yup.object<Partial<Values>>({
     password: Yup.string().required('Required'),
 });
 
-const submitForm = (args, props, { signal }): Promise<LoginResponse> => {
+const submitForm = (
+    args,
+    props: { userService: UserServiceType },
+    { signal },
+): Promise<LoginResponseType> => {
     // Still waiting for https://github.com/async-library/react-async/pull/247
     const [values, setSubmitting] = args as [
         Values,
         (isSubmitting: boolean) => void,
     ];
-    return userService
+    return props.userService
         .loginUser(values.username, values.password, { signal })
         .finally(() => setSubmitting(false));
 };
 
 const LoginForm: React.FC<Props> = props => {
     const { initialValues } = props;
-    const { run } = useAsync<LoginResponse>({
-        deferFn: submitForm,
+    const container = useServiceContainer();
+
+    const { run } = useAsync<LoginResponseType>({
+        deferFn: submitForm as any,
         onReject: e => {
             if (e instanceof Response && e.status === 422) {
                 toast.error('Validation error', { autoClose: false });
@@ -46,9 +52,10 @@ const LoginForm: React.FC<Props> = props => {
             }
         },
         onResolve: response => {
-            authTokenService.storeToken(response.token);
+            container.authTokenService.storeToken(response.token);
             toast.success('Logged');
         },
+        userService: container.userService,
     });
 
     return (

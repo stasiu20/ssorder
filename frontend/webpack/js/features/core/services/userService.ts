@@ -1,13 +1,11 @@
-export interface LoginResponse {
-    token: string;
-}
+import { LoginResponseType, UserServiceType } from '../../contract';
 
-class UserService {
+export class UserService implements UserServiceType {
     loginUser(
         userName: string,
         password: string,
         options: RequestInit,
-    ): Promise<LoginResponse> {
+    ): Promise<LoginResponseType> {
         return fetch('/v1/session/login', {
             ...options,
             method: 'POST',
@@ -19,9 +17,6 @@ class UserService {
         })
             .then(res => (res.ok ? res : Promise.reject(res)))
             .then(res => res.json())
-            .then<LoginResponse>(res => ({ token: res.data }));
+            .then<LoginResponseType>(res => ({ token: res.data }));
     }
 }
-
-const userService = new UserService();
-export default userService;

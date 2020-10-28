@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import { useAuthStatus } from '../hooks';
+import { useAuthStatus, useScrollToggle } from '../hooks';
 
 const NavLogin: React.FC<{}> = props => {
     const isAuthenticated = useAuthStatus();
@@ -18,8 +18,16 @@ const NavLogin: React.FC<{}> = props => {
 };
 
 const AppNavbar: React.FC<{}> = props => {
+    const visible = useScrollToggle(true);
+
     return (
-        <Navbar id={'navbar'} expand="lg" sticky={'top'} variant={'dark'}>
+        <Navbar
+            id={'navbar'}
+            expand="lg"
+            sticky={'top'}
+            variant={'dark'}
+            className={visible ? 'navbar--visible' : ''}
+        >
             <div className={'container'}>
                 <Navbar.Brand href="#/">
                     <img alt={'logo'} src={'/image/sensilabs-logo.png'} />

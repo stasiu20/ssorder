@@ -1,0 +1,136 @@
+stages:
+  - prepare
+  - qa
+  - build
+  - docker
+  - deploy
+
+commit-message:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - /pipeline/scripts/check-commit-title.rb $CI_COMMIT_TITLE
+
+branch-name:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - /pipeline/scripts/check-branch-name.rb $CI_COMMIT_REF_NAME
+  only:
+    - branches
+
+version:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - |
+      VERSION=$(/pipeline/scripts/get-version.rb $CI_PROJECT_DIR/.git $CI_COMMIT_REF_NAME $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME)
+      echo "VERSION=$VERSION" | tee VERSION
+      echo "COMMIT=$CI_COMMIT_SHA" | tee -a VERSION
+      echo "PIPELINE=$CI_PIPELINE_ID" | tee -a VERSION
+  only:
+    - branches
+    - merge_requests
+  artifacts:
+    paths:
+      - VERSION
+    expire_in: 30 days
+
+composer:
+  stage: prepare
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - php -v
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 30 days
+    when: on_success
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - /home/php/.composer/cache
+
+diff-composer-packages:
+  stage: prepare
+  image: morawskim/pipeline-scripts
+  script:
+    - /pipeline/scripts/prev-file-content.rb $CI_PROJECT_DIR/.git composer.lock > /tmp/composer.lock.old || (test $? -eq 101 && exit 0)
+    - /pipeline/scripts/diff-composer.rb /tmp/composer.lock.old > /tmp/composer.old.diff
+    - /pipeline/scripts/diff-composer.rb composer.lock > /tmp/composer.diff
+    - cat /tmp/composer.old.diff
+    - cat /tmp/composer.diff
+    - diff -u /tmp/composer.old.diff /tmp/composer.diff || test $? -eq 1
+  only:
+    changes:
+      - composer.lock
+
+codestyle:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phpcs | tee phpcs-report.xml
+  dependencies:
+    - composer
+  artifacts:
+    when: on_failure
+    reports:
+      junit: phpcs-report.xml
+
+phpmd:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phpmd
+  dependencies:
+    - composer
+
+phploc:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phploc
+  dependencies:
+    - composer
+
+phpcpd:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phpcpd
+  dependencies:
+    - composer
+
+php-lint:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phplint
+  dependencies:
+    - composer
+
+phpstan:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phpstan
+  dependencies:
+    - composer
+
+phpcf:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run phpcf
+  dependencies:
+    - composer
+
+security-checker:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  script:
+    - composer run security-checker
+  allow_failure: true
+  dependencies:
+    - composer

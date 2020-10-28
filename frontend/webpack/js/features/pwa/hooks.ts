@@ -1,4 +1,3 @@
-import authTokenService from '../core/services/authTokenService';
 import { useEffect, useState } from 'react';
 import { FetchOptions, useFetch } from 'react-async';
 import {
@@ -6,12 +5,14 @@ import {
     usePreviousValue,
     useThrottledFn,
 } from 'beautiful-react-hooks';
+import { useServiceContainer } from '../core/context/serviceContainer';
 
 export function useAuthStatus(): boolean {
+    const container = useServiceContainer();
     const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const subscription = authTokenService
+        const subscription = container.authTokenService
             .isAuthenticated$()
             .subscribe(value => {
                 setAuthenticated(value);
@@ -27,7 +28,8 @@ export function useApiFetch<T>(
     init: RequestInit,
     options: FetchOptions<T>,
 ) {
-    const token = authTokenService.getToken();
+    const container = useServiceContainer();
+    const token = container.authTokenService.getToken();
     return useFetch<T>(
         resource,
         // todo mmo merge headers
@@ -36,12 +38,10 @@ export function useApiFetch<T>(
     );
 }
 
-export function useScrollToggle(
-    element: HTMLElement,
-    toggleClassName: string,
-): void {
+export function useScrollToggle(defaultValue: boolean): boolean {
     /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
-    let prevScrollPos = usePreviousValue(0);
+    const [prevScrollPos, setCurrentScrollPos] = useState<number>(0);
+    const [visible, setVisible] = useState<boolean>(defaultValue);
     const tolerance = 30;
 
     const onWindowScrollHandler = useThrottledFn(() => {
@@ -52,17 +52,20 @@ export function useScrollToggle(
         }
 
         if (prevScrollPos <= currentScrollPos) {
-            element.classList.add(toggleClassName);
+            setVisible(true);
         } else {
-            element.classList.remove(toggleClassName);
+            setVisible(false);
         }
-        prevScrollPos = currentScrollPos;
-    }, 200);
+        setCurrentScrollPos(currentScrollPos);
+    }, 450);
 
     useEffect(() => {
         // don't forget to cancel debounced
-        return (): void => onWindowScrollHandler.cancel();
-    });
-
+        return (): void => {
+            onWindowScrollHandler.cancel();
+        };
+    }, []);
     useWindowScroll(onWindowScrollHandler);
+
+    return visible;
 }

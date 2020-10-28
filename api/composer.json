@@ -1,0 +1,103 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.2.5",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "bentools/webpush-bundle": "^0.6.0",
+        "composer/package-versions-deprecated": "^1.11",
+        "doctrine/annotations": "^1.0",
+        "doctrine/doctrine-bundle": "^2.1",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/orm": "^2.7",
+        "friendsofsymfony/rest-bundle": "^3.0",
+        "lexik/jwt-authentication-bundle": "^2.8",
+        "nelmio/api-doc-bundle": "^4.0",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "symfony/console": "5.1.*",
+        "symfony/dotenv": "5.1.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/framework-bundle": "5.1.*",
+        "symfony/property-access": "5.1.*",
+        "symfony/property-info": "5.1.*",
+        "symfony/serializer": "5.1.*",
+        "symfony/yaml": "5.1.*"
+    },
+    "require-dev": {
+        "ergebnis/phpstan-rules": "^0.15.2",
+        "escapestudios/symfony2-coding-standard": "^3.11",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpmd/phpmd": "^2.9",
+        "phpstan/phpstan": "^0.12.52",
+        "phpstan/phpstan-deprecation-rules": "^0.12.5",
+        "phpstan/phpstan-strict-rules": "^0.12.5",
+        "sebastian/phpcpd": "^6.0",
+        "sensiolabs/security-checker": "^6.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "symfony/maker-bundle": "^1.22",
+        "timeweb/phpstan-enum": "^2.2",
+        "wapmorgan/php-code-fixer": "^2.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
+        "phpcf": "./vendor/bin/phpcf ./src/",
+        "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
+        "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./src/ text ./phpmd-ruleset.xml",
+        "phploc": "./vendor/bin/phploc ./src/",
+        "phpcpd": "./vendor/bin/phpcpd ./src/",
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
+        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
+        "all": [
+            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.1.*"
+        }
+    }
+}

@@ -62,6 +62,15 @@ AppAsset::register($this);
         <?= Yii::t('app', 'Wersja') ?> <?= $appVersion->getVersion(); ?>
     </p>
 </footer>
+<script type="application/javascript">
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(registrationError => {
+                console.log(registrationError)
+            });
+        });
+    }
+</script>
 <?php $this->endBody() ?>
 </body>
 </html>

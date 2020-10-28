@@ -3,10 +3,13 @@ import authTokenService, {
     AuthTokenService,
 } from './services/authTokenService';
 import HttpService from './services/httpService';
+import { UserService } from './services/userService';
+import { ApiServiceType, UserServiceType } from '../contract';
 
 export interface AppServiceContainer {
-    apiService: ApiService;
+    apiService: ApiServiceType;
     authTokenService: AuthTokenService;
+    userService: UserServiceType;
 }
 
 function factoryServiceContainer(): AppServiceContainer {
@@ -14,7 +17,12 @@ function factoryServiceContainer(): AppServiceContainer {
     return {
         apiService,
         authTokenService: authTokenService,
+        userService: new UserService(),
     };
 }
 
-export const ContainerService = factoryServiceContainer();
+const ContainerService = factoryServiceContainer();
+
+export function getContainerService(): AppServiceContainer {
+    return ContainerService;
+}

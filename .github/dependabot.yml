@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/node-cron"
+    target-branch: "develop"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "#56 npm"
+  - package-ecosystem: npm
+    directory: "/frontend"
+    target-branch: "develop"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "#56 npm"
+  - package-ecosystem: composer
+    directory: "/"
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: "#56 composer"
+  - package-ecosystem: composer
+    directory: "/api"
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: "#56 composer"

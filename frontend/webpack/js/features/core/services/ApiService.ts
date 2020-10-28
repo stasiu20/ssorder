@@ -2,8 +2,9 @@ import HttpService from './httpService';
 import { AuthTokenService } from './authTokenService';
 import { Food, Restaurant, RestaurantCategory } from '../../restaurant/types';
 import { DictRestaurantCategories } from '../redux/dictionary/types';
+import { ApiServiceType } from '../../contract';
 
-export default class ApiService {
+export default class ApiService implements ApiServiceType {
     private httpService: HttpService;
     private authTokenService: AuthTokenService;
 
