@@ -196,6 +196,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
     },
+    "phploc/phploc": {
+        "version": "7.0.1"
+    },
     "phpmd/phpmd": {
         "version": "2.9.1"
     },

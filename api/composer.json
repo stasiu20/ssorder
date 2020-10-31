@@ -30,6 +30,7 @@
         "escapestudios/symfony2-coding-standard": "^3.11",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpcompatibility/php-compatibility": "^9.3",
+        "phploc/phploc": "^7.0",
         "phpmd/phpmd": "^2.9",
         "phpstan/phpstan": "^0.12.52",
         "phpstan/phpstan-deprecation-rules": "^0.12.5",

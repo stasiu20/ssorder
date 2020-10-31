@@ -5,6 +5,15 @@ stages:
   - docker
   - deploy
 
+before_script:
+  - cd api/
+
+variables:
+  MYSQL_ROOT_PASSWORD: "rootpassword"
+  MYSQL_USER: ssorder
+  MYSQL_PASSWORD: ssorderpassword
+  MYSQL_DATABASE: ssorder
+
 commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
@@ -40,7 +49,7 @@ version:
     - merge_requests
   artifacts:
     paths:
-      - VERSION
+      - api/VERSION
     expire_in: 30 days
 
 composer:
@@ -51,7 +60,7 @@ composer:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
   artifacts:
     paths:
-      - vendor/
+      - api/vendor/
     expire_in: 30 days
     when: on_success
   cache:
@@ -71,7 +80,7 @@ diff-composer-packages:
     - diff -u /tmp/composer.old.diff /tmp/composer.diff || test $? -eq 1
   only:
     changes:
-      - composer.lock
+      - api/composer.lock
 
 codestyle:
   stage: qa
@@ -83,7 +92,7 @@ codestyle:
   artifacts:
     when: on_failure
     reports:
-      junit: phpcs-report.xml
+      junit: api/phpcs-report.xml
 
 phpmd:
   stage: qa
@@ -139,5 +148,21 @@ security-checker:
   script:
     - composer run security-checker
   allow_failure: true
+  dependencies:
+    - composer
+
+phpunit:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  services:
+    - mysql:5.6
+  script:
+    - cd ..
+    - cp .env.ci .env
+    - composer install
+    - ./yii migrate/up --interactive 0
+    - ./yii fixture/load '*' --interactive 0
+    - cd api
+    - composer run phpunit-all
   dependencies:
     - composer
