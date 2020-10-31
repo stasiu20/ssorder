@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    public: true
+  test.story.user_with_webpush:
+    class: 'App\Tests\Story\UserWithWebPushSubscriptionStory'
+    arguments:
+      $subscriptionManager: '@App\Service\UserSubscriptionManager'
+    tags: ['foundry.story']

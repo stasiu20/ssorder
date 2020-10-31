@@ -29,3 +29,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\UserSubscriptionManager:
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: bentools_webpush.subscription_manager, user_class: 'App\Entity\User' }

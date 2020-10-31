@@ -34,7 +34,11 @@ services:
             - ./api:/var/www/html
             - ./provision/nginx/vhost-api.conf:/etc/nginx/conf.d/default.conf
     api-fpm:
-        image: php:7.3-fpm
+        build:
+            context: api
+            dockerfile: Dockerfile
+            args:
+                - WITH_XDEBUG=true
         volumes:
             - ./api:/var/www/html
         depends_on:
@@ -46,6 +50,7 @@ services:
         image: edbizarro/gitlab-ci-pipeline-php:7.3
         volumes:
             - ./:/app
+            - ./provision/xdebug.ini:/usr/local/etc/php/conf.d/xdebug-conf.ini
         user: ${MY_UID:-1000}
         tty: true
         working_dir: /app
