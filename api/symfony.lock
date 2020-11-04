@@ -8,6 +8,18 @@
     "composer/xdebug-handler": {
         "version": "1.4.4"
     },
+    "dama/doctrine-test-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -105,6 +117,9 @@
             "config/packages/fos_rest.yaml"
         ]
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
     },
@@ -181,6 +196,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
     },
+    "phploc/phploc": {
+        "version": "7.0.1"
+    },
     "phpmd/phpmd": {
         "version": "2.9.1"
     },
@@ -253,6 +271,9 @@
             "phpcs.xml.dist"
         ]
     },
+    "symfony/browser-kit": {
+        "version": "v5.1.8"
+    },
     "symfony/cache": {
         "version": "v5.1.7"
     },
@@ -282,6 +303,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.1.7"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.1.8"
     },
     "symfony/dotenv": {
         "version": "v5.1.7"
@@ -362,6 +386,21 @@
     },
     "symfony/orm-pack": {
         "version": "v2.0.0"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.18.1"
@@ -496,6 +535,9 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zenstruck/foundry": {
+        "version": "v1.4.0"
     },
     "zircote/swagger-php": {
         "version": "3.1.0"

@@ -5,6 +5,15 @@ stages:
   - docker
   - deploy
 
+before_script:
+  - cd api/
+
+variables:
+  MYSQL_ROOT_PASSWORD: "rootpassword"
+  MYSQL_USER: ssorder
+  MYSQL_PASSWORD: ssorderpassword
+  MYSQL_DATABASE: ssorder
+
 commit-message:
   stage: prepare
   image: morawskim/pipeline-scripts
@@ -18,13 +27,20 @@ branch-name:
     - /pipeline/scripts/check-branch-name.rb $CI_COMMIT_REF_NAME
   only:
     - branches
+  except:
+    refs:
+      - /^dependabot\/.*$/
 
 version:
   stage: prepare
   image: morawskim/pipeline-scripts
   script:
     - |
-      VERSION=$(/pipeline/scripts/get-version.rb $CI_PROJECT_DIR/.git $CI_COMMIT_REF_NAME $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME)
+      BRANCH_NAME=$CI_COMMIT_REF_NAME
+      if echo $BRANCH_NAME | grep -E '^dependabot\/.*$' ; then
+        BRANCH_NAME=develop
+      fi
+      VERSION=$(/pipeline/scripts/get-version.rb $CI_PROJECT_DIR/.git $BRANCH_NAME $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME)
       echo "VERSION=$VERSION" | tee VERSION
       echo "COMMIT=$CI_COMMIT_SHA" | tee -a VERSION
       echo "PIPELINE=$CI_PIPELINE_ID" | tee -a VERSION
@@ -33,7 +49,7 @@ version:
     - merge_requests
   artifacts:
     paths:
-      - VERSION
+      - api/VERSION
     expire_in: 30 days
 
 composer:
@@ -44,7 +60,7 @@ composer:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
   artifacts:
     paths:
-      - vendor/
+      - api/vendor/
     expire_in: 30 days
     when: on_success
   cache:
@@ -64,7 +80,7 @@ diff-composer-packages:
     - diff -u /tmp/composer.old.diff /tmp/composer.diff || test $? -eq 1
   only:
     changes:
-      - composer.lock
+      - api/composer.lock
 
 codestyle:
   stage: qa
@@ -76,7 +92,7 @@ codestyle:
   artifacts:
     when: on_failure
     reports:
-      junit: phpcs-report.xml
+      junit: api/phpcs-report.xml
 
 phpmd:
   stage: qa
@@ -132,5 +148,21 @@ security-checker:
   script:
     - composer run security-checker
   allow_failure: true
+  dependencies:
+    - composer
+
+phpunit:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  services:
+    - mysql:5.6
+  script:
+    - cd ..
+    - cp .env.ci .env
+    - composer install
+    - ./yii migrate/up --interactive 0
+    - ./yii fixture/load '*' --interactive 0
+    - cd api
+    - composer run phpunit-all
   dependencies:
     - composer

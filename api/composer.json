@@ -25,10 +25,12 @@
         "symfony/yaml": "5.1.*"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^6.4",
         "ergebnis/phpstan-rules": "^0.15.2",
         "escapestudios/symfony2-coding-standard": "^3.11",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpcompatibility/php-compatibility": "^9.3",
+        "phploc/phploc": "^7.0",
         "phpmd/phpmd": "^2.9",
         "phpstan/phpstan": "^0.12.52",
         "phpstan/phpstan-deprecation-rules": "^0.12.5",
@@ -36,9 +38,12 @@
         "sebastian/phpcpd": "^6.0",
         "sensiolabs/security-checker": "^6.0",
         "squizlabs/php_codesniffer": "^3.5",
+        "symfony/browser-kit": "5.1.*",
         "symfony/maker-bundle": "^1.22",
+        "symfony/phpunit-bridge": "^5.1",
         "timeweb/phpstan-enum": "^2.2",
-        "wapmorgan/php-code-fixer": "^2.0"
+        "wapmorgan/php-code-fixer": "^2.0",
+        "zenstruck/foundry": "^1.4"
     },
     "config": {
         "optimize-autoloader": true,
@@ -84,11 +89,12 @@
         "phpmd": "./vendor/bin/phpmd --ignore-violations-on-exit ./src/ text ./phpmd-ruleset.xml",
         "phploc": "./vendor/bin/phploc ./src/",
         "phpcpd": "./vendor/bin/phpcpd ./src/",
-        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ .",
+        "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
+        "phpunit-all": "./bin/phpunit --group default,database",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
         "all": [
-            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan"
+            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
         ]
     },
     "conflict": {

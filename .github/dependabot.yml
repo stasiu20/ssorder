@@ -16,12 +16,14 @@ updates:
       prefix: "#56 npm"
   - package-ecosystem: composer
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: daily
     commit-message:
       prefix: "#56 composer"
   - package-ecosystem: composer
     directory: "/api"
+    target-branch: "develop"
     schedule:
       interval: daily
     commit-message:

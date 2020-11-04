@@ -1,4 +1,13 @@
 lexik_jwt_authentication:
-    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
-    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
-    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    secret_key: '%env(resolve:JWT_KEY)%'
+    encoder:
+        # encryption algorithm used by the encoder service
+        signature_algorithm: HS256
+    user_identity_field: id
+    # token extraction settings
+    token_extractors:
+        # look for a token as Authorization Header
+        authorization_header:
+            enabled: true
+            prefix:  Bearer
+            name:    Authorization

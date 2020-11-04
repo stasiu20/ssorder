@@ -38,7 +38,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^26.1.0",
     "material-icons": "^0.3.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.17.0",
     "protractor": "^5.4.2",
@@ -57,7 +57,7 @@
     "ts-node": "^8.1.0",
     "typescript": "^3.8.0",
     "typescript-plugin-css-modules": "^2.3.0",
-    "webpack-bundle-analyzer": "^3.6.1",
+    "webpack-bundle-analyzer": "^3.9.0",
     "webpack-notifier": "^1.7.0",
     "workbox-webpack-plugin": "^5.1.4"
   },
