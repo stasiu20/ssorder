@@ -1,0 +1,4 @@
+FROM nginx:1.19-alpine
+
+COPY --chown=nginx:nginx ./nginx-vhost-tmp.conf /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx ./ /var/www/html

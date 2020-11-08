@@ -65,7 +65,21 @@ services:
       - .env
     depends_on:
       - mysql
-
+  api-web:
+    image: registry.gitlab.com/morawskim/ssorder/api-web
+    depends_on:
+      - api-fpm
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.backend: "ssorder-api"
+        traefik.frontend.rule: "Host:api.ssorder.snlb.pl"
+  api-fpm:
+    image: registry.gitlab.com/morawskim/ssorder/api
+    env_file:
+      - .env-api
+    depends_on:
+      - mysql
 volumes:
   minio:
   mysql:

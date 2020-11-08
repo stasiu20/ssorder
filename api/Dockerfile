@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.3-fpm as intermediate
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
@@ -17,3 +17,6 @@ RUN if [[ $WITH_XDEBUG = "true" ]]; then \
     && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
   fi
+
+FROM intermediate
+COPY --chown=www-data:www-data ./ /app
