@@ -55,7 +55,7 @@
         "minishlink/web-push": "^5.2"
     },
     "require-dev": {
-        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-debug": "~2.1.13",
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "yiisoft/yii2-coding-standards": "^2.0",
