@@ -201,6 +201,6 @@ docker-web:develop:
   extends: .docker
   script:
     - cp $CI_PROJECT_DIR/provision/nginx/vhost-api.conf $CI_PROJECT_DIR/api/nginx-vhost-tmp.conf
-    - /kaniko/executor --context $CI_PROJECT_DIR/api --dockerfile $CI_PROJECT_DIR/api/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/api-web:latest
+    - /kaniko/executor --context $CI_PROJECT_DIR/api --dockerfile $CI_PROJECT_DIR/api/Dockerfile-web --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/api-web:latest
   only:
     - develop
