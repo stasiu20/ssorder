@@ -65,7 +65,16 @@ services:
       - .env
     depends_on:
       - mysql
-
+  api-web:
+    image: registry.gitlab.com/morawskim/ssorder/api-web
+    depends_on:
+      - api-fpm
+  api-fpm:
+    image: registry.gitlab.com/morawskim/ssorder/api
+    env_file:
+      - .env-api
+    depends_on:
+      - mysql
 volumes:
   minio:
   mysql:

@@ -37,6 +37,7 @@ services:
         build:
             context: api
             dockerfile: Dockerfile
+            target: intermediate
             args:
                 - WITH_XDEBUG=true
         volumes:

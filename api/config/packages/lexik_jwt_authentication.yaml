@@ -4,6 +4,7 @@ lexik_jwt_authentication:
         # encryption algorithm used by the encoder service
         signature_algorithm: HS256
     user_identity_field: id
+    user_id_claim: uid
     # token extraction settings
     token_extractors:
         # look for a token as Authorization Header
