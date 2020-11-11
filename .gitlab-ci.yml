@@ -525,6 +525,7 @@ deploy_production:
   script:
     - TMP_PATH=$(mktemp -d)
     - echo "$PROD_CONFIG" > .env
+    - echo "$PROD_API_CONFIG" > .env-api
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
