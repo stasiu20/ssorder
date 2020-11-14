@@ -18,5 +18,7 @@ RUN if [[ $WITH_XDEBUG = "true" ]]; then \
     && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
   fi
 
+COPY provision/php-fpm.conf /usr/local/etc/php-fpm.d/api-www.conf
+
 FROM intermediate
-COPY --chown=www-data:www-data ./ /app
+COPY --chown=www-data:www-data ./ /var/www/html
