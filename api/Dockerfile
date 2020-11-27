@@ -5,8 +5,18 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /var/www/html
 
+RUN apt-get update && \
+    apt-get -y install \
+            libicu-dev \
+            libgmp-dev \
+        --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
+
 RUN docker-php-ext-install \
-        pdo_mysql
+        pdo_mysql \
+        gmp
 
 ARG WITH_XDEBUG=false
 RUN if [[ $WITH_XDEBUG = "true" ]]; then \

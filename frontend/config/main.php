@@ -251,6 +251,8 @@ return [
                 'v1/restaurants' => 'apiV1/restaurants/index',
                 'v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
                 'POST v1/orders' => 'apiV1/order/create',
+                'POST v1/webpush' => 'apiV1/webpush/create',
+                'DELETE v1/webpush' => 'apiV1/webpush/delete',
                 'v1/<controller:\w+>/<action:\w+>' => 'apiV1/<controller>/<action>',
             ],
         ],
