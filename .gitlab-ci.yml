@@ -210,6 +210,7 @@ assets:
     paths:
       - frontend/web/assets/build
       - frontend/web/assets/pwa
+      - frontend/web/sw.js
       - frontend/webpack/stats.json
       - docs/webpack-bundle-analyzer.html
     expire_in: 30 days
