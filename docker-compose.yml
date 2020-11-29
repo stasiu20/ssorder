@@ -40,6 +40,8 @@ services:
             target: intermediate
             args:
                 - WITH_XDEBUG=true
+        tmpfs:
+            - /var/www/html/var/cache:mode=750,size=50m,uid=33,gid=33
         volumes:
             - ./api:/var/www/html
         depends_on:

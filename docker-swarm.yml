@@ -71,6 +71,8 @@ services:
       - api-fpm
   api-fpm:
     image: registry.gitlab.com/morawskim/ssorder/api
+    tmpfs:
+      - /var/www/html/var/cache:mode=750,size=50m,uid=33,gid=33
     env_file:
       - .env-api
     depends_on:
