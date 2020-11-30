@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /var/www/html
 
+# hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get -y install \
             libicu-dev \
