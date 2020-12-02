@@ -1,6 +1,7 @@
 <?php
 
 use common\services\actions\CreateOrder;
+use frontend\modules\apiV1\helpers\AccessTokenHelper;
 use yii\queue\redis\Queue;
 use yii\queue\serializers\JsonSerializer;
 use yii\redis\Connection;
@@ -87,6 +88,24 @@ return [
             CreateOrder::class => function (Container $container, $params, $config) {
                 return new CreateOrder(Yii::$app->order, new \common\repositories\MenuRepository());
             },
+            \common\services\SymfonyApiClient::class => function (Container $container) {
+                $user = Yii::$app->user;
+                $headers = [];
+
+                if (!$user->isGuest) {
+                    $headers['Authorization'] = sprintf('Bearer %s', AccessTokenHelper::createTokenForUser($user->identity));
+                }
+
+                $client = new \GuzzleHttp\Client([
+                    'base_uri'        => getenv('SYMFONY_API_URL'),
+//                    'timeout'         => 5,
+                    'allow_redirects' => false,
+                    'headers'         => $headers,
+//                   'proxy'           => '192.168.16.1:10'
+                ]);
+
+                return new \common\services\SymfonyApiClient($client);
+            }
         ]
     ],
     'components' => [

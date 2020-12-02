@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import SSOrderApp from '../core/components/SSOrderApp';
 import ProfileForm from './components/profileForm';
+import WebPushStateManager from './components/webPushStateManage';
 
 $(function() {
     const userData = window['__APP_DATA__']['userData']['data'];
@@ -16,6 +17,7 @@ $(function() {
                     rocketChatId: userData.rocketchat_id || '',
                 }}
             />
+            <WebPushStateManager />
         </SSOrderApp>,
         $el.get(0),
     );

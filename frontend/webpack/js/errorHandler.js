@@ -1,7 +1,6 @@
 import ErrorStackParser from 'error-stack-parser';
 
 window.addEventListener('error', function(e) {
-    e.preventDefault();
     const { message, filename, lineno, colno, error } = e;
     let stack = null;
     if (error && error instanceof Error) {

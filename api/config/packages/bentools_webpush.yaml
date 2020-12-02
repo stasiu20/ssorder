@@ -1,4 +1,4 @@
 bentools_webpush:
   settings:
-    public_key: 'BP1xJHhteePiJhsXecuBL561VsxxqeGX1qWonZanHFwegKYF9kAki7y5ZQv2FMCfGO9oq8fE5xaabZSvohz_0og'
+    public_key: '%env(resolve:WEBPUSH_PUB_KEY)%'
     private_key: '%env(resolve:WEBPUSH_PRIVATE_KEY)%'

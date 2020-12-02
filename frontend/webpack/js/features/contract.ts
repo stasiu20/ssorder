@@ -27,3 +27,7 @@ export interface ApiServiceType {
 
     createOrder(foodId: number, remarks): Promise<void>;
 }
+
+export interface AuthTokenServiceType {
+    getToken(): string | null;
+}
