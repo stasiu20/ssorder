@@ -7536,16 +7536,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.10.1",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "f2713a5016faaf6ffc60e9d456dedb5ebf0efcae"
+                "reference": "ab3f5364d01f2c2c16113442fb987d26e4004913"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/f2713a5016faaf6ffc60e9d456dedb5ebf0efcae",
-                "reference": "f2713a5016faaf6ffc60e9d456dedb5ebf0efcae",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/ab3f5364d01f2c2c16113442fb987d26e4004913",
+                "reference": "ab3f5364d01f2c2c16113442fb987d26e4004913",
                 "shasum": ""
             },
             "require": {
@@ -7555,6 +7555,7 @@
                 "fzaninotto/faker": "*"
             },
             "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-intl": "*",
                 "phpunit/phpunit": "^7.5.20 || ^8.5.8 || ^9.4.2"
             },
@@ -7579,7 +7580,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2020-10-28T09:32:46+00:00"
+            "time": "2020-12-18T16:50:48+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -9486,16 +9487,16 @@
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "8364424c7d2420e7aeea7263664ecf9643f00d7a"
+                "reference": "5085bf17bf1c5559ffc4bdb2357698f1e9e6524f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/8364424c7d2420e7aeea7263664ecf9643f00d7a",
-                "reference": "8364424c7d2420e7aeea7263664ecf9643f00d7a",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/5085bf17bf1c5559ffc4bdb2357698f1e9e6524f",
+                "reference": "5085bf17bf1c5559ffc4bdb2357698f1e9e6524f",
                 "shasum": ""
             },
             "require": {
@@ -9510,9 +9511,12 @@
                 "doctrine/doctrine-bundle": "^2.0",
                 "doctrine/orm": "^2.7",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+                "psalm/plugin-symfony": "^1.5|^2.0",
                 "symfony/framework-bundle": "^4.4|^5.0",
                 "symfony/maker-bundle": "^1.13",
-                "symfony/phpunit-bridge": "^5.1"
+                "symfony/phpunit-bridge": "^5.2",
+                "vimeo/psalm": "^3.18|^4.0",
+                "weirdan/doctrine-psalm-plugin": "^0.11.3|^1.0@dev"
             },
             "type": "library",
             "extra": {
@@ -9548,7 +9552,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-11-10T13:47:18+00:00"
+            "time": "2020-12-07T13:32:20+00:00"
         }
     ],
     "aliases": [],
