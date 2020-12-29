@@ -3,4 +3,5 @@ swagger/
 codecept-frontend/
 codecept-common/
 newman/
+api/
 openapi.yml

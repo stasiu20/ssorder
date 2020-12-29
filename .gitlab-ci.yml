@@ -367,6 +367,27 @@ newman:
   only:
     - schedules
 
+# todo mmo integrate child pipeline artifacts with main flow
+# https://gitlab.com/gitlab-org/gitlab/-/issues/201784
+symfony-coverage:
+  stage: qa
+  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  services:
+    - mysql:5.6
+  script:
+    - cp .env.ci .env
+    - composer install
+    - ./yii migrate/up --interactive 0
+    - ./yii fixture/load '*' --interactive 0
+    - cd api
+    - composer install
+    - composer run phpunit-all
+  artifacts:
+    paths:
+      - docs/api/
+    expire_in: 30 days
+    when: on_success
+
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
@@ -427,6 +448,7 @@ docker:docs:
     - codeception
     - newman
     - assets
+    - symfony-coverage
 
 docker:develop:
   extends: .docker

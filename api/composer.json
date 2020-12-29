@@ -96,7 +96,7 @@
         "phpcpd": "./vendor/bin/phpcpd ./src/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
-        "phpunit-all": "./bin/phpunit --group default,database",
+        "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api",
         "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
         "all": [
             "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
