@@ -2,6 +2,9 @@
     "bentools/webpush-bundle": {
         "version": "0.6"
     },
+    "chrisguitarguy/request-id-bundle": {
+        "version": "v4.0.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99"
     },
@@ -237,6 +240,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "ramsey/uuid": {
+        "version": "3.9.3"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
