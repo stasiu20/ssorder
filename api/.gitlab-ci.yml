@@ -134,11 +134,11 @@ phpstan:
   dependencies:
     - composer
 
-phpcf:
+phpdd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - composer run phpcf
+    - composer run phpdd
   dependencies:
     - composer
 
