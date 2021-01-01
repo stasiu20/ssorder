@@ -1,0 +1,88 @@
+version: '3.4'
+services:
+  ssorder:
+    image: registry.gitlab.com/morawskim/ssorder:${VERSION}
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+      - minio
+    networks:
+      - default
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.backend: "ssorder-develop-frontend"
+        traefik.frontend.rule: "Host:ssorder-develop.snlb.pl"
+    healthcheck:
+      test: curl --fail -s http://localhost/ || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  queue:
+    image: registry.gitlab.com/morawskim/ssorder:${VERSION}
+    entrypoint: ["php", "./yii", "queue/listen", "--verbose"]
+    env_file:
+      - .env
+    depends_on:
+      - redis
+  minio:
+    image: minio/minio:RELEASE.2019-08-21T19-40-07Z
+    volumes:
+      - minio:/data
+    env_file:
+      - .env
+    command: server /data
+    networks:
+      - default
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 9000
+        traefik.backend: "ssorder-develop-minio"
+        traefik.frontend.rule: "Host:cdn.ssorder-develop.snlb.pl"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 1m30s
+      timeout: 20s
+      retries: 3
+      start_period: 3m
+  mysql:
+    image: mysql:5.6
+    volumes:
+      - mysql:/var/lib/mysql
+    env_file:
+      - .env
+  redis:
+    image: redis:5.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis:/data
+  scheduler:
+    image: registry.gitlab.com/morawskim/ssorder/scheduler
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+  api-web:
+    image: registry.gitlab.com/morawskim/ssorder/api-web
+    depends_on:
+      - api-fpm
+  api-fpm:
+    image: registry.gitlab.com/morawskim/ssorder/api
+    tmpfs:
+      - /var/www/html/var/cache:mode=750,size=50m,uid=33,gid=33
+    env_file:
+      - .env-api
+    depends_on:
+      - mysql
+volumes:
+  minio:
+  mysql:
+  redis:
+
+networks:
+  traefik:
+    external: true
+# vim: ft=docker-compose.yaml:

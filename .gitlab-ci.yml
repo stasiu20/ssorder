@@ -354,11 +354,11 @@ newman:
     entrypoint: [""]
   script:
     - npm install -g newman-reporter-html
-    - echo "$PROD_CONFIG" > .env
+    - echo "$DEV_CONFIG" > .env
     - source .env
     - >
       for dir in integration-tests/tests/*/; do
-        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
+        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/develop.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
       done
   artifacts:
     paths:
@@ -530,7 +530,7 @@ tag_release:
   variables:
     GIT_STRATEGY: clone
 
-deploy_production:
+.deploy:
   stage: deploy
   image: docker:19.03-dind
   environment:
@@ -554,6 +554,38 @@ deploy_production:
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
     - >
       DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
+
+deploy_production:
+  extends: .deploy
+  environment:
+    name: production
+    url: https://ssorder.snlb.pl
+#  only:
+#    - master
+  script:
+    - TMP_PATH=$(mktemp -d)
+    - echo "$PROD_CONFIG" > .env
+    - echo "$PROD_API_CONFIG" > .env-api
+    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
+    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
+    - >
+      DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
+
+deploy_test:
+  extends: .deploy
+  environment:
+    name: develop
+    url: https://ssorder-develop.snlb.pl
+#  only:
+#    - master
+  script:
+    - TMP_PATH=$(mktemp -d)
+    - echo "$DEV_CONFIG" > .env
+    - echo "$DEV_API_CONFIG" > .env-api
+    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
+    - env DOCKER_HOST=ssh://deployer@192.168.15.28 VERSION=latest docker --config $TMP_PATH stack deploy --compose-file docker-swarm-develop.yml --with-registry-auth ssorder-develop
 
 deploy_docs:
   stage: deploy
