@@ -530,63 +530,6 @@ tag_release:
   variables:
     GIT_STRATEGY: clone
 
-.deploy:
-  stage: deploy
-  image: docker:19.03-dind
-  environment:
-    name: production
-    url: https://ssorder.snlb.pl
-#  only:
-#    - master
-  when: manual
-  before_script:
-    - 'which ssh-agent || ( apk update && apk add openssh-client )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - TMP_PATH=$(mktemp -d)
-    - echo "$PROD_CONFIG" > .env
-    - echo "$PROD_API_CONFIG" > .env-api
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
-    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
-    - >
-      DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
-
-deploy_production:
-  extends: .deploy
-  environment:
-    name: production
-    url: https://ssorder.snlb.pl
-#  only:
-#    - master
-  script:
-    - TMP_PATH=$(mktemp -d)
-    - echo "$PROD_CONFIG" > .env
-    - echo "$PROD_API_CONFIG" > .env-api
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
-    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
-    - >
-      DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
-
-deploy_test:
-  extends: .deploy
-  environment:
-    name: develop
-    url: https://ssorder-develop.snlb.pl
-#  only:
-#    - master
-  script:
-    - TMP_PATH=$(mktemp -d)
-    - echo "$DEV_CONFIG" > .env
-    - echo "$DEV_API_CONFIG" > .env-api
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
-    - env DOCKER_HOST=ssh://deployer@192.168.15.28 VERSION=latest docker --config $TMP_PATH stack deploy --compose-file docker-swarm-develop.yml --with-registry-auth ssorder-develop
-
 deploy_docs:
   stage: deploy
   image: docker:19.03-dind
@@ -606,13 +549,3 @@ deploy_docs:
     - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
     - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
-
-check_ssl_cert:
-  stage: deploy
-  image: morawskim/pipeline-scripts
-  only:
-    - schedules
-  script:
-    - /pipeline/scripts/ssl-check.rb ssorder.snlb.pl
-    - /pipeline/scripts/ssl-check.rb developer.ssorder.snlb.pl
-    - /pipeline/scripts/ssl-check.rb cdn.ssorder.snlb.pl

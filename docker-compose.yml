@@ -108,7 +108,7 @@ services:
             traefik.port: "8025"
             traefik.frontend.rule: "Host:mailhog.lvh.me"
     minio:
-        image: minio/minio:RELEASE.2019-08-21T19-40-07Z
+        image: minio/minio:RELEASE.2021-01-05T05-22-38Z
         volumes:
           - minio:/data
         labels:
