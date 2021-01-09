@@ -166,6 +166,11 @@ phpunit:
     - composer run phpunit-all
   dependencies:
     - composer
+  artifacts:
+    paths:
+      - docs/api/
+    expire_in: 30 days
+    when: on_success
 
 .docker:
   stage: docker

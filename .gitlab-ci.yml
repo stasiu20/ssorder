@@ -367,27 +367,6 @@ newman:
   only:
     - schedules
 
-# todo mmo integrate child pipeline artifacts with main flow
-# https://gitlab.com/gitlab-org/gitlab/-/issues/201784
-symfony-coverage:
-  stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
-  services:
-    - mysql:5.6
-  script:
-    - cp .env.ci .env
-    - composer install
-    - ./yii migrate/up --interactive 0
-    - ./yii fixture/load '*' --interactive 0
-    - cd api
-    - composer install
-    - composer run phpunit-all
-  artifacts:
-    paths:
-      - docs/api/
-    expire_in: 30 days
-    when: on_success
-
 .e2e:
   stage: testing
   image: morawskim/node10-google-chrome:74.0.3729.131
@@ -429,27 +408,6 @@ docker:node:
       - "node-cron/*"
       - .gitlab-ci.yml
 
-docker:docs:
-  stage: docker
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  before_script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-  script:
-    - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
-  only:
-    - schedules
-  dependencies:
-    - swagger
-    - openapi
-    - redoc
-    - sitespeed
-    - codeception
-    - newman
-    - assets
-    - symfony-coverage
-
 docker:develop:
   extends: .docker
   script:
@@ -470,6 +428,15 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
+
+docker:docs:
+  stage: docker
+  trigger:
+    include:
+      - local: docs/.gitlab-ci.yml
+    strategy: depend
+  only:
+    - schedules
 
 .trivy:
   stage: qa

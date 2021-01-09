@@ -1,0 +1,29 @@
+stages:
+  - prepare
+  - docker
+
+docs:
+  stage: prepare
+  script:
+    - ./scripts/fetch-latest-docs-artifacts.sh
+  artifacts:
+    paths:
+      - docs/artifacts/docs
+  tags:
+    - packer
+#  only:
+#    - schedules
+
+docker:
+  stage: docker
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
+  dependencies:
+    - docs
+#  only:
+#    - schedules
