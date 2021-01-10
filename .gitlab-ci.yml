@@ -13,9 +13,10 @@ variables:
 
 api_pipeline:
   stage: qa
-  only:
-    changes:
-      - api/*
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - changes:
+        - api/*
   trigger:
     include:
       - local: api/.gitlab-ci.yml
