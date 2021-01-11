@@ -432,6 +432,8 @@ docker:rc:
 
 docker:docs:
   stage: docker
+  variables:
+    UPSTREAM_PIPELINE: $CI_PIPELINE_ID
   trigger:
     include:
       - local: docs/.gitlab-ci.yml

@@ -54,10 +54,12 @@ fetchArtefacts $PROJECT_ID $LC_PIPELINE_ID
 echo "Get artifacts for child pipelines"
 CHILD_PIPELINES=$(fetchChildPipelines $PROJECT_ID $LC_PIPELINE_ID)
 
-for pipelineID in "${CHILD_PIPELINES}"
-do
-  echo "Fetch artifacts for pipeline: $pipelineID"
-  fetchArtefacts $PROJECT_ID $pipelineID
-done
+if [[ ! -z "$CHILD_PIPELINES" ]]; then
+  for pipelineID in "${CHILD_PIPELINES}"
+  do
+    echo "Fetch artifacts for pipeline: $pipelineID"
+    fetchArtefacts $PROJECT_ID $pipelineID
+  done
+fi
 
 find -maxdepth 1 -name '*.zip' -print0 | xargs -0 -n 1 unzip -d docs/artifacts
