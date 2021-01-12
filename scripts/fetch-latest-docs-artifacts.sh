@@ -24,8 +24,8 @@ set -o nounset                              # Treat unset variables as an error
 shopt -s inherit_errexit
 IFS=$'\n\t'
 
-PROJECT_ID=${CI_PROJECT_ID:-$1}
-LC_PIPELINE_ID=${CI_PIPELINE_ID:-$2}
+PROJECT_ID=${1:-$CI_PROJECT_ID}
+LC_PIPELINE_ID=${2:-$CI_PIPELINE_ID}
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ..
@@ -62,4 +62,4 @@ if [[ ! -z "$CHILD_PIPELINES" ]]; then
   done
 fi
 
-find -maxdepth 1 -name '*.zip' -print0 | xargs -0 -n 1 unzip -d docs/artifacts
+find -maxdepth 1 -name '*.zip' -print0 | xargs -0 -n 1 --no-run-if-empty unzip -d docs/artifacts
