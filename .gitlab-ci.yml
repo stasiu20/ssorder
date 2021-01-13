@@ -499,23 +499,3 @@ tag_release:
     - version
   variables:
     GIT_STRATEGY: clone
-
-deploy_docs:
-  stage: deploy
-  image: docker:19.03-dind
-  environment:
-    name: docs
-    url: https://developer.ssorder.snlb.pl
-  only:
-    - schedules
-  before_script:
-    - 'which ssh-agent || ( apk update && apk add openssh-client )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - PROD_DOCS_PATH=$(mktemp -d)
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
-    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
