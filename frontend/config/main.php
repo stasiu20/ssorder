@@ -28,8 +28,12 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'bootstrap' => ['log', 'headers', function () {
-        $mediator = new \common\component\RocketChatOrderMediator();
-        $mediator->mediate();
+        $disableRCMediator = (int) getenv('DISABLE_RC_MEDIATOR');
+
+        if (!$disableRCMediator) {
+            $mediator = new \common\component\RocketChatOrderMediator();
+            $mediator->mediate();
+        }
 
         $mediator = new \common\component\GAOrderMediator();
         $mediator->mediate();
@@ -264,7 +268,7 @@ return [
             'cspDirectives' => [
                 'script-src' => "'self' 'unsafe-inline' www.google-analytics.com",
                 'style-src' => "'self' 'unsafe-inline' fonts.googleapis.com",
-                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.ssorder.snlb.pl stats.g.doubleclick.net",
+                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.lvh.me:* *.ssorder.snlb.pl *.ssorder-develop.snlb.pl stats.g.doubleclick.net",
                 'connect-src' => '*',
                 'font-src' => '* data:',
                 'object-src' => '*',

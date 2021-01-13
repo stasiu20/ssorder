@@ -13,9 +13,10 @@ variables:
 
 api_pipeline:
   stage: qa
-  only:
-    changes:
-      - api/*
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - changes:
+        - api/*
   trigger:
     include:
       - local: api/.gitlab-ci.yml
@@ -354,11 +355,11 @@ newman:
     entrypoint: [""]
   script:
     - npm install -g newman-reporter-html
-    - echo "$PROD_CONFIG" > .env
+    - echo "$DEV_CONFIG" > .env
     - source .env
     - >
       for dir in integration-tests/tests/*/; do
-        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/prod.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
+        newman run --env-var "rocketChatToken=${ROCKET_CHAT_BOT_TOKEN}" --env-var "userName=${POSTMAN_USERNAME}" --env-var "password=${POSTMAN_PASSWORD}" --globals integration-tests/globals.json --environment integration-tests/environments/develop.postman_environment.json --iteration-data ${dir}/data.csv  --reporters cli,html --reporter-html-export docs/newman/$(basename ${dir}).html ${dir}/ssorder.postman_collection.json
       done
   artifacts:
     paths:
@@ -366,27 +367,6 @@ newman:
     when: always
   only:
     - schedules
-
-# todo mmo integrate child pipeline artifacts with main flow
-# https://gitlab.com/gitlab-org/gitlab/-/issues/201784
-symfony-coverage:
-  stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
-  services:
-    - mysql:5.6
-  script:
-    - cp .env.ci .env
-    - composer install
-    - ./yii migrate/up --interactive 0
-    - ./yii fixture/load '*' --interactive 0
-    - cd api
-    - composer install
-    - composer run phpunit-all
-  artifacts:
-    paths:
-      - docs/api/
-    expire_in: 30 days
-    when: on_success
 
 .e2e:
   stage: testing
@@ -429,27 +409,6 @@ docker:node:
       - "node-cron/*"
       - .gitlab-ci.yml
 
-docker:docs:
-  stage: docker
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  before_script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-  script:
-    - /kaniko/executor --context $CI_PROJECT_DIR/docs --dockerfile $CI_PROJECT_DIR/docs/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/docs:latest
-  only:
-    - schedules
-  dependencies:
-    - swagger
-    - openapi
-    - redoc
-    - sitespeed
-    - codeception
-    - newman
-    - assets
-    - symfony-coverage
-
 docker:develop:
   extends: .docker
   script:
@@ -470,6 +429,17 @@ docker:rc:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:$VERSION
   only:
     - /^release-/
+
+docker:docs:
+  stage: docker
+  variables:
+    UPSTREAM_PIPELINE: $CI_PIPELINE_ID
+  trigger:
+    include:
+      - local: docs/.gitlab-ci.yml
+    strategy: depend
+  only:
+    - schedules
 
 .trivy:
   stage: qa
@@ -529,58 +499,3 @@ tag_release:
     - version
   variables:
     GIT_STRATEGY: clone
-
-deploy_production:
-  stage: deploy
-  image: docker:19.03-dind
-  environment:
-    name: production
-    url: https://ssorder.snlb.pl
-#  only:
-#    - master
-  when: manual
-  before_script:
-    - 'which ssh-agent || ( apk update && apk add openssh-client )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - TMP_PATH=$(mktemp -d)
-    - echo "$PROD_CONFIG" > .env
-    - echo "$PROD_API_CONFIG" > .env-api
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $TMP_PATH/config.json
-    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $TMP_PATH stack deploy --compose-file docker-swarm.yml --with-registry-auth ssorder-prod
-    - >
-      DOCKER_HOST=ssh://deployer@192.168.15.28 docker run --rm curlimages/curl:7.70.0 -X POST -H 'Content-Type: application/json' --data '{"text":"Nowa wersja ssorder!"}' $PROD_ROCKET_CHAT_NOTIFY_WEBHOOK_URL
-
-deploy_docs:
-  stage: deploy
-  image: docker:19.03-dind
-  environment:
-    name: docs
-    url: https://developer.ssorder.snlb.pl
-  only:
-    - schedules
-  before_script:
-    - 'which ssh-agent || ( apk update && apk add openssh-client )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - PROD_DOCS_PATH=$(mktemp -d)
-    - DOCKER_AUTH=$(echo -n $CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD | base64)
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$DOCKER_AUTH\"}}}" > $PROD_DOCS_PATH/config.json
-    - DOCKER_HOST=ssh://deployer@192.168.15.28 docker --config $PROD_DOCS_PATH stack deploy --compose-file docs/docker-swarm.yml --with-registry-auth ssorder-developer
-
-check_ssl_cert:
-  stage: deploy
-  image: morawskim/pipeline-scripts
-  only:
-    - schedules
-  script:
-    - /pipeline/scripts/ssl-check.rb ssorder.snlb.pl
-    - /pipeline/scripts/ssl-check.rb developer.ssorder.snlb.pl
-    - /pipeline/scripts/ssl-check.rb cdn.ssorder.snlb.pl
