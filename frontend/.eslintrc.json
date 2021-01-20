@@ -39,7 +39,9 @@
         "react/prop-types": [0]
     },
     "globals": {
-        "$": "readonly"
+        "$": "readonly",
+        "cy": "readonly",
+        "Cypress": "readonly"
     },
     "env": {
         "browser": true
