@@ -9,14 +9,13 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 
-
 const fs = require('fs-extra')
 const path = require('path')
 
-function getConfigurationByFile (file) {
-  const pathToConfigFile = path.resolve('./cypress', 'config', `${file}.json`)
+function getConfigurationByFile(file) {
+    const pathToConfigFile = path.resolve('./cypress', 'config', `${file}.json`)
 
-  return fs.readJson(pathToConfigFile)
+    return fs.readJson(pathToConfigFile)
 }
 
 // This function is called when a project is opened or re-opened (e.g. due to
@@ -26,11 +25,11 @@ function getConfigurationByFile (file) {
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+    // `on` is used to hook into various events Cypress emits
+    // `config` is the resolved Cypress config
 
-  // accept a configFile value or use development by default
-  const file = config.env.configFile || 'development'
+    // accept a configFile value or use development by default
+    const file = config.env.configFile || 'docker'
 
-  return getConfigurationByFile(file)
+    return getConfigurationByFile(file)
 }

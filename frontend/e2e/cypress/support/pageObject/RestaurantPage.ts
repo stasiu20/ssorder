@@ -10,7 +10,10 @@ export class RestaurantPage {
 
     uploadImage() {
         cy.get('vaadin-upload').shadow().find('input[type="file"]').attachFile('cy.png');
-        cy.get('#react-restaurant-form button[type="submit"]').click();
+    }
+
+    uploadDoneIcon() {
+        return cy.get('vaadin-upload').shadow().find('vaadin-upload-file[complete]');
     }
 }
 

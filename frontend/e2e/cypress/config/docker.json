@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://ssorder-develop.snlb.pl",
+    "baseUrl": "http://ssorder.lvh.me",
     "env": {
         "user": {
             "username": "sonia.baran",

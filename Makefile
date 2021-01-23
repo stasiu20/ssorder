@@ -40,4 +40,4 @@ update-dependencies-packages:
 	docker-compose exec cli bash -c "cd node-cron/ && npm install"
 
 cypress:
-	docker run --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.2.1 --env configFile=ssorder-develop
+	docker run --network=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.2.1 --env configFile=docker

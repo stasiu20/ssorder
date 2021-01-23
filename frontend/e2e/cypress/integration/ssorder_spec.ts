@@ -27,7 +27,7 @@ describe('SSOrder', () => {
             .should('be.visible');
     });
 
-    it('Add restaurant', () => {
+    it('Add restaurant and upload image', () => {
         const restaurantName = 'lorem ipsum' + (new Date()).getTime();
 
         navigator.toSignInPage();
@@ -38,26 +38,22 @@ describe('SSOrder', () => {
         cy.location('pathname').should('eq', '/restaurants/add');
 
         onRestaurantPage.submitForm(restaurantName);
-        cy.location('pathname').should('match', /\/restaurants\/[\d]+\/update/);
-    });
+        cy.location('pathname')
+            .should('match', /\/restaurants\/[\d]+\/update/)
+            .then(location => {
+                const regex = /\/restaurants\/([\d]+)\/update/;
+                const restaurantId = Number(location.match(regex)[1]);
 
-    it('Edit restaurant', () => {
-        const restaurantId = Cypress.env('restaurant').id;
+                onRestaurantPage.uploadImage();
+                onRestaurantPage.uploadDoneIcon().should('be.visible');
 
-        navigator.toSignInPage();
-        onLoginPage.signIn(Cypress.env('user').username, Cypress.env('user').password);
-        navigator.isHomePage();
+                navigator.toRestaurant(restaurantId);
+                cy.location('pathname').should('match', /\/restaurants\/[\d]+/);
 
-        navigator.toEditRestaurant(restaurantId);
-        cy.location('pathname').should('match', /\/restaurants\/[\d]+\/update/);
-        onRestaurantPage.uploadImage();
-
-        navigator.toRestaurant(restaurantId);
-        cy.location('pathname').should('match', /\/restaurants\/[\d]+/);
-
-        cy.get('#react-restaurant-image')
-            .find('img')
-            .should('be.visible')
-            .and(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
+                cy.get('#react-restaurant-image')
+                    .find('img')
+                    .should('be.visible')
+                    .and(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
+            });
     });
 });
