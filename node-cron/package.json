@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "ioredis": "^4.19.2",
-    "nconf": "^0.11.0",
+    "nconf": "^0.11.2",
     "node-cron": "^2.0.3",
     "winston": "^3.3.3"
   }
