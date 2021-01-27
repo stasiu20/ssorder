@@ -56,7 +56,7 @@
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.13",
-        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.2.1",
         "yiisoft/yii2-faker": "~2.0.0",
         "yiisoft/yii2-coding-standards": "^2.0",
         "phpmd/phpmd": "^2.6",
