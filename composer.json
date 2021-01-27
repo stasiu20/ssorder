@@ -62,7 +62,6 @@
         "phpmd/phpmd": "^2.6",
         "sebastian/phpcpd": "^6.0",
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "sensiolabs/security-checker": "^6.0.2",
         "phploc/phploc": "^7.0",
         "wapmorgan/php-code-fixer": "^2.0",
         "phpcompatibility/php-compatibility": "^9.1",
@@ -104,7 +103,6 @@
         "phpcpd": "./vendor/bin/phpcpd --exclude=views/ ./frontend/ ./common/ ./console/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude api/ .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./frontend ./common ./console",
-        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
         "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./common ./frontend/",
         "redoc": "npx redoc-cli bundle -o docs/redoc/index.html docs/openapi.yml",
         "all": [

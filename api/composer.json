@@ -38,7 +38,6 @@
         "phpstan/phpstan-deprecation-rules": "^0.12.5",
         "phpstan/phpstan-strict-rules": "^0.12.5",
         "sebastian/phpcpd": "^6.0",
-        "sensiolabs/security-checker": "^6.0",
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/browser-kit": "5.2.*",
         "symfony/maker-bundle": "^1.22",
@@ -79,8 +78,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "security-checker security:check": "script"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -97,7 +95,6 @@
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
         "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api",
-        "security-checker": "./vendor/bin/security-checker security:check ./composer.lock --format text",
         "all": [
             "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
         ]
