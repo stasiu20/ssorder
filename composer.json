@@ -68,7 +68,7 @@
         "phpcompatibility/php-compatibility": "^9.1",
         "phpstan/phpstan-deprecation-rules": "^0.11.2",
         "phpstan/phpstan-strict-rules": "^0.11.1",
-        "ergebnis/phpstan-rules": "^0.14.2",
+        "ergebnis/phpstan-rules": "^0.15.3",
         "mmo/faker-images": "^0.2.0",
         "fzaninotto/faker": "^1.9",
         "zircote/swagger-php": "^3.0",
