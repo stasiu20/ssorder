@@ -26,13 +26,13 @@
     "require": {
 		"php": ">=7.3.0",
         "yiisoft/yii2": "^2.0.15",
-        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.1.0",
 		"kartik-v/yii2-widget-datepicker": "@dev",
 		"borales/yii2-phone-input": "*",
         "kartik-v/yii2-date-range": "^1.6",
         "bt/rocketchat-php": "^1.1",
         "theiconic/php-ga-measurement-protocol": "^2.0",
-        "lcobucci/jwt": "^3.3",
+        "lcobucci/jwt": "3.3.3",
         "symfony/dotenv": "^3.4",
         "aws/aws-sdk-php": "^3.24.3",
         "mmo/yii2-utils": "dev-master",
@@ -52,11 +52,12 @@
         "myclabs/php-enum": "^1.7",
         "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
         "league/fractal": "^0.19.2",
-        "minishlink/web-push": "^5.2"
+        "minishlink/web-push": "^5.2",
+        "yiisoft/yii2-bootstrap": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.13",
-        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.2.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "yiisoft/yii2-coding-standards": "^2.0",
         "phpmd/phpmd": "^2.6",
@@ -94,7 +95,7 @@
     },
     "scripts": {
         "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
-        "phpcf": "./vendor/bin/phpcf ./frontend/ console/ ./common/",
+        "phpdd": "./vendor/bin/phpdd ./frontend/ console/ ./common/",
         "codecept-common": "cd ./common && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
         "codecept-frontend": "cd ./frontend && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
         "phpcs": "./vendor/bin/phpcs --report=junit --extensions=php",
@@ -106,7 +107,7 @@
         "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php -o docs/openapi.yml ./common ./frontend/",
         "redoc": "npx redoc-cli bundle -o docs/redoc/index.html docs/openapi.yml",
         "all": [
-            "@phplint", "@phpcf", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"
+            "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@codecept-common", "@codecept-frontend"
         ],
         "swagger": ["@openapi", "@redoc"]
     }
