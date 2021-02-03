@@ -69,7 +69,7 @@
         "phpstan/phpstan-deprecation-rules": "^0.11.2",
         "phpstan/phpstan-strict-rules": "^0.11.1",
         "ergebnis/phpstan-rules": "^0.14.2",
-        "mmo/faker-images": "^0.2.0",
+        "mmo/faker-images": "^0.3.0",
         "fzaninotto/faker": "^1.9",
         "zircote/swagger-php": "^3.0",
         "swagger-api/swagger-ui": "^3.25",
