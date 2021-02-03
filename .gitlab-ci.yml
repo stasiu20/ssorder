@@ -159,11 +159,11 @@ phpstan:
   dependencies:
     - composer
 
-phpcf:
+phpdd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
-    - composer run phpcf
+    - composer run phpdd
   dependencies:
     - composer
 
@@ -282,14 +282,14 @@ hadolint:
       - node-cron/Dockerfile
       - docs/Dockerfile
 
-security-checker:
+cve_dependencies_php:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: registry.gitlab.com/savadenn-public/runners/local-php-security-checker:latest
   script:
-    - composer run security-checker
+    - local-php-security-checker -update-cache
+    - local-php-security-checker
   allow_failure: true
-  dependencies:
-    - composer
+  dependencies: []
 
 npm-audit:
   stage: qa
@@ -368,11 +368,25 @@ newman:
   only:
     - schedules
 
-.e2e:
-  stage: testing
-  image: morawskim/node10-google-chrome:74.0.3729.131
+cypress:
+  image: cypress/browsers:node14.7.0-chrome84
+  stage: qa
   script:
-    - cd frontend && npm run e2e
+    - pushd frontend/e2e
+    - npm ci
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run --browser chrome --env configFile=ssorder-develop
+    - popd
+    - mkdir -p docs/cypress/ frontend/e2e/cypress/{screenshots,videos}
+    - mv frontend/e2e/cypress/screenshots docs/cypress/
+    - mv frontend/e2e/cypress/videos docs/cypress/
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - docs/cypress/
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 .docker:
   stage: docker

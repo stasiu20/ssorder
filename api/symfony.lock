@@ -256,18 +256,6 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
-    "sensiolabs/security-checker": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
-        },
-        "files": [
-            "config/packages/security_checker.yaml"
-        ]
-    },
     "spomky-labs/base64url": {
         "version": "v2.0.3"
     },
@@ -369,9 +357,6 @@
             "src/Kernel.php"
         ]
     },
-    "symfony/http-client": {
-        "version": "v5.1.7"
-    },
     "symfony/http-client-contracts": {
         "version": "v2.3.1"
     },
@@ -389,9 +374,6 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/mime": {
-        "version": "v5.1.7"
     },
     "symfony/monolog-bridge": {
         "version": "v5.1.8"
@@ -605,6 +587,9 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zenstruck/callback": {
+        "version": "v1.2.0"
     },
     "zenstruck/foundry": {
         "version": "v1.4.0"

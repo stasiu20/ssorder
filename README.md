@@ -34,6 +34,14 @@ Run `make setup`. You need a `make` package.
 Or run these commands from the target  `setup` manually.
 Make sure that nothing listens on port 80, otherwise up traefik will fail.
 
+## Day to day operations
+
+### Run e2e tests
+
+Cypress is used for e2e tests. First of all, you need to have running ssorder.
+You can run tests by calling `make cypress` on a host machine. This command
+will run the docker container and run tests.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

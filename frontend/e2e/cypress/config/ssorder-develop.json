@@ -1,0 +1,16 @@
+{
+    "baseUrl": "https://ssorder-develop.snlb.pl",
+    "env": {
+        "user": {
+            "username": "sonia.baran",
+            "password": "password"
+        },
+        "order": {
+            "restaurantName": "BurgeRoom",
+            "foodId": 2
+        },
+        "restaurant": {
+            "id": 14
+        }
+    }
+}

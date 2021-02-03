@@ -142,14 +142,14 @@ phpdd:
   dependencies:
     - composer
 
-security-checker:
+cve_dependencies_php:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: registry.gitlab.com/savadenn-public/runners/local-php-security-checker:latest
   script:
-    - composer run security-checker
+    - local-php-security-checker -update-cache
+    - local-php-security-checker
   allow_failure: true
-  dependencies:
-    - composer
+  dependencies: []
 
 phpunit:
   stage: qa
