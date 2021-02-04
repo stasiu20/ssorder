@@ -33,7 +33,7 @@
         "bt/rocketchat-php": "^1.1",
         "theiconic/php-ga-measurement-protocol": "^2.0",
         "lcobucci/jwt": "3.3.3",
-        "symfony/dotenv": "^3.4",
+        "symfony/dotenv": "^5.2",
         "aws/aws-sdk-php": "^3.24.3",
         "mmo/yii2-utils": "dev-master",
         "samdark/yii2-psr-log-target": "^1.1",
