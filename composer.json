@@ -52,7 +52,7 @@
         "myclabs/php-enum": "^1.7",
         "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
         "league/fractal": "^0.19.2",
-        "minishlink/web-push": "^5.2",
+        "minishlink/web-push": "^6.0",
         "yiisoft/yii2-bootstrap": "^2.0"
     },
     "require-dev": {
