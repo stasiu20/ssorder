@@ -1218,16 +1218,16 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "6195e836ffc2e1bd5ddea468fa46015fbea00b3a"
+                "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/6195e836ffc2e1bd5ddea468fa46015fbea00b3a",
-                "reference": "6195e836ffc2e1bd5ddea468fa46015fbea00b3a",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
+                "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
                 "shasum": ""
             },
             "require": {
@@ -1317,7 +1317,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-23T14:08:13+00:00"
+            "time": "2021-02-07T21:16:17+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -1691,16 +1691,16 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "3.0.4",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "0564bdff0e4ee08f5cd418272a749bceecde75bf"
+                "reference": "8779ceebf715d1c60bd10286fce9d32ed03c484a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/0564bdff0e4ee08f5cd418272a749bceecde75bf",
-                "reference": "0564bdff0e4ee08f5cd418272a749bceecde75bf",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/8779ceebf715d1c60bd10286fce9d32ed03c484a",
+                "reference": "8779ceebf715d1c60bd10286fce9d32ed03c484a",
                 "shasum": ""
             },
             "require": {
@@ -1788,7 +1788,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2020-12-10T20:14:08+00:00"
+            "time": "2021-01-02T11:26:24+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2160,16 +2160,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.4.3",
+            "version": "3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9"
+                "reference": "ff92156cd27d3abe7fc8814516ae0615215f01ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/ff92156cd27d3abe7fc8814516ae0615215f01ae",
+                "reference": "ff92156cd27d3abe7fc8814516ae0615215f01ae",
                 "shasum": ""
             },
             "require": {
@@ -2229,37 +2229,37 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-27T23:38:30+00:00"
+            "time": "2021-02-10T11:08:20+00:00"
         },
         {
             "name": "lexik/jwt-authentication-bundle",
-            "version": "v2.10.6",
+            "version": "v2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
-                "reference": "dc472dd55d6a7bc374306e3df8e6202bc95f76e9"
+                "reference": "7a667c81ec52e84a592d8fcf483481ad773151f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/dc472dd55d6a7bc374306e3df8e6202bc95f76e9",
-                "reference": "dc472dd55d6a7bc374306e3df8e6202bc95f76e9",
+                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/7a667c81ec52e84a592d8fcf483481ad773151f5",
+                "reference": "7a667c81ec52e84a592d8fcf483481ad773151f5",
                 "shasum": ""
             },
             "require": {
                 "ext-openssl": "*",
-                "lcobucci/jwt": "^3.2|^4.0",
+                "lcobucci/jwt": "^3.4|^4.0",
                 "namshi/jose": "^7.2",
-                "php": ">=5.6",
-                "symfony/framework-bundle": "^3.4|^4.0|^5.0",
-                "symfony/security-bundle": "^3.4|^4.0|^5.0"
+                "php": ">=7.1",
+                "symfony/framework-bundle": "^4.4|^5.1",
+                "symfony/security-bundle": "^4.4|^5.1"
             },
             "require-dev": {
-                "symfony/browser-kit": "^3.4|^4.0|^5.0",
-                "symfony/console": "^3.4|^4.0|^5.0",
-                "symfony/dom-crawler": "^3.4|^4.0|^5.0",
-                "symfony/phpunit-bridge": "^3.4|^4.0|^5.0",
-                "symfony/var-dumper": "^3.4|^4.0|^5.0",
-                "symfony/yaml": "^3.4|^4.0|^5.0"
+                "symfony/browser-kit": "^4.4|^5.1",
+                "symfony/console": "^4.4|^5.1",
+                "symfony/dom-crawler": "^4.4|^5.1",
+                "symfony/phpunit-bridge": "^4.4|^5.1",
+                "symfony/var-dumper": "^4.4|^5.1",
+                "symfony/yaml": "^4.4|^5.1"
             },
             "suggest": {
                 "gesdinet/jwt-refresh-token-bundle": "Implements a refresh token system over Json Web Tokens in Symfony",
@@ -2335,7 +2335,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-20T18:11:13+00:00"
+            "time": "2021-02-10T12:39:43+00:00"
         },
         {
             "name": "minishlink/web-push",
@@ -8176,16 +8176,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.71",
+            "version": "0.12.74",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5"
+                "reference": "bc5f9483c8f461c86653dcbd040cf0d2778c91a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5",
-                "reference": "d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/bc5f9483c8f461c86653dcbd040cf0d2778c91a2",
+                "reference": "bc5f9483c8f461c86653dcbd040cf0d2778c91a2",
                 "shasum": ""
             },
             "require": {
@@ -8228,7 +8228,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-01T18:24:00+00:00"
+            "time": "2021-02-08T15:00:25+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -8785,16 +8785,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.28.0",
+            "version": "v1.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "6f4d27a68c92179c124f5331a27e32d197c9bd59"
+                "reference": "9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/6f4d27a68c92179c124f5331a27e32d197c9bd59",
-                "reference": "6f4d27a68c92179c124f5331a27e32d197c9bd59",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c",
+                "reference": "9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c",
                 "shasum": ""
             },
             "require": {
@@ -8865,7 +8865,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-15T18:19:20+00:00"
+            "time": "2021-02-07T01:02:28+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -9345,16 +9345,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.2.1",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "f795ca686d38530045859b0350b5352f7d63447d"
+                "reference": "1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f795ca686d38530045859b0350b5352f7d63447d",
-                "reference": "f795ca686d38530045859b0350b5352f7d63447d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5",
+                "reference": "1f3b7e2c06cc05d42936a8ad508ff1db7975cdc5",
                 "shasum": ""
             },
             "require": {
@@ -9369,7 +9369,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -9413,7 +9413,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-05T15:40:36+00:00"
+            "time": "2021-02-08T09:54:36+00:00"
         },
         {
             "name": "wapmorgan/php-code-fixer",
@@ -9525,16 +9525,16 @@
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v1.7.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "9d424010aa73b3d2be0443bab3056cb83b43896e"
+                "reference": "6bab70926e8757fbc3ce1ebe1215158217da6ab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/9d424010aa73b3d2be0443bab3056cb83b43896e",
-                "reference": "9d424010aa73b3d2be0443bab3056cb83b43896e",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/6bab70926e8757fbc3ce1ebe1215158217da6ab0",
+                "reference": "6bab70926e8757fbc3ce1ebe1215158217da6ab0",
                 "shasum": ""
             },
             "require": {
@@ -9590,7 +9590,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2021-01-17T17:14:37+00:00"
+            "time": "2021-02-06T14:13:13+00:00"
         }
     ],
     "aliases": [],
