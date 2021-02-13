@@ -4,12 +4,15 @@ namespace frontend\modules\apiV1\helpers;
 
 use common\models\AccessToken;
 use common\models\User;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Parser;
+use DateTimeImmutable;
+use Exception;
+use Lcobucci\Clock\SystemClock;
+use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token;
-use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lcobucci\JWT\Validation\Constraint\ValidAt;
 use Ramsey\Uuid\Uuid;
 
 class AccessTokenHelper
@@ -33,17 +36,21 @@ class AccessTokenHelper
     public static function createTokenForUser(User $user, int $time = null): Token
     {
         if (null === $time) {
-            $time = time();
+            $now = new DateTimeImmutable();
+        } else {
+            $now = DateTimeImmutable::createFromFormat('U', $time);
         }
-        $signer = new Sha256();
-        $token = (new Builder())
-            ->identifiedBy(Uuid::uuid4(), true)
-            ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-            ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-            ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
-            ->getToken($signer, new Key(self::getJwtSignKey())); // Retrieves the generated token
 
-        return $token;
+        $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(self::getJwtSignKey()));
+        $uuid = Uuid::uuid4();
+
+        return $config->builder()
+            ->identifiedBy($uuid)
+            ->withHeader('jti', $uuid->toString())
+            ->issuedAt($now)
+            ->expiresAt($now->modify('+1 hour'))
+            ->withClaim('uid', $user->id)
+            ->getToken($config->signer(), $config->signingKey());
     }
 
     public static function deleteToken(string $token): void
@@ -54,22 +61,27 @@ class AccessTokenHelper
         }
     }
 
-    public static function parseToken(string $token, string $jwtSignKey = null): ?Token
+    public static function parseToken(string $jwt, string $jwtSignKey = null): ?Token
     {
         if (null === $jwtSignKey) {
             $jwtSignKey = self::getJwtSignKey();
         }
 
+        $config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText($jwtSignKey));
+        $config->setValidationConstraints(
+            new SignedWith($config->signer(), $config->signingKey()),
+            new ValidAt(SystemClock::fromSystemTimezone())
+        );
+
         try {
-            $token = (new Parser())->parse($token);
-            $isSignValid = $token->verify(new Sha256(), $jwtSignKey);
-            $isValid = $token->validate(new ValidationData());
-            if ($isSignValid && $isValid) {
+            $token = $config->parser()->parse($jwt);
+            if ($config->validator()->validate($token, ...$config->validationConstraints())) {
                 return $token;
             }
-            return null;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
+
+        return null;
     }
 }
