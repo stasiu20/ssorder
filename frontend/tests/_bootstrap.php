@@ -3,6 +3,7 @@ defined('YII_APP_BASE_PATH') or define('YII_APP_BASE_PATH', __DIR__ . '/../../')
 require_once(YII_APP_BASE_PATH . '/vendor/autoload.php');
 
 $dotEnv = new \Symfony\Component\Dotenv\Dotenv();
+$dotEnv->usePutenv(true);
 $dotEnv->load(__DIR__ . '/../../.env');
 
 defined('YII_DEBUG') or define('YII_DEBUG', true);

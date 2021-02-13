@@ -2,6 +2,7 @@
 require(__DIR__ . '/../../vendor/autoload.php');
 
 $dotEnv = new \Symfony\Component\Dotenv\Dotenv();
+$dotEnv->usePutenv(true);
 $dotEnv->load(__DIR__ . '/../../.env');
 
 defined('YII_DEBUG') or define('YII_DEBUG', !!getenv('YII_DEBUG'));
