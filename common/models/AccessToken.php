@@ -24,7 +24,7 @@ class AccessToken extends \yii\redis\ActiveRecord
     {
         $tokenAR = new static();
         $tokenAR->uuid = $token->headers()->get('jti');
-        $tokenAR->token = (string)$token;
+        $tokenAR->token = $token->toString();
         $tokenAR->user_id = $user->id;
         $result = $tokenAR->save();
         if (!$result) {
