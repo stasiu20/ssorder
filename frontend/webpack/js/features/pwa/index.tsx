@@ -8,6 +8,7 @@ import RestaurantsFetch from '../restaurant/components/restaurantsFetch';
 import PageRestaurantMenu from './components/pageRestaurantMenu';
 import PageMakeOrder from './components/pageMakeOrder';
 import AppNavbar from './components/navbar';
+import '../../../css/app.scss';
 
 $(function() {
     const $el = $('#react-pwa');
