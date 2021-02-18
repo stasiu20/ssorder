@@ -21,7 +21,8 @@ class AccessTokenHelperTest extends Unit
 
         $token = AccessTokenHelper::createTokenForUser($user);
         $this->assertInstanceOf(Token::class, $token);
-        $this->assertEquals($user->id, $token->getClaim('uid'));
+        $this->assertTrue($token->claims()->has('uid'));
+        $this->assertEquals($user->id, $token->claims()->get('uid'));
     }
 
     public function testParseTokenBadSign()
@@ -48,7 +49,7 @@ class AccessTokenHelperTest extends Unit
 
     public function testParseTokenInvalid()
     {
-        $tokenAsString = 'qwe.asd';
+        $tokenAsString = 'qwe.asd.foo';
         $parsedToken = AccessTokenHelper::parseToken($tokenAsString);
         $this->assertNull($parsedToken);
     }
@@ -60,6 +61,7 @@ class AccessTokenHelperTest extends Unit
 
         $token = AccessTokenHelper::createTokenForUser($user);
         $this->assertInstanceOf(Token::class, $token);
-        $this->assertNotEmpty($token->getHeader('jti'));
+        $this->assertTrue($token->headers()->has('jti'));
+        $this->assertNotEmpty($token->headers()->get('jti'));
     }
 }

@@ -79,6 +79,7 @@
   "dependencies": {
     "@availity/phone": "^1.1.18",
     "@vaadin/vaadin-upload": "^4.3.0",
+    "acorn": "^7.1.1",
     "beautiful-react-hooks": "^0.25.5",
     "cleave.js": "^1.6.0",
     "core-js": "3",

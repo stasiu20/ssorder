@@ -95,7 +95,7 @@ class SessionController extends Controller
 
         $token = AccessTokenHelper::createTokenForUser($user);
         AccessToken::saveTokenForUser($token, $user);
-        return ['type' => 'auth', 'data' => (string)$token];
+        return ['type' => 'auth', 'data' => $token->toString()];
     }
 
     /**

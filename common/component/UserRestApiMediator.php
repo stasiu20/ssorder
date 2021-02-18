@@ -44,7 +44,7 @@ class UserRestApiMediator
         $user = $event->identity;
         $token = AccessTokenHelper::createTokenForUser($user);
         AccessToken::saveTokenForUser($token, $user);
-        \Yii::$app->session->set(self::JWT_SESSION_KEY, (string)$token);
+        \Yii::$app->session->set(self::JWT_SESSION_KEY, $token->toString());
     }
 
     public function deleteJWTTokenBeforeLogout(UserEvent $event): void

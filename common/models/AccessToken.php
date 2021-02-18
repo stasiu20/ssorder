@@ -23,8 +23,8 @@ class AccessToken extends \yii\redis\ActiveRecord
     public static function saveTokenForUser(Token $token, User $user): AccessToken
     {
         $tokenAR = new static();
-        $tokenAR->uuid = $token->getHeader('jti');
-        $tokenAR->token = (string)$token;
+        $tokenAR->uuid = $token->headers()->get('jti');
+        $tokenAR->token = $token->toString();
         $tokenAR->user_id = $user->id;
         $result = $tokenAR->save();
         if (!$result) {
@@ -34,7 +34,7 @@ class AccessToken extends \yii\redis\ActiveRecord
         //todo mmo nie kasujemy wszystkiego.
         $pk = static::buildKey(static::primaryKey());
         $key = static::keyPrefix() . ':a:' . $pk;
-        static::getDb()->expireat($key, $token->getClaim('exp'));
+        static::getDb()->expireat($key, $token->claims()->get('exp')->format('U'));
         return $tokenAR;
     }
 
