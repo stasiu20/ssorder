@@ -14,6 +14,13 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "#56 npm"
+  - package-ecosystem: npm
+    directory: "/frontend/e2e"
+    target-branch: "develop"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "#56 npm"
   - package-ecosystem: composer
     directory: "/"
     target-branch: "develop"
