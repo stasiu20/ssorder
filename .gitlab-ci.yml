@@ -375,7 +375,7 @@ cypress:
     - pushd frontend/e2e
     - npm ci
     - $(npm bin)/cypress verify
-    - $(npm bin)/cypress run --browser chrome --env configFile=ssorder-develop
+    - $(npm bin)/cypress run --browser chrome --env configFile=ssorder-develop  --env "ROCKET_CHAT_BOT_TOKEN=${ROCKET_CHAT_BOT_TOKEN}"
     - popd
     - mkdir -p docs/cypress/ frontend/e2e/cypress/{screenshots,videos}
     - mv frontend/e2e/cypress/screenshots docs/cypress/

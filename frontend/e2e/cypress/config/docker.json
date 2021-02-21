@@ -10,7 +10,9 @@
             "foodId": 2
         },
         "restaurant": {
-            "id": 14
-        }
+            "id": 14,
+            "withMenu": 5
+        },
+        "ROCKET_CHAT_BOT_TOKEN": "FQMA74ydpMjuJhbP9Y3nNJwy"
     }
 }
