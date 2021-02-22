@@ -14,8 +14,9 @@ const path = require('path')
 
 function getConfigurationByFile(file) {
     const pathToConfigFile = path.resolve('./cypress', 'config', `${file}.json`)
+    const raw = fs.readFileSync(pathToConfigFile);
 
-    return fs.readJson(pathToConfigFile)
+    return JSON.parse(raw);
 }
 
 // This function is called when a project is opened or re-opened (e.g. due to
@@ -29,7 +30,8 @@ module.exports = (on, config) => {
     // `config` is the resolved Cypress config
 
     // accept a configFile value or use development by default
-    const file = config.env.configFile || 'docker'
+    const file = config.env.configFile || 'docker';
+    const configuration = getConfigurationByFile(file);
 
-    return getConfigurationByFile(file)
+    return { ...configuration, env: { ...configuration.env, ...config.env } };
 }

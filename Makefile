@@ -41,3 +41,14 @@ update-dependencies-packages:
 
 cypress:
 	docker run --network=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.2.1 --env configFile=docker
+
+cypress-debug:
+	#npx cypress open --env configFile=docker
+	docker run --rm -it \
+	  --network=host \
+      -v $(PWD)/frontend/e2e:/e2e \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -w /e2e \
+      -e DISPLAY=:1 \
+      --entrypoint cypress \
+      cypress/included:6.2.1 open --project .
