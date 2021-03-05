@@ -1,5 +1,7 @@
 {
     "baseUrl": "http://ssorder.lvh.me",
+    "viewportWidth": 1920,
+    "viewportHeight": 1080,
     "env": {
         "user": {
             "username": "sonia.baran",
