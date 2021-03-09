@@ -2,10 +2,9 @@
 
 namespace frontend\modules\apiV1\controllers;
 
-use common\resources\RestaurantResource;
+use common\services\SymfonyApiClient;
 use frontend\models\Restaurants;
 use frontend\modules\apiV1\models\Food;
-use League\Fractal\Manager;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -56,11 +55,10 @@ class RestaurantsController extends Controller
      */
     public function actionIndex(): array
     {
-        $restaurants = Restaurants::findActiveRestaurants()->all();
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
 
-        /** @var Manager $fractalManager */
-        $fractalManager = Yii::$container->get(Manager::class);
-        return $fractalManager->createData(RestaurantResource::factoryCollection($restaurants))->toArray();
+        return $symfonyApiClient->getRestaurants();
     }
 
     /**

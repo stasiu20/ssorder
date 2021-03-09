@@ -18,6 +18,15 @@ class SymfonyApiClient
         $this->_client = $client;
     }
 
+    public function getRestaurants(): array
+    {
+        $response = $this->_client->get(
+            '/api/v1/restaurants',
+        );
+
+        return \json_decode($response->getBody()->getContents(), true);
+    }
+
     public function createWebpush(CreateWebpushRequest $createWebpushRequest): void
     {
         $body = [
