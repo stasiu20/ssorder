@@ -28,7 +28,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         /** @var User|Proxy $user */
         $user = UserFactory::repository()->findOneBy(['username' => 'sonia.baran']);
 
-        UserSubscriptionFactory::repository()->assertEmpty();
+        UserSubscriptionFactory::repository()->assert()->empty();
         self::assertNotNull($user);
 
         self::ensureKernelShutdown();

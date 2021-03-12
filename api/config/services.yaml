@@ -35,3 +35,9 @@ services:
             - '@doctrine'
         tags:
             - { name: bentools_webpush.subscription_manager, user_class: 'App\Entity\User' }
+
+    League\Fractal\Manager: ~
+
+    App\File\FileService:
+        arguments:
+            $publicUrl: '%env(MINIO_PUBLIC_URL)%'

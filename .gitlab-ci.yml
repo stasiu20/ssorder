@@ -205,6 +205,7 @@ assets:
     - cd frontend && yarn build
     - yarn pwa:build
     - npx webpack-bundle-analyzer $CI_PROJECT_DIR/frontend/webpack/stats.json $CI_PROJECT_DIR/frontend/web/assets/build/ --no-open --mode static --report $CI_PROJECT_DIR/docs/webpack-bundle-analyzer.html
+    - find web/assets/build -iname '*.css' -exec npx doiuse -b '>1%, not dead, not ie>0, not ie_mob>0, not op_mini all' {} \;
   dependencies:
     - yarn
   artifacts:
@@ -375,7 +376,7 @@ cypress:
     - pushd frontend/e2e
     - npm ci
     - $(npm bin)/cypress verify
-    - $(npm bin)/cypress run --browser chrome --env configFile=ssorder-develop
+    - $(npm bin)/cypress run --headless --browser chrome --env "configFile=ssorder-develop,ROCKET_CHAT_BOT_TOKEN=${ROCKET_CHAT_BOT_TOKEN}"
     - popd
     - mkdir -p docs/cypress/ frontend/e2e/cypress/{screenshots,videos}
     - mv frontend/e2e/cypress/screenshots docs/cypress/

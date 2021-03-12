@@ -63,7 +63,9 @@
 
     <!-- Run against the PHPCompatibility ruleset -->
     <!-- Require phpcompatibility/php-compatibility package -->
-    <rule ref="PHPCompatibility"/>
+    <rule ref="PHPCompatibility">
+        <exclude name="PHPCompatibility.Keywords.ForbiddenNamesAsDeclared.resourceFound"/>
+    </rule>
     <!-- Check for cross-version support for PHP 7.3 and higher. -->
     <config name="testVersion" value="7.3-"/>
     <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />

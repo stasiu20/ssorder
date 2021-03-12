@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-use common\resources\RestaurantResource;
 use common\services\FileService;
+use common\services\SymfonyApiClient;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Category;
 use frontend\models\Imagesmenu;
@@ -51,9 +51,10 @@ class RestaurantsController extends Controller
         $query = Restaurants::findActiveRestaurants();
         $restaurants = $query->orderBy('restaurantName')->all();
         $categorys = Category::findActive()->all();
-        /** @var Manager $fractalManager */
-        $fractalManager = Yii::$container->get(Manager::class);
-        $restaurantData = $fractalManager->createData(RestaurantResource::factoryCollection($restaurants))->toArray();
+
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
+        $restaurantData = $symfonyApiClient->getRestaurants();
 
         return $this->render('index', [
             'restaurants' => $restaurants,
