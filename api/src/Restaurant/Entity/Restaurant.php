@@ -4,6 +4,9 @@ namespace App\Restaurant\Entity;
 
 use App\Restaurant\Repository\RestaurantRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +73,18 @@ class Restaurant
      * @ORM\Column(name="deletedAt", type="datetime_immutable", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity=MenuPosition::class, mappedBy="restaurant", orphanRemoval=true)
+     */
+    private $menu;
+
+    public function __construct()
+    {
+        $this->menu = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -175,5 +190,38 @@ class Restaurant
     public function isActive(): bool
     {
         return null === $this->deletedAt;
+    }
+
+    /**
+     * @return Collection|MenuPosition[]
+     */
+    public function getMenu(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->isNull('deletedat'));
+
+        return $this->menu->matching($criteria);
+    }
+
+    public function addMenu(MenuPosition $menu): self
+    {
+        if (!$this->menu->contains($menu)) {
+            $this->menu[] = $menu;
+            $menu->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(MenuPosition $menu): self
+    {
+        if ($this->menu->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getRestaurant() === $this) {
+                $menu->setRestaurant(null);
+            }
+        }
+
+        return $this;
     }
 }

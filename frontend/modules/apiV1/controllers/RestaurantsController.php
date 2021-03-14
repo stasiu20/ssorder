@@ -4,7 +4,6 @@ namespace frontend\modules\apiV1\controllers;
 
 use common\services\SymfonyApiClient;
 use frontend\models\Restaurants;
-use frontend\modules\apiV1\models\Food;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -106,10 +105,15 @@ class RestaurantsController extends Controller
             throw new NotFoundHttpException('Restaurant not exists');
         }
 
-        $foods = $restaurant->getMenu();
-        $foods->modelClass = Food::class;
-        return new ActiveDataProvider([
-            'query' => $foods
-        ]);
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
+        $menu =  $symfonyApiClient->getMenu($restaurantId);
+
+        Yii::$app->response->headers->add('X-Pagination-Current-Page', 1);
+        Yii::$app->response->headers->add('X-Pagination-Page-Count', count($menu));
+        Yii::$app->response->headers->add('X-Pagination-Per-Page', count($menu));
+        Yii::$app->response->headers->add('X-Pagination-Total-Count', count($menu));
+
+        return $menu;
     }
 }

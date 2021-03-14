@@ -27,6 +27,15 @@ class SymfonyApiClient
         return \json_decode($response->getBody()->getContents(), true);
     }
 
+    public function getMenu(int $restaurantId): array
+    {
+        $response = $this->_client->get(
+            sprintf('/api/v1/restaurants/%d/menu', $restaurantId),
+        );
+
+        return \json_decode($response->getBody()->getContents(), true);
+    }
+
     public function createWebpush(CreateWebpushRequest $createWebpushRequest): void
     {
         $body = [
