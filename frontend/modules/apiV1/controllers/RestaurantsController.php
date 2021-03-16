@@ -95,7 +95,7 @@ class RestaurantsController extends Controller
      *     )
      * )
      * @param int $restaurantId
-     * @return ActiveDataProvider
+     * @return array
      * @throws NotFoundHttpException
      */
     public function actionFoods(int $restaurantId)

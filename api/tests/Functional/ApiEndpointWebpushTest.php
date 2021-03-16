@@ -41,7 +41,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         $client->request('POST', '/api/webpush', [], [], [], json_encode($body));
 
         self::assertResponseIsSuccessful();
-        UserSubscriptionFactory::repository()->assertCount(1);
+        UserSubscriptionFactory::repository()->assert()->count(1);
     }
 
     /**
@@ -58,7 +58,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         /** @var User|Proxy $user */
         $user = $story->get('user');
 
-        UserSubscriptionFactory::repository()->assertCount(1);
+        UserSubscriptionFactory::repository()->assert()->count(1);
         self::assertNotNull($user);
 
         self::ensureKernelShutdown();
@@ -71,7 +71,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         $client->request('DELETE', '/api/webpush', [], [], [], json_encode($body));
 
         self::assertResponseIsSuccessful();
-        UserSubscriptionFactory::repository()->assertCount(0);
+        UserSubscriptionFactory::repository()->assert()->empty();
     }
 
     /**

@@ -36,6 +36,13 @@ class SymfonyApiClient
         return \json_decode($response->getBody()->getContents(), true);
     }
 
+    public function getRestaurantCategories(): array
+    {
+        $response = $this->_client->get('/api/v1/dictionaries/categories');
+
+        return \json_decode($response->getBody()->getContents(), true);
+    }
+
     public function createWebpush(CreateWebpushRequest $createWebpushRequest): void
     {
         $body = [
