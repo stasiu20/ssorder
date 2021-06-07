@@ -23,7 +23,7 @@ class ApiEndpointWebpushTest extends WebTestCase
     {
         self::bootKernel();
         /** @var JWTManager $jwtManager */
-        $jwtManager = self::$container->get('lexik_jwt_authentication.jwt_manager');
+        $jwtManager = self::getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
         /** @var User|Proxy $user */
         $user = UserFactory::repository()->findOneBy(['username' => 'sonia.baran']);
@@ -31,8 +31,8 @@ class ApiEndpointWebpushTest extends WebTestCase
         UserSubscriptionFactory::repository()->assert()->empty();
         self::assertNotNull($user);
 
-        self::ensureKernelShutdown();
         $token = $jwtManager->create($user->object());
+        self::ensureKernelShutdown();
         $client = $this->getHTTPClient($token);
         $body = [
             'subscription' => ['endpoint' => 'foo'],
@@ -61,8 +61,8 @@ class ApiEndpointWebpushTest extends WebTestCase
         UserSubscriptionFactory::repository()->assert()->count(1);
         self::assertNotNull($user);
 
-        self::ensureKernelShutdown();
         $token = $jwtManager->create($user->object());
+        self::ensureKernelShutdown();
         $client = $this->getHTTPClient($token);
         $body = [
             'subscription' => ['endpoint' => 'foo'],
