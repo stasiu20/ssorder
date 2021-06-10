@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "848e359005bdb1a03ed71cb17820f795",
+    "content-hash": "25869808b1b3cecaaf1350674727dfcd",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -9106,16 +9106,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v5.2.10",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "4fdcde557ae8f4f3666a9aad9dc076448e56a31a"
+                "reference": "379984e25eee9811b0a25a2105e1a2b3b8d9b734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/4fdcde557ae8f4f3666a9aad9dc076448e56a31a",
-                "reference": "4fdcde557ae8f4f3666a9aad9dc076448e56a31a",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/379984e25eee9811b0a25a2105e1a2b3b8d9b734",
+                "reference": "379984e25eee9811b0a25a2105e1a2b3b8d9b734",
                 "shasum": ""
             },
             "require": {
@@ -9170,7 +9170,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-26T17:40:38+00:00"
+            "time": "2021-05-26T17:43:10+00:00"
         },
         {
             "name": "symfony/dom-crawler",
