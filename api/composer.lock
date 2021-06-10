@@ -2642,12 +2642,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "7f3926cc89bc4b93c17217f03d1a2d99e13132b1"
+                "reference": "40dfcf418475998c6541431711b5476b249627d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/7f3926cc89bc4b93c17217f03d1a2d99e13132b1",
-                "reference": "7f3926cc89bc4b93c17217f03d1a2d99e13132b1",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/40dfcf418475998c6541431711b5476b249627d3",
+                "reference": "40dfcf418475998c6541431711b5476b249627d3",
                 "shasum": ""
             },
             "require": {
@@ -2741,7 +2741,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2021-05-27T11:25:30+00:00"
+            "time": "2021-06-07T17:09:58+00:00"
         },
         {
             "name": "paragonie/sodium_compat",
@@ -8631,16 +8631,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.88",
+            "version": "0.12.89",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "464d1a81af49409c41074aa6640ed0c4cbd9bb68"
+                "reference": "54c0f5a6c30511b77128d58b6369f718df250542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/464d1a81af49409c41074aa6640ed0c4cbd9bb68",
-                "reference": "464d1a81af49409c41074aa6640ed0c4cbd9bb68",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/54c0f5a6c30511b77128d58b6369f718df250542",
+                "reference": "54c0f5a6c30511b77128d58b6369f718df250542",
                 "shasum": ""
             },
             "require": {
@@ -8675,6 +8675,10 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
                     "url": "https://www.patreon.com/phpstan",
                     "type": "patreon"
                 },
@@ -8683,7 +8687,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-17T12:24:49+00:00"
+            "time": "2021-06-09T20:23:49+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
