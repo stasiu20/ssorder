@@ -15,7 +15,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "league/fractal": "^0.19.2",
         "lexik/jwt-authentication-bundle": "^2.8",
-        "nelmio/api-doc-bundle": "4.x-dev",
+        "nelmio/api-doc-bundle": "^4.3",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/console": "5.3.*",
