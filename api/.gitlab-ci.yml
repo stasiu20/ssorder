@@ -58,7 +58,7 @@ composer:
   script:
     - php -v
     - composer config -g cache-dir "$CI_PROJECT_DIR/.composer-cache"
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
   artifacts:
     paths:
       - api/vendor/
