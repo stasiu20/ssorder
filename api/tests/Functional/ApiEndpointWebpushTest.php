@@ -23,7 +23,7 @@ class ApiEndpointWebpushTest extends WebTestCase
     {
         self::bootKernel();
         /** @var JWTManager $jwtManager */
-        $jwtManager = self::$container->get('lexik_jwt_authentication.jwt_manager');
+        $jwtManager = self::getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
         /** @var User|Proxy $user */
         $user = UserFactory::repository()->findOneBy(['username' => 'sonia.baran']);
@@ -31,8 +31,8 @@ class ApiEndpointWebpushTest extends WebTestCase
         UserSubscriptionFactory::repository()->assert()->empty();
         self::assertNotNull($user);
 
-        self::ensureKernelShutdown();
         $token = $jwtManager->create($user->object());
+        self::ensureKernelShutdown();
         $client = $this->getHTTPClient($token);
         $body = [
             'subscription' => ['endpoint' => 'foo'],
@@ -41,7 +41,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         $client->request('POST', '/api/webpush', [], [], [], json_encode($body));
 
         self::assertResponseIsSuccessful();
-        UserSubscriptionFactory::repository()->assertCount(1);
+        UserSubscriptionFactory::repository()->assert()->count(1);
     }
 
     /**
@@ -58,11 +58,11 @@ class ApiEndpointWebpushTest extends WebTestCase
         /** @var User|Proxy $user */
         $user = $story->get('user');
 
-        UserSubscriptionFactory::repository()->assertCount(1);
+        UserSubscriptionFactory::repository()->assert()->count(1);
         self::assertNotNull($user);
 
-        self::ensureKernelShutdown();
         $token = $jwtManager->create($user->object());
+        self::ensureKernelShutdown();
         $client = $this->getHTTPClient($token);
         $body = [
             'subscription' => ['endpoint' => 'foo'],
@@ -71,7 +71,7 @@ class ApiEndpointWebpushTest extends WebTestCase
         $client->request('DELETE', '/api/webpush', [], [], [], json_encode($body));
 
         self::assertResponseIsSuccessful();
-        UserSubscriptionFactory::repository()->assertCount(0);
+        UserSubscriptionFactory::repository()->assert()->empty();
     }
 
     /**

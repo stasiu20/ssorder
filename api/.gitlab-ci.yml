@@ -57,7 +57,8 @@ composer:
   image: edbizarro/gitlab-ci-pipeline-php:7.3
   script:
     - php -v
-    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - composer config -g cache-dir "$CI_PROJECT_DIR/.composer-cache"
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
   artifacts:
     paths:
       - api/vendor/
@@ -66,7 +67,7 @@ composer:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - /home/php/.composer/cache
+      - .composer-cache
 
 diff-composer-packages:
   stage: prepare

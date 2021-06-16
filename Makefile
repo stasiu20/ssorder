@@ -40,7 +40,7 @@ update-dependencies-packages:
 	docker-compose exec cli bash -c "cd node-cron/ && npm install"
 
 cypress:
-	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.2.1 --env configFile=docker
+	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.6.0 --env configFile=docker
 
 cypress-debug:
 	#npx cypress open --env configFile=docker
@@ -51,4 +51,4 @@ cypress-debug:
       -w /e2e \
       -e DISPLAY=:1 \
       --entrypoint cypress \
-      cypress/included:6.2.1 open --project .
+      cypress/included:6.6.0 open --project .

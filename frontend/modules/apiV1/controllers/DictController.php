@@ -3,8 +3,7 @@
 namespace frontend\modules\apiV1\controllers;
 
 use common\resources\DictResource;
-use frontend\models\Category;
-use League\Fractal\Manager;
+use common\services\SymfonyApiClient;
 use Yii;
 use yii\filters\AccessControl;
 use yii\rest\Controller;
@@ -52,11 +51,9 @@ class DictController extends Controller
      */
     public function actionCategories()
     {
-        /** @var Category[] $categories */
-        $categories = Category::findActive()->all();
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
 
-        /** @var Manager $fractalManager */
-        $fractalManager = Yii::$container->get(Manager::class);
-        return $fractalManager->createData(DictResource::factoryRestaurantCategoryCollection($categories))->toArray();
+        return $symfonyApiClient->getRestaurantCategories();
     }
 }
