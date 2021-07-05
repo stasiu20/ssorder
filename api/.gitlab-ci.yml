@@ -129,9 +129,10 @@ php-lint:
 
 phpstan:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: jakzal/phpqa:alpine
   script:
-    - composer run phpstan
+    - composer global bin phpstan require --with-all-dependencies symplify/phpstan-rules
+    - phpstan
   dependencies:
     - composer
 

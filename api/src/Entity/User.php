@@ -42,7 +42,7 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -80,7 +80,7 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array
     {
@@ -96,7 +96,7 @@ class User implements UserInterface
      */
     public function getPassword()
     {
-        // not needed for apps that do not check user passwords
+        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**
@@ -104,7 +104,7 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        // not needed for apps that do not check user passwords
+        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**

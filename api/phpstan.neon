@@ -1,4 +1,20 @@
 parameters:
+    level: 5
+    paths:
+        - src
+    ignoreErrors:
+        - '#Do not use chained method calls\. Put each on separated lines\.#'
+        - '#Separate function "sprintf\(\)" in method call to standalone row to improve readability#'
+        -
+            message: '#Use separate function calls with readable variable names#'
+            path: */Exception/*Exception.php
+        -
+            message: '#Do not use @method tag in class docblock#'
+            path: */Repository/*Repository.php
+        -
+            message: '#\$this as argument is not allowed. Refactor method to service composition#'
+            path: */Entity/*.php
+
     customRulesetUsed: true
     bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
     polluteScopeWithLoopInitialAssignments: false
@@ -13,6 +29,10 @@ parameters:
 includes:
 	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/services/services.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/static-rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/packages/cognitive-complexity/config/cognitive-complexity-services.neon
 services:
     # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules
     -

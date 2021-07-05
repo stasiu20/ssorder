@@ -49,10 +49,10 @@ class RestaurantController extends AbstractController
         $data = $manager->createData($menuResource->factoryCollection($collection->toArray()))->toArray()['data'];
 
         $response = new JsonResponse($data);
-        $response->headers->set('X-Pagination-Current-Page', 1);
-        $response->headers->set('X-Pagination-Page-Count', $collection->count());
-        $response->headers->set('X-Pagination-Per-Page', $collection->count());
-        $response->headers->set('X-Pagination-Total-Count', $collection->count());
+        $response->headers->set('X-Pagination-Current-Page', (string) 1);
+        $response->headers->set('X-Pagination-Page-Count', (string) $collection->count());
+        $response->headers->set('X-Pagination-Per-Page', (string) $collection->count());
+        $response->headers->set('X-Pagination-Total-Count', (string) $collection->count());
 
         return $response;
     }

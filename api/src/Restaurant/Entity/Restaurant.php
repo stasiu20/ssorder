@@ -200,12 +200,14 @@ class Restaurant
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->isNull('deletedat'));
 
+        // @phpstan-ignore-next-line
         return $this->menu->matching($criteria);
     }
 
     public function addMenu(MenuPosition $menu): self
     {
         if (!$this->menu->contains($menu)) {
+            /** @phpstan-ignore-next-line */
             $this->menu[] = $menu;
             $menu->setRestaurant($this);
         }

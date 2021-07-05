@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use App\Entity\UserSubscription;
+use App\Webpush\Exception\UnexpectedTypeException;
 use BenTools\WebPushBundle\Model\Subscription\UserSubscriptionInterface;
 use BenTools\WebPushBundle\Model\Subscription\UserSubscriptionManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,6 +31,10 @@ class UserSubscriptionManager implements UserSubscriptionManagerInterface
         array $subscription,
         array $options = []
     ): UserSubscriptionInterface {
+        if (!$user instanceof User) {
+            throw new UnexpectedTypeException($user, User::class);
+        }
+
         // $options is an arbitrary array that can be provided through the front-end code.
         // You can use it to store meta-data about the subscription: the user agent, the referring domain, ...
         return new UserSubscription($user, $subscriptionHash, $subscription);
