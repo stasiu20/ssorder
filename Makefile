@@ -52,3 +52,7 @@ cypress-debug:
       -e DISPLAY=:1 \
       --entrypoint cypress \
       cypress/included:6.6.0 open --project .
+
+qa:
+	docker run --rm -v $(PWD):/project -w /project jakzal/phpqa:alpine phpstan analyse --no-interaction ./frontend ./common ./console
+	docker run --rm -v $(PWD):/project -w /project/api jakzal/phpqa:alpine sh -c 'composer global bin phpstan require --with-all-dependencies symplify/phpstan-rules && phpstan'

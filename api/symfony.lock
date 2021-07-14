@@ -230,12 +230,6 @@
     "phpstan/phpstan": {
         "version": "0.12.88"
     },
-    "phpstan/phpstan-deprecation-rules": {
-        "version": "0.12.6"
-    },
-    "phpstan/phpstan-strict-rules": {
-        "version": "0.12.9"
-    },
     "phpunit/php-file-iterator": {
         "version": "3.0.5"
     },

@@ -154,9 +154,9 @@ php-lint:
 
 phpstan:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: jakzal/phpqa:alpine
   script:
-    - composer run phpstan
+    - phpstan analyse --no-progress --no-interaction ./frontend ./common ./console
   dependencies:
     - composer
 
