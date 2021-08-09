@@ -53,6 +53,7 @@ class SendPushMsgCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        /** @var string $userId */
         $userId = $input->getArgument('user');
         /** @var User|null $user */
         $user = $this->userRepository->find($userId);
