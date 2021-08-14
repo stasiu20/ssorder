@@ -136,6 +136,19 @@ phpstan:
   dependencies:
     - composer
 
+phpmetrics:
+  stage: qa
+  image: jakzal/phpqa:alpine
+  script:
+    # https://github.com/jakzal/phpqa/issues/311
+    - composer global require phpmetrics/phpmetrics
+    - /tools/.composer/vendor/bin/phpmetrics --report-html=../docs/phpmetrics --exclude=tests,vendor,var,bin .
+  artifacts:
+    paths:
+      - docs/phpmetrics/
+    expire_in: 30 days
+    when: on_success
+
 phpdd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
