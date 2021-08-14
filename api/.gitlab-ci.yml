@@ -184,6 +184,8 @@ phpunit:
   artifacts:
     paths:
       - docs/api/
+    reports:
+      junit: docs/api-junit.xml
     expire_in: 30 days
     when: on_success
 

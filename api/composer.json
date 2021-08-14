@@ -94,7 +94,7 @@
         "phpcpd": "./vendor/bin/phpcpd ./src/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
         "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
-        "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api",
+        "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api --log-junit ../docs/api-junit.xml",
         "all": [
             "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
         ]
