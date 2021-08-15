@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4070377f01f7266d6fae3418243cb134",
+    "content-hash": "bea877f2dcca36fed3533b06b47f0af4",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -10217,16 +10217,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v5.2.12",
+            "version": "v5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "ed7ebe262cef150742f5b61d48a94d37513c5758"
+                "reference": "c1e3f64fcc631c96e2c5843b666db66679ced11c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/ed7ebe262cef150742f5b61d48a94d37513c5758",
-                "reference": "ed7ebe262cef150742f5b61d48a94d37513c5758",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/c1e3f64fcc631c96e2c5843b666db66679ced11c",
+                "reference": "c1e3f64fcc631c96e2c5843b666db66679ced11c",
                 "shasum": ""
             },
             "require": {
@@ -10282,7 +10282,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-21T12:38:00+00:00"
+            "time": "2021-07-21T12:40:44+00:00"
         },
         {
             "name": "symfony/dom-crawler",
