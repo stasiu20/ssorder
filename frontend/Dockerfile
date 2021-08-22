@@ -46,15 +46,6 @@ RUN if [[ $WITH_XDEBUG = "true" ]]; then \
     && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
   fi
 
-RUN apt-get update && \
-    apt-get -y install \
-            libicu63=63.1-6+deb10u1 \
-            libgmp10=2:6.1.2+dfsg-4 \
-        --no-install-recommends && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
-
 # hadolint ignore=SC2015
 RUN a2enmod rewrite headers && \
     rm -f /var/www/html/index.html && \
