@@ -6,3 +6,4 @@ newman/
 api/
 cypress/
 openapi.yml
+jmeter/
