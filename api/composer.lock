@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4070377f01f7266d6fae3418243cb134",
+    "content-hash": "5ac8b69f66174a5375302d09974c5a27",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -1413,16 +1413,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.9.4",
+            "version": "2.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "b19a13f4edfaa5806109cd899f5912a7df1547b5"
+                "reference": "77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/b19a13f4edfaa5806109cd899f5912a7df1547b5",
-                "reference": "b19a13f4edfaa5806109cd899f5912a7df1547b5",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da",
+                "reference": "77cc86ed880e3f1f6c9c5819e131a8aaeeeee0da",
                 "shasum": ""
             },
             "require": {
@@ -1499,7 +1499,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2021-08-11T20:53:03+00:00"
+            "time": "2021-08-23T10:20:22+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -5392,7 +5392,7 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.13.4",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
@@ -9837,16 +9837,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.94",
+            "version": "0.12.96",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6"
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
-                "reference": "3d0ba4c198a24e3c3fc489f3ec6ac9612c4be5d6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a98bdc51318f20fcae8c953d266f81a70254917f",
+                "reference": "a98bdc51318f20fcae8c953d266f81a70254917f",
                 "shasum": ""
             },
             "require": {
@@ -9893,7 +9893,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-30T09:05:27+00:00"
+            "time": "2021-08-21T11:55:13+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -10217,16 +10217,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v5.2.12",
+            "version": "v5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "ed7ebe262cef150742f5b61d48a94d37513c5758"
+                "reference": "c1e3f64fcc631c96e2c5843b666db66679ced11c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/ed7ebe262cef150742f5b61d48a94d37513c5758",
-                "reference": "ed7ebe262cef150742f5b61d48a94d37513c5758",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/c1e3f64fcc631c96e2c5843b666db66679ced11c",
+                "reference": "c1e3f64fcc631c96e2c5843b666db66679ced11c",
                 "shasum": ""
             },
             "require": {
@@ -10282,7 +10282,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-21T12:38:00+00:00"
+            "time": "2021-07-21T12:40:44+00:00"
         },
         {
             "name": "symfony/dom-crawler",
