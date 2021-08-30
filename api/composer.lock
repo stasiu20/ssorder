@@ -2813,16 +2813,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.4.0",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "06bc5136d7e510b0ffdd453baa6ef6bad366d9db"
+                "reference": "2f25ca63e916ab63a2df7cccbc749a96f5be913f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/06bc5136d7e510b0ffdd453baa6ef6bad366d9db",
-                "reference": "06bc5136d7e510b0ffdd453baa6ef6bad366d9db",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/2f25ca63e916ab63a2df7cccbc749a96f5be913f",
+                "reference": "2f25ca63e916ab63a2df7cccbc749a96f5be913f",
                 "shasum": ""
             },
             "require": {
@@ -2917,7 +2917,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2021-07-18T16:59:37+00:00"
+            "time": "2021-08-27T15:06:50+00:00"
         },
         {
             "name": "paragonie/sodium_compat",
