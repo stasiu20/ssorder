@@ -129,11 +129,25 @@ php-lint:
 
 phpstan:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: jakzal/phpqa:alpine
   script:
-    - composer run phpstan
+    - composer global bin phpstan require --with-all-dependencies symplify/phpstan-rules
+    - phpstan
   dependencies:
     - composer
+
+phpmetrics:
+  stage: qa
+  image: jakzal/phpqa:alpine
+  script:
+    # https://github.com/jakzal/phpqa/issues/311
+    - composer global require phpmetrics/phpmetrics
+    - /tools/.composer/vendor/bin/phpmetrics --report-html=../docs/phpmetrics --exclude=tests,vendor,var,bin .
+  artifacts:
+    paths:
+      - docs/phpmetrics/
+    expire_in: 30 days
+    when: on_success
 
 phpdd:
   stage: qa
@@ -170,6 +184,8 @@ phpunit:
   artifacts:
     paths:
       - docs/api/
+    reports:
+      junit: docs/api-junit.xml
     expire_in: 30 days
     when: on_success
 

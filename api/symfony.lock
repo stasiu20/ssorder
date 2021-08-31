@@ -5,6 +5,9 @@
     "chrisguitarguy/request-id-bundle": {
         "version": "v4.0.0"
     },
+    "clue/stream-filter": {
+        "version": "v1.5.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -139,6 +142,12 @@
     "guzzlehttp/psr7": {
         "version": "1.7.0"
     },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.2.0"
+    },
+    "jean85/pretty-package-versions": {
+        "version": "1.6.0"
+    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
@@ -206,6 +215,24 @@
     "php": {
         "version": "7.3"
     },
+    "php-http/client-common": {
+        "version": "2.4.0"
+    },
+    "php-http/discovery": {
+        "version": "1.14.0"
+    },
+    "php-http/httplug": {
+        "version": "2.2.0"
+    },
+    "php-http/message": {
+        "version": "1.11.2"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "1.1.0"
+    },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.2.0"
     },
@@ -230,12 +257,6 @@
     "phpstan/phpstan": {
         "version": "0.12.88"
     },
-    "phpstan/phpstan-deprecation-rules": {
-        "version": "0.12.6"
-    },
-    "phpstan/phpstan-strict-rules": {
-        "version": "0.12.9"
-    },
     "phpunit/php-file-iterator": {
         "version": "3.0.5"
     },
@@ -250,6 +271,12 @@
     },
     "psr/event-dispatcher": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
@@ -282,6 +309,24 @@
         },
         "files": [
             "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "sentry/sdk": {
+        "version": "3.1.0"
+    },
+    "sentry/sentry": {
+        "version": "3.3.2"
+    },
+    "sentry/sentry-symfony": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
         ]
     },
     "spomky-labs/base64url": {
@@ -384,6 +429,9 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.3.4"
+    },
     "symfony/http-client-contracts": {
         "version": "v2.4.0"
     },
@@ -465,6 +513,9 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.23.0"
+    },
     "symfony/profiler-pack": {
         "version": "v1.0.5"
     },
@@ -473,6 +524,9 @@
     },
     "symfony/property-info": {
         "version": "v5.3.1"
+    },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.1"
     },
     "symfony/routing": {
         "version": "5.3",

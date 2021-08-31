@@ -22,7 +22,7 @@ parameters:
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
 includes:
-	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
 services:
     # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules

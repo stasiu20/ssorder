@@ -53,12 +53,13 @@ class SendPushMsgCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        /** @var string $userId */
         $userId = $input->getArgument('user');
         /** @var User|null $user */
         $user = $this->userRepository->find($userId);
 
         if (null === $user) {
-            $io->error(sprintf('User %s not exists', $userId));
+            $io->error(sprintf('User "%s" not exists', $userId));
         }
         $this->notifyUer($user);
 
