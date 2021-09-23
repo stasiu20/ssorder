@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96ed53bd659c451721ae85e401e954f0",
+    "content-hash": "e75b9e044018b7b0b24efb950e379960",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -5228,21 +5228,21 @@
         },
         {
             "name": "mmo/faker-images",
-            "version": "v0.3.0",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/faker-images.git",
-                "reference": "f92b66e0c3771891280786ad3a1c4fab21f8e34d"
+                "reference": "6f29fc092abf85678bc177ac56bb63297492ef2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morawskim/faker-images/zipball/f92b66e0c3771891280786ad3a1c4fab21f8e34d",
-                "reference": "f92b66e0c3771891280786ad3a1c4fab21f8e34d",
+                "url": "https://api.github.com/repos/morawskim/faker-images/zipball/6f29fc092abf85678bc177ac56bb63297492ef2d",
+                "reference": "6f29fc092abf85678bc177ac56bb63297492ef2d",
                 "shasum": ""
             },
             "require": {
-                "fzaninotto/faker": "~1.4",
-                "php": "^5.3.3 || ^7.0"
+                "fakerphp/faker": "^1.9",
+                "php": "^7.1 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7",
@@ -5276,9 +5276,9 @@
             ],
             "support": {
                 "issues": "https://github.com/morawskim/faker-images/issues",
-                "source": "https://github.com/morawskim/faker-images/tree/v0.3.0"
+                "source": "https://github.com/morawskim/faker-images/tree/v0.4.0"
             },
-            "time": "2021-01-24T10:59:29+00:00"
+            "time": "2021-09-22T16:34:37+00:00"
         },
         {
             "name": "myclabs/deep-copy",
