@@ -9370,21 +9370,21 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.15.0",
+            "version": "v1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "89c6201c74db25fa759ff16e78a4d8f32547770e"
+                "reference": "271d384d216e5e5c468a6b28feedf95d49f83b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/89c6201c74db25fa759ff16e78a4d8f32547770e",
-                "reference": "89c6201c74db25fa759ff16e78a4d8f32547770e",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/271d384d216e5e5c468a6b28feedf95d49f83b35",
+                "reference": "271d384d216e5e5c468a6b28feedf95d49f83b35",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "psr/container": "^1.0",
+                "psr/container": "^1.0 || ^2.0",
                 "symfony/deprecation-contracts": "^2.2"
             },
             "conflict": {
@@ -9404,7 +9404,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "v1.15-dev"
+                    "dev-main": "v1.16-dev"
                 }
             },
             "autoload": {
@@ -9427,7 +9427,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2021-07-06T20:39:40+00:00"
+            "time": "2021-09-06T14:53:37+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -11103,16 +11103,16 @@
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v1.13.1",
+            "version": "v1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "1dccda1076dc525dc393b74b1d8e96b4def9a77e"
+                "reference": "477db0a2889fa3d72e9b6ca76a6a63c2be26b611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/1dccda1076dc525dc393b74b1d8e96b4def9a77e",
-                "reference": "1dccda1076dc525dc393b74b1d8e96b4def9a77e",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/477db0a2889fa3d72e9b6ca76a6a63c2be26b611",
+                "reference": "477db0a2889fa3d72e9b6ca76a6a63c2be26b611",
                 "shasum": ""
             },
             "require": {
@@ -11130,11 +11130,9 @@
                 "doctrine/doctrine-migrations-bundle": "^2.2|^3.0",
                 "doctrine/orm": "^2.7",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-                "psalm/plugin-symfony": "^1.5|^2.0",
                 "symfony/framework-bundle": "^4.4|^5.0",
                 "symfony/maker-bundle": "^1.30",
-                "symfony/phpunit-bridge": "^5.2",
-                "vimeo/psalm": "^3.18|^4.0"
+                "symfony/phpunit-bridge": "^5.3"
             },
             "type": "library",
             "extra": {
@@ -11179,7 +11177,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-31T13:18:17+00:00"
+            "time": "2021-09-16T18:36:26+00:00"
         }
     ],
     "aliases": [],
