@@ -26,7 +26,7 @@ RestaurantAsset::register($this);
                 Html::a('<span class="material-icons">edit</span>', ['restaurants/update', 'id' => $restaurant->id], [
                     'title' => 'Edytuj restaurację',
                 ]);
-?>
+                ?>
                 <?= Html::a('<span class="material-icons">delete</span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
             <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-restaurant"></div>

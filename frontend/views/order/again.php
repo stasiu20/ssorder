@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = 'Uwagi';
                 'order' => $order,
                 'action' => Url::to(['/order/uwagi', 'id' => $order->menu->id])
             ])
-                        ?>
+            ?>
         </div>
         <div class="col-lg-2"></div>
     </div>
