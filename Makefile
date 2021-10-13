@@ -1,4 +1,4 @@
-.PHONY: setup restore-db update-dependencies-packages
+.PHONY: setup restore-db install-dependencies
 
 
 .env:
@@ -33,14 +33,14 @@ restore-db:
 hadolint:
 	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"
 
-update-dependencies-packages:
+install-dependencies:
 	docker-compose exec cli bash -c "composer install"
 	docker-compose exec cli bash -c "cd api && composer install"
 	docker-compose exec cli bash -c "cd frontend/ && yarn"
 	docker-compose exec cli bash -c "cd node-cron/ && npm install"
 
 cypress:
-	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:6.6.0 --env configFile=docker
+	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:8.5.0 --env configFile=docker
 
 cypress-debug:
 	#npx cypress open --env configFile=docker
@@ -51,7 +51,7 @@ cypress-debug:
       -w /e2e \
       -e DISPLAY=:1 \
       --entrypoint cypress \
-      cypress/included:6.6.0 open --project .
+      cypress/included:8.5.0 open --project .
 
 qa:
 	docker run --rm -v $(PWD):/project -w /project jakzal/phpqa:alpine phpstan analyse --no-interaction ./frontend ./common ./console
@@ -60,3 +60,9 @@ qa:
 jmeter:
 	mkdir -p docs/jmeter
 	docker run --network=host --rm -i -v ${PWD}:/app -w /app justb4/jmeter -Jjmeterengine.force.system.exit=true -n -t /app/performance-tests/performance.jmx -l /app/docs/jmeter/performance.csv -e -o  /app/docs/jmeter/report
+
+update-dependencies:
+	docker-compose exec cli bash -c 'cd api && composer update'
+	docker-compose exec cli bash -c 'composer update'
+	docker-compose exec cli bash -c 'cd frontend/e2e && npm update'
+	docker-compose exec cli bash -c 'cd node-cron && npm update'

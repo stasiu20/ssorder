@@ -1,4 +1,6 @@
 const logger = require('./winston');
+const initSentry = require('./sentry');
+const Sentry = require("@sentry/node");
 
 async function addSendNotifyMailTaskToQueue(client) {
     const date = new Date();
@@ -16,4 +18,22 @@ async function addSendNotifyMailTaskToQueue(client) {
         throw Error("Can't add task to queue");
     }
 }
-module.exports = addSendNotifyMailTaskToQueue;
+
+async function decoratedBySentry(client) {
+    initSentry();
+    const transaction = Sentry.startTransaction({
+        op: "addSendNotifyMailTaskToQueue",
+        name: "Transaction addSendNotifyMailTaskToQueue",
+    });
+
+    try {
+        await addSendNotifyMailTaskToQueue(client);
+    } catch (e) {
+        logger.error(e);
+        Sentry.captureException(e);
+    } finally {
+        transaction.finish();
+    }
+}
+
+module.exports = decoratedBySentry;

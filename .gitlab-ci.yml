@@ -120,6 +120,13 @@ codestyle:
     reports:
       junit: phpcs-report.xml
 
+composer-normalizer:
+  stage: qa
+  image: jakzal/phpqa:alpine
+  script:
+    - composer normalize --dry-run
+  dependencies: []
+
 phpmd:
   stage: qa
   image: edbizarro/gitlab-ci-pipeline-php:7.3
