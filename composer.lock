@@ -58,16 +58,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.198.1",
+            "version": "3.198.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "79bf3298bd2893eb0b4614c2463e9f675d07118b"
+                "reference": "ec63e1ad1b30689e530089e4c9cb18f2ef5c290b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/79bf3298bd2893eb0b4614c2463e9f675d07118b",
-                "reference": "79bf3298bd2893eb0b4614c2463e9f675d07118b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ec63e1ad1b30689e530089e4c9cb18f2ef5c290b",
+                "reference": "ec63e1ad1b30689e530089e4c9cb18f2ef5c290b",
                 "shasum": ""
             },
             "require": {
@@ -143,9 +143,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.198.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.198.5"
             },
-            "time": "2021-10-08T18:28:30+00:00"
+            "time": "2021-10-14T18:15:37+00:00"
         },
         {
             "name": "borales/yii2-phone-input",
