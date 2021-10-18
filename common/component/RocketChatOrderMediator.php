@@ -52,6 +52,7 @@ class RocketChatOrderMediator extends Component
     {
         /** @var RocketChat $rocketChat */
         $rocketChat = \Yii::$app->rocketChat;
+
         return $rocketChat;
     }
 
