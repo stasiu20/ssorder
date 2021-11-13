@@ -16,7 +16,8 @@ parameters:
             path: */Entity/*.php
 
     customRulesetUsed: true
-    bootstrap: %currentWorkingDirectory%/phpstan-bootstrap.php
+    bootstrapFiles:
+        - %currentWorkingDirectory%/phpstan-bootstrap.php
     polluteScopeWithLoopInitialAssignments: false
     polluteScopeWithAlwaysIterableForeach: false
     checkAlwaysTrueCheckTypeFunctionCall: true
@@ -26,9 +27,13 @@ parameters:
     checkFunctionNameCase: true
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
+    doctrine:
+        objectManagerLoader: src/phpstan/object_manager.php
 includes:
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/astral/config/services.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/services/services.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/static-rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
@@ -185,3 +190,7 @@ services:
         tags:
             - phpstan.rules.rule
     # end rules from ergebnis/phpstan-rules
+    -
+        class: App\phpstan\OnlyReadProperties
+        tags:
+            - phpstan.properties.readWriteExtension
