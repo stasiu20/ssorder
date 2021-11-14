@@ -40,7 +40,7 @@ install-dependencies:
 	docker-compose exec cli bash -c "cd node-cron/ && npm install"
 
 cypress:
-	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:8.6.0 --env configFile=docker
+	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:8.7.0 --env configFile=docker
 
 cypress-debug:
 	#npx cypress open --env configFile=docker
@@ -51,7 +51,7 @@ cypress-debug:
       -w /e2e \
       -e DISPLAY=:1 \
       --entrypoint cypress \
-      cypress/included:8.6.0 open --project .
+      cypress/included:8.7.0 open --project .
 
 qa:
 	docker run --rm -v $(PWD):/project -w /project jakzal/phpqa:alpine phpstan analyse --no-interaction ./frontend ./common ./console
