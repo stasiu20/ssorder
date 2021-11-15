@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://ssorder-develop.snlb.pl",
+    "baseUrl": "https://develop.order.snlb.pl",
     "viewportWidth": 1920,
     "viewportHeight": 1080,
     "env": {

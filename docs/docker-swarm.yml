@@ -9,7 +9,7 @@ services:
       labels:
         traefik.port: 8080
         traefik.backend: "ssorder-developer"
-        traefik.frontend.rule: "Host:developer.ssorder.snlb.pl"
+        traefik.frontend.rule: "Host:developer.order.snlb.pl"
 networks:
   traefik:
     external: true
