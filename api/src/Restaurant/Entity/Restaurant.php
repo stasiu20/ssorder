@@ -200,7 +200,6 @@ class Restaurant
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->isNull('deletedat'));
 
-        // @phpstan-ignore-next-line
         return $this->menu->matching($criteria);
     }
 

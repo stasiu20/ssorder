@@ -1,7 +1,7 @@
 {
-    "baseUrl": "https://ssorder-develop.snlb.pl",
-    "viewportWidth": 1920,
-    "viewportHeight": 1080,
+    "baseUrl": "https://develop.order.snlb.pl",
+    "viewportWidth": 1280,
+    "viewportHeight": 720,
     "env": {
         "user": {
             "username": "sonia.baran",

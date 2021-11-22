@@ -98,7 +98,7 @@ return [
             'parsers' => [
                 'application/json' => JsonParser::class,
             ],
-            'trustedHosts' => ['10.0.0.0/24'],
+            'trustedHosts' => ['10.0.0.0/24', '10.0.1.0/24'],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -268,7 +268,7 @@ return [
             'cspDirectives' => [
                 'script-src' => "'self' 'unsafe-inline' www.google-analytics.com",
                 'style-src' => "'self' 'unsafe-inline' fonts.googleapis.com",
-                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.lvh.me:* *.ssorder.snlb.pl *.ssorder-develop.snlb.pl stats.g.doubleclick.net",
+                'img-src' => "'self' data: www.google-analytics.com *.lvh.me *.lvh.me:* stats.g.doubleclick.net " . (string) getenv('CSP_IMG_SRC_DIRECTIVE_EXTRA_DOMAINS'),
                 'connect-src' => '*',
                 'font-src' => '* data:',
                 'object-src' => '*',

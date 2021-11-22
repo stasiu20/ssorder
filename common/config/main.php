@@ -124,7 +124,7 @@ return [
             ],
         ],
         'rocketChat' => [
-            'class' => \common\component\RocketChat::className(),
+            'class' => \common\component\NullRocketChat::className(),
             'endpoint' => 'TO_OVERWRITE',
             'token' => 'TO_OVERWRITE',
         ],

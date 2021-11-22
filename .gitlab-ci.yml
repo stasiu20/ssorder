@@ -332,7 +332,7 @@ codeception:
 sitespeed:
   stage: qa
   variables:
-    URL: https://ssorder.snlb.pl
+    URL: https://order.snlb.pl
     SITESPEED_VERSION: 11.9.3
   before_script:
     - TMPFILE=$(mktemp /tmp/sistespeed.XXXXXX)
