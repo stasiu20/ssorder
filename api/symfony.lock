@@ -2,6 +2,9 @@
     "bentools/webpush-bundle": {
         "version": "0.6"
     },
+    "brick/math": {
+        "version": "0.9.3"
+    },
     "chrisguitarguy/request-id-bundle": {
         "version": "v4.0.0"
     },
@@ -205,9 +208,6 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
-    },
-    "paragonie/sodium_compat": {
-        "version": "v1.14.0"
     },
     "pdepend/pdepend": {
         "version": "2.9.1"
@@ -498,9 +498,6 @@
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.23.0"
     },
-    "symfony/polyfill-intl-idn": {
-        "version": "v1.23.0"
-    },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.23.0"
     },
@@ -647,18 +644,6 @@
         "version": "v1.3.10"
     },
     "web-token/jwt-signature-algorithm-ecdsa": {
-        "version": "v1.3.10"
-    },
-    "web-token/jwt-signature-algorithm-eddsa": {
-        "version": "v1.3.10"
-    },
-    "web-token/jwt-signature-algorithm-hmac": {
-        "version": "v1.3.10"
-    },
-    "web-token/jwt-signature-algorithm-none": {
-        "version": "v1.3.10"
-    },
-    "web-token/jwt-signature-algorithm-rsa": {
         "version": "v1.3.10"
     },
     "web-token/jwt-util-ecc": {
