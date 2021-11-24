@@ -15,6 +15,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "league/fractal": "^0.19.2",
         "lexik/jwt-authentication-bundle": "^2.8",
+        "moneyphp/money": "^3.3",
         "nelmio/api-doc-bundle": "^4.3",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.1",
@@ -95,10 +96,9 @@
         "phploc": "./vendor/bin/phploc ./src/",
         "phpcpd": "./vendor/bin/phpcpd ./src/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
-        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
         "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api --log-junit ../docs/api-junit.xml",
         "all": [
-            "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
+            "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpunit-all"
         ]
     },
     "conflict": {

@@ -4,6 +4,8 @@ namespace App\Api\Controller;
 
 use App\Api\Resource\MenuResource;
 use App\Api\Resource\RestaurantResource;
+use App\Contract\Restaurant\Exception\RestaurantNotFoundExceptionInterface;
+use App\Contract\Restaurant\RestaurantDetailsProviderInterface;
 use App\Restaurant\Entity\Restaurant;
 use App\Restaurant\Repository\RestaurantRepository;
 use League\Fractal\Manager;
@@ -55,5 +57,24 @@ class RestaurantController extends AbstractController
         $response->headers->set('X-Pagination-Total-Count', (string) $collection->count());
 
         return $response;
+    }
+
+    /**
+     * @Route("/api/v1/restaurants/{id}/details", methods={"GET"}, name="api.restaurant.details")
+     *
+     * @param int                                $id
+     * @param RestaurantDetailsProviderInterface $restaurantDetailsProvider
+     *
+     * @return JsonResponse
+     */
+    public function details(int $id, RestaurantDetailsProviderInterface $restaurantDetailsProvider): JsonResponse
+    {
+        try {
+            $restaurantDetails = $restaurantDetailsProvider->getDetails($id);
+
+            return $this->json(['data' => $restaurantDetails]);
+        } catch (RestaurantNotFoundExceptionInterface $e) {
+            throw $this->createNotFoundException();
+        }
     }
 }

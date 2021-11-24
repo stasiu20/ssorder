@@ -1,3 +1,11 @@
+const assertMoney = (money: {amount: string, currency: string}) => {
+    expect(money).to.have.property('amount');
+    expect(money.amount).to.be.a('string');
+
+    expect(money).to.have.property('currency');
+    expect(money.currency).to.be.a('string');
+}
+
 describe('Restaurants', () => {
     it('List of restaurants', () => {
         cy.getAuthToken(Cypress.env('user').username, Cypress.env('user').password).then((token) => {
@@ -51,6 +59,33 @@ describe('Restaurants', () => {
                 expect(body[0]).to.have.property('foodName').and.to.be.a('string');
                 expect(body[0]).to.have.property('foodInfo').and.to.be.a('string');
                 expect(body[0]).to.have.property('foodPrice').and.to.be.a('number');
+            });
+        });
+    });
+
+    it('Details', () => {
+        cy.getAuthToken(Cypress.env('user').username, Cypress.env('user').password).then((token) => {
+            cy.request({
+                url: `/v1/restaurants/${Cypress.env('restaurant').withMenu}/details`,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            }).then((response) => {
+                expect(response.status).to.equal(200);
+                const body = response.body.data;
+
+                expect(body).to.be.a('object');
+                expect(body).to.have.property('id').and.to.be.a('number');
+                expect(body).to.have.property('name').and.to.be.a('string');
+                expect(body).to.have.property('phone_number').and.to.be.a('string');
+                expect(body).to.have.property('delivery_price').and.to.be.a('object');
+                assertMoney(body.delivery_price);
+                expect(body).to.have.property('pack_price').and.to.be.a('object');
+                assertMoney(body.pack_price);
+                expect(body).to.have.property('logo_url').and.to.be.a('string');
             });
         });
     });

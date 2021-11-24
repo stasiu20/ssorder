@@ -9,9 +9,11 @@ use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 
 /**
+ * @extends ModelFactory<Restaurant>
+ *
  * @method static Restaurant|Proxy createOne(array $attributes = [])
- * @method static Restaurant[]|Proxy[] createMany(int $number, $attributes = [])
- * @method static Restaurant|Proxy find($criteria)
+ * @method static Restaurant[]|Proxy[] createMany(int $number, array|callable $attributes = [])
+ * @method static Restaurant|Proxy find(object|array|mixed $criteria)
  * @method static Restaurant|Proxy findOrCreate(array $attributes)
  * @method static Restaurant|Proxy first(string $sortedField = 'id')
  * @method static Restaurant|Proxy last(string $sortedField = 'id')
@@ -22,24 +24,23 @@ use Zenstruck\Foundry\Proxy;
  * @method static Restaurant[]|Proxy[] randomSet(int $number, array $attributes = [])
  * @method static Restaurant[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
  * @method static RestaurantRepository|RepositoryProxy repository()
- * @method Restaurant|Proxy create($attributes = [])
+ * @method Restaurant|Proxy create(array|callable $attributes = [])
  */
 final class RestaurantFactory extends ModelFactory
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     protected function getDefaults(): array
     {
         return [
+            'name' => self::faker()->text(50),
+            'phoneNumber' => self::faker()->e164PhoneNumber(),
+            'imgUrl' => self::faker()->url(),
+            'categoryId' => self::faker()->randomNumber(),
         ];
     }
 
     protected function initialize(): self
     {
-        // see https://github.com/zenstruck/foundry#initialization
+        // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
         return $this
             // ->afterInstantiate(function(Restaurant $restaurant) {})
         ;

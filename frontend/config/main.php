@@ -254,6 +254,7 @@ return [
                 'v1/dictionaries/categories' => 'apiV1/dict/categories',
                 'v1/restaurants' => 'apiV1/restaurants/index',
                 'v1/restaurants/<restaurantId:\d+>/foods' => 'apiV1/restaurants/foods',
+                'GET v1/restaurants/<restaurantId:\d+>/details' => 'apiV1/restaurants/details',
                 'POST v1/orders' => 'apiV1/order/create',
                 'POST v1/webpush' => 'apiV1/webpush/create',
                 'DELETE v1/webpush' => 'apiV1/webpush/delete',

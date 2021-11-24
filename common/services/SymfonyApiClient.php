@@ -76,4 +76,11 @@ class SymfonyApiClient
             ]
         );
     }
+
+    public function getRestaurantDetails(int $restaurantId): array
+    {
+        $response = $this->_client->get('/api/v1/restaurants/' . $restaurantId . '/details');
+
+        return \json_decode($response->getBody()->getContents(), true);
+    }
 }
