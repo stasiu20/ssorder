@@ -118,6 +118,32 @@ class RestaurantsController extends Controller
         return $menu;
     }
 
+    /**
+     * @OA\Get(
+     *      path="/restaurants/{restaurantId}/details",
+     *      operationId="getRestaurantDetails",
+     *      tags={"Restaurants"},
+     *      summary="Get details of restaurant",
+     *      description="Get details of restaurant",
+     *      security={{"jwtToken": {}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/RestaurantDetails"),
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
     public function actionDetails(int $restaurantId)
     {
         $restaurant = Restaurants::findOne($restaurantId);

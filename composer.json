@@ -94,7 +94,6 @@
       "@phpcs",
       "@phpmd",
       "@phpcpd",
-      "@phpstan",
       "@codecept-common",
       "@codecept-frontend"
     ],
