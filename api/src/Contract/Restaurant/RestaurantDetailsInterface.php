@@ -17,4 +17,9 @@ interface RestaurantDetailsInterface
      * @return RestaurantMenuItemInterface[]
      */
     public function getMenu(): array;
+
+    /**
+     * @return RestaurantPhotoInterface[]
+     */
+    public function getPhotos(): array;
 }

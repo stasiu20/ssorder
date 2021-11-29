@@ -6,6 +6,7 @@ use common\enums\BucketEnum;
 use common\services\FileService;
 use common\services\FixtureStore;
 use Faker\Factory;
+use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
 use Mmo\Faker\PicsumProvider;
 use yii\test\ActiveFixture;
@@ -36,6 +37,18 @@ class RestaurantFixture extends ActiveFixture
             $fileService = \Yii::$container->get(FileService::class);
             $fileService->storeFile(BucketEnum::RESTAURANT . '/' . $key, $path);
             $restaurant->save(false);
+
+            $max = random_int(0, 3);
+            for ($i = 0; $i < $max; $i++) {
+                $path = $faker->picsum(null, 400, 400, true);
+                $key = basename($path);
+
+                $photo = new Imagesmenu();
+                $photo->restaurantId = $restaurant->id;
+                $photo->imagesMenu_url = $key;
+                $fileService->storeFile(BucketEnum::MENU . '/' . $key, $path);
+                $photo->save(true);
+            }
         }
     }
 }

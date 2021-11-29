@@ -4,6 +4,7 @@ namespace App\Restaurant\Dto;
 
 use App\Contract\Restaurant\RestaurantDetailsInterface;
 use App\Contract\Restaurant\RestaurantMenuItemInterface;
+use App\Contract\Restaurant\RestaurantPhotoInterface;
 use Money\Money;
 
 class RestaurantDetailsDto implements RestaurantDetailsInterface
@@ -28,6 +29,9 @@ class RestaurantDetailsDto implements RestaurantDetailsInterface
 
     /** @var RestaurantMenuItemInterface[] */
     private $menu;
+
+    /** @var RestaurantPhotoInterface[] */
+    private $photos;
 
     public function getId(): int
     {
@@ -62,6 +66,14 @@ class RestaurantDetailsDto implements RestaurantDetailsInterface
     public function getMenu(): array
     {
         return $this->menu;
+    }
+
+    /**
+     * @return RestaurantPhotoInterface[]
+     */
+    public function getPhotos(): array
+    {
+        return $this->photos;
     }
 
     /**
@@ -118,5 +130,13 @@ class RestaurantDetailsDto implements RestaurantDetailsInterface
     public function setMenu(array $menu): void
     {
         $this->menu = $menu;
+    }
+
+    /**
+     * @param RestaurantPhotoInterface[] $photos
+     */
+    public function setPhotos(array $photos): void
+    {
+        $this->photos = $photos;
     }
 }

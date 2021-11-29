@@ -23,6 +23,11 @@ class FileService
         return $this->getPublicFileUrl('/restaurants/' . $imageUrl);
     }
 
+    public function getMenuImageUrl(string $imageUrl): string
+    {
+        return $this->getPublicFileUrl('/menus/' . $imageUrl);
+    }
+
     private function getPublicFileUrl(string $key): string
     {
         $uri = new Uri($this->publicUrl);

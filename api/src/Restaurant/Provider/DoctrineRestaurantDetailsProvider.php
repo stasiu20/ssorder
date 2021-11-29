@@ -7,7 +7,9 @@ use App\Contract\Restaurant\RestaurantDetailsProviderInterface;
 use App\File\FileService;
 use App\Restaurant\Dto\RestaurantDetailsDto;
 use App\Restaurant\Dto\RestaurantMenuItemDto;
+use App\Restaurant\Dto\RestaurantPhotoDto;
 use App\Restaurant\Entity\MenuPosition;
+use App\Restaurant\Entity\Photo;
 use App\Restaurant\Entity\Restaurant;
 use App\Restaurant\Exception\RestaurantNotFoundException;
 use App\Restaurant\Repository\RestaurantRepository;
@@ -45,6 +47,15 @@ class DoctrineRestaurantDetailsProvider implements RestaurantDetailsProviderInte
         $dto->setName($restaurant->getName());
         $dto->setId($restaurant->getId());
         $dto->setLogoUrl($this->getRestaurantLogo($restaurant));
+
+        $photos = $restaurant->getPhotos()->map(function (Photo $photo) {
+            $photoDto = new RestaurantPhotoDto();
+            $photoDto->setId($photo->getId());
+            $photoDto->setUrl($this->fileService->getMenuImageUrl($photo->getFileName()));
+
+            return $photoDto;
+        })->toArray();
+        $dto->setPhotos($photos);
 
         $menu = $restaurant->getMenu()->map(function (MenuPosition $menuPosition) {
             $menuItemDto = new RestaurantMenuItemDto();
