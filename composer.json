@@ -19,7 +19,7 @@
     "laminas/laminas-diagnostics": "^1.6",
     "lcobucci/jwt": "^3.4",
     "league/fractal": "^0.19.2",
-    "mmo/faker-images": "^0.5.0",
+    "mmo/faker-images": "^0.6.0",
     "mmo/yii2-utils": "dev-master",
     "moneyphp/money": "^3.3",
     "monolog/monolog": "^2.0",
