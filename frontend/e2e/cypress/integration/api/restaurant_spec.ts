@@ -86,6 +86,32 @@ describe('Restaurants', () => {
                 expect(body).to.have.property('pack_price').and.to.be.a('object');
                 assertMoney(body.pack_price);
                 expect(body).to.have.property('logo_url').and.to.be.a('string');
+
+                expect(body).to.have.property('menu');
+                expect(body.menu).to.be.an('array');
+                body.menu.forEach(function(menu) {
+                    expect(menu).to.have.property('id');
+                    expect(menu.id).to.be.an('number');
+
+                    expect(menu).to.have.property('name');
+                    expect(menu.name).to.be.an('string');
+
+                    expect(menu).to.have.property('description');
+                    expect(menu.description).to.be.an('string');
+
+                    expect(menu).to.have.property('price');
+                    assertMoney(menu.price);
+                });
+
+                expect(body).to.have.property('photos');
+                expect(body.photos).to.be.an('array');
+                body.photos.forEach(function(photo) {
+                    expect(photo).to.have.property('id');
+                    expect(photo.id).to.be.an('number');
+
+                    expect(photo).to.have.property('url');
+                    expect(photo.url).to.be.an('string');
+                });
             });
         });
     });

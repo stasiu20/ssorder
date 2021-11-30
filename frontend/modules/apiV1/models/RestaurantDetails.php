@@ -98,4 +98,17 @@ class RestaurantDetails
      * )
      */
     public $menu;
+
+    /**
+     * @var RestaurantPhoto
+     *
+     * @OA\Property(
+     *     property="photos",
+     *     title="Photos",
+     *     type="array",
+     *     description="Photos",
+     *     @OA\Items(ref="#/components/schemas/RestaurantPhoto")
+     * )
+     */
+    public $photos;
 }
