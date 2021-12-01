@@ -131,7 +131,7 @@ phpstan:
   stage: qa
   image: jakzal/phpqa:alpine
   script:
-    - composer global bin phpstan require --with-all-dependencies symplify/astral:^10.0@dev symplify/composer-json-manipulator:^10.0@dev symplify/phpstan-rules:10.0.0-beta5@dev symplify/package-builder:^10.0@dev symplify/simple-php-doc-parser:^10.0@dev symplify/smart-file-system:^10.0@dev symplify/rule-doc-generator-contracts:^10.0@dev symplify/symplify-kernel:^10.0@dev symplify/easy-testing:^10.0@dev symplify/autowire-array-parameter:^10.0@dev
+    - composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/astral:^10.0@dev symplify/composer-json-manipulator:^10.0@dev symplify/phpstan-rules:10.0.0-beta5@dev symplify/package-builder:^10.0@dev symplify/simple-php-doc-parser:^10.0@dev symplify/smart-file-system:^10.0@dev symplify/rule-doc-generator-contracts:^10.0@dev symplify/symplify-kernel:^10.0@dev symplify/easy-testing:^10.0@dev symplify/autowire-array-parameter:^10.0@dev
     - phpstan
   dependencies:
     - composer
