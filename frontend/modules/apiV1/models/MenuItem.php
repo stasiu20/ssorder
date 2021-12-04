@@ -2,12 +2,14 @@
 
 namespace frontend\modules\apiV1\models;
 
+use yii\base\Model;
+
 /**
  * @OA\Schema(
  *     title="Restaurant menu item",
  * )
  */
-class MenuItem
+class MenuItem extends Model
 {
     /**
      * @var int

@@ -87,7 +87,7 @@ class RestaurantDetails
     public $logoUrl;
 
     /**
-     * @var MenuItem
+     * @var MenuItem[]
      *
      * @OA\Property(
      *     property="menu",
@@ -100,7 +100,7 @@ class RestaurantDetails
     public $menu;
 
     /**
-     * @var RestaurantPhoto
+     * @var RestaurantPhoto[]
      *
      * @OA\Property(
      *     property="photos",

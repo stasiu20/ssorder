@@ -74,7 +74,7 @@ class DoctrineRestaurantDetailsProvider implements RestaurantDetailsProviderInte
 
     private function convertToCents(string $amount): int
     {
-        return (int) ((float) preg_replace('/[^\d\.]/', '', $amount) * 100);
+        return (int) round((preg_replace('/[^\d\.]/', '', $amount) * 100), 0);
     }
 
     private function getRestaurantLogo(Restaurant $restaurant): ?string

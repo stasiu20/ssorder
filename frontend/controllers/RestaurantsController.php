@@ -5,13 +5,11 @@ namespace frontend\controllers;
 use common\services\FileService;
 use common\services\SymfonyApiClient;
 use frontend\helpers\FileServiceViewHelper;
-use frontend\models\Category;
 use frontend\models\Imagesmenu;
-use frontend\models\Menu;
 use frontend\models\Restaurants;
-use League\Fractal\Manager;
+use frontend\modules\apiV1\factory\RestaurantDetailsFactory;
 use Yii;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -48,17 +46,11 @@ class RestaurantsController extends Controller
 
     public function actionIndex()
     {
-        $query = Restaurants::findActiveRestaurants();
-        $restaurants = $query->orderBy('restaurantName')->all();
-        $categorys = Category::findActive()->all();
-
         /** @var SymfonyApiClient $symfonyApiClient */
         $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
         $restaurantData = $symfonyApiClient->getRestaurants();
 
         return $this->render('index', [
-            'restaurants' => $restaurants,
-            'categorys' => $categorys,
             'restaurantFrontendData' => $restaurantData,
         ]);
     }
@@ -69,25 +61,19 @@ class RestaurantsController extends Controller
      */
     public function actionDetails($id)
     {
-        $restaurant = $this->findModel($id);
-        $imagesMenu = Imagesmenu::find()->where(['restaurantId' => $id])->all();
-        $menu = $restaurant->menu;
-        $restaurants = Restaurants::find()->all();
-        $model = new Imagesmenu();
-        $dataProvider = new ActiveDataProvider([
-            'query' => Menu::find()->where(['restaurantId' => $id])->andWhere(['deletedAt' => null]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
+        $details =  $symfonyApiClient->getRestaurantDetails($id)['data'];
+        $factory = new RestaurantDetailsFactory();
+        $model = $factory->factoryRestaurantDetails($details);
+
+        $menuProvider = new ArrayDataProvider();
+        $menuProvider->allModels = $model->menu;
+        $menuProvider->key = 'id';
 
         return $this->render('restaurant', [
-            'restaurant' => $restaurant,
-            'menu' => $menu,
-            'dataProvider' => $dataProvider,
-            'restaurants' => $restaurants,
-            'model' => $model,
-            'imagesMenu' => $imagesMenu,
+            'details' => $model,
+            'menuProvider' => $menuProvider,
         ]);
     }
 
