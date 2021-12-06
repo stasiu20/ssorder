@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eeef3621cad6e9032a4c20ba5317f926",
+    "content-hash": "a8138a92a8e3d8bdea2f243042882ef2",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -7936,16 +7936,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v3.52.5",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "f1ad60dc92e7edb0898583e16c3e66fe3e9eada2"
+                "reference": "c572cfe49a3ac747e70ad20c3018e3ff0e08982d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/f1ad60dc92e7edb0898583e16c3e66fe3e9eada2",
-                "reference": "f1ad60dc92e7edb0898583e16c3e66fe3e9eada2",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/c572cfe49a3ac747e70ad20c3018e3ff0e08982d",
+                "reference": "c572cfe49a3ac747e70ad20c3018e3ff0e08982d",
                 "shasum": ""
             },
             "type": "library",
@@ -7991,9 +7991,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v3.52.5"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.1.2"
             },
-            "time": "2021-10-14T14:25:14+00:00"
+            "time": "2021-11-26T10:34:50+00:00"
         },
         {
             "name": "symfony/browser-kit",
