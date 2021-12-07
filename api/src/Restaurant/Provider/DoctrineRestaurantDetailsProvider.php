@@ -74,6 +74,7 @@ class DoctrineRestaurantDetailsProvider implements RestaurantDetailsProviderInte
 
     private function convertToCents(string $amount): int
     {
+        // @phpstan-ignore-next-line
         return (int) round((preg_replace('/[^\d\.]/', '', $amount) * 100), 0);
     }
 
