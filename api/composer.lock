@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f2238dad3c46501283411c5a0e01887",
+    "content-hash": "ebd4d9e1885a6d48f340f5c9059bb27f",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -3091,26 +3091,26 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v4.6.2",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "efa83ca54eefb43e7af16a3c08e8b613d075fc79"
+                "reference": "7de49bb4a8efa15ee5a98aac6237902925bdf56b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/efa83ca54eefb43e7af16a3c08e8b613d075fc79",
-                "reference": "efa83ca54eefb43e7af16a3c08e8b613d075fc79",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/7de49bb4a8efa15ee5a98aac6237902925bdf56b",
+                "reference": "7de49bb4a8efa15ee5a98aac6237902925bdf56b",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "^1.11",
                 "ext-json": "*",
-                "php": ">=7.1.3",
+                "php": ">=7.2",
                 "phpdocumentor/reflection-docblock": "^3.1|^4.4|^5.0",
                 "psr/cache": "^1.0|^2.0|^3.0",
-                "psr/container": "^1.0",
-                "psr/log": "^1.0",
+                "psr/container": "^1.0|^2.0",
+                "psr/log": "^1.0|^2.0|^3.0",
                 "symfony/config": "^4.4|^5.0",
                 "symfony/console": "^4.4|^5.0",
                 "symfony/dependency-injection": "^4.4|^5.0",
@@ -3120,7 +3120,7 @@
                 "symfony/options-resolver": "^4.4|^5.0",
                 "symfony/property-info": "^4.4|^5.0",
                 "symfony/routing": "^4.4|^5.0",
-                "zircote/swagger-php": "^3.0"
+                "zircote/swagger-php": "^3.2|^4.0"
             },
             "conflict": {
                 "symfony/framework-bundle": "4.2.7"
@@ -3194,7 +3194,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2021-10-19T12:29:11+00:00"
+            "time": "2021-12-12T00:32:51+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -4579,77 +4579,6 @@
                 }
             ],
             "time": "2020-11-03T09:10:25+00:00"
-        },
-        {
-            "name": "symfony/asset",
-            "version": "v5.3.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/asset.git",
-                "reference": "547d3d91c759bae8e302630e68f6c4d415715bc3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset/zipball/547d3d91c759bae8e302630e68f6c4d415715bc3",
-                "reference": "547d3d91c759bae8e302630e68f6c4d415715bc3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1",
-                "symfony/polyfill-php80": "^1.16"
-            },
-            "conflict": {
-                "symfony/http-foundation": "<5.3"
-            },
-            "require-dev": {
-                "symfony/http-client": "^4.4|^5.0",
-                "symfony/http-foundation": "^5.3",
-                "symfony/http-kernel": "^4.4|^5.0"
-            },
-            "suggest": {
-                "symfony/http-foundation": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Asset\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
-            "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-11-05T16:25:46+00:00"
         },
         {
             "name": "symfony/cache",
