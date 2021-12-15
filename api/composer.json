@@ -5,7 +5,7 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "bentools/webpush-bundle": "^0.6.0",
+        "bentools/webpush-bundle": "^0.7.0",
         "chrisguitarguy/request-id-bundle": "^4.0",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/annotations": "^1.0",
@@ -15,11 +15,11 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "league/fractal": "^0.19.2",
         "lexik/jwt-authentication-bundle": "^2.8",
+        "moneyphp/money": "^3.3",
         "nelmio/api-doc-bundle": "^4.3",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.1",
         "sentry/sentry-symfony": "^4.1",
-        "symfony/asset": "5.3.*",
         "symfony/console": "5.3.*",
         "symfony/dotenv": "5.3.*",
         "symfony/flex": "^1.3.1",
@@ -95,10 +95,9 @@
         "phploc": "./vendor/bin/phploc ./src/",
         "phpcpd": "./vendor/bin/phpcpd ./src/",
         "phplint": "./vendor/bin/parallel-lint --exclude vendor/ --exclude bin/.phpunit .",
-        "phpstan": "./vendor/bin/phpstan analyse --no-progress --no-interaction ./src",
         "phpunit-all": "XDEBUG_MODE=coverage ./bin/phpunit --group default,database --coverage-html ../docs/api --log-junit ../docs/api-junit.xml",
         "all": [
-            "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpstan", "@phpunit-all"
+            "@phplint", "@phpdd", "@phpcs", "@phpmd", "@phpcpd", "@phpunit-all"
         ]
     },
     "conflict": {

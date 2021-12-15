@@ -81,9 +81,17 @@ class Restaurant
      */
     private $menu;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="restaurant", orphanRemoval=true)
+     */
+    private $photos;
+
     public function __construct()
     {
         $this->menu = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,5 +232,13 @@ class Restaurant
         }
 
         return $this;
+    }
+
+    public function getPhotos(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->isNull('deletedAt'));
+
+        return $this->photos->matching($criteria);
     }
 }

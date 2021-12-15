@@ -1,9 +1,13 @@
 <?php
 
+use yii\data\DataProviderInterface;
+use yii\grid\SerialColumn;
 use frontend\assets\RestaurantAsset;
 use frontend\helpers\FileServiceViewHelper;
 use frontend\models\Imagesmenu;
 use frontend\models\Restaurants;
+use frontend\modules\apiV1\models\RestaurantDetails;
+use frontend\modules\apiV1\models\RestaurantPhoto;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -11,7 +15,10 @@ use yii\helpers\Url;
 
 /** @var Restaurants $restaurant */
 /** @var Imagesmenu[] $imagesMenu */
-$this->title = $restaurant->restaurantName;
+/** @var RestaurantDetails $details */
+/** @var DataProviderInterface $menuProvider */
+
+$this->title = $details->name;
 $this->params['breadcrumbs'][] = $this->title;
 $userName = Yii::$app->user->identity->username;
 $formatter = \Yii::$app->formatter;
@@ -20,43 +27,43 @@ RestaurantAsset::register($this);
 <div class="body-content">
     <div class="row">
         <div class="col-lg-3">
-            <h1><?= Html::encode("{$restaurant->restaurantName}"); ?></h1>
+            <h1><?= Html::encode($details->name); ?></h1>
             <p>
                 <?=
-                Html::a('<span class="material-icons">edit</span>', ['restaurants/update', 'id' => $restaurant->id], [
+                Html::a('<span class="material-icons">edit</span>', ['restaurants/update', 'id' => $details->id], [
                     'title' => 'Edytuj restaurację',
                 ]);
                 ?>
-                <?= Html::a('<span class="material-icons">delete</span>', ['restaurants/delete', 'id' => $restaurant->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
+                <?= Html::a('<span class="material-icons">delete</span>', ['restaurants/delete', 'id' => $details->id], ['data-method' => 'post', 'data-confirm' => 'Ar ju siur ju wan tu dileit restauracje i oll pozycje w menue?!?', 'title'=>'Usuń restaurację']) ?>
             </p>
-            <div id="react-restaurant-image" data-src="<?= FileServiceViewHelper::getRestaurantImageUrl($restaurant->img_url) ?>" class="img-restaurant"></div>
+            <div id="react-restaurant-image" data-src="<?= $details->logoUrl ?>" class="img-restaurant"></div>
 
             <div class="restaurant-details">
                 <h5>Numer telefonu:</h5>
-                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->tel_number}"); ?></h3>
+                <h3 class="restaurant-details__summary"><?= Html::encode($details->phoneNumber); ?></h3>
                 <h5>Koszt dowozu:</h5>
-                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->delivery_price}"); ?> zł</h3>
+                <h3 class="restaurant-details__summary"><?= Html::encode(number_format($details->deliveryPrice->amount / 100, 2)); ?> zł</h3>
                 <h5>Koszt opakowania:</h5>
-                <h3 class="restaurant-details__summary"><?= Html::encode("{$restaurant->pack_price}"); ?> zł </h3>
+                <h3 class="restaurant-details__summary"><?= Html::encode(number_format($details->packPrice->amount / 100, 2)); ?> zł </h3>
             </div>
             <div>
                 <?= \common\widgets\VaadinUpload::widget([
-                    'target' => \yii\helpers\Url::to(['/upload/image', 'id' => $restaurant->id]),
+                    'target' => \yii\helpers\Url::to(['/upload/image', 'id' => $details->id]),
                     'accept' => 'image/*',
                     'maxFiles' => 1,
                     'formDataName' => 'imagesMenu_url'
                 ]) ?>
 
-                <?php if ($imagesMenu) {
+                <?php if (count($details->photos) > 0) {
                     echo '<h3>Galeria</h3>';
                 } ?>
-                <?php $galleryData = array_map(function (Imagesmenu $imageMenu) {
+                <?php $galleryData = array_map(function (RestaurantPhoto $photo) {
                     return [
-                        'id' => $imageMenu->id,
-                        'url' => FileServiceViewHelper::getMenuImageUrl($imageMenu->imagesMenu_url),
-                        'deleteUrl' => Url::toRoute(['restaurants/delete-image', 'id' => $imageMenu->id])
+                        'id' => $photo->id,
+                        'url' => $photo->url,
+                        'deleteUrl' => Url::toRoute(['restaurants/delete-image', 'id' => $photo->id])
                     ];
-                }, $imagesMenu); ?>
+                }, $details->photos); ?>
                 <div data-gallery="<?= Html::encode(Json::encode($galleryData)) ?>" id="react-restaurant-gallery"></div>
             </div>
         </div>
@@ -65,24 +72,24 @@ RestaurantAsset::register($this);
 
                 <h3>Menu</h3>
                 <p>
-                    <?= Html::a('Dodaj pozycję w Menu', ['menu/create', 'id' => $restaurant->id], ['class' => 'btn btn-primary']); ?>
+                    <?= Html::a('Dodaj pozycję w Menu', ['menu/create', 'id' => $details->id], ['class' => 'btn btn-primary']); ?>
                 </p>
             </div>
 
-            <?php if (!empty($menu)): ?>
+            <?php if (count($details->menu) > 0): ?>
                 <?=
                 GridView::widget([
-                    'dataProvider' => $dataProvider,
+                    'dataProvider' => $menuProvider,
                     'summary' => '',
                     'tableOptions' => ['class' => 'table  table-bordered table-hover'],
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        ['attribute' => 'foodName', 'contentOptions' => ['class' => 'text-right text-wrap']],
-                        ['attribute' => 'foodInfo', 'contentOptions' => ['class' => 'text-right text-wrap']],
-                        ['attribute' => 'foodPrice',
+                        ['class' => SerialColumn::class],
+                        ['attribute' => 'name', 'contentOptions' => ['class' => 'text-right text-wrap']],
+                        ['attribute' => 'description', 'contentOptions' => ['class' => 'text-right text-wrap']],
+                        ['attribute' => 'price',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return "$data->foodPrice" . ' ' . 'zł';
+                                return number_format(round($data->price->amount / 100, 2), 2) . ' ' . 'zł';
                             },
                             'contentOptions' => ['class' => 'text-right'],
                         ],
@@ -90,8 +97,8 @@ RestaurantAsset::register($this);
                             'controller' => 'menu',
                             'template' => '{order} {view} {update} {delete}',
                             'buttons' => [
-                                'order' => function ($url, $restaurant) {
-                                    return Html::a('<span class="material-icons">restaurant</span>', ['order/uwagi', 'id' => $restaurant->id], [
+                                'order' => function ($url, $menu) {
+                                    return Html::a('<span class="material-icons">restaurant</span>', ['order/uwagi', 'id' => $menu->id], [
                                                 'title' => 'zamów',
                                     ]);
                                 },
@@ -104,11 +111,9 @@ RestaurantAsset::register($this);
                 ?>
             <?php else: ?>
                 <p class="nodata"><?php echo 'Ta restauracja nie ma jeszcze menu'; ?></p>
-
             <?php endif;
             ?>
         </div>
 
     </div>
 </div>
-

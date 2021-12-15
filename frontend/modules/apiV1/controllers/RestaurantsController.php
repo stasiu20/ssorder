@@ -18,11 +18,12 @@ class RestaurantsController extends Controller
         $parent = parent::behaviors();
         $parent['verbFilter']['actions'] = [
             'index' => ['get'],
+            'details' => ['get'],
         ];
         $parent['access'] = [
             'class' => AccessControl::class,
             'rules' => [
-                ['actions' => ['index', 'foods'], 'allow' => true, 'roles' => ['@']],
+                ['actions' => ['index', 'foods', 'details'], 'allow' => true, 'roles' => ['@']],
             ]
         ];
         return $parent;
@@ -115,5 +116,44 @@ class RestaurantsController extends Controller
         Yii::$app->response->headers->add('X-Pagination-Total-Count', count($menu));
 
         return $menu;
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/restaurants/{restaurantId}/details",
+     *      operationId="getRestaurantDetails",
+     *      tags={"Restaurants"},
+     *      summary="Get details of restaurant",
+     *      description="Get details of restaurant",
+     *      security={{"jwtToken": {}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/RestaurantDetails"),
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
+    public function actionDetails(int $restaurantId)
+    {
+        $restaurant = Restaurants::findOne($restaurantId);
+        if (null === $restaurant) {
+            throw new NotFoundHttpException('Restaurant not exists');
+        }
+
+        /** @var SymfonyApiClient $symfonyApiClient */
+        $symfonyApiClient = Yii::$container->get(SymfonyApiClient::class);
+
+        return $symfonyApiClient->getRestaurantDetails($restaurantId);
     }
 }
