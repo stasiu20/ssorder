@@ -68,6 +68,6 @@ jmeter:
 
 update-dependencies:
 	docker-compose exec cli bash -c 'cd api && composer update'
-	docker-compose exec cli bash -c 'composer update'
+	docker-compose exec cli bash -c 'COMPOSER_MEMORY_LIMIT=2G composer update'
 	docker-compose exec cli bash -c 'cd frontend/e2e && npm update'
 	docker-compose exec cli bash -c 'cd node-cron && npm update'
