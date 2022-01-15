@@ -10,6 +10,8 @@ setup: .env
 	chmod 777 frontend/runtime
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
+	mkdir -p api/var/
+	chmod 777 api/var/
 	ln -s config-dev.js frontend/webpack/config.js
 	docker-compose up -d mongo
 	docker-compose run --rm wait -c mongo:27017 -t 15
@@ -17,8 +19,11 @@ setup: .env
 	docker-compose up -d
 	docker-compose run --rm wait -c minio:9000 -t 15
 	docker-compose exec cli bash -c "composer install"
+	docker-compose exec cli bash -c "cd api && composer install"
 	docker-compose exec cli bash -c "cd frontend && yarn install --frozen-lock-file"
 	docker-compose exec cli bash -c 'cd frontend && yarn build'
+	docker-compose exec cli bash -c 'cd frontend && yarn pwa:build'
+	docker-compose exec cli bash -c "cd frontend/e2e && npm ci"
 	docker-compose exec cli bash -c "./yii migrate/up --interactive 0"
 	docker-compose exec cli bash -c "./yii init/create-bucket"
 	docker-compose exec cli bash -c "./yii fixture/load '*' --interactive 0 "
