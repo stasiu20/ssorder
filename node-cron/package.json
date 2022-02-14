@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@sentry/node": "^6.15.0",
-    "@sentry/tracing": "^6.15.0",
+    "@sentry/tracing": "^6.17.7",
     "ioredis": "^4.28.0",
     "nconf": "^0.11.3",
     "node-cron": "^3.0.0",
