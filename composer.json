@@ -55,7 +55,7 @@
     "phpmd/phpmd": "^2.6",
     "phpunit/php-file-iterator": "^3.0",
     "sebastian/phpcpd": "^6.0",
-    "swagger-api/swagger-ui": "^3.25",
+    "swagger-api/swagger-ui": "^4.5",
     "timeweb/phpstan-enum": "^2.2",
     "wapmorgan/php-code-fixer": "^2.0",
     "yiisoft/yii2-coding-standards": "^2.0",
