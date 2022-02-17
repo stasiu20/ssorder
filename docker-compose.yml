@@ -11,11 +11,6 @@ services:
             - ./:/app
         depends_on:
             - mysql
-        links:
-            - mysql
-            - rocketchat
-            - mailhog
-            - minio
         labels:
             traefik.backend: "ssorder"
             traefik.frontend.rule: "Host:ssorder.lvh.me"
@@ -61,8 +56,6 @@ services:
         working_dir: /app
         depends_on:
           - mysql
-        links:
-          - mysql
         environment:
             XDEBUG_MODE: develop,debug
             XDEBUG_CONFIG: "client_host=${MY_IP:-172.17.0.1} discover_client_host=0 client_port=9000"
@@ -85,8 +78,6 @@ services:
             - redis:/data
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:4.8
-        links:
-          - mysql
         environment:
             - PMA_HOST=mysql
         labels:
@@ -145,8 +136,6 @@ services:
             traefik.backend: "rocketchat"
             traefik.frontend.rule: "Host:rocketchat.lvh.me"
             traefik.port: "3000"
-        links:
-            - mailhog
         external_links:
           - ssorder:ssorder.lvh.me
 
@@ -184,8 +173,6 @@ services:
             - ./integration-tests:/tests
         depends_on:
             - traefik
-        links:
-            - traefik
         external_links:
             - traefik:ssorder.lvh.me
         entrypoint: '/tests/entrypoint.sh'
@@ -193,8 +180,6 @@ services:
         image: dokku/wait
     prometheus:
         image: prom/prometheus
-        links:
-            - ssorder
         volumes:
             - ./provision/prometheus.yml:/etc/prometheus/prometheus.yml
             - prometheus-tsdb:/prometheus
