@@ -1,5 +1,7 @@
 <?php
 
+namespace frontend\modules\apiV1;
+
 use \OpenApi\Annotations as OA;
 
 /**
@@ -40,4 +42,9 @@ use \OpenApi\Annotations as OA;
  *     bearerFormat="jwt",
  *     securityScheme="jwtToken"
  * )
+ *
+ * Without class  zircote/swagger-php return warning that OA\Info not exists
  */
+class OpenApiSpec
+{
+}
