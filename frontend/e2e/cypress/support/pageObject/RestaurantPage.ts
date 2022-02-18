@@ -9,7 +9,9 @@ export class RestaurantPage {
     }
 
     uploadImage() {
-        cy.get('vaadin-upload').shadow().find('input[type="file"]').attachFile('cy.png');
+        cy.get('vaadin-upload').selectFile('cypress/fixtures/cy.png', {
+            action: 'drag-drop',
+        });
     }
 
     uploadDoneIcon() {

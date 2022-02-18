@@ -1,4 +1,3 @@
-import 'cypress-file-upload';
 import './command/api';
 
 // ***********************************************
