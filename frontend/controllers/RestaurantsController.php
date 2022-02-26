@@ -146,8 +146,6 @@ class RestaurantsController extends Controller
     /**
      * @param $id int Image id
      * @return \yii\web\Response
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public function actionDeleteImage(int $id)
     {

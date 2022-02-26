@@ -1,0 +1,67 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: src/Api/Transformer/RestaurantTransformer.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: src/Api/Transformer/RestaurantTransformer.php
+
+		-
+			message: "#^Constructor in App\\\\Command\\\\SendPushMsgCommand has parameter \\$name with default value\\.$#"
+			count: 1
+			path: src/Command/SendPushMsgCommand.php
+
+		-
+			message: "#^Method App\\\\Command\\\\SendPushMsgCommand\\:\\:__construct\\(\\) has parameter \\$name with null as default value\\.$#"
+			count: 1
+			path: src/Command/SendPushMsgCommand.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\MenuPosition\\:\\:setFoodPrice\\(\\) has parameter \\$foodPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/MenuPosition.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\MenuPosition\\:\\:setRestaurant\\(\\) has parameter \\$restaurant with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/MenuPosition.php
+
+		-
+			message: "#^Property App\\\\Restaurant\\\\Entity\\\\MenuPosition\\:\\:\\$restaurant type mapping mismatch\\: property can contain App\\\\Restaurant\\\\Entity\\\\Restaurant\\|null but database expects App\\\\Restaurant\\\\Entity\\\\Restaurant\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/MenuPosition.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\Restaurant\\:\\:setDeliveryPrice\\(\\) has parameter \\$deliveryPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/Restaurant.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\Restaurant\\:\\:setPackPrice\\(\\) has parameter \\$packPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/Restaurant.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: src/Restaurant/Provider/DoctrineRestaurantDetailsProvider.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: src/Restaurant/Provider/DoctrineRestaurantDetailsProvider.php
+
+		-
+			message: "#^Throwing checked exception Symfony\\\\Component\\\\DependencyInjection\\\\Exception\\\\ServiceCircularReferenceException in global scope is prohibited$#"
+			count: 1
+			path: src/phpstan/object_manager.php
+
+		-
+			message: "#^Throwing checked exception Symfony\\\\Component\\\\DependencyInjection\\\\Exception\\\\ServiceNotFoundException in global scope is prohibited$#"
+			count: 1
+			path: src/phpstan/object_manager.php
+
