@@ -6,7 +6,6 @@ parameters:
         - '#Do not use chained method calls\. Put each on separated lines\.#'
         - '#Separate function "sprintf\(\)" in method call to standalone row to improve readability#'
         - '#File is missing a "declare\(strict_types=1\)" declaration#'
-        - '#Missing @throws [a-zA-Z0-9\\]+ annotation#'
         - '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
         - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has a nullable return type declaration.#'
         -
@@ -46,6 +45,13 @@ includes:
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/static-rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/services/services.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/packages/cognitive-complexity/config/cognitive-complexity-services.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/packages/symfony/config/services.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/astral/config/services.neon
 services:
     # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules
     -
@@ -173,3 +179,5 @@ services:
         class: App\phpstan\OnlyReadProperties
         tags:
             - phpstan.properties.readWriteExtension
+    -
+        class: PHPStan\Rules\Operators\OperatorRuleHelper

@@ -21,11 +21,6 @@ parameters:
 			path: frontend/models/OrderSummaryRow.php
 
 		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: frontend/models/ResetPasswordForm.php
-
-		-
 			message: "#^Constructor in frontend\\\\models\\\\ResetPasswordForm has parameter \\$config with default value\\.$#"
 			count: 1
 			path: frontend/models/ResetPasswordForm.php
@@ -56,29 +51,14 @@ parameters:
 			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
 
 		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
 			count: 1
 			path: frontend/rocketChat/commands/HistoryCommand.php
 
 		-
 			message: "#^Language construct empty\\(\\) should not be used\\.$#"
 			count: 1
-			path: frontend/rocketChat/commands/HistoryCommand.php
-
-		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
 			path: frontend/rocketChat/commands/ReorderCommand.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: frontend/rocketChat/commands/ReorderCommand.php
-
-		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: frontend/services/OrderSummaryStatics.php
 
 		-
 			message: "#^Language construct empty\\(\\) should not be used\\.$#"

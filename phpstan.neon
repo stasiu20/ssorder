@@ -11,20 +11,12 @@ parameters:
     bootstrapFiles:
         - %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:
-    		- '#Call to deprecated method className\(\) of class yii\\base\\BaseObject#'
     		- '#Method [a-zA-Z0-9\\]+::action[a-zA-Z0-9\\]+\(\) has no return type specified#'
     		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has parameter \$[a-zA-Z0-9]+ with no type specified#'
     		- '#Dynamic call to static method PHPUnit\\Framework\\Assert::.*#'
     		- '#File is missing a "declare\(strict_types=1\)" declaration#'
-    		- '#Missing @throws [a-zA-Z0-9\\]+ annotation#'
     		- '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
     		- '#Language construct isset\(\) should not be used.#'
-    		-
-    		    message: '#Throwing checked exception [a-zA-Z0-9\\]+ in global scope is prohibited#'
-    		    paths:
-    		        - common/tests/unit/fixtures/data/*
-    		        - common/tests/_bootstrap.php
-    		        - common/config/*
     polluteScopeWithLoopInitialAssignments: false
     polluteScopeWithAlwaysIterableForeach: false
     checkAlwaysTrueCheckTypeFunctionCall: true
@@ -68,6 +60,7 @@ parameters:
     		    - yii\widgets\InputWidget
 includes:
 	#- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
 	- %currentWorkingDirectory%/phpstan-baseline-frontend.neon
 	- %currentWorkingDirectory%/phpstan-baseline-common.neon
@@ -179,6 +172,8 @@ services:
         class: PHPStan\Rules\VariableVariables\VariableVariablesRule
         tags:
             - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperatorRuleHelper
     # end phpstan/phpstan-strict-rules
     # start rules from ergebnis/phpstan-rules
     -
