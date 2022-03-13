@@ -21,7 +21,15 @@ class RestaurantTransformer extends TransformerAbstract
     /**
      * @param Restaurant $data
      *
-     * @return array{id: int, name: string, category: int, imageUrl: string|null, packPrice: float, deliveryPrice: float, telNumber: string}
+     * @return array{
+     *   id: int,
+     *   name: string,
+     *   category: int,
+     *   imageUrl: string|null,
+     *   packPrice: float,
+     *   deliveryPrice: float,
+     *   telNumber: string
+     * }
      */
     public function transform(Restaurant $data): array
     {

@@ -19,7 +19,7 @@ parameters:
             path: */Entity/*.php
         -
             message: '#Instead of array shape, use value object with specific types in constructor and getters#'
-            path: src/Api/Transformer/MenuTransformer.php
+            path: src/Api/Transformer/*Transformer.php
     customRulesetUsed: true
     bootstrapFiles:
         - %currentWorkingDirectory%/phpstan-bootstrap.php
