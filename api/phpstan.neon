@@ -17,6 +17,9 @@ parameters:
         -
             message: '#\$this as argument is not allowed. Refactor method to service composition#'
             path: */Entity/*.php
+        -
+            message: '#Instead of array shape, use value object with specific types in constructor and getters#'
+            path: src/Api/Transformer/MenuTransformer.php
     customRulesetUsed: true
     bootstrapFiles:
         - %currentWorkingDirectory%/phpstan-bootstrap.php
