@@ -1,0 +1,67 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method frontend\\\\controllers\\\\OrderController\\:\\:actionIndex\\(\\) has parameter \\$date with null as default value\\.$#"
+			count: 1
+			path: frontend/controllers/OrderController.php
+
+		-
+			message: "#^Method frontend\\\\helpers\\\\GoogleAnalyticsHelper\\:\\:getTrackingId\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: frontend/helpers/GoogleAnalyticsHelper.php
+
+		-
+			message: "#^Method frontend\\\\helpers\\\\GoogleAnalyticsHelper\\:\\:getUserId\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: frontend/helpers/GoogleAnalyticsHelper.php
+
+		-
+			message: "#^Method frontend\\\\models\\\\OrderSummaryRow\\:\\:getChange\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: frontend/models/OrderSummaryRow.php
+
+		-
+			message: "#^Constructor in frontend\\\\models\\\\ResetPasswordForm has parameter \\$config with default value\\.$#"
+			count: 1
+			path: frontend/models/ResetPasswordForm.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: frontend/models/ResetPasswordForm.php
+
+		-
+			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:createTokenForUser\\(\\) has parameter \\$time with null as default value\\.$#"
+			count: 1
+			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
+
+		-
+			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:getTokenFromHeader\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
+
+		-
+			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:parseToken\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
+
+		-
+			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:parseToken\\(\\) has parameter \\$jwtSignKey with null as default value\\.$#"
+			count: 1
+			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: frontend/rocketChat/commands/HistoryCommand.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: frontend/rocketChat/commands/ReorderCommand.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: frontend/services/OrderSummaryStatics.php
+

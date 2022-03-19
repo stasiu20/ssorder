@@ -10,6 +10,8 @@ setup: .env
 	chmod 777 frontend/runtime
 	mkdir -p frontend/web/assets
 	chmod 777 frontend/web/assets
+	mkdir -p api/var/
+	chmod 777 api/var/
 	ln -s config-dev.js frontend/webpack/config.js
 	docker-compose up -d mongo
 	docker-compose run --rm wait -c mongo:27017 -t 15
@@ -17,8 +19,11 @@ setup: .env
 	docker-compose up -d
 	docker-compose run --rm wait -c minio:9000 -t 15
 	docker-compose exec cli bash -c "composer install"
+	docker-compose exec cli bash -c "cd api && composer install"
 	docker-compose exec cli bash -c "cd frontend && yarn install --frozen-lock-file"
 	docker-compose exec cli bash -c 'cd frontend && yarn build'
+	docker-compose exec cli bash -c 'cd frontend && yarn pwa:build'
+	docker-compose exec cli bash -c "cd frontend/e2e && npm ci"
 	docker-compose exec cli bash -c "./yii migrate/up --interactive 0"
 	docker-compose exec cli bash -c "./yii init/create-bucket"
 	docker-compose exec cli bash -c "./yii fixture/load '*' --interactive 0 "
@@ -40,7 +45,7 @@ install-dependencies:
 	docker-compose exec cli bash -c "cd node-cron/ && npm install"
 
 cypress:
-	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:8.7.0 --env configFile=docker
+	docker run --network=host  --ipc=host --rm -it -v $(PWD)/frontend/e2e:/e2e -w /e2e cypress/included:9.5.0 --env configFile=docker
 
 cypress-debug:
 	#npx cypress open --env configFile=docker
@@ -51,9 +56,10 @@ cypress-debug:
       -w /e2e \
       -e DISPLAY=:1 \
       --entrypoint cypress \
-      cypress/included:8.7.0 open --project .
+      cypress/included:9.5.0 open --project .
 
 qa:
+	docker pull jakzal/phpqa:alpine
 	docker run --rm -v $(PWD):/project -w /project jakzal/phpqa:alpine phpstan analyse --no-interaction ./frontend ./common ./console
 	docker run --rm -v $(PWD):/project -w /project/api jakzal/phpqa:alpine sh -c 'composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/phpstan-rules && phpstan'
 
@@ -63,6 +69,6 @@ jmeter:
 
 update-dependencies:
 	docker-compose exec cli bash -c 'cd api && composer update'
-	docker-compose exec cli bash -c 'composer update'
+	docker-compose exec cli bash -c 'COMPOSER_MEMORY_LIMIT=2G composer update'
 	docker-compose exec cli bash -c 'cd frontend/e2e && npm update'
 	docker-compose exec cli bash -c 'cd node-cron && npm update'

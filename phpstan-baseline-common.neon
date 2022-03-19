@@ -1,0 +1,101 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 4
+			path: common/behaviors/DateRangeBehavior.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 2
+			path: common/component/RocketChatOrderMediator.php
+
+		-
+			message: "#^Constructor in common\\\\component\\\\UserRestApiMediator has parameter \\$user with default value\\.$#"
+			count: 1
+			path: common/component/UserRestApiMediator.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: common/component/UserRestApiMediator.php
+
+		-
+			message: "#^Method common\\\\component\\\\UserRestApiMediator\\:\\:__construct\\(\\) has parameter \\$user with null as default value\\.$#"
+			count: 1
+			path: common/component/UserRestApiMediator.php
+
+		-
+			message: "#^Method common\\\\helpers\\\\OrderView\\:\\:getOrderChangeTitle\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: common/helpers/OrderView.php
+
+		-
+			message: "#^Method common\\\\helpers\\\\OrderView\\:\\:getOrderChangeTitle\\(\\) has parameter \\$formatter with null as default value\\.$#"
+			count: 1
+			path: common/helpers/OrderView.php
+
+		-
+			message: "#^Method common\\\\models\\\\AccessToken\\:\\:getByToken\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: common/models/AccessToken.php
+
+		-
+			message: "#^Method common\\\\models\\\\Order\\:\\:canBeRealized\\(\\) has parameter \\$compareToDate with null as default value\\.$#"
+			count: 1
+			path: common/models/Order.php
+
+		-
+			message: "#^Method common\\\\models\\\\Order\\:\\:cloneOrder\\(\\) has parameter \\$userId with null as default value\\.$#"
+			count: 1
+			path: common/models/Order.php
+
+		-
+			message: "#^Method common\\\\models\\\\Order\\:\\:isCreatedByUser\\(\\) has parameter \\$userId with null as default value\\.$#"
+			count: 1
+			path: common/models/Order.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 2
+			path: common/models/User.php
+
+		-
+			message: "#^Method common\\\\models\\\\User\\:\\:findIdentityByAccessToken\\(\\) has parameter \\$type with null as default value\\.$#"
+			count: 1
+			path: common/models/User.php
+
+		-
+			message: "#^Method common\\\\models\\\\User\\:\\:getByRocketChatUserId\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: common/models/User.php
+
+		-
+			message: "#^Method common\\\\repositories\\\\MenuRepository\\:\\:findOne\\(\\) has a nullable return type declaration\\.$#"
+			count: 1
+			path: common/repositories/MenuRepository.php
+
+		-
+			message: "#^Method common\\\\services\\\\actions\\\\CreateFoodRating\\:\\:run\\(\\) has parameter \\$review with null as default value\\.$#"
+			count: 1
+			path: common/services/actions/CreateFoodRating.php
+
+		-
+			message: "#^Method common\\\\services\\\\actions\\\\CreateOrder\\:\\:run\\(\\) has parameter \\$identity with null as default value\\.$#"
+			count: 1
+			path: common/services/actions/CreateOrder.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: common/services/actions/UploadRestaurantLogo.php
+
+		-
+			message: "#^Control structures using switch should not be used\\.$#"
+			count: 1
+			path: common/widgets/grid/ActionMaterialIconColumn.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: common/widgets/grid/InputColumn.php

@@ -10,7 +10,7 @@ class RestaurantCategoryTransformer extends TransformerAbstract
     /**
      * @param Category $data
      *
-     * @return array
+     * @return array{id: int, name: string}
      */
     public function transform(Category $data): array
     {

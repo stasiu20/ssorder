@@ -1,0 +1,41 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: src/Api/Transformer/RestaurantTransformer.php
+
+		-
+			message: "#^Constructor in App\\\\Command\\\\SendPushMsgCommand has parameter \\$name with default value\\.$#"
+			count: 1
+			path: src/Command/SendPushMsgCommand.php
+
+		-
+			message: "#^Method App\\\\Command\\\\SendPushMsgCommand\\:\\:__construct\\(\\) has parameter \\$name with null as default value\\.$#"
+			count: 1
+			path: src/Command/SendPushMsgCommand.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\MenuPosition\\:\\:setFoodPrice\\(\\) has parameter \\$foodPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/MenuPosition.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\MenuPosition\\:\\:setRestaurant\\(\\) has parameter \\$restaurant with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/MenuPosition.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\Restaurant\\:\\:setDeliveryPrice\\(\\) has parameter \\$deliveryPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/Restaurant.php
+
+		-
+			message: "#^Method App\\\\Restaurant\\\\Entity\\\\Restaurant\\:\\:setPackPrice\\(\\) has parameter \\$packPrice with a nullable type declaration\\.$#"
+			count: 1
+			path: src/Restaurant/Entity/Restaurant.php
+
+		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: src/Restaurant/Provider/DoctrineRestaurantDetailsProvider.php

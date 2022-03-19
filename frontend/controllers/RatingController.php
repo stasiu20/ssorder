@@ -89,7 +89,6 @@ class RatingController extends Controller
      * @param $url
      * @return string|\yii\web\Response
      * @throws \yii\base\InvalidConfigException
-     * @throws \yii\di\NotInstantiableException
      */
     private function rating(Order $order, IdentityInterface $identity, $url)
     {

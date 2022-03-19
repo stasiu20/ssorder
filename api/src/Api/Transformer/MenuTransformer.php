@@ -10,7 +10,7 @@ class MenuTransformer extends TransformerAbstract
     /**
      * @param MenuPosition $data
      *
-     * @return array
+     * @return array{id: int, restaurantId: int, foodName: string, foodInfo: string, foodPrice: float}
      */
     public function transform(MenuPosition $data): array
     {

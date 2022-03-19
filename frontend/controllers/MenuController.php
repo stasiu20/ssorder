@@ -109,8 +109,6 @@ class MenuController extends Controller
      * @param $id int
      * @return \yii\web\Response
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

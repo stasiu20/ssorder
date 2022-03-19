@@ -75,14 +75,14 @@ class Restaurant
     private $deletedAt;
 
     /**
-     * @var Collection
+     * @var Collection<MenuPosition>
      *
      * @ORM\OneToMany(targetEntity=MenuPosition::class, mappedBy="restaurant", orphanRemoval=true)
      */
     private $menu;
 
     /**
-     * @var Collection
+     * @var Collection<Photo>
      *
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="restaurant", orphanRemoval=true)
      */
@@ -214,7 +214,6 @@ class Restaurant
     public function addMenu(MenuPosition $menu): self
     {
         if (!$this->menu->contains($menu)) {
-            /** @phpstan-ignore-next-line */
             $this->menu[] = $menu;
             $menu->setRestaurant($this);
         }

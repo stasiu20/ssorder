@@ -1,5 +1,7 @@
 parameters:
     excludePaths:
+        - %currentWorkingDirectory%/frontend/config/*
+        - %currentWorkingDirectory%/console/config/*
         - %currentWorkingDirectory%/frontend/views/*
         - %currentWorkingDirectory%/frontend/web/index.php
         - %currentWorkingDirectory%/frontend/tests/*
@@ -9,10 +11,12 @@ parameters:
     bootstrapFiles:
         - %currentWorkingDirectory%/phpstan-bootstrap.php
     ignoreErrors:
-    		- '#Call to deprecated method className\(\) of class yii\\base\\BaseObject#'
     		- '#Method [a-zA-Z0-9\\]+::action[a-zA-Z0-9\\]+\(\) has no return type specified#'
     		- '#Method [a-zA-Z0-9\\]+Controller::[a-zA-Z0-9\\]+\(\) has parameter \$[a-zA-Z0-9]+ with no type specified#'
     		- '#Dynamic call to static method PHPUnit\\Framework\\Assert::.*#'
+    		- '#File is missing a "declare\(strict_types=1\)" declaration#'
+    		- '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
+    		- '#Language construct isset\(\) should not be used.#'
     polluteScopeWithLoopInitialAssignments: false
     polluteScopeWithAlwaysIterableForeach: false
     checkAlwaysTrueCheckTypeFunctionCall: true
@@ -22,39 +26,46 @@ parameters:
     checkFunctionNameCase: true
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
+    ergebnis:
+    		classesAllowedToBeExtended:
+    		    - yii\base\Model
+    		    - yii\filters\auth\AuthMethod
+    		    - yii\base\BaseObject
+    		    - frontend\assets\WebpackAsset
+    		    - frontend\models\Category
+    		    - frontend\models\Menu
+    		    - frontend\models\Restaurants
+    		    - yii\base\Module
+    		    - yii\db\ActiveRecord
+    		    - yii\rest\Controller
+    		    - yii\web\AssetBundle
+    		    - yii\web\Controller
+    		    - yii\console\Controller
+    		    - Codeception\Test\Unit
+    		    - common\component\RocketChat
+    		    - common\models\Order
+    		    - common\models\User
+    		    - kartik\daterange\DateRangeBehavior
+    		    - kartik\daterange\DateRangePicker
+    		    - League\Fractal\TransformerAbstract
+    		    - MyCLabs\Enum\Enum
+    		    - yii\base\Component
+    		    - yii\base\Event
+    		    - yii\base\Widget
+    		    - yii\bootstrap\Widget
+    		    - yii\grid\ActionColumn
+    		    - yii\grid\Column
+    		    - yii\redis\ActiveRecord
+    		    - yii\test\ActiveFixture
+    		    - yii\widgets\InputWidget
 includes:
-	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	#- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
+	- %currentWorkingDirectory%/phpstan-baseline-frontend.neon
+	- %currentWorkingDirectory%/phpstan-baseline-common.neon
 services:
     # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanRuleHelper
-    -
-        class: PHPStan\Rules\Operators\OperatorRuleHelper
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanAndRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanNotRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanOrRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInElseIfConditionRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInIfConditionRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInTernaryOperatorRule
-        tags:
-            - phpstan.rules.rule
     -
         class: PHPStan\Rules\Cast\UselessCastRule
         arguments:
@@ -161,6 +172,8 @@ services:
         class: PHPStan\Rules\VariableVariables\VariableVariablesRule
         tags:
             - phpstan.rules.rule
+    -
+        class: PHPStan\Rules\Operators\OperatorRuleHelper
     # end phpstan/phpstan-strict-rules
     # start rules from ergebnis/phpstan-rules
     -

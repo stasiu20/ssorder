@@ -5,6 +5,9 @@ parameters:
     ignoreErrors:
         - '#Do not use chained method calls\. Put each on separated lines\.#'
         - '#Separate function "sprintf\(\)" in method call to standalone row to improve readability#'
+        - '#File is missing a "declare\(strict_types=1\)" declaration#'
+        - '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
+        - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has a nullable return type declaration.#'
         -
             message: '#Use separate function calls with readable variable names#'
             path: */Exception/*Exception.php
@@ -14,7 +17,9 @@ parameters:
         -
             message: '#\$this as argument is not allowed. Refactor method to service composition#'
             path: */Entity/*.php
-
+        -
+            message: '#Instead of array shape, use value object with specific types in constructor and getters#'
+            path: src/Api/Transformer/*Transformer.php
     customRulesetUsed: true
     bootstrapFiles:
         - %currentWorkingDirectory%/phpstan-bootstrap.php
@@ -29,46 +34,29 @@ parameters:
     reportStaticMethodSignatures: true
     doctrine:
         objectManagerLoader: src/phpstan/object_manager.php
+    ergebnis:
+        classesAllowedToBeExtended:
+            - Symfony\Component\HttpKernel\Kernel
+            - Symfony\Component\Console\Command\Command
+            - Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+            - League\Fractal\TransformerAbstract
+            - InvalidArgumentException
+            - RuntimeException
+            - Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
 includes:
+	- %currentWorkingDirectory%/phpstan-baseline.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
-	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
-	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
-	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/astral/config/services.neon
-	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/services/services.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/static-rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/services/services.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/packages/cognitive-complexity/config/cognitive-complexity-services.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/packages/symfony/config/services.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/astral/config/services.neon
 services:
     # bellow are rules from phpstan/phpstan-strict-rules without VariablePropertyFetchRule and VariablePropertyFetchRule rules
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanRuleHelper
-    -
-        class: PHPStan\Rules\Operators\OperatorRuleHelper
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanAndRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanNotRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInBooleanOrRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInElseIfConditionRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInIfConditionRule
-        tags:
-            - phpstan.rules.rule
-    -
-        class: PHPStan\Rules\BooleansInConditions\BooleanInTernaryOperatorRule
-        tags:
-            - phpstan.rules.rule
     -
         class: PHPStan\Rules\Cast\UselessCastRule
         arguments:
@@ -194,3 +182,5 @@ services:
         class: App\phpstan\OnlyReadProperties
         tags:
             - phpstan.properties.readWriteExtension
+    -
+        class: PHPStan\Rules\Operators\OperatorRuleHelper

@@ -47,7 +47,6 @@ class DictController extends Controller
      *      )
      * )
      * @throws \yii\base\InvalidConfigException
-     * @throws \yii\di\NotInstantiableException
      */
     public function actionCategories()
     {

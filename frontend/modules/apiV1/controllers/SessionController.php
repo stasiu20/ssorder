@@ -120,8 +120,6 @@ class SessionController extends Controller
      *     )
      * )
      * @throws BadRequestHttpException
-     * @throws Throwable
-     * @throws StaleObjectException
      * @return Response
      */
     public function actionLogout()

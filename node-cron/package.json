@@ -10,11 +10,11 @@
   "author": "Marcin Morawski <marcin@morawskim.pl>",
   "license": "MIT",
   "dependencies": {
-    "@sentry/node": "^6.15.0",
-    "@sentry/tracing": "^6.15.0",
-    "ioredis": "^4.28.0",
+    "@sentry/node": "^6.18.1",
+    "@sentry/tracing": "^6.18.1",
+    "ioredis": "^4.28.5",
     "nconf": "^0.11.3",
     "node-cron": "^3.0.0",
-    "winston": "^3.3.3"
+    "winston": "^3.6.0"
   }
 }
