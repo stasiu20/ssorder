@@ -93,7 +93,10 @@ return [
                 $headers = [];
 
                 if (!$user->isGuest) {
-                    $headers['Authorization'] = sprintf('Bearer %s', AccessTokenHelper::createTokenForUser($user->identity));
+                    $headers['Authorization'] = sprintf(
+                        'Bearer %s',
+                        AccessTokenHelper::createTokenForUser($user->identity)->toString()
+                    );
                 }
 
                 $client = new \GuzzleHttp\Client([

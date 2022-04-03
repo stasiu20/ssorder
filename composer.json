@@ -11,35 +11,34 @@
     "source": "https://github.com/stasiu20/ssorder"
   },
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=8.1.0",
     "ext-json": "*",
     "aws/aws-sdk-php": "^3.24.3",
     "borales/yii2-phone-input": "*",
     "bt/rocketchat-php": "^1.1",
-    "endclothing/prometheus_client_php": "^1.0",
     "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
     "kartik-v/yii2-date-range": "^1.6",
     "kartik-v/yii2-widget-datepicker": "@dev",
-    "laminas/laminas-diagnostics": "^1.6",
-    "lcobucci/jwt": "^3.4",
-    "league/fractal": "^0.19.2",
-    "mmo/yii2-utils": "dev-master",
-    "moneyphp/money": "^3.3",
+    "laminas/laminas-diagnostics": "^1.15",
+    "lcobucci/jwt": "^4.0",
+    "league/fractal": "^0.20",
+    "moneyphp/money": "^4.0",
     "monolog/monolog": "^2.0",
     "myclabs/php-enum": "^1.7",
     "ramsey/uuid": "^4.1",
     "samdark/yii2-psr-log-target": "^1.1",
     "superbalist/php-pubsub-redis": "^2.0",
     "symfony/dotenv": "^5.2",
-    "theiconic/php-ga-measurement-protocol": "^2.0",
-    "tightenco/collect": "^8.0",
+    "theiconic/php-ga-measurement-protocol": "dev-php81",
+    "tightenco/collect": "^9.6",
     "yii2tech/ar-softdelete": "^1.0",
     "yiisoft/yii2": "^2.0.15",
     "yiisoft/yii2-bootstrap": "^2.0",
     "yiisoft/yii2-bootstrap4": "^2.0",
     "yiisoft/yii2-queue": "^2.3",
     "yiisoft/yii2-redis": "^2.0",
-    "yiisoft/yii2-swiftmailer": "~2.1.0"
+    "yiisoft/yii2-swiftmailer": "~2.1.0",
+    "mmo/yii2-utils": "dev-master"
   },
   "require-dev": {
     "codeception/codeception": "^4.1",
@@ -69,6 +68,10 @@
       "url": "https://github.com/morawskim/yii2-utils"
     },
     {
+      "type": "git",
+      "url": "https://github.com/morawskim/php-ga-measurement-protocol"
+    },
+    {
       "type": "composer",
       "url": "https://asset-packagist.org"
     }
@@ -77,9 +80,12 @@
   "config": {
     "platform": {
       "ext-gmp": "1.0.0",
-      "php": "7.3"
+      "php": "8.1"
     },
-    "process-timeout": 1800
+    "process-timeout": 1800,
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
   },
   "extra": {
     "asset-installer-paths": {
