@@ -41,16 +41,6 @@ return [
         $mediator = new \common\component\UserRestApiMediator();
         $mediator->mediate();
 
-        /** @var \common\component\Order $order */
-        $order = \Yii::$app->order;
-        /** @var \common\services\SSOrderMetrics $metrics */
-        $metrics = Yii::$container->get(\common\services\SSOrderMetrics::class);
-        $mediator = new \common\events\listeners\NewOrderPrometheus(
-            $order,
-            $metrics
-        );
-        $mediator->mediate();
-
         /** @var \common\component\SSEOrderMediator $mediator */
         $mediator = Yii::$container->get(\common\component\SSEOrderMediator::class);
         $mediator->mediate();
@@ -284,14 +274,4 @@ return [
         ]
     ],
     'params' => $params,
-    'as prometheus' => [
-        'class' => \mmo\yii2\behaviors\PrometheusBehavior::class,
-        'namespace' => $params['prometheus.namespace'],
-        'collectorRegistry' => \Prometheus\CollectorRegistry::class
-    ],
-    'as metrics' => [
-        'class' => \mmo\yii2\filters\PrometheusWebMetrics::class,
-        'namespace' => 'ssorder2',
-        'collectorRegistry' => \Prometheus\CollectorRegistry::class,
-    ]
 ];
