@@ -10,7 +10,7 @@ variables:
   MYSQL_USER: ssorder
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
-  PHP_EXTENSIONS: bcmath
+  PHP_EXTENSIONS: bcmath xdebug
 
 api_pipeline:
   stage: qa
@@ -208,7 +208,7 @@ sonarcloud:
 
 assets:
   stage: build
-  image: thecodingmachine/php:8.1-v4-cli-node16
+  image: thecodingmachine/php:8.1-v4-cli-node14
   script:
     - ln -s config-prod.js frontend/webpack/config.js
     - cd frontend && yarn build

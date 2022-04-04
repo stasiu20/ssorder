@@ -51,18 +51,12 @@ class FilePHP81Validator extends FileValidator
      * [finfo_open](https://www.php.net/manual/en/function.finfo-open.php). If the `fileinfo` extension is not installed,
      * it will fall back to [[getMimeTypeByExtension()]] when `$checkExtension` is true.
      * @param string $file the file name.
-     * @param string|null $magicFile name of the optional magic database file (or alias), usually something like `/path/to/magic.mime`.
-     * This will be passed as the second parameter to [finfo_open()](https://www.php.net/manual/en/function.finfo-open.php)
-     * when the `fileinfo` extension is installed. If the MIME type is being determined based via [[getMimeTypeByExtension()]]
-     * and this is null, it will use the file specified by [[mimeMagicFile]].
-     * @param bool $checkExtension whether to use the file extension to determine the MIME type in case
-     * `finfo_open()` cannot determine it.
      * @return string|null the MIME type (e.g. `text/plain`). Null is returned if the MIME type cannot be determined.
-     * @throws InvalidConfigException when the `fileinfo` PHP extension is not installed and `$checkExtension` is `false`.
+     * @throws InvalidConfigException when the `fileinfo` PHP extension is not installed.
      */
-    public static function getMimeType($file, $magicFile = null, $checkExtension = true)
+    public static function getMimeType($file)
     {
-        $info = finfo_open(FILEINFO_MIME_TYPE, $magicFile);
+        $info = finfo_open(FILEINFO_MIME_TYPE);
 
         if ($info) {
             $result = finfo_file($info, $file);
@@ -73,6 +67,6 @@ class FilePHP81Validator extends FileValidator
             }
         }
 
-        return $checkExtension ? FileHelper::getMimeTypeByExtension($file, $magicFile) : null;
+        return FileHelper::getMimeTypeByExtension($file);
     }
 }

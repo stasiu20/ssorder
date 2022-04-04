@@ -58,6 +58,7 @@ parameters:
     		    - yii\redis\ActiveRecord
     		    - yii\test\ActiveFixture
     		    - yii\widgets\InputWidget
+    		    - yii\validators\FileValidator
 includes:
 	#- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
