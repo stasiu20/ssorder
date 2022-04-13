@@ -36,7 +36,7 @@ restore-db:
 	docker exec -i $(shell docker-compose ps -q mysql) mysql -ussorder -pssorderpassword  -D ssorder < ssorder-backup.sql
 
 hadolint:
-	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"
+	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -vE '/app/vendor|/app/api/vendor|/app/frontend/node_modules|/app/frontend/e2e/node_modules' | xargs --max-lines=1 hadolint"
 
 install-dependencies:
 	docker-compose exec cli bash -c "composer install"
@@ -79,3 +79,4 @@ tests:
 	make cypress
 	make jmeter
 	docker-compose exec cli bash -c 'composer run all'
+	make hadolint

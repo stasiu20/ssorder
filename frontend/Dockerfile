@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
+# hadolint ignore=DL3022
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions pdo_mysql intl gmp bcmath redis-^5.3
 
@@ -23,6 +24,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
+# hadolint ignore=DL3022
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN if [[ $WITH_XDEBUG = "true" ]]; then \
