@@ -30,7 +30,7 @@ class AccessTokenHelperTest extends Unit
         $user = new User();
         $user->id = 12;
         $token = AccessTokenHelper::createTokenForUser($user);
-        $tokenAsString = (string)$token;
+        $tokenAsString = $token->toString();
 
         $parsedToken = AccessTokenHelper::parseToken($tokenAsString, 'wrongSignKey');
         $this->assertNull($parsedToken);
@@ -41,7 +41,7 @@ class AccessTokenHelperTest extends Unit
         $user = new User();
         $user->id = 12;
         $token = AccessTokenHelper::createTokenForUser($user, time()-7200);
-        $tokenAsString = (string)$token;
+        $tokenAsString = $token->toString();
 
         $parsedToken = AccessTokenHelper::parseToken($tokenAsString);
         $this->assertNull($parsedToken);

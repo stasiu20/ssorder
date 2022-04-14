@@ -20,7 +20,7 @@ class OrderCost
         }
         $cost = $order->getPriceWithPack();
 
-        $total = Money::PLN(round($order->restaurants->delivery_price * 100));
+        $total = Money::PLN((int) round($order->restaurants->delivery_price * 100));
         $allocation = $total->allocateTo($numOfOrders);
         return $cost + ($allocation[$index]->getAmount()) / 100;
     }

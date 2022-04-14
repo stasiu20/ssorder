@@ -3,6 +3,7 @@
 namespace common\services;
 
 use Aws\S3\S3Client;
+use common\validators\FilePHP81Validator;
 use GuzzleHttp\Psr7\Uri;
 use yii\helpers\FileHelper;
 
@@ -43,7 +44,7 @@ class FileService
             'Bucket' => $this->_bucketName,
             'Key'    => $key,
             'SourceFile' => $filePath,
-            'ContentType' => FileHelper::getMimeType(
+            'ContentType' => FilePHP81Validator::getMimeType(
                 $filePath,
                 null,
                 false

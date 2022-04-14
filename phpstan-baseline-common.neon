@@ -11,6 +11,11 @@ parameters:
 			path: common/component/RocketChatOrderMediator.php
 
 		-
+			message: "#^Language construct empty\\(\\) should not be used\\.$#"
+			count: 1
+			path: common/validators/FilePHP81Validator.php
+
+		-
 			message: "#^Constructor in common\\\\component\\\\UserRestApiMediator has parameter \\$user with default value\\.$#"
 			count: 1
 			path: common/component/UserRestApiMediator.php

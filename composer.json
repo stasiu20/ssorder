@@ -11,28 +11,27 @@
     "source": "https://github.com/stasiu20/ssorder"
   },
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=8.1.0",
     "ext-json": "*",
     "aws/aws-sdk-php": "^3.24.3",
     "borales/yii2-phone-input": "*",
     "bt/rocketchat-php": "^1.1",
-    "endclothing/prometheus_client_php": "^1.0",
     "hyperia/yii2-secure-headers": "dev-master as 1.1.99",
     "kartik-v/yii2-date-range": "^1.6",
     "kartik-v/yii2-widget-datepicker": "@dev",
-    "laminas/laminas-diagnostics": "^1.6",
-    "lcobucci/jwt": "^3.4",
-    "league/fractal": "^0.19.2",
+    "laminas/laminas-diagnostics": "^1.15",
+    "lcobucci/jwt": "^4.0",
+    "league/fractal": "^0.20",
     "mmo/yii2-utils": "dev-master",
-    "moneyphp/money": "^3.3",
+    "moneyphp/money": "^4.0",
     "monolog/monolog": "^2.0",
     "myclabs/php-enum": "^1.7",
     "ramsey/uuid": "^4.1",
     "samdark/yii2-psr-log-target": "^1.1",
     "superbalist/php-pubsub-redis": "^2.0",
     "symfony/dotenv": "^5.2",
-    "theiconic/php-ga-measurement-protocol": "^2.0",
-    "tightenco/collect": "^8.0",
+    "theiconic/php-ga-measurement-protocol": "dev-php81",
+    "tightenco/collect": "^9.6",
     "yii2tech/ar-softdelete": "^1.0",
     "yiisoft/yii2": "^2.0.15",
     "yiisoft/yii2-bootstrap": "^2.0",
@@ -47,8 +46,8 @@
     "codeception/module-yii2": "^1.1",
     "codeception/phpunit-wrapper": "^9.0",
     "ergebnis/phpstan-rules": "^0.15.3",
-    "jakub-onderka/php-parallel-lint": "^1.0",
     "mmo/faker-images": "^0.6.0",
+    "php-parallel-lint/php-parallel-lint": "^1.3",
     "phpcompatibility/php-compatibility": "^9.1",
     "phploc/phploc": "^7.0",
     "phpmd/phpmd": "^2.6",
@@ -56,7 +55,7 @@
     "sebastian/phpcpd": "^6.0",
     "swagger-api/swagger-ui": "^4.5",
     "timeweb/phpstan-enum": "^2.2",
-    "wapmorgan/php-code-fixer": "^2.0",
+    "wapmorgan/php-deprecation-detector": "^2.0",
     "yiisoft/yii2-coding-standards": "^2.0",
     "yiisoft/yii2-debug": "~2.1.13",
     "yiisoft/yii2-faker": "~2.0.0",
@@ -69,15 +68,22 @@
       "url": "https://github.com/morawskim/yii2-utils"
     },
     {
+      "type": "git",
+      "url": "https://github.com/morawskim/php-ga-measurement-protocol"
+    },
+    {
       "type": "composer",
       "url": "https://asset-packagist.org"
     }
   ],
   "minimum-stability": "stable",
   "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    },
     "platform": {
       "ext-gmp": "1.0.0",
-      "php": "7.3"
+      "php": "8.1"
     },
     "process-timeout": 1800
   },
@@ -100,8 +106,8 @@
       "@codecept-common",
       "@codecept-frontend"
     ],
-    "codecept-common": "cd ./common && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
-    "codecept-frontend": "cd ./frontend && php -dxdebug.mode=coverage -dxdebug.coverage_enable=1 ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
+    "codecept-common": "cd ./common && XDEBUG_MODE=coverage php ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-common unit",
+    "codecept-frontend": "cd ./frontend && XDEBUG_MODE=coverage php ../vendor/bin/codecept run --coverage-html ../../../docs/codecept-frontend unit",
     "openapi": "./vendor/bin/openapi -b frontend/config/openapi-constant.php --exclude mail --exclude test --exclude views --exclude web -o docs/openapi.yml ./frontend ./common",
     "phpcbf": " ./vendor/bin/phpcbf --extensions=php -d memory_limit=800M",
     "phpcpd": "./vendor/bin/phpcpd --exclude=views/ ./frontend/ ./common/ ./console/",

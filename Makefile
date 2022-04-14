@@ -36,7 +36,7 @@ restore-db:
 	docker exec -i $(shell docker-compose ps -q mysql) mysql -ussorder -pssorderpassword  -D ssorder < ssorder-backup.sql
 
 hadolint:
-	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -v '/app/vendor' | xargs --max-lines=1 hadolint"
+	docker run --rm -v $(PWD):/app -it hadolint/hadolint:v1.16.3-debian bash -c "find /app -iname 'Dockerfile*' | grep -vE '/app/vendor|/app/api/vendor|/app/frontend/node_modules|/app/frontend/e2e/node_modules' | xargs --max-lines=1 hadolint"
 
 install-dependencies:
 	docker-compose exec cli bash -c "composer install"
@@ -69,6 +69,14 @@ jmeter:
 
 update-dependencies:
 	docker-compose exec cli bash -c 'cd api && composer update'
-	docker-compose exec cli bash -c 'COMPOSER_MEMORY_LIMIT=2G composer update'
+	docker-compose exec cli bash -c 'COMPOSER_MEMORY_LIMIT=2G composer update --with-all-dependencies'
 	docker-compose exec cli bash -c 'cd frontend/e2e && npm update'
 	docker-compose exec cli bash -c 'cd node-cron && npm update'
+
+tests:
+	sudo rm -rf docs/jmeter
+	docker-compose exec cli bash -c 'cd api && composer run all'
+	make cypress
+	make jmeter
+	docker-compose exec cli bash -c 'composer run all'
+	make hadolint

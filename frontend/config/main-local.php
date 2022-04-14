@@ -14,7 +14,13 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['*']
+        'allowedIPs' => ['*'],
+        'panels' => [
+            'user' => [
+                'class' => 'yii\debug\panels\UserPanel',
+                'filterModel' => 'foo',
+            ],
+        ]
     ];
 
     $config['bootstrap'][] = 'gii';

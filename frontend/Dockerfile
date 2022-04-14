@@ -1,34 +1,21 @@
 # hadolint ignore=DL3006
-FROM php:7.3-apache as build
+FROM php:8.1-apache as build
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
-# hadolint ignore=DL3008
-RUN apt-get update && \
-    apt-get -y install \
-            libicu-dev \
-            libgmp-dev \
-        --no-install-recommends && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
-
-RUN docker-php-ext-install \
-        pdo_mysql \
-        intl \
-        gmp \
-        && echo -e "no\nno\nno\n" | pecl install redis-5.2.1 \
-        && echo "extension=redis.so" | tee /usr/local/etc/php/conf.d/redis.ini
+# hadolint ignore=DL3022
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions pdo_mysql intl gmp bcmath redis-^5.3
 
 RUN mkdir -p /artifacts \
-    && cp -r --parents /usr/local/lib/php/extensions/no-debug-non-zts-20180731/ /artifacts/ \
+    && cp -r --parents /usr/local/lib/php/extensions/no-debug-non-zts-20210902/ /artifacts/ \
     && cp -r --parents /usr/local/etc/php/conf.d/ /artifacts/
 
 # hadolint ignore=DL3006
-FROM php:7.3-apache as intermediate
+FROM php:8.1-apache as intermediate
 
 ARG WITH_XDEBUG=false
 
@@ -37,13 +24,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR /app
 
+# hadolint ignore=DL3022
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
 RUN if [[ $WITH_XDEBUG = "true" ]]; then \
-    pecl install xdebug-3.0.1 \
-    && docker-php-ext-enable xdebug \
-    && echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+    install-php-extensions xdebug-^3.1; \
+#    pecl install xdebug-3.0.1 \
+#    && docker-php-ext-enable xdebug \
+#    && echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+#    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+#    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+#    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
   fi
 
 # hadolint ignore=SC2015

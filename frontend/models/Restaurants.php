@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\validators\FilePHP81Validator;
 use Yii;
 use \yii\db\ActiveRecord;
 use borales\extensions\phoneInput\PhoneInputValidator;
@@ -70,7 +71,7 @@ class Restaurants extends ActiveRecord
     {
         return [
             //[['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'on'=>self::SCENARIO_UPDATE],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg',],
+            [['imageFile'], FilePHP81Validator::class, 'skipOnEmpty' => false, 'extensions' => 'png, jpg',],
             [['restaurantName', 'tel_number', 'img_url', 'categoryId'], 'required',],
             //[['restaurantName', 'tel_number', 'delivery_price', 'pack_price', 'categoryId'], 'required', 'on'=>  self::SCENARIO_UPDATE],
             [['restaurantName', 'img_url','tel_number'], 'string'],

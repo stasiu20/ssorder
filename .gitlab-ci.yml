@@ -10,6 +10,7 @@ variables:
   MYSQL_USER: ssorder
   MYSQL_PASSWORD: ssorderpassword
   MYSQL_DATABASE: ssorder
+  PHP_EXTENSIONS: bcmath xdebug
 
 api_pipeline:
   stage: qa
@@ -62,7 +63,7 @@ version:
 
 composer:
   stage: prepare
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - php -v
     - composer config -g cache-dir "$CI_PROJECT_DIR/.composer-cache"
@@ -110,7 +111,7 @@ diff-composer-packages:
 
 codestyle:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phpcs | tee phpcs-report.xml
   dependencies:
@@ -129,7 +130,7 @@ composer-normalizer:
 
 phpmd:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phpmd
   dependencies:
@@ -137,7 +138,7 @@ phpmd:
 
 phploc:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phploc
   dependencies:
@@ -145,7 +146,7 @@ phploc:
 
 phpcpd:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phpcpd
   dependencies:
@@ -153,7 +154,7 @@ phpcpd:
 
 php-lint:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phplint
   dependencies:
@@ -169,7 +170,7 @@ phpstan:
 
 phpdd:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run phpdd
   dependencies:
@@ -177,7 +178,7 @@ phpdd:
 
 openapi:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run openapi
   dependencies:
@@ -207,7 +208,7 @@ sonarcloud:
 
 assets:
   stage: build
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node14
   script:
     - ln -s config-prod.js frontend/webpack/config.js
     - cd frontend && yarn build
@@ -228,7 +229,7 @@ assets:
 
 redoc:
   stage: build
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - composer run redoc
   dependencies:
@@ -241,7 +242,7 @@ redoc:
 
 swagger:
   stage: build
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - cp -rv ./vendor/swagger-api/swagger-ui/dist ./docs/swagger
     - cp docs/openapi.yml ./docs/swagger
@@ -257,7 +258,7 @@ swagger:
 
 pretier:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - cd frontend && yarn run prettier
   dependencies:
@@ -265,7 +266,7 @@ pretier:
 
 stylelint:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - cd frontend && yarn run stylelint
   dependencies:
@@ -273,7 +274,7 @@ stylelint:
 
 eslint:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   script:
     - cd frontend && yarn run eslint
   dependencies:
@@ -312,7 +313,7 @@ npm-audit:
 
 codeception:
   stage: qa
-  image: edbizarro/gitlab-ci-pipeline-php:7.3
+  image: thecodingmachine/php:8.1-v4-cli-node16
   services:
     - mysql:5.6
   script:
