@@ -61,7 +61,7 @@ cypress-debug:
 qa:
 	docker pull jakzal/phpqa:alpine
 	docker run --rm -v $(PWD):/project -w /project jakzal/phpqa:alpine phpstan analyse --no-interaction ./frontend ./common ./console
-	docker run --rm -v $(PWD):/project -w /project/api jakzal/phpqa:alpine sh -c 'composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/phpstan-rules && phpstan'
+	docker run --rm -v $(PWD):/project -w /project/api jakzal/phpqa:alpine sh -c 'composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/phpstan-rules:^10.1 && phpstan'
 
 jmeter:
 	mkdir -p docs/jmeter
