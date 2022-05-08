@@ -3,6 +3,8 @@
 namespace App\Restaurant\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Menu
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="menu")
  * @ORM\Entity
  */
-class MenuPosition
+class MenuPosition implements NormalizableInterface
 {
     /**
      * @var int
@@ -128,5 +130,36 @@ class MenuPosition
     public function setFoodPrice(?string $foodPrice): void
     {
         $this->foodprice = $foodPrice;
+    }
+
+    public function isActive(): bool
+    {
+        return null === $this->deletedat;
+    }
+
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    {
+        $restaurant = $this->getRestaurant();
+
+        if ($restaurant) {
+            $restaurantData = [
+                'name' => $restaurant->getName(),
+            ];
+        } else {
+            $restaurantData = null;
+        }
+
+        return [
+            'objectID' => 'menu-' . $this->getId(),
+            'type' => 'food',
+            'food' => [
+                'name' => $this->getFoodName(),
+                'price' => $this->getFoodPrice(),
+                'info' => $this->getFoodInfo(),
+            ],
+            'restaurant' => $restaurantData,
+            'restaurant_name_search' => $restaurantData ? $restaurantData['name'] : null,
+            'food_name_search' => $this->getFoodName(),
+        ];
     }
 }

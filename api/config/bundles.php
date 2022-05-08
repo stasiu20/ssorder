@@ -18,4 +18,5 @@ return [
     Chrisguitarguy\RequestId\ChrisguitarguyRequestIdBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
+    MeiliSearch\Bundle\MeiliSearchBundle::class => ['all' => true],
 ];

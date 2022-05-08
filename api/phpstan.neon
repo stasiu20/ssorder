@@ -8,6 +8,8 @@ parameters:
         - '#File is missing a "declare\(strict_types=1\)" declaration#'
         - '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
         - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has a nullable return type declaration.#'
+        - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has parameter \$format with null as default value.#'
+        - '#Complete known array shape to the method @return type#'
         -
             message: '#Use separate function calls with readable variable names#'
             path: */Exception/*Exception.php
