@@ -29,7 +29,7 @@
     "ramsey/uuid": "^4.1",
     "samdark/yii2-psr-log-target": "^1.1",
     "superbalist/php-pubsub-redis": "^2.0",
-    "symfony/dotenv": "^5.2",
+    "symfony/dotenv": "^6.0",
     "theiconic/php-ga-measurement-protocol": "dev-php81",
     "tightenco/collect": "^9.6",
     "yii2tech/ar-softdelete": "^1.0",
