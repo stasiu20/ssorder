@@ -18,11 +18,13 @@ class MenuPositionTest extends TestCase
             'objectID' => 'menu-1',
             'type' => 'food',
             'food' => [
+                'id' => $menu->getId(),
                 'name' => $menu->getFoodName(),
                 'price' => $menu->getFoodPrice(),
                 'info' => $menu->getFoodInfo()
             ],
             'restaurant' => [
+                'id' => 1,
                 'name' => 'foo',
             ],
             'restaurant_name_search' => 'foo',
@@ -41,6 +43,7 @@ class MenuPositionTest extends TestCase
             'objectID' => 'menu-1',
             'type' => 'food',
             'food' => [
+                'id' => $menu->getId(),
                 'name' => $menu->getFoodName(),
                 'price' => $menu->getFoodPrice(),
                 'info' => $menu->getFoodInfo()

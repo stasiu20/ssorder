@@ -250,6 +250,7 @@ class Restaurant implements NormalizableInterface
             'type' => 'restaurant',
             'food' => null,
             'restaurant' => [
+                'id' => $this->getId(),
                 'name' => $this->getName(),
             ],
             'restaurant_name_search' => $this->getName(),

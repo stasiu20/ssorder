@@ -143,6 +143,7 @@ class MenuPosition implements NormalizableInterface
 
         if ($restaurant) {
             $restaurantData = [
+                'id' => $restaurant->getId(),
                 'name' => $restaurant->getName(),
             ];
         } else {
@@ -153,6 +154,7 @@ class MenuPosition implements NormalizableInterface
             'objectID' => 'menu-' . $this->getId(),
             'type' => 'food',
             'food' => [
+                'id' => $this->getId(),
                 'name' => $this->getFoodName(),
                 'price' => $this->getFoodPrice(),
                 'info' => $this->getFoodInfo(),

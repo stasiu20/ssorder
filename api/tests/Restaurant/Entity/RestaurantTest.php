@@ -18,6 +18,7 @@ class RestaurantTest extends TestCase
             'type' => 'restaurant',
             'food' => null,
             'restaurant' => [
+                'id' => 1,
                 'name' => 'foo',
             ],
             'restaurant_name_search' => 'foo',
