@@ -3574,16 +3574,16 @@
         },
         {
             "name": "tightenco/collect",
-            "version": "v9.8.1",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/collect.git",
-                "reference": "1cbcbb07341949ddee208f52ae8da3bdf426bd0a"
+                "reference": "23f90ce15fde6a2992c0a906696219b62ecc192b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/collect/zipball/1cbcbb07341949ddee208f52ae8da3bdf426bd0a",
-                "reference": "1cbcbb07341949ddee208f52ae8da3bdf426bd0a",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/23f90ce15fde6a2992c0a906696219b62ecc192b",
+                "reference": "23f90ce15fde6a2992c0a906696219b62ecc192b",
                 "shasum": ""
             },
             "require": {
@@ -3622,9 +3622,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tighten/collect/issues",
-                "source": "https://github.com/tighten/collect/tree/v9.8.1"
+                "source": "https://github.com/tighten/collect/tree/v9.12.2"
             },
-            "time": "2022-04-15T20:22:28+00:00"
+            "time": "2022-05-12T23:31:08+00:00"
         },
         {
             "name": "yii2tech/ar-softdelete",
@@ -9804,5 +9804,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
