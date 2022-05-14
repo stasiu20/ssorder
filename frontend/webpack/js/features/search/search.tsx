@@ -35,9 +35,12 @@ const SearchComponent = () => (
     </InstantSearch>
 );
 
-render(
-    <SSOrderApp>
-        <SearchComponent/>
-    </SSOrderApp>,
-    $('#react-meilisearch').get(0),
-);
+const $elMeilisearch = $('#react-meilisearch');
+if ($elMeilisearch.length) {
+    render(
+        <SSOrderApp>
+            <SearchComponent/>
+        </SSOrderApp>,
+        $elMeilisearch.get(0),
+    );
+}

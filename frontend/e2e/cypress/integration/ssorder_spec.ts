@@ -56,4 +56,16 @@ describe('SSOrder', () => {
                     .and(($img) => expect($img[0].naturalWidth).to.be.greaterThan(0));
             });
     });
+
+    it('Search', () => {
+        navigator.toSignInPage();
+        onLoginPage.signIn(Cypress.env('user').username, Cypress.env('user').password);
+
+        cy.location('pathname').should('eq', '/');
+        cy.get('#react-meilisearch input[type="text"]').type('ramzes');
+        cy.get('#react-meilisearch .react-autosuggest__suggestions-container--open').should('be.visible')
+        cy.get('#react-meilisearch .react-autosuggest__suggestions-list').children().should('have.length', 6);
+        cy.get('#react-meilisearch .react-autosuggest__suggestions-list').children().contains('Price').click();
+        cy.location('pathname').should('eq', '/order/uwagi');
+    });
 });
