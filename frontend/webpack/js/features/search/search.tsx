@@ -5,10 +5,11 @@ import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 import SSOrderApp from '../core/components/SSOrderApp';
 import FoodAutocomplete, { SuggestionFood, SuggestionRestaurant } from './autocomplete';
 import './autocomplete.css';
+import appConfig from 'appConfig';
 
 const searchClient = instantMeiliSearch(
-    'http://meilisearch.lvh.me',
-    '',
+    appConfig.meiliSearch.url,
+    appConfig.meiliSearch.apiKey,
 );
 
 const redirectToPage = (model: SuggestionFood | SuggestionRestaurant): void => {

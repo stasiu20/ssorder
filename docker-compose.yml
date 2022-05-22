@@ -122,8 +122,9 @@ services:
         labels:
             traefik.port: "7700"
             traefik.frontend.rule: "Host:meilisearch.lvh.me"
-#        environment:
-#            MEILI_MASTER_KEY: $MEILI_MASTER_KEY
+        environment:
+            MEILI_ENV: development
+            MEILI_MASTER_KEY: ~
         volumes:
             - meilisearch:/data.ms
         healthcheck:
