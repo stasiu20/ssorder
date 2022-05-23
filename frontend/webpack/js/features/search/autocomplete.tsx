@@ -6,7 +6,7 @@ interface Suggestion {
     type: string;
 }
 
-export interface SuggestionFood extends Suggestion{
+export interface SuggestionFood extends Suggestion {
     type: 'food';
     food: {
         id: number;
@@ -20,7 +20,7 @@ export interface SuggestionFood extends Suggestion{
     };
 }
 
-export interface SuggestionRestaurant extends Suggestion{
+export interface SuggestionRestaurant extends Suggestion {
     type: 'restaurant';
     restaurant: {
         id: number;
@@ -32,7 +32,9 @@ interface AutoCompleteProps {
     hits: object[];
     currentRefinement: string;
     refine: (value?: string) => void;
-    onSuggestionSelected: (suggestion: SuggestionFood|SuggestionRestaurant) => void;
+    onSuggestionSelected: (
+        suggestion: SuggestionFood | SuggestionRestaurant,
+    ) => void;
 }
 
 class AutoComplete extends Component<AutoCompleteProps> {
@@ -58,17 +60,25 @@ class AutoComplete extends Component<AutoCompleteProps> {
         return hit.name;
     }
 
-    renderSuggestion(hit: SuggestionRestaurant|SuggestionFood) {
+    renderSuggestion(hit: SuggestionRestaurant | SuggestionFood) {
         if (hit.type === 'restaurant') {
-            return <div>
-                <div className="hit-info">Restaurant: {hit.restaurant?.name}</div>
-            </div>
+            return (
+                <div>
+                    <div className="hit-info">
+                        Restaurant: {hit.restaurant?.name}
+                    </div>
+                </div>
+            );
         } else if (hit.type === 'food') {
-            return <div>
-                <div className="hit-info">Food: {hit.restaurant?.name} / {hit.food?.name}</div>
-                <div className="hit-info">Price: {hit.food?.price}</div>
-                <small>{hit.food?.info}</small>
-            </div>
+            return (
+                <div>
+                    <div className="hit-info">
+                        Food: {hit.restaurant?.name} / {hit.food?.name}
+                    </div>
+                    <div className="hit-info">Price: {hit.food?.price}</div>
+                    <small>{hit.food?.info}</small>
+                </div>
+            );
         }
     }
 
@@ -87,7 +97,9 @@ class AutoComplete extends Component<AutoCompleteProps> {
                 suggestions={hits}
                 onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                onSuggestionSelected={(_: unknown, { suggestion }): void => onSuggestionSelected(suggestion)}
+                onSuggestionSelected={(_: unknown, { suggestion }): void =>
+                    onSuggestionSelected(suggestion)
+                }
                 getSuggestionValue={this.getSuggestionValue}
                 renderSuggestion={this.renderSuggestion}
                 inputProps={inputProps}

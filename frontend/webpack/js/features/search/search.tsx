@@ -3,7 +3,10 @@ import { render } from 'react-dom';
 import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 import SSOrderApp from '../core/components/SSOrderApp';
-import FoodAutocomplete, { SuggestionFood, SuggestionRestaurant } from './autocomplete';
+import FoodAutocomplete, {
+    SuggestionFood,
+    SuggestionRestaurant,
+} from './autocomplete';
 import './autocomplete.css';
 import appConfig from 'appConfig';
 
@@ -21,13 +24,13 @@ const redirectToPage = (model: SuggestionFood | SuggestionRestaurant): void => {
 };
 
 const SearchComponent = () => (
-    <InstantSearch
-        indexName="food"
-        searchClient={searchClient}
-    >
+    <InstantSearch indexName="food" searchClient={searchClient}>
         <Configure
             hitsPerPage={6}
-            attributesToHighlight={['restaurant_name_search', 'food_name_search']}
+            attributesToHighlight={[
+                'restaurant_name_search',
+                'food_name_search',
+            ]}
         />
         <FoodAutocomplete
             currentRefinement={''}
@@ -40,7 +43,7 @@ const $elMeilisearch = $('#react-meilisearch');
 if ($elMeilisearch.length) {
     render(
         <SSOrderApp>
-            <SearchComponent/>
+            <SearchComponent />
         </SSOrderApp>,
         $elMeilisearch.get(0),
     );
