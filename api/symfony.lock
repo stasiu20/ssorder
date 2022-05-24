@@ -151,6 +151,15 @@
     "http-interop/http-factory-guzzle": {
         "version": "1.2.0"
     },
+    "illuminate/collections": {
+        "version": "v8.83.11"
+    },
+    "illuminate/contracts": {
+        "version": "v8.83.11"
+    },
+    "illuminate/macroable": {
+        "version": "v8.83.11"
+    },
     "jean85/pretty-package-versions": {
         "version": "1.6.0"
     },
@@ -177,6 +186,12 @@
         "files": [
             "config/packages/lexik_jwt_authentication.yaml"
         ]
+    },
+    "meilisearch/meilisearch-php": {
+        "version": "v0.23.1"
+    },
+    "meilisearch/search-bundle": {
+        "version": "v0.7.2"
     },
     "minishlink/web-push": {
         "version": "v5.2.5"
@@ -208,6 +223,18 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.5"
+    },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
     },
     "pdepend/pdepend": {
         "version": "2.9.1"
@@ -281,6 +308,9 @@
     "psr/log": {
         "version": "1.1.4"
     },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
@@ -343,6 +373,9 @@
         "files": [
             "phpcs.xml.dist"
         ]
+    },
+    "stella-maris/clock": {
+        "version": "0.1.4"
     },
     "symfony/browser-kit": {
         "version": "v5.2.10"

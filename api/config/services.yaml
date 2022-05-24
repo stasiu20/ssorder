@@ -42,3 +42,7 @@ services:
     App\File\FileService:
         arguments:
             $publicUrl: '%env(MINIO_PUBLIC_URL)%'
+
+    symfony_custom_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\CustomNormalizer
+        tags: [serializer.normalizer]

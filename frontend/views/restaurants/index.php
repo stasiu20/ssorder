@@ -19,6 +19,7 @@ $this->registerJsVar('__APP_DATA__', [
 <div class="site-index">
     <h2 class="text-center mb-4">To co dziś zamawiamy?!</h2>
     <div class="body-content">
+        <div class="row"><div class="col-12"><div id="react-meilisearch"></div></div></div>
         <div class="row" id="react-restaurant-cards"></div>
     </div>
 </div>

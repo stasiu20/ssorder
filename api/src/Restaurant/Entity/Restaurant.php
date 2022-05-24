@@ -8,12 +8,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
  * @ORM\Table(name="restaurants")
  */
-class Restaurant
+class Restaurant implements NormalizableInterface
 {
     /**
      * @ORM\Id
@@ -239,5 +241,20 @@ class Restaurant
             ->andWhere(Criteria::expr()->isNull('deletedAt'));
 
         return $this->photos->matching($criteria);
+    }
+
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    {
+        return [
+            'objectID' => 'restaurant-' . $this->getId(),
+            'type' => 'restaurant',
+            'food' => null,
+            'restaurant' => [
+                'id' => $this->getId(),
+                'name' => $this->getName(),
+            ],
+            'restaurant_name_search' => $this->getName(),
+            'food_name_search' => null,
+        ];
     }
 }

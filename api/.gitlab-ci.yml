@@ -132,7 +132,7 @@ phpstan:
   stage: qa
   image: jakzal/phpqa:alpine
   script:
-    - composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/phpstan-rules
+    - composer global bin phpstan require --with-all-dependencies symfony/config:^5.4 symfony/dependency-injection:^5.4 symplify/phpstan-rules:^10.1
     - phpstan
   dependencies:
     - composer

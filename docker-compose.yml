@@ -117,6 +117,22 @@ services:
           timeout: 20s
           retries: 3
           start_period: 3m
+    meilisearch:
+        image: getmeili/meilisearch:v0.26.1
+        labels:
+            traefik.port: "7700"
+            traefik.frontend.rule: "Host:meilisearch.lvh.me"
+        environment:
+            MEILI_ENV: development
+            MEILI_MASTER_KEY: ~
+        volumes:
+            - meilisearch:/data.ms
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://127.0.0.1:7700/health" ]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 1m
     rocketchat:
         image: rocketchat/rocket.chat:0.70.2 # upgrade to 0.70.4
         volumes:
@@ -219,3 +235,4 @@ volumes:
     rocketchat-uploads:
     mongodb:
     prometheus-tsdb:
+    meilisearch:
