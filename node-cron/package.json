@@ -14,7 +14,7 @@
     "@sentry/tracing": "^6.18.1",
     "ioredis": "^4.28.5",
     "nconf": "^0.11.3",
-    "node-cron": "^3.0.0",
+    "node-cron": "^3.0.1",
     "winston": "^3.6.0"
   }
 }
