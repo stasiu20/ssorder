@@ -1519,10 +1519,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/cleave.js@^1.4.2":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@types/cleave.js/-/cleave.js-1.4.6.tgz#985ae25b3545986789c1adb262b21bb3cd49b2ac"
-  integrity sha512-OVW8lDUfaMa13OkWpH0ydQOB9IMLN9UZP4lBz63xCDZr/b7SqImRlBuzM1+eQb4whGPGGkZBOUe0Q7naOVO2dQ==
+"@types/cleave.js@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@types/cleave.js/-/cleave.js-1.4.7.tgz#ee1cddc1b83fa72491d1489f0ac8e860ac550974"
+  integrity sha512-0MatQhFMEsOWOjfY06z7Ez+84dWJFXWsqGRsZn+dxcZ8FqZbHftP4g4NIdpZmPm5I7RWmjDmrF5wtg99TVCgQA==
   dependencies:
     "@types/react" "*"
 
@@ -1733,21 +1733,13 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^16", "@types/react@^16.9.11":
+"@types/react@^16", "@types/react@^16.0.40", "@types/react@^16.9.11":
   version "16.14.21"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.21.tgz#35199b21a278355ec7a3c40003bd6a334bd4ae4a"
   integrity sha512-rY4DzPKK/4aohyWiDRHS2fotN5rhBSK6/rz1X37KzNna9HJyqtaGAbq9fVttrEPWF5ywpfIP1ITL8Xi2QZn6Eg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@^16.0.40":
-  version "16.14.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.4.tgz#365f6a1e117d1eec960ba792c7e1e91ecad38e6f"
-  integrity sha512-ETj7GbkPGjca/A4trkVeGvoIakmLV6ZtX3J8dcmOpzKzWVybbrOxanwaIPG71GZwImoMDY6Fq4wIe34lEqZ0FQ==
-  dependencies:
-    "@types/prop-types" "*"
     csstype "^3.0.2"
 
 "@types/resolve@0.0.8":
