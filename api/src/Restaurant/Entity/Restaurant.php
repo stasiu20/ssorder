@@ -243,7 +243,7 @@ class Restaurant implements NormalizableInterface
         return $this->photos->matching($criteria);
     }
 
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
     {
         return [
             'objectID' => 'restaurant-' . $this->getId(),
