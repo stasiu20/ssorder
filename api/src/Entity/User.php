@@ -94,17 +94,15 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword()
+    public function getPassword(): void
     {
-        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
-        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**
