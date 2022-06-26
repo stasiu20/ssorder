@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5041b3947b0f915f9603ec3404b87a91",
+    "content-hash": "88ac5f49e3e148152136ccd923cc4f87",
     "packages": [
+        {
+            "name": "8ctopus/php-ga-measurement-protocol",
+            "version": "v2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/8ctopus/php-ga-measurement-protocol.git",
+                "reference": "e0144e10ba5837985a20918d6985f32150ed5770"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/8ctopus/php-ga-measurement-protocol/zipball/e0144e10ba5837985a20918d6985f32150ed5770",
+                "reference": "e0144e10ba5837985a20918d6985f32150ed5770",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0 || ^7.0",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*",
+                "satooshi/php-coveralls": "1.0.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TheIconic\\Tracking\\GoogleAnalytics\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "THE ICONIC ENGINEERING TEAM",
+                    "email": "engineering@theiconic.com.au"
+                },
+                {
+                    "name": "8ctopus",
+                    "email": "hello@octopuslabs.io"
+                }
+            ],
+            "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
+            "support": {
+                "source": "https://github.com/8ctopus/php-ga-measurement-protocol/tree/v2.9.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/jorgeborges",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-06-23T08:44:36+00:00"
+        },
         {
             "name": "aws/aws-crt-php",
             "version": "v1.0.2",
@@ -201,7 +255,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:twbs/bootstrap.git",
+                "url": "https://github.com/twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -243,12 +297,12 @@
             "version": "v16.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jackocnr/intl-tel-input.git",
+                "url": "git@github.com:Bluefieldscom/intl-tel-input.git",
                 "reference": "52211bd88178f2cbed022b24d154ef980aef2878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackocnr/intl-tel-input/zipball/52211bd88178f2cbed022b24d154ef980aef2878",
+                "url": "https://api.github.com/repos/Bluefieldscom/intl-tel-input/zipball/52211bd88178f2cbed022b24d154ef980aef2878",
                 "reference": "52211bd88178f2cbed022b24d154ef980aef2878"
             },
             "type": "bower-asset"
@@ -3585,40 +3639,6 @@
                 }
             ],
             "time": "2022-05-21T13:34:40+00:00"
-        },
-        {
-            "name": "theiconic/php-ga-measurement-protocol",
-            "version": "dev-php81",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/morawskim/php-ga-measurement-protocol",
-                "reference": "3af76e4e7370581b0eff957d8d6d64049e0be3fc"
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0 || ^7.0",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.7.*",
-                "satooshi/php-coveralls": "1.0.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TheIconic\\Tracking\\GoogleAnalytics\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "THE ICONIC ENGINEERING TEAM",
-                    "email": "engineering@theiconic.com.au"
-                }
-            ],
-            "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
-            "time": "2022-04-03T09:28:56+00:00"
         },
         {
             "name": "tightenco/collect",
@@ -9839,8 +9859,7 @@
     "stability-flags": {
         "hyperia/yii2-secure-headers": 20,
         "kartik-v/yii2-widget-datepicker": 20,
-        "mmo/yii2-utils": 20,
-        "theiconic/php-ga-measurement-protocol": 20
+        "mmo/yii2-utils": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -9853,5 +9872,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
