@@ -27,6 +27,7 @@
     "moneyphp/money": "^4.0",
     "monolog/monolog": "^2.0",
     "myclabs/php-enum": "^1.7",
+    "promphp/prometheus_client_php": "^2.6",
     "ramsey/uuid": "^4.1",
     "samdark/yii2-psr-log-target": "^1.1",
     "superbalist/php-pubsub-redis": "^2.0",
