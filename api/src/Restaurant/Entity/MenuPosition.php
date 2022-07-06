@@ -137,7 +137,7 @@ class MenuPosition implements NormalizableInterface
         return null === $this->deletedat;
     }
 
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
     {
         $restaurant = $this->getRestaurant();
 

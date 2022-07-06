@@ -8,4 +8,12 @@ return [
             'identityClass' => 'common\models\User',
         ],
     ],
+    'container' => [
+        'singletons' => [
+            \Prometheus\CollectorRegistry::class => function ($container, $params, $config) {
+                return new \Prometheus\CollectorRegistry(new \Prometheus\Storage\InMemory([]));
+            },
+
+        ]
+    ],
 ];

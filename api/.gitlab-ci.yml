@@ -150,14 +150,6 @@ phpmetrics:
     expire_in: 30 days
     when: on_success
 
-phpdd:
-  stage: qa
-  image: thecodingmachine/php:8.1-v4-cli-node16
-  script:
-    - composer run phpdd
-  dependencies:
-    - composer
-
 cve_dependencies_php:
   stage: qa
   image: registry.gitlab.com/savadenn-public/runners/local-php-security-checker:latest

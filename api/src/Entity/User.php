@@ -94,17 +94,15 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword()
+    public function getPassword(): void
     {
-        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
-        // @phpstan-ignore-line not needed for apps that do not check user passwords
     }
 
     /**
@@ -114,5 +112,10 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 }

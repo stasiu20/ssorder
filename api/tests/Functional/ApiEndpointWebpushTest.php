@@ -53,7 +53,7 @@ class ApiEndpointWebpushTest extends WebTestCase
 
         self::bootKernel();
         /** @var JWTManager $jwtManager */
-        $jwtManager = self::$container->get('lexik_jwt_authentication.jwt_manager');
+        $jwtManager = self::getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
         /** @var User|Proxy $user */
         $user = $story->get('user');

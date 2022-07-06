@@ -39,6 +39,24 @@ return [
             \common\component\SSEOrderMediator::class => function (Container $container, $params, $config) {
                 return new \common\component\SSEOrderMediator(Yii::$app->redis, Yii::$app->order);
             },
+            \Prometheus\CollectorRegistry::class => function ($container, $params, $config) {
+                return new \Prometheus\CollectorRegistry(new \Prometheus\Storage\Redis([
+                    'host' => getenv('REDIS_HOST'),
+                    'port' => (int)getenv('REDIS_PORT'),
+                    'timeout' => 0.3,
+                    'read_timeout' => 5,
+                    'persistent_connections' => false,
+                    'password' => null,
+                ]));
+            },
+            \common\services\SSOrderMetrics::class => [function (Container $container, $params, $config) {
+                /** @var \Prometheus\CollectorRegistry $collectorRegistry */
+                $collectorRegistry = $container->get(\Prometheus\CollectorRegistry::class);
+                return new \common\services\SSOrderMetrics(
+                    $collectorRegistry,
+                    $params['namespace']
+                );
+            }, ['namespace' => $params['prometheus.namespace']]],
             \Laminas\Diagnostics\Runner\Runner::class => function (Container $container, $params, $config) {
                 $runner = new \Laminas\Diagnostics\Runner\Runner();
                 $runner->addCheck(new \Laminas\Diagnostics\Check\GuzzleHttpService(
