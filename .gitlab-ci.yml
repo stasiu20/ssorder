@@ -419,48 +419,41 @@ sitespeed:
     - source $CI_PROJECT_DIR/VERSION
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "" > $CI_PROJECT_DIR/.env
-  except:
-    - tags
-    - api
-    - external
-    - pipelines
-    - schedules
-    - triggers
-    - web
-    - merge_requests
-    - chats
 
 docker:node:
   extends: .docker
   script:
       - /kaniko/executor --context $CI_PROJECT_DIR/node-cron --dockerfile $CI_PROJECT_DIR/node-cron/Dockerfile --destination ${CI_REGISTRY}/${CI_PROJECT_PATH}/scheduler:latest
-  only:
-    refs:
-      - develop
-    changes:
-      - "node-cron/*"
-      - .gitlab-ci.yml
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      changes:
+        - "node-cron/*"
+        - .gitlab-ci.yml
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: manual
 
 docker:develop:
   extends: .docker
   script:
       - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:latest
-  only:
-    - develop
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: manual
 
 docker:master:
   extends: .docker
   script:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:stable --destination $CI_REGISTRY_IMAGE:$VERSION
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
 
 docker:rc:
   extends: .docker
   script:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/frontend/Dockerfile --destination $CI_REGISTRY_IMAGE:$VERSION
-  only:
-    - /^release-/
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release-/
 
 docker:docs:
   stage: docker
