@@ -112,16 +112,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.231.4",
+            "version": "3.231.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2dc6f917e3ce656e4fb5b9b591d7d84cd0d1f665"
+                "reference": "7bff685fea578276c28d5476197f6c3fa7cff116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2dc6f917e3ce656e4fb5b9b591d7d84cd0d1f665",
-                "reference": "2dc6f917e3ce656e4fb5b9b591d7d84cd0d1f665",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7bff685fea578276c28d5476197f6c3fa7cff116",
+                "reference": "7bff685fea578276c28d5476197f6c3fa7cff116",
                 "shasum": ""
             },
             "require": {
@@ -198,9 +198,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.231.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.231.13"
             },
-            "time": "2022-07-12T18:46:48+00:00"
+            "time": "2022-07-25T18:21:23+00:00"
         },
         {
             "name": "borales/yii2-phone-input",
@@ -9940,5 +9940,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
