@@ -15,7 +15,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "league/fractal": "^0.20",
         "lexik/jwt-authentication-bundle": "^2.8",
-        "meilisearch/search-bundle": "^0.7.2",
+        "meilisearch/search-bundle": "^0.8.0",
         "moneyphp/money": "^4.0",
         "monolog/monolog": "^2.7.0",
         "nelmio/api-doc-bundle": "^4.3",

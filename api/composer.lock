@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d63e988dc014cdef5930396a6ff94451",
+    "content-hash": "dd9fdf9cc9673609e2bbf4ea55e56e0f",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -3031,16 +3031,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.23.3",
+            "version": "v0.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "e993256ff7c5be7fe760392145830c9defab8214"
+                "reference": "072d43019b7ade2fe9592a078da99d1ab8521086"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/e993256ff7c5be7fe760392145830c9defab8214",
-                "reference": "e993256ff7c5be7fe760392145830c9defab8214",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/072d43019b7ade2fe9592a078da99d1ab8521086",
+                "reference": "072d43019b7ade2fe9592a078da99d1ab8521086",
                 "shasum": ""
             },
             "require": {
@@ -3092,29 +3092,29 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.23.3"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.24.0"
             },
-            "time": "2022-06-21T15:55:00+00:00"
+            "time": "2022-07-11T15:50:51+00:00"
         },
         {
             "name": "meilisearch/search-bundle",
-            "version": "v0.7.2",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-symfony.git",
-                "reference": "8149da82412fa09bacce8c6cb162a7d4da20eecf"
+                "reference": "788dbfb2800b8018c26cd19ce4b64ad1b159dc67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-symfony/zipball/8149da82412fa09bacce8c6cb162a7d4da20eecf",
-                "reference": "8149da82412fa09bacce8c6cb162a7d4da20eecf",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-symfony/zipball/788dbfb2800b8018c26cd19ce4b64ad1b159dc67",
+                "reference": "788dbfb2800b8018c26cd19ce4b64ad1b159dc67",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "^2.4",
                 "ext-json": "*",
                 "illuminate/collections": "^8.47",
-                "meilisearch/meilisearch-php": "^0.23.0",
+                "meilisearch/meilisearch-php": "^0.24.0",
                 "php": "^7.4|^8.0",
                 "symfony/filesystem": "^4.4 || ^5.0 || ^6.0",
                 "symfony/property-access": "^4.4 || ^5.0 || ^6.0",
@@ -3163,9 +3163,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-symfony/issues",
-                "source": "https://github.com/meilisearch/meilisearch-symfony/tree/v0.7.2"
+                "source": "https://github.com/meilisearch/meilisearch-symfony/tree/v0.8.0"
             },
-            "time": "2022-03-17T16:17:21+00:00"
+            "time": "2022-07-12T12:18:06+00:00"
         },
         {
             "name": "minishlink/web-push",
@@ -12073,5 +12073,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
