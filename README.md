@@ -28,8 +28,11 @@ A web application created by intern. Currently develop after hours as an opensou
 
 You should copy file `.env.dist` to `.env`.
 In the new file edit value of `COMPOSER_GITHUB_OAUTH` and `GA_TRACKING_ID`.
-If you don't do it `make` will do it for you, but not set `COMPOSER_GITHUB_OAUTH`.
-You may get an error with GitHub rate limit.
+Generate random string for `JWT_KEY` variable. The generated value set to `.env` and `/api/.env.local`.
+Library `lcobucci/jwt` requires key with right length.
+If you don't do it `make` will do it for you, but not set `COMPOSER_GITHUB_OAUTH` and `JWT_KEY`.
+You may get an error with GitHub rate limit. 
+Your app will not work - "Key provided is shorter than 256 bits".
 Run `make setup`. You need a `make` package.
 Or run these commands from the target  `setup` manually.
 Make sure that nothing listens on port 80, otherwise up traefik will fail.
