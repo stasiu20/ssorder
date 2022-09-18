@@ -17,7 +17,7 @@
         "lexik/jwt-authentication-bundle": "^2.8",
         "meilisearch/search-bundle": "^0.7.2",
         "moneyphp/money": "^4.0",
-        "monolog/monolog": "^2.7.0",
+        "monolog/monolog": "^3.2.0",
         "nelmio/api-doc-bundle": "^4.3",
         "nyholm/psr7": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.2",
