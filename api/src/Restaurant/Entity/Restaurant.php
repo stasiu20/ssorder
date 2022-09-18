@@ -203,7 +203,7 @@ class Restaurant implements NormalizableInterface
     }
 
     /**
-     * @return Collection|MenuPosition[]
+     * @return Collection<int, MenuPosition>
      */
     public function getMenu(): Collection
     {
@@ -235,6 +235,9 @@ class Restaurant implements NormalizableInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Photo>
+     */
     public function getPhotos(): Collection
     {
         $criteria = Criteria::create()
