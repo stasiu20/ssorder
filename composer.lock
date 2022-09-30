@@ -8460,16 +8460,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v4.14.0",
+            "version": "v4.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "424d704d1e971cb4b8c952d1b5e302414745f86c"
+                "reference": "775d307d5634de376efab8fc2d993bd353843795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/424d704d1e971cb4b8c952d1b5e302414745f86c",
-                "reference": "424d704d1e971cb4b8c952d1b5e302414745f86c",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/775d307d5634de376efab8fc2d993bd353843795",
+                "reference": "775d307d5634de376efab8fc2d993bd353843795",
                 "shasum": ""
             },
             "type": "library",
@@ -8515,9 +8515,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.14.0"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.14.2"
             },
-            "time": "2022-08-17T18:49:32+00:00"
+            "time": "2022-09-29T17:30:08+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -9721,5 +9721,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
