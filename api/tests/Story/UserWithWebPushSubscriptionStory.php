@@ -30,7 +30,7 @@ final class UserWithWebPushSubscriptionStory extends Story
             'subscription' => ['endpoint' => $endpoint]
         ])->create();
 
-        $this->add('user', $user);
-        $this->add('subscription', $subscription);
+        $this->addState('user', $user);
+        $this->addState('subscription', $subscription);
     }
 }

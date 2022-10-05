@@ -19,7 +19,7 @@ final class RestaurantPhotosStory extends Story
         $factoryPhoto->create();
         $factoryPhoto->markAsDeleted()->create();
         $restaurant->save();
-        $this->add(self::RESTAURANT, $restaurant);
+        $this->addState(self::RESTAURANT, $restaurant);
 
         $restaurant2 = RestaurantFactory::createOne();
         $factoryPhoto = PhotoFactory::new(['restaurant' => $restaurant2]);

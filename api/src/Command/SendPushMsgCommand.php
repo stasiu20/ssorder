@@ -7,15 +7,16 @@ use App\Repository\UserRepository;
 use BenTools\WebPushBundle\Model\Message\PushNotification;
 use BenTools\WebPushBundle\Model\Subscription\UserSubscriptionManagerRegistry;
 use BenTools\WebPushBundle\Sender\PushMessageSender;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: "app:send-push-msg", description: "Send push msg to user")]
 class SendPushMsgCommand extends Command
 {
-    protected static $defaultName = 'app:send-push-msg';
     /**
      * @var UserSubscriptionManagerRegistry
      */
@@ -44,7 +45,6 @@ class SendPushMsgCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Add a short description for your command')
             ->addArgument('user', InputArgument::REQUIRED, 'User\'s id to whom send test message.')
         ;
     }

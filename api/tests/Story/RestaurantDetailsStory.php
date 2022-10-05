@@ -17,7 +17,7 @@ final class RestaurantDetailsStory extends Story
         $restaurant = RestaurantFactory::createOne();
         MenuPositionFactory::createMany(5, ['restaurant' => $restaurant]);
 
-        $this->add(self::RESTAURANT, $restaurant);
+        $this->addState(self::RESTAURANT, $restaurant);
     }
 
     /**
