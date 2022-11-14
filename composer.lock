@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed7232dc2a2fe54aa6f44476ffbd4af5",
+    "content-hash": "88fcf66ba33a7a91fd787a43d9309721",
     "packages": [
         {
             "name": "8ctopus/php-ga-measurement-protocol",
@@ -6162,16 +6162,16 @@
         },
         {
             "name": "mmo/faker-images",
-            "version": "v0.6.0",
+            "version": "v0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/morawskim/faker-images.git",
-                "reference": "985f76583f41e52a5519116464e18152fb716a41"
+                "reference": "fff9965ce5e9587301311de856f126a11ce1dc24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/morawskim/faker-images/zipball/985f76583f41e52a5519116464e18152fb716a41",
-                "reference": "985f76583f41e52a5519116464e18152fb716a41",
+                "url": "https://api.github.com/repos/morawskim/faker-images/zipball/fff9965ce5e9587301311de856f126a11ce1dc24",
+                "reference": "fff9965ce5e9587301311de856f126a11ce1dc24",
                 "shasum": ""
             },
             "require": {
@@ -6211,9 +6211,9 @@
             ],
             "support": {
                 "issues": "https://github.com/morawskim/faker-images/issues",
-                "source": "https://github.com/morawskim/faker-images/tree/v0.6.0"
+                "source": "https://github.com/morawskim/faker-images/tree/v0.7.0"
             },
-            "time": "2021-11-29T18:32:04+00:00"
+            "time": "2022-11-12T10:23:37+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -9729,5 +9729,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
