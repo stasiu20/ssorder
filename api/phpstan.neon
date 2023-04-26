@@ -8,8 +8,6 @@ parameters:
         - '#File is missing a "declare\(strict_types=1\)" declaration#'
         - '#Class [a-zA-Z0-9\\]+ is neither abstract nor final#'
         - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has a nullable return type declaration.#'
-        - '#Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has parameter \$format with null as default value.#'
-        - '#Complete known array shape to the method @return type#'
         -
             message: '#Use separate function calls with readable variable names#'
             path: */Exception/*Exception.php
@@ -48,6 +46,7 @@ parameters:
 includes:
 	- %currentWorkingDirectory%/phpstan-baseline.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
+	- /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/static-rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
 	- /tools/.composer/vendor-bin/phpstan/vendor/ergebnis/phpstan-rules/rules.neon
@@ -111,26 +110,38 @@ services:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticAdditionRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticDivisionRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticExponentiationRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticModuloRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticMultiplicationRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -
         class: PHPStan\Rules\Operators\OperandsInArithmeticSubtractionRule
+        arguments:
+            bleedingEdge: %featureToggles.bleedingEdge%
         tags:
             - phpstan.rules.rule
     -

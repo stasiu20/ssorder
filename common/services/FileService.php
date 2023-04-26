@@ -2,6 +2,7 @@
 
 namespace common\services;
 
+use Aws\Result;
 use Aws\S3\S3Client;
 use common\validators\FilePHP81Validator;
 use GuzzleHttp\Psr7\Uri;
@@ -30,7 +31,10 @@ class FileService
         return (string)$uri;
     }
 
-    public function getFile(string $key): \Aws\Result
+    /**
+     * @return Result<mixed>
+     */
+    public function getFile(string $key): Result
     {
         return $this->_s3Client->getObject([
             'Bucket' => $this->_bucketName,

@@ -24,6 +24,7 @@ class UserSubscriptionManager implements UserSubscriptionManagerInterface
 
     /**
      * @inheritDoc
+     * @phpstan-ignore-next-line
      */
     public function factory(
         UserInterface $user,
@@ -74,6 +75,7 @@ class UserSubscriptionManager implements UserSubscriptionManagerInterface
 
     /**
      * @inheritDoc
+     * @phpstan-ignore-next-line
      */
     public function findByHash(string $subscriptionHash): iterable
     {

@@ -35,12 +35,17 @@ class UserSubscription implements UserSubscriptionInterface
     private $subscriptionHash;
 
     /**
-     * @var array
+     * @var array<mixed>
      *
      * @ORM\Column(type="json")
      */
     private $subscription;
 
+    /**
+     * @param User         $user
+     * @param string       $subscriptionHash
+     * @param array<mixed> $subscription
+     */
     public function __construct(User $user, string $subscriptionHash, array $subscription)
     {
         $this->user = $user;

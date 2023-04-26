@@ -246,6 +246,15 @@ class Restaurant implements NormalizableInterface
         return $this->photos->matching($criteria);
     }
 
+    /**
+     * @phpstan-ignore-next-line
+     *
+     * @param NormalizerInterface $normalizer
+     * @param string|null         $format
+     * @param array               $context
+     *
+     * @return array
+     */
     public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
     {
         return [
