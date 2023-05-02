@@ -499,6 +499,7 @@ tag_release:
   image: edbizarro/gitlab-ci-pipeline-php:7.2
   only:
     - master
+    - web
   except:
     - tags
     - api
@@ -506,7 +507,6 @@ tag_release:
     - pipelines
     - schedules
     - triggers
-    - web
     - merge_requests
     - chats
   before_script:
