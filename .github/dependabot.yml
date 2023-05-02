@@ -4,34 +4,39 @@ updates:
     directory: "/node-cron"
     target-branch: "develop"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "wednesday"
     commit-message:
       prefix: "#56 npm"
   - package-ecosystem: npm
     directory: "/frontend"
     target-branch: "develop"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "wednesday"
     commit-message:
       prefix: "#56 npm"
   - package-ecosystem: npm
     directory: "/frontend/e2e"
     target-branch: "develop"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "wednesday"
     commit-message:
       prefix: "#56 npm"
   - package-ecosystem: composer
     directory: "/"
     target-branch: "develop"
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "wednesday"
     commit-message:
       prefix: "#56 composer"
   - package-ecosystem: composer
     directory: "/api"
     target-branch: "develop"
     schedule:
-      interval: daily
+      interval: "weekly"
+      day: "wednesday"
     commit-message:
       prefix: "#56 composer"
