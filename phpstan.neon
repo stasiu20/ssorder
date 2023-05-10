@@ -30,6 +30,7 @@ parameters:
     reportMaybesInMethodSignatures: true
     reportStaticMethodSignatures: true
     ergebnis:
+    	noExtends:
     		classesAllowedToBeExtended:
     		    - yii\base\Model
     		    - yii\filters\auth\AuthMethod

@@ -1,27 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 4
-			path: common/behaviors/DateRangeBehavior.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 2
-			path: common/component/RocketChatOrderMediator.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: common/validators/FilePHP81Validator.php
-
-		-
 			message: "#^Constructor in common\\\\component\\\\UserRestApiMediator has parameter \\$user with default value\\.$#"
-			count: 1
-			path: common/component/UserRestApiMediator.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
 			count: 1
 			path: common/component/UserRestApiMediator.php
 
@@ -61,11 +41,6 @@ parameters:
 			path: common/models/Order.php
 
 		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 2
-			path: common/models/User.php
-
-		-
 			message: "#^Method common\\\\models\\\\User\\:\\:findIdentityByAccessToken\\(\\) has parameter \\$type with null as default value\\.$#"
 			count: 1
 			path: common/models/User.php
@@ -89,18 +64,7 @@ parameters:
 			message: "#^Method common\\\\services\\\\actions\\\\CreateOrder\\:\\:run\\(\\) has parameter \\$identity with null as default value\\.$#"
 			count: 1
 			path: common/services/actions/CreateOrder.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: common/services/actions/UploadRestaurantLogo.php
-
 		-
 			message: "#^Control structures using switch should not be used\\.$#"
 			count: 1
 			path: common/widgets/grid/ActionMaterialIconColumn.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: common/widgets/grid/InputColumn.php

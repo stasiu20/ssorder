@@ -26,11 +26,6 @@ parameters:
 			path: frontend/models/ResetPasswordForm.php
 
 		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: frontend/models/ResetPasswordForm.php
-
-		-
 			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:createTokenForUser\\(\\) has parameter \\$time with null as default value\\.$#"
 			count: 1
 			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
@@ -49,19 +44,3 @@ parameters:
 			message: "#^Method frontend\\\\modules\\\\apiV1\\\\helpers\\\\AccessTokenHelper\\:\\:parseToken\\(\\) has parameter \\$jwtSignKey with null as default value\\.$#"
 			count: 1
 			path: frontend/modules/apiV1/helpers/AccessTokenHelper.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: frontend/rocketChat/commands/HistoryCommand.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: frontend/rocketChat/commands/ReorderCommand.php
-
-		-
-			message: "#^Language construct empty\\(\\) should not be used\\.$#"
-			count: 1
-			path: frontend/services/OrderSummaryStatics.php
-

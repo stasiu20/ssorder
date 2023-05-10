@@ -35,14 +35,15 @@ parameters:
     doctrine:
         objectManagerLoader: src/phpstan/object_manager.php
     ergebnis:
-        classesAllowedToBeExtended:
-            - Symfony\Component\HttpKernel\Kernel
-            - Symfony\Component\Console\Command\Command
-            - Symfony\Bundle\FrameworkBundle\Controller\AbstractController
-            - League\Fractal\TransformerAbstract
-            - InvalidArgumentException
-            - RuntimeException
-            - Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
+        noExtends:
+            classesAllowedToBeExtended:
+                - Symfony\Component\HttpKernel\Kernel
+                - Symfony\Component\Console\Command\Command
+                - Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+                - League\Fractal\TransformerAbstract
+                - InvalidArgumentException
+                - RuntimeException
+                - Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
 includes:
 	- %currentWorkingDirectory%/phpstan-baseline.neon
 	- %currentWorkingDirectory%/vendor/timeweb/phpstan-enum/extension.neon
