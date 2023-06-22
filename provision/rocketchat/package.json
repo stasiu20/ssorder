@@ -12,6 +12,6 @@
   "private": true,
   "dependencies": {
     "envfile": "^4.5.0",
-    "rocketchat-api": "^1.0.4"
+    "rocketchat-api": "^1.0.5"
   }
 }
