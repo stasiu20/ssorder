@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed7232dc2a2fe54aa6f44476ffbd4af5",
+    "content-hash": "6d8b19af52650a8a3ed93d64aadfca2e",
     "packages": [
         {
             "name": "8ctopus/php-ga-measurement-protocol",
@@ -8468,16 +8468,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v4.14.2",
+            "version": "v5.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "775d307d5634de376efab8fc2d993bd353843795"
+                "reference": "7582a437b30ac1c4998ff7aa3aca8e3e74e9f5e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/775d307d5634de376efab8fc2d993bd353843795",
-                "reference": "775d307d5634de376efab8fc2d993bd353843795",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/7582a437b30ac1c4998ff7aa3aca8e3e74e9f5e6",
+                "reference": "7582a437b30ac1c4998ff7aa3aca8e3e74e9f5e6",
                 "shasum": ""
             },
             "type": "library",
@@ -8523,9 +8523,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.14.2"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v5.10.5"
             },
-            "time": "2022-09-29T17:30:08+00:00"
+            "time": "2023-12-14T12:09:05+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -9729,5 +9729,5 @@
         "ext-gmp": "1.0.0",
         "php": "8.1"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
