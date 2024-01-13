@@ -247,13 +247,21 @@ class Restaurant implements NormalizableInterface
     }
 
     /**
-     * @phpstan-ignore-next-line
-     *
      * @param NormalizerInterface $normalizer
      * @param string|null         $format
-     * @param array               $context
+     * @param array<mixed> $context
      *
-     * @return array
+     * @return array{
+     *     objectID: string,
+     *     type: string,
+     *     food: null,
+     *     restaurant: array{
+     *         id: int,
+     *         name: string
+     *     },
+     *     restaurant_name_search: string,
+     *     food_name_search: null
+     * }
      */
     public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = []): array
     {
