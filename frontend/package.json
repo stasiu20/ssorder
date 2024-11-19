@@ -7,7 +7,7 @@
   ],
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
-    "@fortawesome/fontawesome-free": "^5.8.0",
+    "@fortawesome/fontawesome-free": "^6.7.0",
     "@symfony/webpack-encore": "^0.30.2",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.4",
