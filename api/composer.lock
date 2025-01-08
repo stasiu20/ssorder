@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b76d100a4e0d54924cd7e7cb704f3391",
+    "content-hash": "e9b0a542b76b1efb21927cb87735700b",
     "packages": [
         {
             "name": "bentools/webpush-bundle",
@@ -9879,39 +9879,38 @@
         },
         {
             "name": "ergebnis/phpstan-rules",
-            "version": "1.0.0",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ergebnis/phpstan-rules.git",
-                "reference": "ebeced30d7e50324a94a83c19a59d75816e8fbb4"
+                "reference": "9999fb11a1c426d616a10f6ee7c524b9d7bd2e13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/ebeced30d7e50324a94a83c19a59d75816e8fbb4",
-                "reference": "ebeced30d7e50324a94a83c19a59d75816e8fbb4",
+                "url": "https://api.github.com/repos/ergebnis/phpstan-rules/zipball/9999fb11a1c426d616a10f6ee7c524b9d7bd2e13",
+                "reference": "9999fb11a1c426d616a10f6ee7c524b9d7bd2e13",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "nikic/php-parser": "^4.2.3",
-                "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.0.0"
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+                "phpstan/phpstan": "^1.10.21"
             },
             "require-dev": {
-                "doctrine/orm": "^2.10.2",
-                "ergebnis/composer-normalize": "^2.15.0",
-                "ergebnis/license": "^1.1.0",
-                "ergebnis/php-cs-fixer-config": "^2.14.0",
-                "ergebnis/test-util": "^1.5.0",
-                "infection/infection": "~0.15.3",
-                "nette/di": "^3.0.11",
-                "phpstan/phpstan-deprecation-rules": "^1.0.0",
-                "phpstan/phpstan-strict-rules": "^1.0.0",
-                "phpunit/phpunit": "^8.5.21",
-                "psalm/plugin-phpunit": "~0.16.1",
-                "psr/container": "^1.0.0",
-                "vimeo/psalm": "^4.12.0",
-                "zendframework/zend-servicemanager": "^2.0.0"
+                "doctrine/orm": "^2.20.0 || ^3.3.0",
+                "ergebnis/composer-normalize": "^2.45.0",
+                "ergebnis/license": "^2.6.0",
+                "ergebnis/php-cs-fixer-config": "^6.39.0",
+                "ergebnis/phpunit-slow-test-detector": "^2.17.0",
+                "nette/di": "^3.1.10",
+                "nikic/php-parser": "^4.19.4",
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan-deprecation-rules": "^1.2.1",
+                "phpstan/phpstan-strict-rules": "^1.6.1",
+                "phpunit/phpunit": "^9.6.21",
+                "psr/container": "^2.0.2",
+                "symfony/finder": "^5.4.45",
+                "symfony/process": "^5.4.47"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -9933,27 +9932,22 @@
             "authors": [
                 {
                     "name": "Andreas Möller",
-                    "email": "am@localheinz.com"
+                    "email": "am@localheinz.com",
+                    "homepage": "https://localheinz.com"
                 }
             ],
-            "description": "Provides additional rules for phpstan/phpstan.",
+            "description": "Provides rules for phpstan/phpstan.",
             "homepage": "https://github.com/ergebnis/phpstan-rules",
             "keywords": [
                 "PHPStan",
-                "phpstan-extreme-rules",
                 "phpstan-rules"
             ],
             "support": {
                 "issues": "https://github.com/ergebnis/phpstan-rules/issues",
+                "security": "https://github.com/ergebnis/phpstan-rules/blob/main/.github/SECURITY.md",
                 "source": "https://github.com/ergebnis/phpstan-rules"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/localheinz",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-11-08T15:37:09+00:00"
+            "time": "2025-01-07T16:43:59+00:00"
         },
         {
             "name": "escapestudios/symfony2-coding-standard",
@@ -10590,16 +10584,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.7",
+            "version": "1.12.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e"
+                "reference": "c91d4e8bc056f46cf653656e6f71004b254574d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c91d4e8bc056f46cf653656e6f71004b254574d1",
+                "reference": "c91d4e8bc056f46cf653656e6f71004b254574d1",
                 "shasum": ""
             },
             "require": {
@@ -10628,8 +10622,11 @@
                 "static analysis"
             ],
             "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.7"
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
             },
             "funding": [
                 {
@@ -10639,13 +10636,9 @@
                 {
                     "url": "https://github.com/phpstan",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
-                    "type": "tidelift"
                 }
             ],
-            "time": "2022-10-04T14:09:33+00:00"
+            "time": "2025-01-05T16:40:22+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -12011,5 +12004,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
