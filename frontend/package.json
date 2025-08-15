@@ -80,7 +80,7 @@
   "dependencies": {
     "@availity/phone": "^1.1.18",
     "@meilisearch/instant-meilisearch": "0.7.0",
-    "@vaadin/vaadin-upload": "^4.3.0",
+    "@vaadin/vaadin-upload": "^23.6.1",
     "acorn": "^7.1.1",
     "beautiful-react-hooks": "^0.25.5",
     "cleave.js": "^1.6.0",
