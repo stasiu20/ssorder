@@ -82,7 +82,7 @@
     "@meilisearch/instant-meilisearch": "0.7.0",
     "@vaadin/vaadin-upload": "^4.3.0",
     "acorn": "^7.1.1",
-    "beautiful-react-hooks": "^0.25.5",
+    "beautiful-react-hooks": "^2.0.2",
     "cleave.js": "^1.6.0",
     "core-js": "3",
     "formik": "^2.1.4",
