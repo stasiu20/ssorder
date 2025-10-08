@@ -61,7 +61,7 @@
     "yiisoft/yii2-debug": "~2.1.13",
     "yiisoft/yii2-faker": "~2.0.0",
     "yiisoft/yii2-gii": "~2.2.0",
-    "zircote/swagger-php": "^4.2"
+    "zircote/swagger-php": "^5.4"
   },
   "repositories": [
     {
